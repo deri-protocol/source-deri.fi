@@ -1,0 +1,32 @@
+{
+  "name": "eco",
+  "version": "1.0.0",
+  "description": "this is eco  of deri",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env GENERATE_SOURCEMAP=false npm-run-all --serial start:*",
+    "start:main": "cd main && npm start",
+    "start:demo": "cd ../sub-app-demo && npm start",
+    "install": "npm-run-all --serial install:*",
+    "install:main" : "cd main && yarn install --ignore-engines",
+    "install:demo" : "cd sub-app-demo && yarn install --ignore-engines",
+    "build": "yarn install --ignore-engines && npm run install && rm -rf build && mkdir build && npm-run-all --serial build:*",
+    "build:demo": "mkdir -p build/sub-app-demo  && cd sub-app-demo && npm run build",
+    "build:main": "cd main && npm run build"
+  },
+  "devDependencies": {
+    "@babel/plugin-syntax-jsx": "^7.17.12",
+    "@babel/plugin-transform-react-jsx": "^7.17.12",
+    "cross-env": "^7.0.3",
+    "npm-run-all": "^4.1.5"
+  },
+  "keywords": [
+    "deri-protocol",
+    "deri.fi"
+  ],
+  "author": "haidong.li@dfactory.tech",
+  "license": "ISC",
+  "dependencies": {
+    "sass": "^1.52.1"
+  }
+}

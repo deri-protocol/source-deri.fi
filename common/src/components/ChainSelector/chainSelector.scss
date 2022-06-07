@@ -1,0 +1,137 @@
+.network-select {
+  margin-right : 24px;
+  position : relative;
+  display : flex;
+  justify-content : center;
+  align-items : center;
+  cursor : pointer;
+  color : #fff;
+  .nw-wrapper {
+    background : #FFAB00;
+    position : absolute;
+    top : 0px;
+    display : flex;
+    flex-direction : column;
+    z-index :1;
+    .cur-network {
+      display : flex;
+      align-items : center;
+      height : 48px;
+    }
+    .nw-item {
+      display : flex;
+      height : 44px;
+      align-items: center;
+      position : relative;
+      .name {
+        white-space: nowrap;
+      }
+    }
+    .nw-item.hidden {
+      display : none;
+    }
+  }
+}
+
+@media only screen and (min-width : 375px ) and (max-width : 760px) { 
+
+  .network-select {
+    width : 43px;
+    font-weight : 600;
+    margin-right : 12px;
+    font-size : 12px;
+    .nw-wrapper {
+      width : 34px;
+      height : 34px;
+      border: 1px solid #fff;
+      border-radius: 8px;
+      font-size : 12px;
+      padding: 0;
+      justify-content: center;
+      min-height: auto;
+      position: initial;
+      // background: transparent;
+      align-items: center;
+      .nw-item {
+        .name ,.arrow{
+          display : none;
+        }
+      }
+    }
+  }
+  .network-select.shrink {
+    transition : all 500ms ease-out;
+  }
+  .network-select.expand {
+    cursor : pointer;
+    width : 118px;
+    height : auto;
+    position : relative;
+    display : flex;
+    justify-content : center;
+    transition : width 500ms ease-out,height 500ms ease-out;
+    .name {
+      margin : 0 4px;
+    }
+    .nw-wrapper {
+      width : 100%;
+      height : auto;
+      // background : transparent;    
+      padding: 0 8px;
+      justify-content: center;
+      position : absolute;
+      min-height: 48px;    
+      overflow: hidden;
+      align-items: start;
+      .nw-item {
+        height: 34px;
+        .name ,.arrow{
+          display : block;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width : 761px ) {
+  .network-select{
+    font-size : 16px;
+    font-weight : 600;
+    min-width : 180px;
+    height : 44px;
+    margin-right : 24px;
+    position : relative;
+    display : flex;
+    justify-content : center;
+    .name {
+      margin : 0 4px;
+    }
+    .nw-wrapper {
+      border : 2px solid #fff;
+      border-radius: 15px;
+      background : #FFAB00;
+      position : absolute;
+      top : 0px;
+      display : flex;
+      flex-direction : column;
+      min-height: 48px;
+      width: 100%;
+      padding: 0 16px;
+      z-index :1;
+      .cur-network {
+        display : flex;
+        align-items : center;
+        height : 48px;
+      }
+      .nw-item {
+        display : flex;
+        height : 44px;
+        align-items: center;
+        position : relative;
+        .name {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}

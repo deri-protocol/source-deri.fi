@@ -1,0 +1,52 @@
+@media only screen and (min-width : 375px ) and (max-width : 760px) {
+  .wallet-view {
+    .wallet-btn {
+      border : 1px solid #fff;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      overflow: hidden;
+      img {
+        width: 16px;
+        height: 16px;
+        display : block;
+      }
+      span{
+        display : none;
+      }
+    }
+  }
+  .wallet-view.shrink {
+    .wallet-btn {
+      transition: width 500ms ease-out;
+    }
+  }
+  
+  .wallet-view.expand {
+    .wallet-btn {
+      width: 126px;
+      padding: 0 10px;
+      font-size: 12px;
+      transition: width 500ms ease-out ;
+      span {
+        display : block;
+      }
+    }
+  }
+}
+@media only screen and (min-width : 761px) {
+  .wallet-view {
+    .wallet-btn {
+      img  {
+        display : none;
+      } 
+    }
+  }
+  .wallet-view.connected {
+    .wallet-btn {
+      img {
+        display : block
+      }
+    }
+  }
+}

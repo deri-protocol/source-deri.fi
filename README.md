@@ -99,5 +99,5 @@
     REACT_APP_SUB_APP_DEMO=http://localhost:3002 //new app dev server url
     ```
   - setup 
-    - yarn install in root of app
+    - yarn 
     - npm start

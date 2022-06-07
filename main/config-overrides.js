@@ -26,14 +26,7 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
         crypto: false,
         // crypto: require.resolve(`crypto-browserify`),
       }
-      return process.env.NODE_ENV === 'development' 
-      ?
-      rewireBabelLoader.include(
-        config,
-        resolveApp("../common/src")
-      )
-      : 
-      rewireBabelLoader.include(
+      return rewireBabelLoader.include(
         config,
         resolveApp("node_modules/@deri/eco-common/src")
       );

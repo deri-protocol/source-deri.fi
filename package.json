@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env GENERATE_SOURCEMAP=false npm-run-all --serial start:*",
     "start:main": "cd main && npm start",
-    "start:demo": "cd ../sub-app-demo && npm start",
+    "start:demo": "cd sub-app-demo && npm start",
     "install": "npm-run-all --serial install:*",
     "install:main" : "cd main && yarn install --ignore-engines",
     "install:demo" : "cd sub-app-demo && yarn install --ignore-engines",
@@ -25,8 +25,5 @@
     "deri.fi"
   ],
   "author": "haidong.li@dfactory.tech",
-  "license": "ISC",
-  "dependencies": {
-    "sass": "^1.52.1"
-  }
+  "license": "ISC"
 }

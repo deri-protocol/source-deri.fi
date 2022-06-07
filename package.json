@@ -4,10 +4,10 @@
   "description": "this is eco  of deri",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently 'npm run start:main' 'npm run start:demo'",
+    "start": "concurrently 'npm run start:*'",
     "start:main": "cd main && npm start",
     "start:demo": "cd sub-app-demo && npm start",
-    "install": "npm-run-all --serial install:*",
+    "install": "concurrently 'npm run install:*' ",
     "install:main": "cd main && yarn install --ignore-engines",
     "install:demo": "cd sub-app-demo && yarn install --ignore-engines",
     "build": "yarn install --ignore-engines && npm run install && rm -rf build && mkdir build && npm-run-all --serial build:*",

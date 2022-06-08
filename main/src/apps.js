@@ -1,4 +1,3 @@
-import store from './store/store'
 
 const microApps = [
   {
@@ -10,14 +9,6 @@ const microApps = [
   }
 ]
 
-const apps = microApps.map(item => {
-  return {
-    ...item,
-    props: {
-      routerBase: item.activeRule,
-      getGlobalState: store.getGlobalState,
-    }
-  }
-})
 
-export default apps
+
+export default process.env.NODE_ENV === 'production' ? microApps.filter(app => app.env === 'development') : microApps;

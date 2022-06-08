@@ -1,28 +1,30 @@
 import {registerMicroApps,start,setDefaultMountApp} from 'qiankun'
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import actions from './state/actions'
 import apps from './apps';
 
-const render = () => {
-  ReactDOM.render(
+const render = (props) => {
+  const root = ReactDOM.createRoot(document.getElementById('root'))
+  root.render(
     <React.StrictMode>
-      <App />
+      <App {...props}/>
     </React.StrictMode>
-    ,document.getElementById('root')
   );
 }
 
+const microApps = apps.map(item => {
+  return {
+    ...item,
+    props : {
+      actions
+    } 
+  }
+})
 
-const loader = loading => render({ loading });
-
-render({ loading: true });
-
-const microApps = apps.map((app => ({
-  ...app,
-  loader,
-})))
+render({ actions });
 
 registerMicroApps(microApps, {
   beforeLoad: app => {

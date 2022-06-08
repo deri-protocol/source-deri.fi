@@ -4,14 +4,20 @@ import './navigation.scss'
 import { useState } from 'react';
 import apps from '../../apps'
 
-export default function Navigation({ collect, lang, isExpand, statusCallback, switchMenu,className }) {
-  const [activeUrl, setActiveUrl] = useState(apps && apps.length > 0 ? apps[0].name : '')
+export default function Navigation({ collect, lang, statusCallback, switchMenu,className ,actions}) {
+  const [activeUrl, setActiveUrl] = useState(apps && apps.length > 0 ? apps[0].activeRule : '')
   const [isCollapse, setIsCollapse] = useState(true)
+  const [isExpand, setIsExpand] = useState(false)
   const clazz = classNames(`portal-header`,className ,{
     collapse: isCollapse,
     growup : !isCollapse,
     expand: isExpand
   })
+
+  actions.onGlobalStateChange((value,prev) => {
+    setIsExpand(value.menuStatus)
+  })
+
   const link = (href,title) => {
     setActiveUrl(href);
     window.history.pushState({}, title, href);
@@ -19,7 +25,7 @@ export default function Navigation({ collect, lang, isExpand, statusCallback, sw
   const openOrClose = () => {
     const status = !isCollapse;
     setIsCollapse(status)
-    statusCallback && statusCallback(status);
+    actions.setGlobalState({menuStatus : false});
   }
   return (
     <div className={clazz}>
@@ -29,9 +35,9 @@ export default function Navigation({ collect, lang, isExpand, statusCallback, sw
           <Icon token={collect ? "portal-down" : "portal-up"} onClick={openOrClose} className='pc-arrow' />
           <Icon token='m-arrow-left' width='16' className='mobile-arrow' onClick={openOrClose} />
           {apps.map(app => (
-            <a href='javascript:void(0)' className={activeUrl === app.name && 'selected'} onClick={() => link(app.name,app.name)}>
+            <span  key={app.name} className={classNames('sub-app',{ 'selected' : activeUrl === app.activeRule}) } onClick={() => link(app.activeRule,app.name)}>
               <div className='bit-it'>{app.name}</div>
-            </a>
+            </span>
           ))}
           
           <a target="_blank" href="https://deri.io/">

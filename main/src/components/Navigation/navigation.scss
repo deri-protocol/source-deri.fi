@@ -1,0 +1,305 @@
+@-moz-keyframes menuFadein {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@-webkit-keyframes menuFadein {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes menuFadein {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+.portal-header {
+  // width: 100%;
+  height: 120px;
+  background: #FCCFA7;
+  display: flex;
+  padding: 0 103px;
+  padding-right: 27px;
+  justify-content: space-between;
+  align-items: center;
+  color: #FFFFFF;
+
+  .down-up {
+    display: flex;
+    align-items: center;
+
+    .network-select {
+      height: 36px;
+
+      .nw-wrapper {
+        min-height: 36px;
+
+        .nw-item {
+          height: 36px;
+        }
+      }
+    }
+
+    .wallet-btn {
+      height: 40px;
+      border: 0;
+    }
+  }
+
+  .link-btn {
+    display: flex;
+    align-items: center;
+    margin-top: 21px;
+
+    .mobile-arrow {
+      display: none;
+    }
+
+    .pc-arrow {
+      display: block;
+    }
+
+    img {
+      cursor: pointer;
+    }
+
+    a {
+      color: #FFFFFF;
+      text-decoration: none;
+    }
+
+    .bit-it,
+    .coming-soon-link,
+    .deri-io {
+      width: 180px;
+      height: 32px;
+      line-height: 32px;
+      text-align: center;
+      background-color: #93A1B8;
+      background-repeat: no-repeat;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-left: 20px;
+    }
+
+    .add-link {
+      margin-left: 20px;
+    }
+
+    .deri-io {
+      background-image: url("../../assets/img/deri-io-go.svg");
+      background-position: 150px center;
+    }
+  }
+}
+
+.portal-header {
+  .link-btn {
+    .sub-app {
+      cursor: pointer;
+    }
+    
+    .selected {
+      .bit-it {
+        background-image: url("../../assets/img/bet-now.svg");
+        background-position: 20px center;
+        background-color: #59AE99;
+      }
+    }
+  }
+}
+
+.portal-header {
+  .link-btn {
+    .selected {
+      .coming-soon-link {
+        background-image: url("../../assets/img/bet-now.svg");
+        background-position: 20px center;
+        background-color: #59AE99;
+      }
+    }
+  }
+}
+
+.portal-header.collapse {
+  animation: headerClose 0.5s;
+  height: 56px;
+}
+
+.portal-header.growup {
+  animation: headerOpen 0.5s;
+}
+
+.collapse {
+  .link-btn {
+    margin: 0;
+  }
+
+  .title-des {
+    display: none;
+  }
+}
+
+@keyframes headerClose {
+  from {
+    height: 120px;
+  }
+
+  to {
+    height: 56px;
+  }
+}
+
+@keyframes headerOpen {
+  from {
+    height: 56px;
+  }
+
+  to {
+    height: 120px;
+  }
+}
+
+@keyframes expand {
+  from {
+    width: 0px;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes shrink {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media only screen and (min-width : 375px) and (max-width : 1250px) {
+  .portal-header {
+    .link-btn {
+
+      .deri-io,
+      .coming-soon-link,
+      .bit-it {
+        width: 88px;
+        height: 32px;
+        background: #93A1B8;
+        background-image: none !important;
+        background-repeat: no-repeat;
+      }
+
+    }
+  }
+
+  .betit-portal {
+    .link-btn {
+      .bit-it {
+        background: #59AE99;
+      }
+    }
+  }
+
+  .coming-portal {
+    .link-btn {
+      .coming-soon-link {
+        background: #59AE99;
+      }
+    }
+  }
+}
+
+@media (0 < width < 761px) {
+  .portal-header {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 2;
+    padding: 24px;
+
+    .down-up {
+      display: none;
+    }
+  }
+
+  .portal-header.shrink {
+    animation: shrink 0.5s;
+    height: 100vh;
+  }
+
+  .portal-header.expand {
+    display: flex;
+    height: 100vh;
+    animation: expand 0.5s;
+
+    .title-link {
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: space-between;
+      height: 100vh;
+      align-items: flex-start;
+      overflow: hidden;
+
+      .link-btn {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        align-items: start;
+        
+        .mobile-arrow {
+          display: block;
+        }
+
+        .pc-arrow {
+          display: none;
+        }
+
+        .bit-it,
+        .coming-soon-link,
+        .deri-io {
+          width: 100%;
+          background: transparent;
+          text-align: left;
+          margin-top: 12px;
+          margin-left: 0;
+        }
+        
+
+        .add-link {
+          margin-top: 12px;
+          margin-left: 0;
+        }
+      }
+
+      .title-des {
+        display: block;
+        font-size: 14px;
+        font-weight: 400;
+        margin: 0 0px 40px;
+        white-space: nowrap;
+      }
+    }
+  }
+}

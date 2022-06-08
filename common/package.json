@@ -1,0 +1,19 @@
+{
+  "name": "@deri/eco-common",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bignumber.js": "^9.0.2",
+    "classnames": "^2.3.1",
+    "js-cookie": "^3.0.1",
+    "react-device-detect": "^2.2.2",
+    "react-tooltip": "^4.2.21",
+    "styled-components": "^5.3.5"
+  }
+}

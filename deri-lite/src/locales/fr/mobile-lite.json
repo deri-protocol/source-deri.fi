@@ -1,0 +1,12 @@
+{
+  "balance-in-contract" : "Solde dans le contrat",
+  "dynamic-balance" : "Solde dynamique",
+  "available-balance" : "Solde disponible",
+  "dynamic-effective-balance" : "Dyn. Eff. Bal",
+  "transaction-fee" : "Frais",
+  "my-position" : "POSITION",
+  "index" : "Indice",
+  "funding" : "Funding(D)",
+  "base-token" : "Code B Token",
+  "wallet-balance" : "Solde du porte-monnaie"
+}

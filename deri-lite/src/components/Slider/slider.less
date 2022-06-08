@@ -1,0 +1,101 @@
+.rc-slider-disabled{
+  background-color: initial!important;
+}
+.deri-slider {  
+  .rc-slider-rail {      
+    // width: 517px;
+    height: 6px;
+    background-image: url(../../assets/img/slider-bg.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border-radius: 2px;
+    cursor: pointer;
+    background-color: transparent;
+  }
+  .rc-slider-handle {
+      width: 24px;
+      height: 24px;
+      margin-top: -10px;
+      background: rgb(36, 108, 173);
+      border: 0px;
+      z-index: 1;
+  }
+  .rc-slider-track {    
+    left: 0%;
+    top: 5px;
+    height: 6px;
+    border-radius: 10px;
+    opacity: 0.35;
+    background-image: linear-gradient(270deg,rgb(255, 255, 255) 0%, rgb(36, 108, 173) 100%);
+  }
+  .rc-slider-text {
+    position: absolute;
+    font-size: 12px;
+    top: -22px;
+    left: -3px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .rc-slider-dot{
+    border : 0px;
+    width: 0px;
+    height: 0px;
+  }
+
+  .rc-slider-mark{
+    top: -10px;
+  }
+}
+
+.rc-slider-tooltip-placement-top .rc-slider-tooltip-arrow {
+  bottom: 0px!important;
+}
+
+.rc-slider-mark-text:last-child div:first-child{
+  visibility: hidden;
+}
+.controlled .rc-slider-mark-text:last-child div:first-child{
+  visibility : visible
+}
+
+
+.mobile {
+  .rc-slider-tooltip-inner {
+    padding: 0.06rem 0.02rem;
+    min-width: 0.24rem;
+    height: 0.24rem;
+  }
+
+  .deri-slider {  
+    .rc-slider-rail {      
+      // width: 517px;
+      height: 6px;
+      background-image: url(../../assets/img/slider-bg.png);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      border-radius: 2px;
+      cursor: pointer;
+      background-color: transparent;
+    }
+    .rc-slider-handle {
+        width: 0.24rem;
+        height: 0.24rem;
+        margin-top: -0.1rem;
+    }
+    .rc-slider-track {    
+      top: 0.05rem;
+      height: 0.06rem;
+      border-radius: 0.1rem;
+    }
+    .rc-slider-text {
+      font-size: 0.12rem;
+      top: -0.22rem;
+      left: -0.03rem;
+    }
+
+    .rc-slider-mark{
+      top: -0.07rem;
+    }
+  }
+}

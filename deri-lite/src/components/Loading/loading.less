@@ -1,0 +1,109 @@
+
+.loading-mask {
+
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  // background: rgba(0, 0, 0);
+  z-index: 2;
+  opacity: 0.2;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .snippet {
+    position: relative;
+    padding: 2rem 5%;
+    margin: 1.5rem 0;
+    border-radius: .25rem;
+    width: 100%;
+    top: -40px;
+  }
+  .stage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 2rem 0;
+    margin: 0 -5%;
+    overflow: hidden;
+  }
+
+  .dot-pulse {
+    position: relative;
+    left: -10024px;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #246CAD;
+    color: #246CAD;
+    box-shadow: 10024px 0 0 -15px #246CAD;
+    animation: dotPulse 1.5s infinite linear;
+    animation-delay: .25s;
+  }
+  
+  .dot-pulse::before, .dot-pulse::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #246CAD;
+    color: #246CAD;
+  }
+  
+  .dot-pulse::before {
+    box-shadow: 9974px 0 0 -15px #246CAD;
+    animation: dotPulseBefore 1.5s infinite linear;
+    animation-delay: 0s;
+  }
+  
+  .dot-pulse::after {
+    box-shadow: 10044px 0 0 -15px #246CAD;
+    animation: dotPulseAfter 1.5s infinite linear;
+    animation-delay: .5s;
+  }
+  
+  @keyframes dotPulseBefore {
+    0% {
+      box-shadow: 9974px 0 0 -15px #246CAD;
+    }
+    30% {
+      box-shadow: 9974px 0 0 5px #246CAD;
+    }
+    60%,
+    100% {
+      box-shadow: 9974px 0 0 -15px #246CAD;
+    }
+  }
+  
+  @keyframes dotPulse {
+    0% {
+      box-shadow: 10024px 0 0 -15px #246CAD;
+    }
+    30% {
+      box-shadow: 10024px 0 0 6px #246CAD;
+    }
+    60%,
+    100% {
+      box-shadow: 10024px 0 0 -15px #246CAD;
+    }
+  }
+  
+  @keyframes dotPulseAfter {
+    0% {
+      box-shadow: 10044px 0 0 -15px #246CAD;
+    }
+    30% {
+      box-shadow: 10044px 0 0 6px #246CAD;
+    }
+    60%,
+    100% {
+      box-shadow: 10044px 0 0 -15px #246CAD;
+    }
+  }
+}

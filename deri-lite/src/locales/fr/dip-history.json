@@ -1,0 +1,18 @@
+{
+  "governance-title":"DIP1: Veuillez voter pour l'une des options suivantes:",
+  "governance-options-one":"Partager les frais de transaction avec les détenteurs de DERI:",
+  "governance-options-one-describe":"20% des frais de transaction seront mis dans un pool où vous pourrez placer un pari de DERI pour obtenir xDERI. Les détenteurs de xDERI partageront les revenus de frais de transaction du pool.",
+  "governance-options-two":"Racheter DERI avec des revenus de frais de transaction:",
+  "governance-options-two-describe":"20% des frais de transaction seront mis dans un fonds DAO, qui rachète régulièrement DERI à partir du marché secondaire et brûle (c'est-à-dire recycle pour réexploiter).",
+  "governance-options-three":"Maintenir l'état actuel",
+  "vote":"VOTER",
+  "voting-ended":"Vote terminé",
+  "your-vote":"Votre vote",
+  "your-voting-power":"Votre droit de vote",
+  "voting-rules":"Règles de vote",
+  "vote-rules-one":"Votre droit de vote est votre solde DERI + votre montant DERI correspondant de votre solde DERI-USDT SLP sur Sushiswap jusqu'à la date limite. La formule précise est",
+  "vote-rules-one-describe":"Droit de vote = Solde (DERI) + Solde (DERI-USDT SLP) * totalDERIsurSushi / totaldefourniture(DERI-USDT SLP)",
+  "vote-rules-two":"Vous pouvez choisir l'une des 3 chaînes (ETH / BSC / HECO) pour signer votre vote avant la date limite",
+  "vote-rules-three":" Date limite de vote = 19 mars 2021 4:00:00AM UTC",
+  "vote-rules-four":"Un instantané sera pris au bloc à la date limite et utilisé pour calculer le résultat. C'est-à-dire, si vous votez avant la date limite mais vous avez transféré votre DERI ou SLP avant la date limite, c'est le solde à cette date qui sera calculé."
+}

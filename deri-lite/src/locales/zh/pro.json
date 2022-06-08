@@ -1,0 +1,21 @@
+{
+  "total-net-position" : "总净仓位",
+  "min" : "分钟",
+  "hour" : "小时",
+  "day" : "天",
+  "week" : "周",
+  "current-position" : "当前仓位",
+  "trade-history" : "交易记录",
+  "pool-total-liquidity" : "池总流动性",
+  "funding-rate-delta":"Delta Funding Daily",
+  "funding-rate-premium":"Premium Funding Daily",
+  "position-info" : "仓位信息",
+  "option-mark-price" : "期权价格",
+  "open" : "开",
+  "high" : "高",
+  "low" : "低",
+  "closed" : "收",
+  "price" : "价格",
+  "index" : "指数",
+  "option" : "期权"
+}

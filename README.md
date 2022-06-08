@@ -7,6 +7,7 @@
   - sub-app-demo is demo app
 
 # Developer guide
+  ## add a app
   - fork current repo
   - create app，for example : npx [create-react-app](https://github.com/facebook/create-react-app) `app-name`
   - edit index.js，refer to sub-app-demo's index.js
@@ -18,28 +19,26 @@
 
       export async function mount(props) {
         console.log('props from main framework', props);
-        storeTest(props);
         render(props);
       }
 
       export async function unmount(props) {
         const { container } = props;
         const root = ReactDOM.createRoot(getSubRootContainer(container))
-        root.unmount(getSubRootContainer(container));
+        root.unmount();
       }
       ```
     - put code of cra generator into render function ,as follows
       ``` javascript
       function render(props) {
-        const { container } = props;
-        ReactDOM.render(
+        const { container,name ='' } = props;
+        const root = ReactDOM.createRoot(getSubRootContainer(container))
+        root.render(
           <React.StrictMode>
-            <HashRouter basename='/sub-app-demo'>
-              <App store={{...props}} />
+            <HashRouter basename={name}>
+              <App {...props} />
             </HashRouter>
           </React.StrictMode>
-
-          ,getSubRootContainer(container)
         );
       }
 
@@ -63,7 +62,22 @@
         config.output.libraryTarget = 'umd';
         config.output.chunkLoadingGlobal = `webpackJsonp_${name}`;   
         config.output.publicPath = `${process.env.PUBLIC_URL}`
-        return config;
+        //if you use webpack >= 5 ,you should add below code
+        config.resolve.fallback =  {
+          os: false,
+          https: false,
+          http: false,
+          stream: false,
+          util: false,
+          url: false,
+          assert: false,
+          crypto: false,
+        }
+        //if you want use @deri/eco-common node_modules ,you should include it in load path
+        return rewireBabelLoader.include(
+          config,
+          resolveApp("node_modules/@deri/eco-common/src")
+        );
       },
       devServer: (configFunction) => {
         return (proxy, allowedHost) => {
@@ -99,5 +113,13 @@
     REACT_APP_SUB_APP_DEMO=http://localhost:3002 //new app dev server url
     ```
   - setup 
-    - yarn 
-    - npm start
+    - yarn -- install all apps
+    - npm start  -- start all apps
+    - npm run build -- build all apps
+## Communication between apps
+  Every app's props has actions prop,actions has onGlobalStateChange 、getGlobalState、setGlobalState api
+  - setGlobalState is change state api
+  - getGlobalState is get state api
+  - onGlobalStateChange is listener for state
+  
+**_NOTE:_** demo code above is react 18.1.0

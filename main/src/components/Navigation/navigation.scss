@@ -111,6 +111,10 @@
 
 .portal-header {
   .link-btn {
+    .sub-app {
+      cursor: pointer;
+    }
+    
     .selected {
       .bit-it {
         background-image: url("../../assets/img/bet-now.svg");

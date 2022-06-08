@@ -10,21 +10,13 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
     webpack: config => {
       config.resolve.fallback =  {
         os: false,
-        // os: require.resolve(`os-browserify/browser`),
         https: false,
-        // https: require.resolve(`https-browserify`),
         http: false,
-        // http: require.resolve(`stream-http`),
         stream: false,
-        // stream: require.resolve(`stream-browserify`),
         util: false,
-        // util: require.resolve(`util/`),
         url: false,
-        // url: require.resolve(`url/`),
         assert: false,
-        // assert: require.resolve(`assert/`),
         crypto: false,
-        // crypto: require.resolve(`crypto-browserify`),
       }
       return rewireBabelLoader.include(
         config,

@@ -1,0 +1,49 @@
+[
+  {
+    "chainId" : "56",
+    "code" : "BSC",
+    "order" : 1,
+    "icon" : "BNB",
+    "name" : "BNB Chain",
+    "symbol" : "BNB",
+    "viewUrl" : "https://bscscan.com/",
+    "supportV2" : true,
+    "supportV1" : true,
+    "supportInnovation" : true,
+    "supportOptions":true,
+    "supportPowers":true,
+    "supportOpen" : true,
+    "isDefault" : true,
+    "metamask" : {
+      "chainName": "BSC-Mainnet",
+      "nativeCurrency": {
+        "name": "BSC",
+        "symbol": "BNB",
+        "decimals" : 18
+      },
+      "rpcUrls": ["https://bsc-dataseed.binance.org/"],
+      "blockExplorerUrls": ["https://bscscan.com"]
+    }
+  },
+  {
+    "chainId" : "42161",
+    "code" : "Arbitrum",
+    "order" : 1,
+    "chainName" : "Arbi",
+    "name" : "Arbitrum",
+    "icon" : "arbitrum",
+    "symbol" : "ETH",
+    "viewUrl" : "https://arbiscan.io/",
+    "supportOptions":true,
+    "metamask" : {
+      "chainName": "ETHEREUM-Mainnet",
+      "nativeCurrency": {
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "decimals" : 18
+      },
+      "rpcUrls": ["https://arb1.arbitrum.io/rpc"],
+      "blockExplorerUrls": ["https://arbiscan.io"]
+    }
+  }
+]

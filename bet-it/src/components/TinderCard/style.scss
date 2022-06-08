@@ -1,0 +1,194 @@
+.modal-body {
+  width: 320px;
+  // height: 710px;
+  position: relative;
+  .modal-body-container{
+    margin-top: 36px;
+  }
+  .close-modal {
+    // position: absolute;
+    // bottom: 0;
+    // left: 50%;
+    // transform: translateX(-50%);
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #FE7207;
+  }
+  .card-index{
+    // position: absolute;
+    // top: 2%;
+    // left: 50%;
+    // transform: translateX(-50%);
+    text-align: center;
+    font-size: 21px;
+    color: #FFF;
+    z-index: 9999;
+    span{
+      font-size: 10px;
+    }
+  }
+
+  .swipe {
+    position: absolute;
+
+    .card-box {
+      margin-top: 0;
+      width: 316px;
+      height: 551px;
+      padding-left: 25px;
+      padding-top: 26px;
+
+      .symbol-price {
+        margin-top: 21px;
+        font-size: 28px;
+      }
+
+      .symbol-leverage {
+        margin-top: 16px;
+        font-size: 21px;
+      }
+
+      .input-box {
+        width: 270px;
+        margin-top: 11px;
+        height: 83px;
+      }
+
+      .btn-box {
+        width: 256px;
+        height: 192px;
+
+        .line-chart {
+          width: 280px;
+          right: 24px;
+        }
+
+        .btn {
+          width: 270px;
+          margin-top: 16px;
+          height: 54px;
+        }
+      }
+    }
+  }
+}
+
+.stack {
+  margin: 0 auto;
+  position: relative;
+  z-index: 1000;
+  width: 100%;
+  height: 551px;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.stack__item {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  opacity: 0;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: auto;
+}
+
+
+
+/* Animations */
+.stack__item--reject,
+.stack__item--accept {
+  pointer-events: none;
+}
+
+
+
+/***********************************************/
+/******************** krisna *******************/
+/***********************************************/
+
+
+.stack--krisna .stack__item--reject {
+  -webkit-animation: krisnaReject 0.5s forwards;
+  animation: krisnaReject 0.5s forwards;
+}
+
+@-webkit-keyframes krisnaReject {
+  to {
+    -webkit-transform: translate3d(-25vw, 0, 0) translate3d(-60%, 0, 0) rotate3d(0, 0, 1, -5deg);
+    transform: translate3d(-25vw, 0, 0) translate3d(-60%, 0, 0) rotate3d(0, 0, 1, -5deg);
+  }
+}
+
+@keyframes krisnaReject {
+  to {
+    -webkit-transform: translate3d(-25vw, 0, 0) translate3d(-60%, 0, 0) rotate3d(0, 0, 1, -5deg);
+    transform: translate3d(-25vw, 0, 0) translate3d(-60%, 0, 0) rotate3d(0, 0, 1, -5deg);
+  }
+}
+
+.stack--krisna .stack__item--accept {
+  -webkit-animation: krisnaAccept 0.5s forwards;
+  animation: krisnaAccept 0.5s forwards;
+}
+
+@-webkit-keyframes krisnaAccept {
+  to {
+    -webkit-transform: translate3d(25vw, 0, 0) translate3d(60%, 0, 0) rotate3d(0, 0, 1, 5deg);
+    transform: translate3d(25vw, 0, 0) translate3d(60%, 0, 0) rotate3d(0, 0, 1, 5deg);
+  }
+}
+
+@keyframes krisnaAccept {
+  to {
+    -webkit-transform: translate3d(25vw, 0, 0) translate3d(60%, 0, 0) rotate3d(0, 0, 1, 5deg);
+    transform: translate3d(25vw, 0, 0) translate3d(60%, 0, 0) rotate3d(0, 0, 1, 5deg);
+  }
+}
+
+/* ...when content has 100% viewport width */
+@media screen and (max-width: 60em) {
+  @-webkit-keyframes krisnaReject {
+    to {
+      -webkit-transform: translate3d(-50vw, 0, 0) translate3d(-60%, 0, 0) rotate3d(0, 0, 1, -5deg);
+      transform: translate3d(-50vw, 0, 0) translate3d(-60%, 0, 0) rotate3d(0, 0, 1, -5deg);
+    }
+  }
+
+  @keyframes krisnaReject {
+    to {
+      -webkit-transform: translate3d(-50vw, 0, 0) translate3d(-60%, 0, 0) rotate3d(0, 0, 1, -5deg);
+      transform: translate3d(-50vw, 0, 0) translate3d(-60%, 0, 0) rotate3d(0, 0, 1, -5deg);
+    }
+  }
+
+  @-webkit-keyframes krisnaAccept {
+    to {
+      -webkit-transform: translate3d(50vw, 0, 0) translate3d(60%, 0, 0) rotate3d(0, 0, 1, 5deg);
+      transform: translate3d(50vw, 0, 0) translate3d(60%, 0, 0) rotate3d(0, 0, 1, 5deg);
+    }
+  }
+
+  @keyframes krisnaAccept {
+    to {
+      -webkit-transform: translate3d(50vw, 0, 0) translate3d(60%, 0, 0) rotate3d(0, 0, 1, 5deg);
+      transform: translate3d(50vw, 0, 0) translate3d(60%, 0, 0) rotate3d(0, 0, 1, 5deg);
+    }
+  }
+}

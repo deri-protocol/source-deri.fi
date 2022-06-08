@@ -5,7 +5,13 @@ const microApps = [
     entry: process.env.REACT_APP_SUB_APP_DEMO,
     activeRule: '/#/sub-app-demo',
     container: '#subapp-viewport',
-    env : 'development'
+    env: 'development'
+  },
+  {
+    name: 'bet-it',
+    entry: process.env.REACT_APP_BET_IT,
+    activeRule: '/#/bet-it',
+    container: '#subapp-viewport'
   }
 ]
 

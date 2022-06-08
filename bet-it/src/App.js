@@ -7,7 +7,6 @@ import PageRouter from './pages/PageRouter';
 import { useLocation } from 'react-router-dom'
 import { DeriEnv } from './web3';
 
-DeriEnv.set('prod')
 
 function App({intl,actions}) {
   const location = useLocation();

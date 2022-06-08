@@ -38,13 +38,13 @@ export default function BetIt({ lang, getLang, actions }) {
     } else {
       setIsFixed(false)
     }
-    // let top = collect ? 56 : 120
-    // if (!isStartScroll(top)) {
-    //   const st = window.pageYOffset || document.documentElement.scrollTop;
-    //   bgTop.style.top = top - st + "px"
-    // } else {
-    //   bgTop.style.top = "0px"
-    // }
+    let top = collect ? 56 : 120
+    if (!isStartScroll(top)) {
+      const st = window.pageYOffset || document.documentElement.scrollTop;
+      bgTop.style.top = top - st + "px"
+    } else {
+      bgTop.style.top = "0px"
+    }
   })
 
   const switchMenu = () => {
@@ -57,13 +57,13 @@ export default function BetIt({ lang, getLang, actions }) {
   useEffect(() => {
     let bgTop = document.getElementsByClassName('bg-img-color')[0]
     document.addEventListener('scroll', handler, false);
-    // let top = collect ? 56 : 120
-    // if (!isStartScroll(top)) {
-    //   const st = window.pageYOffset || document.documentElement.scrollTop;
-    //   bgTop.style.top = top - st + "px"
-    // } else {
-    //   bgTop.style.top = "0px"
-    // }
+    let top = collect ? 56 : 120
+    if (!isStartScroll(top)) {
+      const st = window.pageYOffset || document.documentElement.scrollTop;
+      bgTop.style.top = top - st + "px"
+    } else {
+      bgTop.style.top = "0px"
+    }
     return () => {
       document.removeEventListener('scroll', handler)
     }

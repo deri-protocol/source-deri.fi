@@ -1,0 +1,56 @@
+[
+  {
+    "chainId": "97",
+    "chain" : "BSC",
+    "name": "future_inno",
+    "default" : true,
+    "symbols": [
+      {
+        "symbol": "DOGEUSDT",
+        "order" : 5
+      },
+      {
+        "symbol": "SOLUSDT",
+        "order" : 4
+      },
+      {
+        "symbol": "DOTUSDT",
+        "order" : 3
+      },
+      {
+        "symbol": "BTCUSD",
+        "order" : 1,
+        "powerSymbol": {
+          "displaySymbol": "mBTC^2"
+        }
+      },
+      {
+        "symbol": "ETHUSD",
+        "order" : 2,
+        "powerSymbol": {
+          "displaySymbol": "mETH^2"
+        }
+      }
+    ]
+  },
+  {
+    "chainId": "421611",
+    "chain" : "ARBI",
+    "name": "pool1",
+    "symbols": [
+      {
+        "symbol": "BTCUSD",
+        "powerSymbol": {
+          "symbol": "BTC^2",
+          "displaySymbol": "mBTC^2"
+        }
+      },
+      {
+        "symbol": "ETHUSD",
+        "powerSymbol": {
+          "displaySymbol": "mETH^2"
+        }
+      }
+    ]
+  }
+]

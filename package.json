@@ -1,14 +1,14 @@
 {
-  "name": "eco",
+  "name": "deri.fi",
   "version": "1.0.0",
-  "description": "this is eco  of deri",
+  "description": "this is dapps for deri",
   "main": "index.js",
   "scripts": {
     "start": "concurrently 'npm run start:*'",
     "start:main": "cd main && npm start",
     "start:demo": "cd sub-app-demo && npm start",
     "start:bet-it": "cd bet-it && npm start",
-    "install": "concurrently 'npm run install:*' ",
+    "install": "npm-run-all --serial install:*",
     "install:main": "cd main && yarn install --ignore-engines",
     "install:demo": "cd sub-app-demo && yarn install --ignore-engines",
     "install:bet-it": "cd bet-it && yarn install --ignore-engines",

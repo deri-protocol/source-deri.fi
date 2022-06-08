@@ -5,7 +5,7 @@ import { useState } from 'react';
 import apps from '../../apps'
 
 export default function Navigation({ collect, lang, statusCallback, switchMenu,className ,actions}) {
-  const [activeUrl, setActiveUrl] = useState(apps && apps.length > 0 ? apps[0].activeRule : '')
+  const [activeUrl, setActiveUrl] = useState(window.location.hash ? window.location.hash : apps.length > 0 && apps[0].activeRule)
   const [isCollapse, setIsCollapse] = useState(true)
   const [isExpand, setIsExpand] = useState(false)
   const clazz = classNames(`portal-header`,className ,{

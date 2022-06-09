@@ -69,19 +69,27 @@ export default function BetIt({ lang, getLang, actions }) {
     }
   }, [collect])
 
+  const setCard = () => {
+    symbols.map((item, index) => {
+      let card = document.getElementsByClassName(`${item.unit}`)[0]
+      if (card) {
+        let left = card.getBoundingClientRect()
+        if (left.x < 120 && left.x > 0) {
+          setStepNow(index + 1)
+        }
+      }
+
+    })
+  }
+
   useEffect(() => {
+
     if (symbols.length) {
-      document.addEventListener('scroll', function () {
-        symbols.map((item, index) => {
-          let card = document.getElementsByClassName(`${item.unit}`)[0]
-          let left = card.getBoundingClientRect()
-          if (left.x < 120 && left.x > 0) {
-            setStepNow(index + 1)
-          }
-        })
-
-      }, true);
-
+      document.removeEventListener('scroll', setCard)
+      document.addEventListener('scroll', setCard, true);
+    }
+    return () => {
+      document.removeEventListener('scroll', setCard)
     }
   }, [symbols])
 

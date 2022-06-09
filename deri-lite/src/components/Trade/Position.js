@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { closePosition, getWalletBalance, getPoolBTokensBySymbolId, bg } from "../../lib/web3js/indexV2";
 import className from 'classnames'
 import withModal from '../hoc/withModal';
-import DepositMargin from './Dialog/DepositMargin';
-import WithdrawMagin from './Dialog/WithdrawMargin';
 import DeriNumberFormat from '../../utils/DeriNumberFormat';
 import { eqInNumber } from '../../utils/utils';
 import { inject, observer } from 'mobx-react';
@@ -17,8 +15,6 @@ import TipWrapper from '../TipWrapper/TipWrapper';
 
 
 
-const DepositDialog = withModal(DepositMargin);
-const WithDrawDialog = withModal(WithdrawMagin)
 const BalanceListDialog = withModal(BalanceList)
 
 function Position({ wallet, trading, version, lang, type }) {
@@ -27,8 +23,6 @@ function Position({ wallet, trading, version, lang, type }) {
   const [balanceContract, setBalanceContract] = useState('');
   const [availableBalance, setAvailableBalance] = useState('');
   const [balanceListModalIsOpen, setBalanceListModalIsOpen] = useState(false)
-  const [addModalIsOpen, setAddModalIsOpen] = useState(false);
-  const [removeModalIsOpen, setRemoveModalIsOpen] = useState(false);
   const [balance, setBalance] = useState('');
 
   const loadBalance = async () => {
@@ -62,11 +56,6 @@ function Position({ wallet, trading, version, lang, type }) {
     loadBalance();
   }
 
-  const afterDeposit = () => {
-    setAddModalIsOpen(false)
-    refreshBalance()
-  }
-
   const afterDepositAndWithdraw = () => {
     refreshBalance();
   }
@@ -75,33 +64,16 @@ function Position({ wallet, trading, version, lang, type }) {
     setBalanceListModalIsOpen(false)
   }
 
-  const onCloseDeposit = () => {
-    setAddModalIsOpen(false)
-  }
-
-  const afterWithdraw = () => {
-    setRemoveModalIsOpen(false)
-    refreshBalance();
-  }
-
-  const onCloseWithdraw = () => {
-    setRemoveModalIsOpen(false)
-  }
-
   const directionClass = className('Direction', 'info-num', {
     'LONG': (+trading.position.volume) > 0,
     'SHORT': (+trading.position.volume) < 0
   })
-
-
-
 
   useEffect(() => {
     loadBalance();
     return () => {
     };
   }, [wallet.detail.account, trading.config]);
-
 
   useEffect(() => {
     if (trading.position) {
@@ -113,8 +85,6 @@ function Position({ wallet, trading, version, lang, type }) {
     }
     return () => { };
   }, [trading.position.volume, trading.position.margin, trading.position.unrealizedPnl]);
-
-
 
   return (
     <div className='position-info'>
@@ -143,7 +113,14 @@ function Position({ wallet, trading, version, lang, type }) {
       </div>
       <div className='info'>
         <div className='info-left'>
-          <div className='title-text'>{lang['average-entry-price']}</div>
+          <div className='title-text'>Entry Price</div>
+          <div className='info-num'><DeriNumberFormat value={trading.position.averageEntryPrice} decimalScale={2} /></div>
+        </div>
+        <div className='info-right'></div>
+      </div>
+      <div className='info'>
+        <div className='info-left'>
+          <div className='title-text'>Mark Price</div>
           <div className='info-num'><DeriNumberFormat value={trading.position.averageEntryPrice} decimalScale={2} /></div>
         </div>
         <div className='info-right'></div>
@@ -151,27 +128,14 @@ function Position({ wallet, trading, version, lang, type }) {
       <div className='info'>
         <div className='info-left'>
           <div className='title-text balance-con'>
-            {(version.isV1 || version.isV2Lite || type.isOption) ? <>{lang['balance-in-contract']}<br /> ({lang['dynamic-balance']})</> : lang['dynamic-effective-balance']}
+            {lang['dynamic-effective-balance']}
           </div>
           <div className='info-num'>
             <DeriNumberFormat decimalScale={2} allowZero={true} value={balanceContract} />
           </div>
         </div>
         <div className={`info-right action ${version.current}`}>
-          {(version.isV1 || version.isV2Lite || type.isOption || version.isOpen) ? <>
-            <div
-              className='add-margin'
-              id='openAddMargin'
-              onClick={() => setAddModalIsOpen(true)}
-            >
-              <img src={removeMarginIcon} alt='add margin' /> {lang['add']}
-            </div>
-            <div className='remove-margin'
-              onClick={() => setRemoveModalIsOpen(true)}>
-              <img src={addMarginIcon} alt='add margin' /> {lang['remove']}
-            </div>
-          </> : (<div onClick={() => setBalanceListModalIsOpen(true)}><img src={marginDetailIcon} alt='Remove margin' /> {lang['detail']}</div>)}
-
+          <div onClick={() => setBalanceListModalIsOpen(true)}><img src={marginDetailIcon} alt='Remove margin' /> {lang['detail']}</div>
         </div>
       </div>
       <div className='info'>
@@ -183,7 +147,9 @@ function Position({ wallet, trading, version, lang, type }) {
       </div>
       <div className='info'>
         <div className='info-left'>
-          <div className='title-text'>{lang['margin']}</div>
+          <div className='title-text'>
+            <TipWrapper><div className='title-text  funding-fee' tip="The margin frozen by this single position.">Margin Usage</div></TipWrapper>
+          </div>
           <div className='info-num'><DeriNumberFormat value={trading.position.marginHeld} decimalScale={2} /></div>
         </div>
         <div className='info-right'></div>
@@ -194,14 +160,14 @@ function Position({ wallet, trading, version, lang, type }) {
           <div className='info-num'>
             <span className='pnl-list'>
               <DeriNumberFormat value={trading.position.unrealizedPnl} decimalScale={8} />
-              {(trading.position.unrealizedPnlList ? (version.isV2 || version.isV2Lite || version.isOption) && trading.position.unrealizedPnlList.length : (version.isV2 || version.isV2Lite)) && <img src={pnlIcon} alt='unrealizePnl' />}
-              {(version.isV2 || version.isV2Lite || version.isOption) && <div className='pnl-box'>
+              <img src={pnlIcon} alt='unrealizePnl' />
+              <div className='pnl-box'>
                 {trading.position.unrealizedPnlList && trading.position.unrealizedPnlList.map((item, index) => (
                   <div className='unrealizePnl-item' key={index}>
                     <span>{item[0]}</span><span><DeriNumberFormat value={item[1]} decimalScale={8} /></span>
                   </div>
                 ))}
-              </div>}
+              </div>
             </span>
           </div>
         </div>
@@ -226,8 +192,8 @@ function Position({ wallet, trading, version, lang, type }) {
       <div className='info'>
         <div className='info-left'>
           <div className='title-text'>
-            <span></span>  
-          {type.isOption ? <TipWrapper block={false}><span className='funding-fee' tip={lang['liq-price-hover-one']}>{lang['liquidation-price']}</span></TipWrapper> :<span>{lang['liquidation-price']}</span>}
+            <span></span>
+            {type.isOption ? <TipWrapper block={false}><span className='funding-fee' tip={lang['liq-price-hover-one']}>{lang['liquidation-price']}</span></TipWrapper> : <span>{lang['liquidation-price']}</span>}
           </div>
           <div className='info-num'>
             {type.isOption ? <LiqPrice trading={trading} wallet={wallet} lang={lang} /> : <DeriNumberFormat decimalScale={4} value={trading.position.liquidationPrice} />}
@@ -235,27 +201,7 @@ function Position({ wallet, trading, version, lang, type }) {
         </div>
         <div className='info-right'></div>
       </div>
-      <DepositDialog
-        wallet={wallet}
-        modalIsOpen={addModalIsOpen}
-        onClose={onCloseDeposit}
-        spec={trading.config}
-        afterDeposit={afterDeposit}
-        balance={balance}
-        className='trading-dialog'
-        lang={lang}
-      />
-      <WithDrawDialog
-        wallet={wallet}
-        modalIsOpen={removeModalIsOpen}
-        onClose={onCloseWithdraw}
-        spec={trading.config}
-        afterWithdraw={afterWithdraw}
-        position={trading.position}
-        availableBalance={availableBalance}
-        className='trading-dialog'
-        lang={lang}
-      />
+     
       <BalanceListDialog
         wallet={wallet}
         modalIsOpen={balanceListModalIsOpen}

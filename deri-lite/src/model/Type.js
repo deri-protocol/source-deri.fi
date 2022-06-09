@@ -2,13 +2,14 @@ import { makeAutoObservable, observable, action, computed } from "mobx";
 
 
 class Type {
-  current = null;
+  current = "future";
   
   constructor(){
     makeAutoObservable(this,{
       current:observable,
       setCurrent : action,
       isOption : computed,
+      isPower:computed,
       isFuture : computed
     })
   }
@@ -19,6 +20,9 @@ class Type {
 
   get isOption() {
     return this.current === 'option'
+  }
+  get isPower() {
+    return this.current === 'power'
   }
 
   get isFuture() {

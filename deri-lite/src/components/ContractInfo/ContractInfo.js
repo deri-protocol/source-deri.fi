@@ -21,7 +21,7 @@ function ContractInfo({ wallet, trading, lang, type }) {
         <div className="info">
           <div className="title">Base Token
             <TipWrapper>
-              <span tip="Discount Factor is the effective ratio of the margin token counted as collateral (converted into dynamic effective balance). For example: posting 10 USD in CAKE token (with DiscountFactor = 0.685) to your margin account will increase your dynamic effective margin by 6.85 USD.">(Discount Factor)</span>
+              <span className="margin-per" tip="Discount Factor is the effective ratio of the margin token counted as collateral (converted into dynamic effective balance). For example: posting 10 USD in CAKE token (with DiscountFactor = 0.685) to your margin account will increase your dynamic effective margin by 6.85 USD.">(Discount Factor)</span>
             </TipWrapper>
           </div>
           <div className="text" >
@@ -38,7 +38,7 @@ function ContractInfo({ wallet, trading, lang, type }) {
             {trading.contract.symbol}
           </div>
         </div>
-        {type.isFuture && <>
+        {(type.isFuture || type.isPower) && <>
           <div className="info">
             <div className="title"> <span>Min.Trade Unit (Notional)</span> </div>
             <div className="text">
@@ -46,17 +46,38 @@ function ContractInfo({ wallet, trading, lang, type }) {
             </div>
           </div>
           <div className="info">
-            <div className="title">{lang['min-initial-margin-ratio']}</div>
+            <div className="title">Funding Rate Coefficient</div>
             <div className="text">
-              <NumberFormat displayType='text' value={trading.contract.minInitialMarginRatio * 100} decimalScale={2} suffix='%' />
+              <NumberFormat displayType='text' value={trading.contract.fundingRateCoefficient * 100} decimalScale={2} />
             </div>
           </div>
           <div className="info">
-            <div className="title">{lang['min-maintenance-margin-ratio']}</div>
+            <div className="title"><TipWrapper block={false}><span tip={trading.initialMarginRatioTip} className='margin-per'>{lang['initial-margin-ratio']}</span></TipWrapper></div>
             <div className="text">
-              <NumberFormat displayType='text' value={trading.contract.minMaintenanceMarginRatio * 100} decimalScale={2} suffix='%' />
+              <NumberFormat displayType='text' value={trading.contract.initialMarginRatio * 100} decimalScale={2} suffix='%' />
             </div>
           </div>
+          <div className="info">
+            <div className="title"> <TipWrapper block={false}><span tip={trading.maintenanceMarginRatioTip} className='margin-per'> {lang['maintenance-margin-ratio']}</span></TipWrapper> </div>
+            <div className="text">
+              <NumberFormat displayType='text' value={trading.contract.maintenanceMarginRatio * 100} decimalScale={2} suffix='%' />
+            </div>
+          </div>
+          {type.isPower && <>
+            <div className="info">
+              <div className="title"><TipWrapper block={false}><span tip={trading.initialMarginRatioTip} className='margin-per'>Multiplier</span></TipWrapper></div>
+              <div className="text">
+                <NumberFormat displayType='text' value={trading.contract.multiplier} decimalScale={2}  />
+              </div>
+            </div>
+            <div className="info">
+              <div className="title"> <TipWrapper block={false}><span tip={trading.maintenanceMarginRatioTip} className='margin-per'> Funding Period</span></TipWrapper> </div>
+              <div className="text">
+                <NumberFormat displayType='text' value={trading.contract.maintenanceMarginRatio } decimalScale={2} />   Days
+              </div>
+            </div>
+          </>}
+
         </>}
         {type.isOption && <>
           <div className="info">
@@ -95,9 +116,27 @@ function ContractInfo({ wallet, trading, lang, type }) {
               <NumberFormat displayType='text' value={trading.contract.maintenanceMarginRatio * 100} decimalScale={2} suffix='%' />
             </div>
           </div>
+          <div className="info">
+            <div className="title"> <TipWrapper block={false}><span tip={trading.maintenanceMarginRatioTip} className='margin-per'>Funding Period</span></TipWrapper> </div>
+            <div className="text">
+              <NumberFormat displayType='text' value={trading.contract.maintenanceMarginRatio * 100} decimalScale={2} suffix='%' />
+            </div>
+          </div>
+          <div className="info">
+            <div className="title"> Delta </div>
+            <div className="text">
+              <NumberFormat displayType='text' value={trading.contract.maintenanceMarginRatio * 100} decimalScale={2} suffix='%' />
+            </div>
+          </div>
+          <div className="info">
+            <div className="title"> Gamma </div>
+            <div className="text">
+              <NumberFormat displayType='text' value={trading.contract.maintenanceMarginRatio * 100} decimalScale={2} suffix='%' />
+            </div>
+          </div>
         </>}
         <div className="info">
-          {type.isFuture && <>
+          {(type.isFuture || type.isPower) && <>
             <div className="title">{lang['transaction-fee']}</div>
           </>}
           {type.isOption && <>
@@ -129,7 +168,7 @@ function ContractInfo({ wallet, trading, lang, type }) {
 
 
             </>}
-            {type.isFuture && <>
+            {(type.isFuture || type.isPower) && <>
               <NumberFormat displayType='text' value={trading.contract.feeRatio * 100} decimalScale={3} suffix='%' />
             </>}
           </div>

@@ -8,6 +8,7 @@ const withModal = Component => {
     overlay: {
       position: 'fixed',
       zIndex : 2,
+      inset:"10px 0px 0px",
       background : 'rgb(0 0 0 / 0.5)'
     },
     content: {

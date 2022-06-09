@@ -221,13 +221,13 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
         trading.setVolume(value)
       }
     } else {
-      let length = multiplier.length -1
+      let length = multiplier.length - 1
       let num = value.slice(-length);
-      value = value.slice(0,-length)
-      num = num.replace(/\d/gi,'0')
+      value = value.slice(0, -length)
+      num = num.replace(/\d/gi, '0')
       value = value + num
       trading.setVolume(value)
-      
+
     }
     if (value !== '') {
       if (value < multiplier) {
@@ -388,41 +388,32 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
       <div className='trade-peration'>
         <div className='check-baseToken'>
           <SymbolSelector setSpec={setSpec} spec={trading.config} isOption={type.isOption} />
-          <div className={type.isOption ? 'price-fundingRate pc options' : 'price-fundingRate pc'}>
-            {type.isFuture && !version.isOpen && !version.isV1 && <>
+          <div className='price-fundingRate pc'>
+            {type.isFuture && <>
               <div className='mark-price'>
                 {lang['mark-price']} : <span className={markPriceClass}>&nbsp; <DeriNumberFormat value={markPrice} decimalScale={trading.priceDecimals} /></span>
               </div>
-            </>}
-            {type.isFuture && <>
               <div className='index-prcie'>
                 {lang['index-price']}: <span className={indexPriceClass}>&nbsp; <DeriNumberFormat value={trading.index} decimalScale={trading.priceDecimals} /></span>
               </div>
             </>}
-            {type.isOption && <>
+            {(type.isOption || type.isPower) && <>
               <div className='mark-price'>
-                {lang['eo-mark-price']} : <span className={markPriceClass}>&nbsp; <DeriNumberFormat value={markPrice} decimalScale={4} /></span>
+                {lang['mark-price']} : <span className={markPriceClass}>&nbsp; <DeriNumberFormat value={markPrice} decimalScale={4} /></span>
               </div>
               <div className='index-prcie'>
-                {trading.config ? type.isOption ? trading.config.symbol.split('-')[0] : '' : ''} : <span className='option-vol'>&nbsp; <span> <DeriNumberFormat value={trading.index} decimalScale={2} /></span><span className='vol'> | </span>{lang['vol']} : <DeriNumberFormat value={trading.volatility} decimalScale={2} suffix='%' /></span>
+                {trading.config ? type.isOption ? trading.config.symbol.split('-')[0] : '' : ''} : <span className='option-vol'>&nbsp; <span> <DeriNumberFormat value={trading.index} decimalScale={2} /></span><span className='vol'> | </span>DVOL : <DeriNumberFormat value={trading.volatility} decimalScale={2} suffix='%' /></span>
               </div>
             </>}
-
             <div className='funding-rate'>
-              {type.isOption && <>
-                <span>{lang['funding-rate']} : &nbsp;</span>
+              {(type.isOption || type.isPower) && <>
+                <span>Daily Funding : &nbsp;</span>
                 <TipWrapper block={false} tip={trading.optionFundingRateTip}>
                   <span className='funding-per' tip={trading.optionFundingRateTip || ''}><DeriNumberFormat value={trading.fundingRate.premiumFunding0} decimalScale={4} /></span>
                 </TipWrapper>
               </>}
-              {(type.isFuture && (version.isOpen || version.isV1)) && <>
-                <span>{lang['funding-rate-annual']} : &nbsp;</span>
-                <TipWrapper block={false} tip={trading.fundingRateTip}>
-                  <span className='funding-per' tip={trading.fundingRateTip || ''}><DeriNumberFormat value={trading.fundingRate.fundingRate0} decimalScale={4} suffix='%' /></span>
-                </TipWrapper>
-              </>}
-              {(type.isFuture && !version.isOpen && !version.isV1) && <>
-                <span>{lang['funding-rate']} : &nbsp;</span>
+              {type.isFuture && <>
+                <span>Daily Funding: &nbsp;</span>
                 <TipWrapper block={false} tip={trading.dpmmFundingRateTip}>
                   <span className='funding-per' tip={trading.dpmmFundingRateTip || ''}><DeriNumberFormat value={trading.fundingRate.funding0} decimalScale={4} /></span>
                 </TipWrapper>
@@ -433,51 +424,43 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
 
             </div>
           </div>
-          <div className={type.isOption ? 'price-fundingRate mobile options' : 'price-fundingRate mobile'}>
-            {type.isFuture && !version.isOpen && !version.isV1 && <>
+          <div className='price-fundingRate mobile'>
+            {type.isFuture && <>
               <div className='index-prcie'>
                 {lang['mark-price']}: <span className={markPriceClass}>&nbsp; <DeriNumberFormat value={markPrice} decimalScale={trading.priceDecimals} /></span>
               </div>
-            </>}
-            {type.isFuture && <>
               <div className='index-prcie'>
                 {lang['index']}: <span className={indexPriceClass}>&nbsp; <DeriNumberFormat value={trading.index} decimalScale={trading.priceDecimals} /></span>
               </div>
             </>}
             {type.isOption && <>
               <div className='mark-price'>
-                {lang['eo-mark-price']} : <span className={markPriceClass}>&nbsp; <DeriNumberFormat value={markPrice} decimalScale={2} /></span>
+                {lang['mark-price']} : <span className={markPriceClass}>&nbsp; <DeriNumberFormat value={markPrice} decimalScale={2} /></span>
               </div>
               <div className='index-prcie'>
                 {trading.config ? type.isOption ? trading.config.symbol.split('-')[0] : '' : ''}: <span className={indexPriceClass}>&nbsp; <DeriNumberFormat value={trading.index} decimalScale={2} /></span>
               </div>
               <div className='index-prcie'>
-                {lang['vol']}: <DeriNumberFormat value={trading.volatility} decimalScale={2} />
+                DVOL: <DeriNumberFormat value={trading.volatility} decimalScale={2} />
               </div>
 
             </>}
 
             <div className='funding-rate'>
               {type.isOption && <>
-                <span>{lang['funding-rate']} : &nbsp;</span>
+                <span>Daily Funding : &nbsp;</span>
                 <TipWrapper block={false}>
                   <span className='funding-per' tip={trading.optionFundingRateTip || ''}><DeriNumberFormat value={trading.fundingRate.premiumFunding0} decimalScale={4} /></span>
                 </TipWrapper>
               </>}
-              {(type.isFuture && (version.isOpen || version.isV1)) && <>
-                <span>{lang['funding-rate-annual']} : &nbsp;</span>
-                <TipWrapper block={false} tip={trading.fundingRateTip}>
-                  <span className='funding-per' tip={trading.fundingRateTip || ''}><DeriNumberFormat value={trading.fundingRate.fundingRate0} decimalScale={4} suffix='%' /></span>
-                </TipWrapper>
-              </>}
-              {(type.isFuture && !version.isOpen && !version.isV1) && <>
-                <span>{lang['funding-rate']} : &nbsp;</span>
+              {type.isFuture && <>
+                <span>Daily Funding : &nbsp;</span>
                 <TipWrapper block={false} tip={trading.dpmmFundingRateTip}>
                   <span className='funding-per' tip={trading.dpmmFundingRateTip || ''}><DeriNumberFormat value={trading.fundingRate.funding0} decimalScale={4} /></span>
                 </TipWrapper>
               </>}
             </div>
-            {(type.isFuture && !version.isOpen && !version.isV1) && <>
+            {type.isFuture && <>
               <div className='rate'>
                 <TipWrapper block={false} tip={trading.rateTip}>
                   <span className='funding-per' tip={trading.rateTip || ''}>(<DeriNumberFormat value={rate} decimalScale={4} suffix='%' />)</span>
@@ -532,79 +515,38 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
           <div className='right-info'>
             <div className={`contrant-info ${version.current}`}>
               <div className='balance-contract'>
-                {/* v1 */}
-                {(version.isV1) && <>
-                  <span className='balance-contract-text pc v1'>
-                    {lang['balance-in-contract']}<br />
-                  ({lang['dynamic-balance']})
-                </span>
-                  <span className='balance-contract-text mobile v1'>
-                    {lang['balance-in-contract']}<br />
-                  ({lang['dynamic-balance']})
-                </span>
-                </>}
-                {/* v2 */}
-                {(version.isV2 || version.isV2Lite || type.isOption || version.isOpen) && <TipWrapper block={false}>
+                <TipWrapper block={false}>
                   <span className='balance-contract-text pc' tip={lang['dynamic-effective-balance-title']}>
                     {lang['dynamic-effective-balance']}
                   </span>
                   <span className='balance-contract-text mobile' tip={lang['dynamic-effective-balance-title']}>
                     {lang['dynamic-effective-balance']}
                   </span>
-                </TipWrapper>}
+                </TipWrapper>
 
                 <span className={`balance-contract-num ${version.current}`}>
-                  {(version.isV1 || version.isV2Lite || type.isOption || version.isOpen)
-                    ? <TipWrapper block={false}>
-                      <span
-                        className='open-add'
-                        id='openAddMargin'
-                        onClick={() => setRemoveModalIsOpen(true)}
-                        tip={lang['remove-margin']}
-                      >
-                        <img src={removeMarginIcon} alt='add margin' />
-                      </span>
-                    </TipWrapper>
-                    : <TipWrapper block={false}>
-                      <span
-                        className='open-add'
-                        id='openAddMargin'
-                        tip={lang['remove-margin']}
-                        onClick={() => setBalanceListModalIsOpen(true)}
-                      >
-                        <img src={removeMarginIcon} alt='add margin' />
-                      </span>
-                    </TipWrapper>
-                  }
-
+                  <TipWrapper block={false}>
+                    <span
+                      className='open-add'
+                      id='openAddMargin'
+                      tip={lang['remove-margin']}
+                      onClick={() => setBalanceListModalIsOpen(true)}
+                    >
+                      <img src={removeMarginIcon} alt='add margin' />
+                    </span>
+                  </TipWrapper>
                   <DeriNumberFormat value={trading.amount.dynBalance} allowZero={true} decimalScale={2} />
-                  {(version.isV1 || version.isV2Lite || type.isOption || version.isOpen)
-                    ? <TipWrapper block={false}>
-                      <span className='open-remove'
-                        onClick={() => setAddModalIsOpen(true)}
-                        tip={lang['add-margin']}
-                      >
-                        <img src={addMarginIcon} alt='add margin' />
-                      </span>
-                    </TipWrapper>
-
-                    : <TipWrapper block={false}>
-                      <span className='open-remove'
-                        onClick={() => setBalanceListModalIsOpen(true)}
-                        tip={lang['add-margin']}
-                      >
-                        <img src={addMarginIcon} alt='add margin' />
-                      </span>
-                    </TipWrapper>}
+                  <TipWrapper block={false}>
+                    <span className='open-remove'
+                      onClick={() => setBalanceListModalIsOpen(true)}
+                      tip={lang['add-margin']}
+                    >
+                      <img src={addMarginIcon} alt='add margin' />
+                    </span>
+                  </TipWrapper>
                 </span>
               </div>
-              {(version.isV1) && <div className='box-margin'>
-                <span>{lang['margin']}</span>
-                <span className='margin'>
-                  <DeriNumberFormat value={trading.amount.margin} allowZero={true} decimalScale={2} />
-                </span>
-              </div>}
-              {(version.isV2 || version.isV2Lite || type.isOption || version.isOpen) && <TipWrapper block={false} >
+              <TipWrapper block={false} >
                 <div className='box-margin'>{lang['margin']}</div>
                 <div className='box-margin'>
                   <span className='total-held' tip={lang['total-held-title']}>&nbsp;- {lang['total-held']}</span>
@@ -615,7 +557,6 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
                   <span className='margin' ><DeriNumberFormat value={trading.amount.currentSymbolMarginHeld} allowZero={true} decimalScale={2} /></span>
                 </div>
               </TipWrapper>
-              }
               <TipWrapper block={true}>
                 <div className='available-balance'>
                   <span className='pc' tip={lang['available-balance-title']} > {lang['available-balance']} </span>
@@ -635,71 +576,18 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
         <div className='enterInfo'>
           {!!trading.volumeDisplay && <>
             {type.isFuture && <>
-              {!version.isOpen && !version.isV1 && <>
-                <div className='text-info'>
-                  <div className='title-enter pool'>{lang['mark-price']}</div>
-                  <div className='text-enter poolL'>
-                    <DeriNumberFormat value={markPrice} decimalScale={trading.priceDecimals} />
-                  </div>
-                </div>
-                <div className='text-info'>
-                  <div className='title-enter pool'>{lang['trade-price']}</div>
-                  <div className='text-enter poolL'>
-                    <DeriNumberFormat value={markPriceAfter} decimalScale={trading.priceDecimals} />
-                  </div>
-                </div>
-              </>}
-              {(version.isOpen || version.isV1) && <>
-                <div className='text-info'>
-                  <div className='title-enter pool'>{lang['trade-price']}</div>
-                  <div className='text-enter poolL'>
-                    <DeriNumberFormat value={trading.index} decimalScale={trading.priceDecimals} />
-                  </div>
-                </div>
-              </>}
-
               <div className='text-info'>
-                <div className='title-enter pool'>{lang['pool-liquidity']}</div>
+                <div className='title-enter pool'>Margin Usage</div>
                 <div className='text-enter poolL'>
-                  <DeriNumberFormat value={trading.fundingRate.liquidity} decimalScale={2} suffix={` ${trading.config.bTokenSymbol}`} />
-                </div>
-              </div>
-              {(version.isOpen || version.isV1) && <>
-                <div className='text-info'>
-                  <div className='title-enter'>{lang['liquidity-used']}</div>
-                  <div className='text-enter'>
-                    <DeriNumberFormat value={liqUsedPair.curLiqUsed} suffix='%' decimalScale={2} /> -> <DeriNumberFormat value={liqUsedPair.afterLiqUsed} decimalScale={2} suffix='%' />
-                  </div>
-                </div>
-                <div className='text-info'>
-                  <div className='title-enter'>{lang['funding-rate-impact']}</div>
-                  <div className='text-enter'>
-                    <DeriNumberFormat value={trading.fundingRate.fundingRate0} suffix='%' decimalScale={4} /> -> <DeriNumberFormat value={fundingRateAfter} decimalScale={4} suffix='%' />
-                  </div>
-                </div>
-              </>}
-
-            </>}
-            {type.isOption && <>
-              <div className='text-info'>
-                <div className='title-enter pool'>{lang['mark-price']}</div>
-                <div className='text-enter poolL'>
-                  <DeriNumberFormat value={markPrice} decimalScale={4} />
+                  <DeriNumberFormat value={markPrice} decimalScale={trading.priceDecimals} />
                 </div>
               </div>
               <div className='text-info'>
                 <div className='title-enter pool'>{lang['trade-price']}</div>
                 <div className='text-enter poolL'>
-                  <DeriNumberFormat value={markPriceAfter} decimalScale={4} />
+                  <DeriNumberFormat value={markPriceAfter} decimalScale={trading.priceDecimals} />
                 </div>
               </div>
-              <div className='text-info'>
-                <div className='title-enter pool'>{lang['pool-liquidity']}</div>
-                <div className='text-enter poolL'>
-                  <DeriNumberFormat value={trading.fundingRate.liquidity} thousandSeparator={true} decimalScale={2} suffix={` ${trading.config.bTokenSymbol}`} />
-                </div>
-              </div>
-
             </>}
             <div className='text-info'>
               <div className='title-enter'>{lang['transaction-fee']}</div>
@@ -707,7 +595,7 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
                 <DeriNumberFormat value={transFee} allowZero={true} decimalScale={2} suffix={` ${trading.config.bTokenSymbol}`} />
               </div>
             </div>
-            {type.isFuture && <div className='text-info'>
+            {(type.isFuture || type.isPower) && <div className='text-info'>
               <div className='title-enter'>{lang['liquidation-price']}</div>
               <div className='text-enter'>
                 {liquidationPrice > 0 ? <DeriNumberFormat value={liquidationPrice} decimalScale={2} /> : '--'}
@@ -736,28 +624,6 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
           markPriceAfter={markPriceAfter}
           liquidationPrice={liquidationPrice}
         />
-        <DepositDialog
-          wallet={wallet}
-          modalIsOpen={addModalIsOpen}
-          onClose={onCloseDeposit}
-          spec={trading.config}
-          afterDeposit={afterDeposit}
-          balance={balance}
-          className='trading-dialog'
-          lang={lang}
-        />
-        <WithDrawDialog
-          wallet={wallet}
-          modalIsOpen={removeModalIsOpen}
-          onClose={onCloseWithdraw}
-          spec={trading.config}
-          afterWithdraw={afterWithdraw}
-          availableBalance={availableBalance}
-          position={trading.position}
-          className='trading-dialog'
-          lang={lang}
-        />
-
         <BalanceListDialog
           wallet={wallet}
           modalIsOpen={balanceListModalIsOpen}
@@ -784,7 +650,6 @@ function Operator({ hasConnectWallet, wallet, spec, volume, available,
   const [depositIsOpen, setDeposiIsOpen] = useState(false);
   const [balance, setBalance] = useState('');
 
-
   const connect = () => {
     wallet.connect()
   }
@@ -800,7 +665,6 @@ function Operator({ hasConnectWallet, wallet, spec, volume, available,
     }
   }
 
-
   const afterDeposit = async () => {
     trading.refresh();
     setDeposiIsOpen(false);
@@ -810,7 +674,6 @@ function Operator({ hasConnectWallet, wallet, spec, volume, available,
     trading.refresh();
     setDeposiIsOpen(false);
   }
-
 
   //load Approve status
   const loadApprove = async () => {
@@ -850,7 +713,6 @@ function Operator({ hasConnectWallet, wallet, spec, volume, available,
     return () => { };
   }, [wallet.detail.isApproved, spec]);
 
-
   let actionElement = (<>
     <ConfirmDialog wallet={wallet}
       className='trading-dialog'
@@ -879,30 +741,17 @@ function Operator({ hasConnectWallet, wallet, spec, volume, available,
       actionElement = <Button className='approve' btnText={lang['approve']} click={approve} lang={lang} />
     } else if (!available || (+available) <= 0) {
       actionElement = (<>
-        {(version.isV2 && !type.isOption)
-          ?
-          <BalanceListDialog
-            wallet={wallet}
-            modalIsOpen={depositIsOpen}
-            onClose={afterDepositAndWithdraw}
-            spec={spec}
-            afterDepositAndWithdraw={afterDepositAndWithdraw}
-            position={trading.position}
-            overlay={{ background: '#1b1c22', top: 80 }}
-            className='balance-list-dialog'
-            lang={lang}
-          />
-          :
-          <DepositDialog
-            wallet={wallet}
-            modalIsOpen={depositIsOpen}
-            onClose={() => setDeposiIsOpen(false)}
-            spec={spec}
-            balance={balance}
-            afterDeposit={afterDeposit}
-            className='trading-dialog'
-            lang={lang}
-          />}
+        <BalanceListDialog
+          wallet={wallet}
+          modalIsOpen={depositIsOpen}
+          onClose={afterDepositAndWithdraw}
+          spec={spec}
+          afterDepositAndWithdraw={afterDepositAndWithdraw}
+          position={trading.position}
+          overlay={{ background: '#1b1c22', top: 80 }}
+          className='balance-list-dialog'
+          lang={lang}
+        />
         <div className="noMargin-text">{((+trading.position.margin) === 0 || !trading.position.margin) ? lang['no-margin-tip'] : lang['not-enough-margin-tip']}</div>
         <button className='short-submit' onClick={() => setDeposiIsOpen(true)}>{lang['deposit']}</button>
       </>)

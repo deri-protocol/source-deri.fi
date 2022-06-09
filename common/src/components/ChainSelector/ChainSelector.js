@@ -9,8 +9,8 @@ import './chainSelector.scss'
 function ChainSelector({collect,id=""}){
   const [isScroll, setIsScroll] = useState(false);
   const [isShow, setIsShow] = useState()
-  const chains = useChain();
   const wallet = useWallet()
+  const chains = useChain();
 
   const nwSelectClass = classNames('network-select',{
     expand : isShow,
@@ -24,7 +24,7 @@ function ChainSelector({collect,id=""}){
       await wallet.connect();
       switchChain(chain,() => setIsShow(false))
     }
-  },[wallet])
+  },[])
 
   const handler = useCallback(() => {
     let offset = collect ? 138 : 202
@@ -33,7 +33,7 @@ function ChainSelector({collect,id=""}){
     } else {
       setIsScroll(false)
     }
-  })
+  },[])
 
   const onBodyClick = useCallback((e) => {
     const parent = document.querySelector(`#${id}`);
@@ -51,9 +51,6 @@ function ChainSelector({collect,id=""}){
     }
   }, [isShow]);
 
-
-
-
   return (
     <div className={nwSelectClass}>
       <div className='nw-wrapper' id={id}>
@@ -63,13 +60,13 @@ function ChainSelector({collect,id=""}){
           })
           return index === 0 
             ?
-              (<div className='nw-item' onClick={() => setIsShow(!isShow)} key={index}>
+              (<div className='nw-item' onClick={() => setIsShow(!isShow)} key={chain.chainId}>
                 <Icon token={isMobile() ? chain.icon  :  `${chain.icon}-LIGHT`} width='20'/>
                 <div className='name'>{chain.name}</div>
                 <Icon  width='16' token={'arrow-down'} className='arrow'/>
               </div>)
           : 
-            (<div className={itemClass} onClick={e => onSelect(chain)} key={index}>
+            (<div className={itemClass} onClick={e => onSelect(chain)} key={chain.chainId}>
               <Icon token={isMobile() ? chain.icon  :  `${chain.icon}-LIGHT`} width='20'/>
               <div className='name'>{chain.name}</div>
             </div>)

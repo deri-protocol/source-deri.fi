@@ -34,7 +34,12 @@ module.exports = {
       Buffer: ['buffer', 'Buffer']
     })
     )
-    return rewireBabelLoader.include(
+    return process.env.NODE_ENV === 'development' ? 
+    rewireBabelLoader.include(
+      config,
+      resolveApp("../common/src")
+    )
+    : rewireBabelLoader.include(
       config,
       resolveApp("node_modules/@deri/eco-common/src")
     );

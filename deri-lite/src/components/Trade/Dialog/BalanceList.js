@@ -5,7 +5,7 @@ import WithdrawMagin from './WithdrawMargin';
 import removeMarginIcon from '../../../assets/img/remove-margin.svg'
 import addMarginIcon from '../../../assets/img/add-margin.svg'
 import DeriNumberFormat from '../../../utils/DeriNumberFormat';
-import { getPoolBTokensBySymbolId } from '../../../lib/web3js/index';
+import { getUserBTokensInfo } from '../../../lib/web3js/index';
 import useDisableScroll from '../../../hooks/useDisableScroll';
 
 const AddMarginDialog = withModal(DepositMargin)
@@ -56,7 +56,7 @@ export function BalanceList({wallet,spec,afterDepositAndWithdraw,position,onClos
 
   const loadBalanceList = async () => {
     if(wallet.detail.account && spec){
-      const list = await getPoolBTokensBySymbolId(wallet.detail.chainId,spec.pool,wallet.detail.account,spec.symbolId)
+      const list = await getUserBTokensInfo(wallet.detail.chainId,spec.pool,wallet.detail.account)
       setDepositAndWithdragList(list)
       if(list.length < limit){
         setPlaceholdList(Array.from({length : limit - list.length}));

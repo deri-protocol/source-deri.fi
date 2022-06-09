@@ -1,5 +1,5 @@
 
-import {getUserWalletBalance ,DeriEnv,connectWallet, isUnlocked, unlock } from "../lib/web3js/index";
+import {DeriEnv,connectWallet, isUnlocked, unlock } from "../lib/web3js/index";
 import config from '../config.json'
 import { formatBalance, eqInNumber, storeChain } from "../utils/utils";
 import { observable, computed, action, makeAutoObservable } from "mobx";
@@ -87,9 +87,7 @@ class Wallet {
   }
 
   loadWalletBalance = async (chainId,account) => {
-    
-    const balance = await getUserWalletBalance(chainId,account).catch(e => console.log('wallet account is not exist'))
-    const detail = {chainId,account,balance,formatBalance : formatBalance(balance)}
+    const detail = {chainId,account}
     const env = DeriEnv.get();
     const {chainInfo} = config[env]
     

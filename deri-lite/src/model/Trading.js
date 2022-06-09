@@ -5,7 +5,7 @@ import Contract from "./Contract";
 import History from './History'
 import Config from "./Config";
 import { eqInNumber, storeConfig, getConfigFromStore, restoreChain, getFormatSymbol, getMarkpriceSymbol, getDefaultNw } from "../utils/utils";
-import { getFundingRate, priceCache, DeriEnv, getVolatility } from "../lib/web3js/index";
+import { getFundingRate, DeriEnv, getVolatility } from "../lib/web3js/index";
 import { bg } from "../lib/web3js/index";
 import Intl from "./Intl";
 import version from './Version'
@@ -212,8 +212,6 @@ export default class Trading {
   refreshCache() {
     const { pool } = this.config;
     const symbol = type.isOption ? this.config.symbol.split('-')[0] : this.config.symbol
-    priceCache.clear();
-    priceCache.update(pool, symbol)
   }
 
 

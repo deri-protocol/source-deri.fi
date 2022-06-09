@@ -2,7 +2,8 @@ export {
   DeriEnv
 } from './shared/config/env'
 export {
-  bg
+  bg,
+  sortOptionSymbols,
 } from './shared/utils/convert'
 
 export * from './shared/api/index'

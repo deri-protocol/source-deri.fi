@@ -61,7 +61,7 @@ export default class Contract {
   }
 
   bTokenSymbolDisplay(spec){
-    if(version.isV1 || version.isV2Lite || type.isOption || version.isOpen || (version.isV2 && !Array.isArray(spec.bTokenSymbol))){
+    if( !Array.isArray(spec.bTokenSymbol)){
       return [spec.bTokenSymbol];
     }
     return spec.bTokenSymbol;

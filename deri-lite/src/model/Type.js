@@ -2,7 +2,7 @@ import { makeAutoObservable, observable, action, computed } from "mobx";
 
 
 class Type {
-  current = "future";
+  current = "futures";
   
   constructor(){
     makeAutoObservable(this,{
@@ -26,7 +26,7 @@ class Type {
   }
 
   get isFuture() {
-    return this.current === 'future'
+    return this.current === "futures"
   }
 }
 export default new Type()

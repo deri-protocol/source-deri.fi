@@ -23,7 +23,7 @@ if(process.env.NODE_ENV === 'production') {
   DeriEnv.set('prod')
 }
 // DeriEnv.set('testnet')
-DeriEnv.set('testnet')
+DeriEnv.set('prod')
 function render(props) {
   const { container } = props;
     ReactDOM.render(

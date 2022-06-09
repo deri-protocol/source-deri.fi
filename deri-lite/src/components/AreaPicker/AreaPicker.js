@@ -10,7 +10,7 @@ function AreaPicker({lang,version,wallet,type}){
   const siwtchZone = (zone) => {
     setCurrent(zone)
     if(zone === 'Futures') {
-      type.setCurrent('future')
+      type.setCurrent('futures')
     } else if(zone === 'Options') {
       type.setCurrent('option')
     } else if(zone === 'Powers'){

@@ -51,8 +51,15 @@ class Wallet {
     return new Promise(async (resolve,reject) => {
       if(res.success){
         const {chainId,account} = res
-        const wallet = await this.loadWalletBalance(chainId,account);      
-        resolve(wallet)
+        const detail = {chainId,account}
+        const env = DeriEnv.get();
+        const {chainInfo} = config[env]
+        if(chainInfo[chainId]){
+          Object.assign(detail,{...chainInfo[chainId],supported : true})
+          storeChain(chainInfo[chainId])
+        }
+        this.setDetail(detail)    
+        resolve(detail)
       } else {
         reject(null)
       }
@@ -84,19 +91,6 @@ class Wallet {
         }
       }
     }
-  }
-
-  loadWalletBalance = async (chainId,account) => {
-    const detail = {chainId,account}
-    const env = DeriEnv.get();
-    const {chainInfo} = config[env]
-    
-    if(chainInfo[chainId]){
-      Object.assign(detail,{...chainInfo[chainId],supported : true})
-      storeChain(chainInfo[chainId])
-    }
-    this.setDetail(detail)
-    return detail;
   }
 
   get = () => {

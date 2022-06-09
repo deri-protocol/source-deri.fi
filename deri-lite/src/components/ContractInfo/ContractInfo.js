@@ -25,9 +25,14 @@ function ContractInfo({ wallet, trading, lang, type }) {
             </TipWrapper>
           </div>
           <div className="text" >
-            {trading.contract.bTokenSymbol && trading.contract.bTokenSymbol.map((bToken, index) => {
-              return (<span key={index} className='btoken-symbol'>{bToken}</span>)
-            })}
+            <TipWrapper>
+              <span className='margin-per btoken-mu' tip={trading.contract.bTokenSymbol && trading.contract.bTokenSymbol.map((token, index) => `${token} (${trading.contract.bTokenMultiplier[index]})`).join(' ')}>
+                {trading.contract.bTokenSymbol && trading.contract.bTokenSymbol.map((token, index) => {
+                  return index < 3 ? (<span key={index} className='btoken-symbol'>{token}({trading.contract.bTokenMultiplier[index]})</span>) : null
+                })}...
+              </span>
+            </TipWrapper>
+
           </div>
         </div>
         <div className="info">
@@ -42,38 +47,42 @@ function ContractInfo({ wallet, trading, lang, type }) {
           <div className="info">
             <div className="title"> <span>Min.Trade Unit (Notional)</span> </div>
             <div className="text">
-              {trading.contract.multiplier} {trading.config ? trading.config.unit : ''}
+              {trading.contract['minTradeUnit'] ? trading.contract['minTradeUnit'] + trading.symbol.unit : ''}
             </div>
           </div>
           <div className="info">
             <div className="title">Funding Rate Coefficient</div>
             <div className="text">
-              <NumberFormat displayType='text' value={trading.contract.fundingRateCoefficient * 100} decimalScale={2} />
+              <TipWrapper>
+                <span className="margin-per" tip={trading.fundingCoefficientTip}>
+                  {trading.contract['fundingRateCoefficient'] && (+trading.contract['fundingRateCoefficient']).toExponential()}
+                </span>
+              </TipWrapper>
             </div>
           </div>
           <div className="info">
-            <div className="title"><TipWrapper block={false}><span tip={trading.initialMarginRatioTip} className='margin-per'>{lang['initial-margin-ratio']}</span></TipWrapper></div>
+            <div className="title"><TipWrapper block={false}><span tip="Initial Margin Ratio is the percentage of notional value that your margin will be frozen to open a new position." className='margin-per'>{lang['initial-margin-ratio']}</span></TipWrapper></div>
             <div className="text">
               <NumberFormat displayType='text' value={trading.contract.initialMarginRatio * 100} decimalScale={2} suffix='%' />
             </div>
           </div>
           <div className="info">
-            <div className="title"> <TipWrapper block={false}><span tip={trading.maintenanceMarginRatioTip} className='margin-per'> {lang['maintenance-margin-ratio']}</span></TipWrapper> </div>
+            <div className="title"> <TipWrapper block={false}><span tip="Maintenance Margin Ratio is the percentage of notional value required to keep your open positions from being liquidated." className='margin-per'> {lang['maintenance-margin-ratio']}</span></TipWrapper> </div>
             <div className="text">
               <NumberFormat displayType='text' value={trading.contract.maintenanceMarginRatio * 100} decimalScale={2} suffix='%' />
             </div>
           </div>
           {type.isPower && <>
             <div className="info">
-              <div className="title"><TipWrapper block={false}><span tip={trading.initialMarginRatioTip} className='margin-per'>Multiplier</span></TipWrapper></div>
+              <div className="title"><TipWrapper block={false}><span tip="Maintenance Margin Ratio is the percentage of notional value required to keep your open positions from being liquidated." className='margin-per'>Multiplier</span></TipWrapper></div>
               <div className="text">
-                <NumberFormat displayType='text' value={trading.contract.multiplier} decimalScale={2}  />
+                <NumberFormat displayType='text' value={trading.contract.multiplier} decimalScale={2} />
               </div>
             </div>
             <div className="info">
-              <div className="title"> <TipWrapper block={false}><span tip={trading.maintenanceMarginRatioTip} className='margin-per'> Funding Period</span></TipWrapper> </div>
+              <div className="title"> <TipWrapper block={false}><span tip={`Funding period is the time period for which the funding fee (${this.symbol.symbol} Mark Price - ${this.symbol.symbol} ) is paid. For Funding Period = 7 days, every second a long (short) contract pays (receives) a funding fee=(${this.symbol.symbol} Mark Price - ${this.symbol.symbol} ))/(7*24*60*60)`} className='margin-per'> Funding Period</span></TipWrapper> </div>
               <div className="text">
-                <NumberFormat displayType='text' value={trading.contract.maintenanceMarginRatio } decimalScale={2} />   Days
+                <NumberFormat displayType='text' value={trading.contract.maintenanceMarginRatio} decimalScale={2} />   Days
               </div>
             </div>
           </>}

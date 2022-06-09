@@ -1,5 +1,6 @@
 import { makeObservable, observable, action } from "mobx";
 import { getContractAddressConfig, DeriEnv, sortOptionSymbols } from "../lib/web3js/index";
+import Pool from "./Pool"
 
 export default class Config {
   all = []
@@ -11,19 +12,12 @@ export default class Config {
     })
   }
 
-  async load(version, isOptions) {
-    let current = version && version.current;
-    if (isOptions) {
-      current = 'option'
-    }
-    let configs = await getContractAddressConfig(DeriEnv.get())
-    if (configs.success) {
-      let configList = configs.response.data
-      if (isOptions) {
-        configList = sortOptionSymbols(configList)
-      }
-      this.setAll(configList)
-    }
+  async load(version, Type) {
+    let current = Type.current
+    let pools = await getContractAddressConfig(DeriEnv.get())
+    pools = pools.filter(p =>  p.versionId === version.current)
+    pools.map(pool => new Pool(pool))
+    this.setAll(pools)
     return this.all;
   }
 

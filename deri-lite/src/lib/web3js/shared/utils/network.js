@@ -1,4 +1,5 @@
 import Web3 from 'web3';
+import any from 'promise.any'
 // == func
 // const np = () => {}
 // const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
@@ -42,32 +43,38 @@ export const shuffleArray = (array) => {
 }
 
 const getBlockNumber = async (url) => {
-  let res = { url: url, blockNumber: -1, duration: Number.MAX_SAFE_INTEGER,};
-  try {
+  //try {
+    let res = { url: url, blockNumber: -1, duration: Number.MAX_SAFE_INTEGER,};
     const web3 = new Web3(new Web3.providers.HttpProvider(url))
-    const startTime = Date.now()
-    res.blockNumber = await web3.eth.getBlockNumber()
-    res.duration = Date.now() - startTime
-  } catch (err) {
-    //console.log(`getBlockNumber(${url}) error: ${err}`)
-  }
-  return res
+    const startTime = Math.floor(Date.now()/1000)
+    const blockInfo = await web3.eth.getBlock('latest')
+    res.url = url
+    res.block = blockInfo.number
+    res.timestamp = blockInfo.timestamp
+    if (Math.abs(startTime - res.timestamp) < 300) {
+      return res
+    }
+    throw new Error(`not synced node: ${url}`)
+  // } catch (err) {
+  //   //console.log(`getBlockNumber(${url}) error: ${err}`)
+  // }
 };
 
 export const getLatestRPCServer = async (urls = []) => {
-  //urls = shuffleArray(urls)
-  //pick 2 random urls
-  //urls = urls.length >= 2 ? urls.slice(0,2) : urls
+  // urls = shuffleArray(urls)
+  // pick 2 random urls
+  // urls = urls.length >= 2 ? urls.slice(0,2) : urls
   let promises = []
   for (let i = 0; i < urls.length; i++) {
     promises.push(getBlockNumber(urls[i]));
   }
-  let blockNumbers = await Promise.all(promises)
-  blockNumbers = blockNumbers.sort((a, b) => a.duration - b.duration)
-  // console.log('blockNumbers',  blockNumbers)
-  const latestBlockNumber = blockNumbers.reduce((a, b) => b.blockNumber !== -1 ? a > b.blockNumber ? a : b.blockNumber : a, 0)
-  const index = blockNumbers.findIndex((b) => b.blockNumber === latestBlockNumber);
-  const res = blockNumbers[index] && blockNumbers[index].url
+  let blockInfo = await any(promises)
+  // console.log('blockInfo', blockInfo)
+  // blockNumbers = blockNumbers.sort((a, b) => a.duration - b.duration)
+  // // console.log('blockNumbers',  blockNumbers)
+  // const latestBlockNumber = blockNumbers.reduce((a, b) => b.blockNumber !== -1 ? a > b.blockNumber ? a : b.blockNumber : a, 0)
+  // const index = blockNumbers.findIndex((b) => b.blockNumber === latestBlockNumber);
+  const res = blockInfo.url
   // console.log(res)
   if (res && res.startsWith('http')) {
     return res

@@ -9,13 +9,13 @@ export class SlpPool extends ContractBase {
   constructor(chainId, contractAddress) {
     super(chainId, contractAddress, CONTRACT_ABI);
   }
-  async addLiquidity(accountAddress, amount) {
+  async addLiquidity(accountAddress, amount, opts) {
     const args = [152, naturalToDeri(amount)];
-    return await this._transact('deposit', args, accountAddress);
+    return await this._transact('deposit', args, accountAddress, opts);
   }
-  async removeLiquidity(accountAddress, amount) {
+  async removeLiquidity(accountAddress, amount, opts) {
     const args = [152, naturalToDeri(amount)];
-    return await this._transact('withdraw', args, accountAddress);
+    return await this._transact('withdraw', args, accountAddress, opts);
   }
   async getLiquidity(accountAddress) {
     const res = await this._call('userInfo', [152, accountAddress]);

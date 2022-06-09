@@ -5,9 +5,10 @@ export {
   databaseWormholeFactory,
   databaseAirdropFactory,
   databaseActivityFactory,
+  databaseActivityClaimFactory,
 } from './database';
 export {
-  bTokenFactory,
+  //bTokenFactory,
   TERC20Factory,
 
   brokerManagerFactory,

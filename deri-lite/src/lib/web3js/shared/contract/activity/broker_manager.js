@@ -11,11 +11,12 @@ export class BrokerManager extends ContractBase {
   }
 
   // transaction
-  async setBroker(accountAddress, brokerAddress) {
+  async setBroker(accountAddress, brokerAddress, opts) {
     return await this._transact(
       'setBroker',
       [brokerAddress],
-      accountAddress
+      accountAddress,
+      opts,
     );
   }
 }

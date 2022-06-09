@@ -12,29 +12,33 @@ export class MiningVaultRouter extends ContractBase {
   async mint(accountAddress, ...args) {
     await this._init()
     //console.log(accountAddress, args)
-    const gas = await this._estimatedGas(
-      'claim',
-      [accountAddress, ...args],
-      accountAddress
-    );
-    //console.log(gas);
-    let txRaw = [
-      {
-        from: accountAddress,
-        to: this.contractAddress,
-        gas: numberToHex(gas),
-        value: numberToHex('0'),
-        data: this.contract.methods['claim'](
-          accountAddress,
-          ...args
-        ).encodeABI(),
-      },
-    ];
-    //console.log('txRaw', txRaw)
-    let tx = await window.ethereum.request({
-      method: 'eth_sendTransaction',
-      params: txRaw,
-    });
-    return await new Promise(this._getTransactionReceipt(tx));
+    const opts = args.pop()
+    // const gas = await this._estimatedGas(
+    //   'claim',
+    //   [accountAddress, ...args],
+    //   accountAddress,
+    //   opts,
+    // );
+    // //console.log(gas);
+    // let txRaw = [
+    //   {
+    //     from: accountAddress,
+    //     to: this.contractAddress,
+    //     gas: numberToHex(gas),
+    //     value: numberToHex('0'),
+    //     data: this.contract.methods['claim'](
+    //       accountAddress,
+    //       ...args
+    //     ).encodeABI(),
+    //   },
+    // ];
+    // //console.log('txRaw', txRaw)
+    // let tx = await window.ethereum.request({
+    //   method: 'eth_sendTransaction',
+    //   params: txRaw,
+    // });
+    // return await new Promise(this._getTransactionReceipt(tx));
+
+    return await this._transact('claim', [accountAddress, ...args], accountAddress, opts)
   }
 }

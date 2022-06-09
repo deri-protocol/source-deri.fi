@@ -1,9 +1,10 @@
+import { debug } from '../config';
 import { web3Factory } from '../factory/web3';
-import { numberToHex } from '../utils/convert';
+import { getWeb3 } from '../utils';
 
 const MAX_GAS_AMOUNT = 832731 * 3;
-//const RE_ERROR_MSG = /\"message\":\s\"execution\sreverted:([\w\s]+)\"/
-const RE_ERROR_MSG = /"message":\s"execution\sreverted:([\w\s]+)"/
+
+const noOp = () => {}
 
 export class ContractBase {
   constructor(chainId, contractAddress, contractAbi) {
@@ -15,7 +16,12 @@ export class ContractBase {
   async _init() {
     // re-init web3 and contract when web3 instance is null
     if (!this.web3) {
-      this.web3 = await web3Factory.get(this.chainId);
+      if (!!this.useProvider) {
+        this.web3 = await getWeb3(this.chainId);
+      } else {
+        this.web3 = await web3Factory.get(this.chainId);
+      }
+      // this.web3.eth.handleRevert = true
       this.contract = new this.web3.eth.Contract(
         this.contractAbi,
         this.contractAddress
@@ -30,9 +36,9 @@ export class ContractBase {
       try {
         await this._init()
         res = await this.contract.methods[method](...args).call();
-        break
+        return res
       } catch(err) {
-        retry -= 1
+        debug() && console.log(err)
         // remove web3 instance to re-init
         if (retry === 1) {
           this.web3 = null
@@ -45,11 +51,12 @@ export class ContractBase {
         //   //console.log('error:', err.toString())
         // }
       }
+      retry -= 1
     }
-    if (retry === 0 && !res) {
-      throw new Error(`The contract(${this.contractAddress}) '${method}([${args}])' failed with max retry 2.`)
-    }
-    return res
+    throw new Error('JSON_RPC_CALL_TIMEOUT', {
+      name: method,
+      args: [...args, this.contractAddress],
+    });
   }
 
   async _estimatedGas(method, args = [], accountAddress) {
@@ -91,30 +98,57 @@ export class ContractBase {
       });
     };
   }
-  async _transact(method, args=[], accountAddress) {
+  async _transact(method, args=[], accountAddress, opts={}) {
     await this._init()
-    const gas = await this._estimatedGas(method, args, accountAddress)
-    let gasPrice = await this.web3.eth.getGasPrice()
-    console.log('gasPrice before', gasPrice)
+    let { onAccept, onReject, ...restOpts } = opts
+    if (!onAccept) {
+      onAccept = noOp
+    }
+    if (!onReject) {
+      onReject = noOp
+    }
+    // this.web3 = await web3Factory.get(this.chainId);
+    // this.contract = new this.web3.eth.Contract(
+    //   this.contractAbi,
+    //   this.contractAddress
+    // );
+    let [gas, gasPrice] = await Promise.all([
+      this._estimatedGas(method, args, accountAddress),
+      this.web3.eth.getGasPrice(),
+    ]);
     if (this.chainId.toString() === '56') {
       gasPrice = gasPrice * 1.002
     }
-    let txRaw = [
-      {
-        from: accountAddress,
-        to: this.contractAddress,
-        gas: numberToHex(gas),
-        gasPrice:numberToHex(gasPrice),
-        value: numberToHex('0'),
-        data: this.contract.methods[method](...args).encodeABI(),
-      },
-    ];
-    let tx = await window.ethereum.request({
-      method: 'eth_sendTransaction',
-      params: txRaw,
+    // let txRaw = [
+    //   {
+    //     from: accountAddress,
+    //     to: this.contractAddress,
+    //     gas: numberToHex(gas),
+    //     gasPrice: numberToHex(gasPrice),
+    //     value: numberToHex('0'),
+    //     data: this.contract.methods[method](...args).encodeABI(),
+    //     ...opts,
+    //   },
+    // ];
+    // let tx = await window.ethereum.request({
+    //   method: 'eth_sendTransaction',
+    //   params: txRaw,
+    // });
+    // return await new Promise(this._getTransactionReceipt(tx));
+
+    return await this.contract.methods[method](...args).send({
+      from: accountAddress,
+      gas,
+      gasPrice,
+      ...restOpts,
+    }).on('transactionHash', (txHash) => {
+      onAccept()
+    }).on('error', (error) => {
+      if (error.code === 4001) { // user reject
+        onReject()
+      }
     });
-    return await new Promise(this._getTransactionReceipt(tx));
-    //return await this.contract.methods[method](...args).send({from: accountAddress})
+
   }
 
 }

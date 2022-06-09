@@ -1,14 +1,29 @@
-// export const DERI_ENV="dev"
-export const DeriEnv = (() => {
-  let _deriEnv = 'dev';
+// export let Env;
+// (function (Env) {
+//   Env["PROD"] = "prod";
+//   Env["DEV"] = "dev";
+//   Env["TESTNET"] = "testnet";
+// })(Env || (Env = {}));
+
+export const Env = {
+  PROD: 'prod',
+  TESTNET: 'testnet',
+  DEV: 'dev',
+};
+Object.freeze(Env);
+
+export const DeriEnv = (function(Env) {
+  let _env = Env.DEV
   return {
-    get: () => _deriEnv,
-    set: (value) => {
-      if (value === 'dev' || value === 'prod' || value === 'testnet') {
-        _deriEnv = value;
-      } else {
-        throw new Error("please use 'dev', 'testnet' or 'prod' for DeriEnv");
-      }
+    get() {
+      return _env
     },
-  };
-})();
+    set(env) {
+      if (Object.values(Env).includes(env)) {
+        _env = env
+      } else {
+        throw new Error('INVALID_DERI_ENV', env)
+      }
+    }
+  }
+})(Env)

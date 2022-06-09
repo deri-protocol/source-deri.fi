@@ -1,7 +1,7 @@
-import { getOracleConfig } from '../config/oracle';
+import { debug } from '../config/constant';
 import { normalizeChainId } from './validate';
 import { DeriEnv } from '../config/env';
-import { oracleFactory, wrappedOracleFactory } from '../factory/oracle';
+import { wrappedOracleFactory } from '../factory/oracle';
 import { deriToNatural, fromWei } from './convert';
 import {
   mapToSymbolInternal,
@@ -11,7 +11,6 @@ import {
 import { PRESERVED_SYMBOLS } from '../config/version';
 import { offChainOracleFactory } from '../contract/factory';
 
-
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const getPriceInfoForV1 = async(symbol) => {
@@ -20,8 +19,8 @@ export const getPriceInfoForV1 = async(symbol) => {
   let url
   let baseUrl =
     env === 'prod'
-      ? `https://oraclemainnet.deri.finance/${method}`
-      : `https://oracletestnet.deri.finance/${method}`;
+      ? `https://oraclemainnet.deri.io/${method}`
+      : `https://oracletestnet.deri.io/${method}`;
   const addSymbolParam = (url, symbol) =>
     `${url}?symbol=${symbol}`;
   if (symbol) {
@@ -43,17 +42,21 @@ export const getPriceInfoForV1 = async(symbol) => {
     retry -= 1;
   }
   if (retry === 0) {
-    throw new Error(`getPriceFromV1 exceed max retry(3): ${symbol} => ${JSON.stringify(priceInfo)}`);
+    throw new Error('REST_API_CALL_TIMEOUT', url);
   }
 }
 
 
-export const getOracleUrl = (symbol, type='futures') => {
+export const getOracleUrl = (symbol, type='futures', version='') => {
   const env = DeriEnv.get();
   //if (/^[0-9]+$/.test(symbolId.toString())) {
   let method = 'get_signed_price'
   if (type === 'option') {
-    method = 'get_signed_volatility'
+    if (version === 'v3') {
+      method = 'get_signed_volatility_v3';
+    } else {
+      method = 'get_signed_volatility';
+    }
   }
   if (PRESERVED_SYMBOLS.includes(symbol)) {
     method = 'get_price'
@@ -61,8 +64,8 @@ export const getOracleUrl = (symbol, type='futures') => {
   }
   let baseUrl =
     env === 'prod'
-      ? `https://oraclemainnet.deri.finance/${method}`
-      : `https://oracletestnet.deri.finance/${method}`;
+      ? `https://oraclemainnet.deri.io/${method}`
+      : `https://oracletestnet.deri.io/${method}`;
   const addSymbolParam = (url, symbol) =>
     `${url}?symbol=${symbol}`;
 
@@ -73,14 +76,12 @@ export const getOracleUrl = (symbol, type='futures') => {
   }
 };
 
-export const getPriceFromRest = async(symbol, type='futures') => {
-  const res = await getPriceInfo(symbol, type)
+export const getPriceFromRest = async(symbol, type='futures', version="") => {
+  const res = await getPriceInfo(symbol, type, version)
   if (type === 'futures' && res.price) {
     return PRESERVED_SYMBOLS.includes(symbol) ? res.price : deriToNatural(res.price).toString()
   } else if (type === 'option' && res.volatility) {
-    return deriToNatural(res.volatility).toString()
-  } else {
-    throw new Error(`getPrice() invalid format: ${JSON.stringify(res)}`)
+    return res.volatility
   }
 }
 
@@ -100,12 +101,12 @@ export const getPriceInfo = async (symbol, type='futures') => {
         }
       }
     } catch(err) {
-      //console.log(err.toString())
-      retry -= 1;
+      debug() && console.log(err)
     }
+    retry -= 1;
   }
   if (retry === 0) {
-    throw new Error(`fetch oracle info exceed max retry(3): ${symbol} => ${JSON.stringify(priceInfo)}`);
+    throw new Error('REST_API_CALL_TIMEOUT', url);
   }
 };
 
@@ -131,11 +132,13 @@ export const getOracleInfosFromRest = async (symbolList, type = 'future') => {
           return priceInfo.data;
         }
       }
-    } catch (err) {}
+    } catch (err) {
+      debug() &&  console.log(err)
+    }
     retry -= 1;
   }
   if (retry === 0) {
-    throw new Error(`getOracleInfosFromRest exceed max retry(3): ${symbolList}`);
+    throw new Error('REST_API_CALL_TIMEOUT', url);
   }
 };
 
@@ -168,26 +171,30 @@ export const getPriceInfos = async (symbolList) => {
   let retry = 3;
   let res, priceInfo;
   while (retry > 0) {
-    res = await fetch(url, {
-      mode: 'cors',
-      cache: 'no-cache',
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(symbolList),
-    });
-    if (res.ok) {
-      priceInfo = await res.json();
-      if (priceInfo.status.toString() === '200' && priceInfo.data) {
-        return priceInfo.data
+    try {
+      res = await fetch(url, {
+        mode: 'cors',
+        cache: 'no-cache',
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(symbolList),
+      });
+      if (res.ok) {
+        priceInfo = await res.json();
+        if (priceInfo.status.toString() === '200' && priceInfo.data) {
+          return priceInfo.data;
+        }
       }
+    } catch (err) {
+      debug() && console.log(err);
     }
     retry -= 1;
   }
   if (retry === 0) {
-    throw new Error(`fetch oracle infos exceed max retry(3): ${symbolList} ${JSON.stringify(priceInfo)}`);
+    throw new Error('REST_API_CALL_TIMEOUT', url);
   }
 };
 
@@ -252,24 +259,24 @@ export const RestOracle = (symbol) => {
   }
 };
 
-export const getOraclePrice = async (chainId, symbol, version='v2') => {
-  chainId = normalizeChainId(chainId);
-  symbol = mapToSymbolInternal(symbol)
-  const config = getOracleConfig(version, chainId, symbol);
-  if (config && config.address) {
-    const oracle = oracleFactory(
-      chainId,
-      config.address,
-      symbol,
-      config.decimal,
-    );
-    return await oracle.getPrice();
-  } else {
-    // for new added symbol and not updated to config yet
-    const priceInfo = await getPriceInfo(symbol, version);
-    return deriToNatural(priceInfo.price).toString();
-  }
-};
+// export const getOraclePrice = async (chainId, symbol, version='v2') => {
+//   chainId = normalizeChainId(chainId);
+//   symbol = mapToSymbolInternal(symbol)
+//   const config = getOracleConfig(version, chainId, symbol);
+//   if (config && config.address) {
+//     const oracle = oracleFactory(
+//       chainId,
+//       config.address,
+//       symbol,
+//       config.decimal,
+//     );
+//     return await oracle.getPrice();
+//   } else {
+//     // for new added symbol and not updated to config yet
+//     const priceInfo = await getPriceInfo(symbol, version);
+//     return deriToNatural(priceInfo.price).toString();
+//   }
+// };
 
 export const getOraclePrice2 = async (chainId, symbol, oracleAddress, version='v2_lite') => {
   chainId = normalizeChainId(chainId);
@@ -348,6 +355,7 @@ export const getOracleVolatilitiesForOption = async (symbols) => {
     .filter((value, index, self) => self.indexOf(value) === index);
   const res = await getOracleInfosFromRest(oracleSymbols.map((os) => `VOL-${os}`), 'option')
   const volatilities = oracleSymbols.map((s) => res[`VOL-${s}`])
+  //console.log('volatilities', volatilities)
   return symbols.map((s) => {
     return volatilities[oracleSymbols.indexOf(normalizeOptionSymbol(s))];
   });

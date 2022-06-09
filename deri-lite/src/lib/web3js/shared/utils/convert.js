@@ -37,6 +37,7 @@ export const min = (value1, value2) => {
   return value2;
 };
 
+
 export const fromWei = (value) => bg(value, -18).toString()
 
 export const toWei = (value) => bg(value, 18).toFixed(0).toString()
@@ -75,7 +76,7 @@ export const naturalWithPercentage = (value) =>
   `${bg(value).sd(4).times(100).toFixed(4).toString()}%`;
 
 export const formatBN = (bigNumber) =>
-  bigNumber.toFormat().replaceAll(',', '').toString();
+  bigNumber.toFormat().replace(/,/g, '').toString();
 
 // == convert
 export const numberToHex = (value) => Web3.utils.numberToHex(value);
@@ -164,7 +165,7 @@ export const sortOptionSymbols = (symbolList) => {
     const index1 =  symbol.indexOf(symbolArr[index][0]) + 1
     const index2 =  to2(direction.indexOf(symbolArr[index][2]) + 1)
     const index3 =  to2(price.indexOf(symbolArr[index][1]) + 1)
-    i.index = parseInt(`${index1}${index2}${index3}`)
+    i.index = parseInt(`${index1}${index3}${index2}`)
     return i
   }).sort((a, b) => a.index - b.index).map((i) => {
     delete i.index

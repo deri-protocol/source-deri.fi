@@ -27,7 +27,10 @@ export const databaseFactory = (() => {
 export const databaseActivityFactory = (() => {
   const databaseInstanceMap = {};
   return () => {
-    const address = DeriEnv.get() === 'prod' ? '0x75E04C816F206939a92AE7B23015ce3ef21aE571' : '0x7C1267188379f57d92e640E519151229E1eA5565'
+    const address =
+      DeriEnv.get() === 'prod'
+        ? '0x75E04C816F206939a92AE7B23015ce3ef21aE571'
+        : '0x7C1267188379f57d92e640E519151229E1eA5565';
     const key = address;
     if (Object.keys(databaseInstanceMap).includes(key)) {
       return databaseInstanceMap[key];
@@ -41,7 +44,26 @@ export const databaseActivityFactory = (() => {
 export const databaseActivityClaimFactory = (() => {
   const databaseInstanceMap = {};
   return () => {
-    const address = DeriEnv.get() === 'prod' ? '0xe40a75957034A003Da4b341FBb02a457Af2aa302' : '0x7C1267188379f57d92e640E519151229E1eA5565'
+    const address =
+      DeriEnv.get() === 'prod'
+        ? '0xe40a75957034A003Da4b341FBb02a457Af2aa302'
+        : '0x7C1267188379f57d92e640E519151229E1eA5565';
+    const key = address;
+    if (Object.keys(databaseInstanceMap).includes(key)) {
+      return databaseInstanceMap[key];
+    }
+    const database = new DatabaseContract(address);
+    databaseInstanceMap[key] = database;
+    return database;
+  };
+})();
+
+export const databasePEActivityFactory = (() => {
+  const databaseInstanceMap = {};
+  return (useProductionDB) => {
+    const address = useProductionDB
+      ? '0xc97F4af0E3e17806171CA7899DAFAec52085AE24'
+      : '0x7C1267188379f57d92e640E519151229E1eA5565';
     const key = address;
     if (Object.keys(databaseInstanceMap).includes(key)) {
       return databaseInstanceMap[key];

@@ -36,12 +36,12 @@ export class TERC20 extends ContractBase {
   }
 
   // tx
-  async approve(accountAddress, spender, amount) {
-    return await this._transact('approve', [spender, amount], accountAddress)
+  async approve(accountAddress, spender, amount, opts) {
+    return await this._transact('approve', [spender, amount], accountAddress, opts)
   }
   // only for testnet
-  async mint(accountAddress) {
-    return await this._transact('mint', [], accountAddress)
+  async mint(accountAddress, opts) {
+    return await this._transact('mint', [], accountAddress, opts)
   }
   //  async transfer(accountAddress, to, amount) {
   //    return await this._transact('transfer', [to, amount], accountAddress)

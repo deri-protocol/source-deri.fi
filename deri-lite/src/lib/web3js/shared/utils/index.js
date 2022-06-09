@@ -8,4 +8,4 @@ export * from './web3'
 export * from './api'
 // export * from './oracle'
 
-export * from './derijsnext'
+export * from './web3next'

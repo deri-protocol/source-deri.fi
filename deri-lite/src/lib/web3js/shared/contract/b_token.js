@@ -42,11 +42,12 @@ export class BToken extends ContractBase {
   }
 
   // === transaction ===
-  async unlock(accountAddress, poolAddress) {
+  async unlock(accountAddress, poolAddress, opts) {
     return await this._transact(
       'approve',
       [poolAddress, MAX_UINT256],
-      accountAddress
+      accountAddress,
+      opts,
     );
   }
 }

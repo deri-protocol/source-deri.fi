@@ -10,29 +10,31 @@ export class MiningVaultPool extends ContractBase {
     super(chainId, contractAddress, CONTRACT_ABI['abi']);
   }
   async mintDToken(accountAddress, ...args) {
-    await this._init()
-    const gas = await this._estimatedGas(
-      'claim',
-      [accountAddress, ...args],
-      accountAddress
-    );
-    //console.log(gas);
-    let txRaw = [
-      {
-        from: accountAddress,
-        to: this.contractAddress,
-        gas: numberToHex(gas),
-        value: numberToHex('0'),
-        data: this.contract.methods['claim'](
-          accountAddress,
-          ...args
-        ).encodeABI(),
-      },
-    ];
-    let tx = await window.ethereum.request({
-      method: 'eth_sendTransaction',
-      params: txRaw,
-    });
-    return await new Promise(this._getTransactionReceipt(tx));
+    //await this._init()
+    const opts = args.pop()
+    // const gas = await this._estimatedGas(
+    //   'claim',
+    //   [accountAddress, ...args],
+    //   accountAddress
+    // );
+    // //console.log(gas);
+    // let txRaw = [
+    //   {
+    //     from: accountAddress,
+    //     to: this.contractAddress,
+    //     gas: numberToHex(gas),
+    //     value: numberToHex('0'),
+    //     data: this.contract.methods['claim'](
+    //       accountAddress,
+    //       ...args
+    //     ).encodeABI(),
+    //   },
+    // ];
+    // let tx = await window.ethereum.request({
+    //   method: 'eth_sendTransaction',
+    //   params: txRaw,
+    // });
+    // return await new Promise(this._getTransactionReceipt(tx));
+    return await this._transact('claim', [accountAddress, ...args], accountAddress, opts)
   }
 }

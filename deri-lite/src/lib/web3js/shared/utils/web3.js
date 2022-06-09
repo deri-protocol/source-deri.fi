@@ -1,10 +1,14 @@
 import { hexToNumber } from './convert';
 import { web3Factory } from '../factory/web3'
+import { isObject, isArray } from './convert';
 
 const intRe = /^\d+$/
 // adopt from derijs next
 export const deleteIndexedKey = (obj) => {
-  if (typeof obj === 'object' && obj !== null &&  Object.keys(obj).length > 0) {
+  if (isObject(obj) && Object.keys(obj).length > 0) {
+    if (obj.__length__) {
+      delete obj.__length__
+    }
     const keys = Object.keys(obj);
     const intKeyCount = keys.reduce(
       (acc, k) => (intRe.test(k) ? acc + 1 : acc),
@@ -16,7 +20,7 @@ export const deleteIndexedKey = (obj) => {
       let newObj = {};
       Object.keys(obj).forEach((k) => {
         if (!intRe.test(k)) {
-          newObj[k] = obj[k];
+          newObj[k] = deleteIndexedKey(obj[k]);
         }
       });
       return newObj;
@@ -24,7 +28,7 @@ export const deleteIndexedKey = (obj) => {
       // is array container
       let res = [];
       for (let i = 0; i < keys.length; i++) {
-        if (Array.isArray(obj[i])) {
+        if (isArray(obj[i])) {
           res.push(deleteIndexedKey(obj[i]));
         } else {
           res.push(obj[i]);
@@ -35,6 +39,38 @@ export const deleteIndexedKey = (obj) => {
   }
   return obj;
 };
+// export const deleteIndexedKey = (obj) => {
+//   if (typeof obj === 'object' && obj !== null &&  Object.keys(obj).length > 0) {
+//     const keys = Object.keys(obj);
+//     const intKeyCount = keys.reduce(
+//       (acc, k) => (intRe.test(k) ? acc + 1 : acc),
+//       0
+//     );
+//     //console.log(keys);
+//     // is leaf array
+//     if (intKeyCount * 2 === keys.length) {
+//       let newObj = {};
+//       Object.keys(obj).forEach((k) => {
+//         if (!intRe.test(k)) {
+//           newObj[k] = obj[k];
+//         }
+//       });
+//       return newObj;
+//     } else if (intKeyCount === keys.length) {
+//       // is array container
+//       let res = [];
+//       for (let i = 0; i < keys.length; i++) {
+//         if (Array.isArray(obj[i])) {
+//           res.push(deleteIndexedKey(obj[i]));
+//         } else {
+//           res.push(obj[i]);
+//         }
+//       }
+//       return res;
+//     }
+//   }
+//   return obj;
+// };
 
   // get block number when last updated
   export const getLastUpdatedBlockNumber = async(chainId, contractAddress, position = 0) => {

@@ -10,14 +10,15 @@ export class WormholeContract extends ContractBase {
   constructor(chainId, contractAddress) {
     super(chainId, contractAddress, CONTRACT_ABI );
   }
-  async freeze(accountAddress, amount, toChainId) {
-    const { wormholeAddress: toWormholeAddress } = getDeriConfig(
+  async freeze(accountAddress, amount, toChainId, opts) {
+    const { wormholeAddress: toWormholeAddress } = await getDeriConfig(
       toChainId
     );
     return this._transact(
       'freeze',
       [naturalToDeri(amount), toChainId, toWormholeAddress],
-      accountAddress
+      accountAddress,
+      opts,
     );
   }
 
@@ -29,12 +30,14 @@ export class WormholeContract extends ContractBase {
     fromNonce,
     v,
     r,
-    s
+    s,
+    opts,
   ) {
     return this._transact(
       'claim',
       [amount, fromChainId, fromWormhole, fromNonce, v, r, s],
-      accountAddress
+      accountAddress,
+      opts,
     );
   }
 }

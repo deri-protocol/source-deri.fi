@@ -19,12 +19,13 @@ export class DeriContract extends ContractBase {
     ]);
     return deriToNatural(allowance).gt(0);
   }
-  async unlock(accountAddress, poolAddress) {
+  async unlock(accountAddress, poolAddress, opts) {
     //!this.poolAddress && console.log('please do setAccount(poolAddress) first');
     return await this._transact(
       'approve',
       [poolAddress, MAX_UINT256],
-      accountAddress
+      accountAddress,
+      opts,
     );
   }
 

@@ -62,8 +62,8 @@ export class TERC20MintLimit extends ContractBase {
   }
 
   // tx
-  async approve(accountAddress, spender, amount) {
-    return await this._transact('approve', [spender, amount], accountAddress)
+  async approve(accountAddress, spender, amount, opts) {
+    return await this._transact('approve', [spender, amount], accountAddress, opts)
   }
   //  async burn(accountAddress) {
   //    return await this._transact('burn', [], accountAddress)
@@ -74,8 +74,8 @@ export class TERC20MintLimit extends ContractBase {
   //  async controllerMint(accountAddress, account, amount) {
   //    return await this._transact('controllerMint', [account, amount], accountAddress)
   //  }
-  async mint(accountAddress) {
-    return await this._transact('mint', [], accountAddress)
+  async mint(accountAddress, opts) {
+    return await this._transact('mint', [], accountAddress, opts)
   }
   //  async setMintAmount(accountAddress, amount) {
   //    return await this._transact('setMintAmount', [amount], accountAddress)

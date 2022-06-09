@@ -34,10 +34,10 @@ export class OffChainVolatilityOracle extends ContractBase {
   //    const res = await this._call('timestamp', [])
   //    return deleteIndexedKey(res)
   //  }
-  //  async volatility() {
-  //    const res = await this._call('volatility', [])
-  //    return deleteIndexedKey(res)
-  //  }
+   async volatility() {
+     const res = await this._call('volatility', [])
+     return deleteIndexedKey(res)
+   }
 
   // tx
   //  async setDelayAllowance(accountAddress, delayAllowance_) {

@@ -9,3 +9,5 @@ export { BToken } from './b_token.js'
 export { WrappedOracle } from './oracle/wrapped_oracle.js'
 export { BrokerManager } from './activity/broker_manager.js'
 export { PTokenAirdrop } from './activity/ptoken_airdrop.js'
+
+export * from './factory.js'

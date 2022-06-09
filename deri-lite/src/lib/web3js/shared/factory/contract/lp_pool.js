@@ -40,29 +40,3 @@ export const clp2PoolFactory = (function () {
     return clp2Pool;
   };
 })();
-
-// export const lpPoolFactory = (function () {
-//   const lpPoolInstanceMap = {};
-//   return (chainId, contractAddress, isProvider = false) => {
-//     let key;
-//     if (isProvider) {
-//       key = `${chainId}.${contractAddress}.isProvider`;
-//     } else {
-//       key = `${chainId}.${contractAddress}`;
-//     }
-//     if (Object.keys(lpPoolInstanceMap).includes(key)) {
-//       return lpPoolInstanceMap[key];
-//     } else {
-//       let lpPool;
-//       const { type } = getLpContractAddress(chainId, contractAddress);
-//       console.log(`lp type: ${type}`);
-//       if (type === 'slp') {
-//         lpPool = new SlpPool(chainId, contractAddress, isProvider);
-//       } else if (type === 'clp') {
-//         lpPool = new ClpPool(chainId, contractAddress, isProvider);
-//       }
-//       lpPoolInstanceMap[key] = lpPool;
-//       return lpPool;
-//     }
-//   };
-// })();

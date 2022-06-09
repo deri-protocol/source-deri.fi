@@ -1,12 +1,11 @@
 import {
   getChainProviderUrls,
   getDailyBlockNumberConfig,
+  chainConfigList,
 } from '../config/chain';
-import { normalizeChainId } from './validate';
 import { getLatestRPCServer } from './network';
 
 export const getChainProviderUrl = async (chainId) => {
-  chainId = normalizeChainId(chainId);
   const urls = getChainProviderUrls(chainId);
   if (urls.length > 0) {
    const url =  await getLatestRPCServer(urls);
@@ -29,38 +28,23 @@ export const getDailyBlockNumber = (chainId) => {
 };
 
 export const getNetworkName = (chainId) => {
-  chainId = normalizeChainId(chainId);
-  let poolNetwork;
-  switch (chainId) {
-    case '1':
-      poolNetwork = 'ethereum';
-      break;
-    case '56':
-      poolNetwork = 'bsc';
-      break;
-    case '128':
-      poolNetwork = 'heco';
-      break;
-    case '3':
-      poolNetwork = 'ropsten';
-      break;
-    case '42':
-      poolNetwork = 'kovan';
-      break;
-    case '97':
-      poolNetwork = 'bsctestnet';
-      break;
-    case '256':
-      poolNetwork = 'hecotestnet';
-      break;
-    case '137':
-      poolNetwork = 'matic';
-      break;
-    case '80001':
-      poolNetwork = 'mumbai';
-      break;
-    default:
-      throw new Error(`The networkId is not valid for chainId ${chainId}`);
+  const config = chainConfigList.find((c) => c.chainId === chainId)
+  if (config && config.name)  {
+    return config.name
   }
-  return poolNetwork;
+  throw new AppError('CONFIG_NOT_FOUND', {
+    name: 'getNetworkName',
+    args: [chainId],
+  });
+};
+
+export const getChainGasUnit= (chainId) => {
+  const config = chainConfigList.find((c) => c.chainId === chainId)
+  if (config && config.unit)  {
+    return config.unit
+  }
+  throw new AppError('CONFIG_NOT_FOUND', {
+    name: 'getChainGasUnit',
+    args: [chainId],
+  });
 };

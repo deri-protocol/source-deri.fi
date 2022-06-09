@@ -9,13 +9,13 @@ export class Clp2Pool extends ContractBase {
   constructor(chainId, contractAddress) {
     super(chainId, contractAddress, CONTRACT_ABI);
   }
-  async addLiquidity(accountAddress, amount) {
+  async addLiquidity(accountAddress, amount, opts) {
     const args = [391, naturalToDeri(amount)];
-    return await this._transact('deposit', args, accountAddress);
+    return await this._transact('deposit', args, accountAddress, opts);
   }
-  async removeLiquidity(accountAddress, amount) {
+  async removeLiquidity(accountAddress, amount, opts) {
     const args = [391, naturalToDeri(amount)];
-    return await this._transact('withdraw', args, accountAddress);
+    return await this._transact('withdraw', args, accountAddress, opts);
   }
   async getLiquidity(accountAddress) {
     //console.log('hit clp2')

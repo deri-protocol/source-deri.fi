@@ -3,10 +3,10 @@
     "prod": {
       "pools": [
         {
-          "pool": "0x66f501dda450C8978c4A1115D7b2A7FAa7702F05",
+          "pool": "0x4B439ABCBc736837D0F7f7A9C5619bF8fa650e15",
           "pToken": "0x2AA5865BF556ab3f6Cd9405e565099f70234dF05",
           "lToken": "0x6f8F1C2781b555B63F1A1BE85BF99aEe27d87cB2",
-          "router": "0x896ea3a202795feb3f26a5f61f481258ca797CFD",
+          "router": "0x5b2BBCF596feBdC3a701601c7dBa3bDfC45210c6",
           "bTokens": [
             {
               "bTokenId": "0",
@@ -41,18 +41,17 @@
               "unit": "BNB"
             }
           ],
-          "initialBlock": "14091331",
+          "initialBlock": "12181000",
           "type": "perpetual",
           "version": "v2",
           "versionId": "v2_dpmm",
-          "chainId": "56",
-          "retired": true
+          "chainId": "56"
         },
         {
-          "pool": "0x4Db087225C920Bec55B2dCEAa629BDc5782623D9",
+          "pool": "0x6be39f5C04C837aE3c55bF19D10EC370c52Dc0ac",
           "pToken": "0x0757bC621A32b1134eCf2843955B0bBc8CA13BA1",
           "lToken": "0xADeA18DA0aF0Ab14900A5634EdDf5A83513cdcE0",
-          "router": "0xA06095Cf9FF327FD7Cc9d9bf99EE71f6241C8dcB",
+          "router": "0x8B0340a77f807D0857Ef4C3fB0014A8cE3591E93",
           "bTokens": [
             {
               "bTokenId": "0",
@@ -82,7 +81,7 @@
               "unit": "ETH"
             }
           ],
-          "initialBlock": "23362144",
+          "initialBlock": "20726570",
           "type": "perpetual",
           "version": "v2",
           "versionId": "v2_dpmm",
@@ -291,7 +290,7 @@
     "prod": {
       "pools": [
         {
-          "pool": "0x574022307e60bE1f07da6Ec1cB8fE23d426e5831",
+          "pool": "0xbC259DCA83b7EdD81b28BcCd1fee87d7b881785a",
           "pToken": "0x6c4907a76628574C14C6292DEA5B4A5cD81D9Ee0",
           "lToken": "0x992974FF499979cDd295214f8883D83a93855fA7",
           "bToken": "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
@@ -303,6 +302,21 @@
               "unit": "AXS"
             },
             {
+              "symbolId": "1",
+              "symbol": "MBOXUSDT",
+              "unit": "MBOX"
+            },
+            {
+              "symbolId": "2",
+              "symbol": "IBSCDEFI",
+              "unit": "iBSCDEFI"
+            },
+            {
+              "symbolId": "3",
+              "symbol": "IGAME",
+              "unit": "iGAME"
+            },
+            {
               "symbolId": "4",
               "symbol": "ALICEUSDT",
               "unit": "ALICE"
@@ -317,17 +331,21 @@
               "symbol": "SHIBUSDT",
               "unit": "SHIB",
               "decimals": "6"
+            },
+            {
+              "symbolId": "7",
+              "symbol": "SANDUSDT",
+              "unit": "SAND"
             }
           ],
-          "initialBlock": "13050183",
+          "initialBlock": "12182029",
           "type": "perpetual",
           "version": "v2_lite",
           "versionId": "v2_lite_dpmm",
-          "chainId": "56",
-          "retired": true
+          "chainId": "56"
         },
         {
-          "pool": "0x26bE73Bdf8C113F3630e4B766cfE6F0670Aa09cF",
+          "pool": "0x9e2f5E284BEEb2C955987eD1EbB2149494CC1e41",
           "pToken": "0xef4c81c76ED66d9B02e0d5de2eD352f840Eb497C",
           "lToken": "0xC246d0aD04a9029A82862BE2fbd16ab1445b1602",
           "bToken": "0xe60eaf5A997DFAe83739e035b005A33AfdCc6df5",
@@ -339,6 +357,21 @@
               "unit": "AXS"
             },
             {
+              "symbolId": "1",
+              "symbol": "MBOXUSDT",
+              "unit": "MBOX"
+            },
+            {
+              "symbolId": "2",
+              "symbol": "IBSCDEFI",
+              "unit": "iBSCDEFI"
+            },
+            {
+              "symbolId": "3",
+              "symbol": "IGAME",
+              "unit": "iGAME"
+            },
+            {
               "symbolId": "4",
               "symbol": "ALICEUSDT",
               "unit": "ALICE"
@@ -353,16 +386,21 @@
               "symbol": "SHIBUSDT",
               "unit": "SHIB",
               "decimals": "6"
+            },
+            {
+              "symbolId": "7",
+              "symbol": "SANDUSDT",
+              "unit": "SAND"
             }
           ],
-          "initialBlock": "13050356",
+          "initialBlock": "12182152",
           "type": "perpetual",
           "version": "v2_lite",
           "versionId": "v2_lite_dpmm",
           "chainId": "56"
         },
         {
-          "pool": "0xA8769A4Fb0Ca82eb474448B1683DCA3c79798B69",
+          "pool": "0x9C0033D74618BC081Aca8b5E4bf64574a8C5960E",
           "pToken": "0xDC3ED843f0c411Eea1B84C0277CDFC5B71E22059",
           "lToken": "0x35C8b3bb6CE67d9bf6b14a5FfC121A79d6247d07",
           "bToken": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
@@ -379,6 +417,11 @@
               "unit": "ALICE"
             },
             {
+              "symbolId": "2",
+              "symbol": "SANDUSDT",
+              "unit": "SAND"
+            },
+            {
               "symbolId": "3",
               "symbol": "QUICKUSDT",
               "unit": "QUICK"
@@ -394,14 +437,14 @@
               "unit": "AGLD"
             }
           ],
-          "initialBlock": "21937580",
+          "initialBlock": "20727026",
           "type": "perpetual",
           "version": "v2_lite",
           "versionId": "v2_lite_dpmm",
           "chainId": "137"
         },
         {
-          "pool": "0xdDfCA16Cd80Ae3aeeb7C7ef743924Ac39A94cC9c",
+          "pool": "0x29e9dC4634bd9a8930FF07f4Fa2E1479CDF5d17F",
           "pToken": "0x074f37Be1c9818b192aCdB3B268baA52d052ea28",
           "lToken": "0x7B0a54d667F2665438DDf66349C30d75Dc4c590A",
           "bToken": "0x3D1D2aFd191b165D140e3E8329E634665fFB0E5e",
@@ -418,6 +461,11 @@
               "unit": "ALICE"
             },
             {
+              "symbolId": "2",
+              "symbol": "SANDUSDT",
+              "unit": "SAND"
+            },
+            {
               "symbolId": "3",
               "symbol": "QUICKUSDT",
               "unit": "QUICK"
@@ -433,7 +481,7 @@
               "unit": "AGLD"
             }
           ],
-          "initialBlock": "21937673",
+          "initialBlock": "20727196",
           "type": "perpetual",
           "version": "v2_lite",
           "versionId": "v2_lite_dpmm",
@@ -589,24 +637,58 @@
     "testnet": {
       "pools": [
         {
-          "pool": "0x792ec4De2B607baEF7DAAE9d238d73Ffb4819972",
-          "pToken": "0xA6309EE8378Be048B6985746655EaE2b878dad26",
-          "lToken": "0xfd3bfb84Db09733dB47F6bBfdE167e602dEC2Fb7",
+          "pool": "0x2922cc3f09eec9648b231B4AF074a6E7c443Be20",
+          "pToken": "0x02dE63c1f730d06332d473B8dC6E50D58e07Af90",
+          "lToken": "0x397D7a569EB8De270070Cf4DA38584398C38D512",
           "bToken": "0xaa2B8115c094445e96C2CD951c17a30F41867323",
           "bTokenSymbol": "TBUSD",
           "symbols": [
             {
               "symbolId": "0",
-              "symbol": "BTCUSD",
-              "unit": "BTC"
+              "symbol": "AXSUSDT",
+              "unit": "AXS"
             },
             {
               "symbolId": "1",
-              "symbol": "ETHUSD",
-              "unit": "ETH"
+              "symbol": "MBOXUSDT",
+              "unit": "MBOX"
+            },
+            {
+              "symbolId": "2",
+              "symbol": "IBSCDEFI",
+              "unit": "iBSCDEFI"
             }
           ],
-          "initialBlock": "13590247",
+          "initialBlock": "14187315",
+          "type": "perpetual",
+          "version": "v2_lite",
+          "versionId": "v2_lite_dpmm",
+          "chainId": "97"
+        },
+        {
+          "pool": "0x18463a7AF32fd9629EFFD54CE2c7e7f3980B7396",
+          "pToken": "0xd639996939847cBF79e66dFb68563B859A0b4158",
+          "lToken": "0x0af9Ac9794a52362D074aA3e72886D9146149780",
+          "bToken": "0xcf02E0E7790E5c7005819b69d6573417Eb44D4e4",
+          "bTokenSymbol": "TDERI",
+          "symbols": [
+            {
+              "symbolId": "0",
+              "symbol": "AXSUSDT",
+              "unit": "AXS"
+            },
+            {
+              "symbolId": "1",
+              "symbol": "MBOXUSDT",
+              "unit": "MBOX"
+            },
+            {
+              "symbolId": "2",
+              "symbol": "IBSCDEFI",
+              "unit": "iBSCDEFI"
+            }
+          ],
+          "initialBlock": "14187744",
           "type": "perpetual",
           "version": "v2_lite",
           "versionId": "v2_lite_dpmm",
@@ -792,10 +874,9 @@
           ],
           "initialBlock": "12305540",
           "type": "option",
-          "version": "v2",
+          "version": "option",
           "versionId": "option",
-          "chainId": "56",
-          "retired": true
+          "chainId": "56"
         }
       ],
       "poolViewer": [
@@ -951,6 +1032,36 @@
             {
               "symbolId": "3",
               "symbol": "ETHUSD-3000-P",
+              "unit": "ETH"
+            },
+            {
+              "symbolId": "4",
+              "symbol": "BTCUSD-70000-C",
+              "unit": "BTC"
+            },
+            {
+              "symbolId": "5",
+              "symbol": "BTCUSD-60000-C",
+              "unit": "BTC"
+            },
+            {
+              "symbolId": "6",
+              "symbol": "BTCUSD-50000-P",
+              "unit": "BTC"
+            },
+            {
+              "symbolId": "7",
+              "symbol": "ETHUSD-5000-C",
+              "unit": "ETH"
+            },
+            {
+              "symbolId": "8",
+              "symbol": "ETHUSD-3000-C",
+              "unit": "ETH"
+            },
+            {
+              "symbolId": "9",
+              "symbol": "ETHUSD-2000-P",
               "unit": "ETH"
             }
           ],

@@ -1,9 +1,9 @@
-import { DeriEnv } from '../config'
-import { normalizeChainId } from '../utils/validate'
+import { DeriEnv, Env } from './env';
+import { checkChainId, checkEnv } from './check';
 
-export const getPoolV1ConfigList = (env = 'dev') => {
-  // production environment
-  if (env === 'prod') {
+export const getPoolV1ConfigList = (env) => {
+  env = checkEnv(env);
+  if (env === Env.PROD) {
     return [
       {
         pool: '0xAf081e1426f64e74117aD5F695D2A80482679DE5',
@@ -17,9 +17,11 @@ export const getPoolV1ConfigList = (env = 'dev') => {
         symbol: 'BTCUSD',
         unit: 'BTC',
         chainId: '56',
-        type: 'perpetual',
+        type: 'future',
         version: 'v1',
         versionId: 'v1',
+        env: 'prod',
+        chain: 'bsc',
         retired: true,
       },
       {
@@ -34,9 +36,11 @@ export const getPoolV1ConfigList = (env = 'dev') => {
         symbol: 'COIN',
         unit: 'COIN',
         chainId: '56',
-        type: 'perpetual',
+        type: 'future',
         version: 'v1',
         versionId: 'v1',
+        env: 'prod',
+        chain: 'bsc',
         retired: true,
       },
       {
@@ -51,9 +55,11 @@ export const getPoolV1ConfigList = (env = 'dev') => {
         symbol: 'iMEME',
         unit: 'iMEME',
         chainId: '56',
-        type: 'perpetual',
+        type: 'future',
         version: 'v1',
         versionId: 'v1',
+        env: 'prod',
+        chain: 'bsc',
         retired: true,
       },
       {
@@ -68,9 +74,11 @@ export const getPoolV1ConfigList = (env = 'dev') => {
         symbol: 'BTCUSD',
         unit: 'BTC',
         chainId: '1',
-        type: 'perpetual',
+        type: 'future',
         version: 'v1',
         versionId: 'v1',
+        env: 'prod',
+        chain: 'bsc',
         retired: true,
       },
       {
@@ -85,9 +93,11 @@ export const getPoolV1ConfigList = (env = 'dev') => {
         symbol: 'BTCUSD',
         unit: 'BTC',
         chainId: '1',
-        type: 'perpetual',
+        type: 'future',
         version: 'v1',
         versionId: 'v1',
+        env: 'prod',
+        chain: 'bsc',
         retired: true,
       },
       {
@@ -102,13 +112,15 @@ export const getPoolV1ConfigList = (env = 'dev') => {
         symbol: 'BTCUSD',
         unit: 'BTC',
         chainId: '128',
-        type: 'perpetual',
+        type: 'future',
         version: 'v1',
         versionId: 'v1',
+        env: 'prod',
+        chain: 'bsc',
         retired: true,
       },
     ];
-  } else if (env === 'dev') {
+  } else if (env === Env.DEV) {
     return [
       {
         pool: '0x372b640A00a0A6B73381e9363A39644a712cCc37',
@@ -120,111 +132,42 @@ export const getPoolV1ConfigList = (env = 'dev') => {
         symbol: 'BTCUSD',
         unit: 'BTC',
         chainId: '97',
-        type: 'perpetual',
+        type: 'future',
         version: 'v1',
         versionId: 'v1',
+        env: 'dev',
+        chain: 'bsctestnet',
+        retired: true,
       },
     ];
-  } else if (env === 'testnet') {
+  } else if (env === Env.TESTNET) {
     return [];
   }
 };
 
-// export const getSlpContractAddressConfig = (env = 'dev') => {
-//   if (env === 'prod') {
-//     return [
-//       {
-//         pool: '0xc2EdaD668740f1aA35E4D8f227fB8E17dcA888Cd',
-//         bToken: '0xA3DfbF2933FF3d96177bde4928D0F5840eE55600',
-//         pToken: '0x0000000000000000000000000000000000000000',
-//         lToken: '0x0000000000000000000000000000000000000000',
-//         dToken: '0xA487bF43cF3b10dffc97A9A744cbB7036965d3b9',
-//         MiningVault: '0x7826Ef8Da65494EA21D64D8E6A76AB1BED042FD8',
-//         chainId: '1',
-//         bTokenSymbol: 'DERI-USDT SLP',
-//         symbol: '--',
-//       },
-//     ];
-//   }
-//   console.log('getSlpContractAddressConfig(): no config for dev environment');
-//   return [];
-// };
-
-// export const getClpContractAddressConfig = (env = 'dev') => {
-//   if (env === 'prod') {
-//     return [
-//       {
-//         pool:   '0x4de2Ac273aD1BBe2F5C41f986d7b3cef8383Df98',
-//         bToken: '0xDc7188AC11e124B1fA650b73BA88Bf615Ef15256',
-//         pToken: '0x0000000000000000000000000000000000000000',
-//         lToken: '0x83b31Abc899863B8Eb06952994580CE86414156E',
-//         dToken: '0x0000000000000000000000000000000000000000',
-//         MiningVault: '0x0000000000000000000000000000000000000000',
-//         initialBlock: '6894880',
-//         chainId: '56',
-//         bTokenSymbol: 'CAKE-LP',
-//         symbol: '--',
-//         retired: true,
-//       },
-//     ];
-//   } else {
-//     return [];
-//   }
-// };
-// export const getClp2ContractAddressConfig = (env = 'dev') => {
-//   if (env === 'prod') {
-//     return [
-//       {
-//         pool:   '0x73feaa1eE314F8c655E354234017bE2193C9E24E',
-//         bToken: '0xDc7188AC11e124B1fA650b73BA88Bf615Ef15256',
-//         pToken: '0x0000000000000000000000000000000000000000',
-//         lToken: '0x0000000000000000000000000000000000000000',
-//         dToken: '0x0000000000000000000000000000000000000000',
-//         MiningVault: '0x0000000000000000000000000000000000000000',
-//         initialBlock: '699498',
-//         chainId: '56',
-//         bTokenSymbol: 'CAKE-LP SYRUP',
-//         symbol: '--',
-//       },
-//     ];
-//   } else {
-//     return [];
-//   }
-// };
-
-export const getLpConfigList = (env = 'dev') => {
-  if (env === 'prod') {
+export const getLpConfigList = async(env) => {
+  env = checkEnv(env);
+  if (env === Env.PROD) {
     return [
       {
-        pool:   '0xc2EdaD668740f1aA35E4D8f227fB8E17dcA888Cd',
+        pool: '0xc2EdaD668740f1aA35E4D8f227fB8E17dcA888Cd',
         bToken: '0xA3DfbF2933FF3d96177bde4928D0F5840eE55600',
         pToken: '0x0000000000000000000000000000000000000000',
         lToken: '0x0000000000000000000000000000000000000000',
         dToken: '0xA487bF43cF3b10dffc97A9A744cbB7036965d3b9',
         MiningVault: '0x7826Ef8Da65494EA21D64D8E6A76AB1BED042FD8',
         chainId: '1',
+        chain: "ethereum",
         bTokenSymbol: 'DERI-USDT SLP',
+        bTokens: [{ bTokenSymbol: 'DERI' }, { bTokenSymbol: 'USDT' }],
         symbol: '--',
-        type: 'slp',
+        type: 'lp',
+        version: 'slp',
         isLp: true,
+        rewarded: true,
       },
       {
-        pool:   '0x4de2Ac273aD1BBe2F5C41f986d7b3cef8383Df98',
-        bToken: '0xDc7188AC11e124B1fA650b73BA88Bf615Ef15256',
-        pToken: '0x0000000000000000000000000000000000000000',
-        lToken: '0x83b31Abc899863B8Eb06952994580CE86414156E',
-        dToken: '0x0000000000000000000000000000000000000000',
-        MiningVault: '0x0000000000000000000000000000000000000000',
-        initialBlock: '6894880',
-        chainId: '56',
-        bTokenSymbol: 'CAKE-LP',
-        symbol: '--',
-        type: 'clp',
-        retired: true,
-        isLp: true,
-      },
-      {
-        pool:   '0x73feaa1eE314F8c655E354234017bE2193C9E24E',
+        pool: '0x73feaa1eE314F8c655E354234017bE2193C9E24E',
         bToken: '0xDc7188AC11e124B1fA650b73BA88Bf615Ef15256',
         pToken: '0x0000000000000000000000000000000000000000',
         lToken: '0x0000000000000000000000000000000000000000',
@@ -232,10 +175,14 @@ export const getLpConfigList = (env = 'dev') => {
         MiningVault: '0x0000000000000000000000000000000000000000',
         initialBlock: '699498',
         chainId: '56',
-        bTokenSymbol: 'CAKE-LP SYRUP',
+        chain: "bsc",
+        bTokenSymbol: 'PANCAKE-LP SYRUP',
+        bTokens: [{ bTokenSymbol: 'DERI' }, { bTokenSymbol: 'BUSD' }],
         symbol: '--',
-        type: 'clp2',
+        type: 'lp',
+        version: 'clp',
         isLp: true,
+        rewarded: true,
       },
     ];
   } else {
@@ -253,15 +200,16 @@ export const getMiningVaultRouterConfig = (chainId) => {
   const filteredConfig = configs.filter((i) => i.chainId === chainId);
   if (filteredConfig.length > 0) {
     return filteredConfig[0].MiningVaultRouter;
-  } else {
-    throw new Error(
-      `getMiningVaultRouterAddressConfig: no address for chainId ${chainId}`
-    );
   }
+  throw new Error('CONFIG_NOT_FOUND', {
+    name: 'getMiningVaultRouterConfig',
+    args: [chainId],
+  });
 };
 
-export const getDeriConfigList= (env = 'dev') => {
-  if (env === 'prod') {
+export const getDeriConfigList = async(env) => {
+  env = checkEnv(env)
+  if (env === Env.PROD) {
     return [
       {
         Deri: '0xA487bF43cF3b10dffc97A9A744cbB7036965d3b9',
@@ -281,6 +229,12 @@ export const getDeriConfigList= (env = 'dev') => {
         bTokenSymbol: 'DERI',
         chainId: '128',
       },
+      {
+        Deri: '0x21E60EE73F17AC0A411ae5D690f908c3ED66Fe12',
+        Wormhole: '0x0000000000000000000000000000000000000000',
+        bTokenSymbol: 'DERI',
+        chainId: '42161',
+      }
     ];
   }
   return [
@@ -302,11 +256,18 @@ export const getDeriConfigList= (env = 'dev') => {
       bTokenSymbol: 'DERI',
       chainId: '256',
     },
+      {
+        Deri: '0x0000000000000000000000000000000000000000',
+        Wormhole: '0x0000000000000000000000000000000000000000',
+        bTokenSymbol: 'DERI',
+        chainId: '421611',
+      }
   ];
 };
 
-export const getPreminingConfigList = (env = 'dev') => {
-  if (env === 'prod') {
+export const getPreminingConfigList = async(env) => {
+  env = checkEnv(env)
+  if (env === Env.PROD) {
     return [
       {
         bToken: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
@@ -438,99 +399,35 @@ export const getPreminingConfigList = (env = 'dev') => {
       },
     ];
   } else {
-    return []
+    return [];
   }
 };
 
-
-// export const getSlpConfig = (chainId, poolAddress) => {
-//   chainId = normalizeChainId(chainId);
-//   const pools = getLpConfigList(DeriEnv.get()).filter(
-//     (c) => c.chainId === chainId
-//   );
-//   const pool = pools.filter((p) => p.pool === poolAddress);
-//   if (pool.length > 0) {
-//     return {
-//       poolAddress: pool[0].pool,
-//       bTokenAddress: pool[0].bToken,
-//       pTokenAddress: pool[0].pToken,
-//       lTokenAddress: pool[0].lToken,
-//       dTokenAdress: pool[0].dToken,
-//       MinningVaultAddress: pool[0].MiningVault,
-//     };
-//   }
-//   console.log(
-//     `getSlpConfig(): contract address is not found: ${chainId} ${poolAddress}`
-//   );
-//   return {};
-// };
-
-// export const getClp2Config= (chainId, poolAddress) => {
-//   chainId = normalizeChainId(chainId);
-//   const pools = getLpContractConfigList(DeriEnv.get()).filter(
-//     (c) => c.chainId === chainId
-//   );
-//   const pool = pools.filter((p) => p.pool === poolAddress);
-//   if (pool.length > 0) {
-//     return {
-//       poolAddress: pool[0].pool,
-//       bTokenAddress: pool[0].bToken,
-//       pTokenAddress: pool[0].pToken,
-//       lTokenAddress: pool[0].lToken,
-//       dTokenAdress: pool[0].dToken,
-//       MinningVaultAddress: pool[0].MiningVault,
-//     };
-//   }
-//   console.log(
-//     `getClp2Config(): contract address is not found: ${chainId} ${poolAddress}`
-//   );
-//   return {};
-// };
-
-// export const getClpConfig= (chainId, poolAddress) => {
-//   chainId = normalizeChainId(chainId);
-//   const pools = getLpContractConfigList(DeriEnv.get()).filter(
-//     (c) => c.chainId === chainId
-//   );
-//   const pool = pools.filter((p) => p.pool === poolAddress);
-//   if (pool.length > 0) {
-//     return {
-//       poolAddress: pool[0].pool,
-//       bTokenAddress: pool[0].bToken,
-//       lTokenAddress: pool[0].lToken,
-//     };
-//   }
-//   console.log(
-//     `getClpContractAddress(): contract address is not found: ${chainId} ${poolAddress}`
-//   );
-//   return {};
-// };
-
-export const getLpConfig = (chainId, poolAddress) => {
-  chainId = normalizeChainId(chainId);
-  const pools = getLpConfigList(DeriEnv.get()).filter(
+export const getLpConfig = async(chainId, poolAddress) => {
+  chainId = checkChainId(chainId);
+  const pools = (await getLpConfigList(DeriEnv.get())).filter(
     (c) => c.chainId === chainId
   );
-  const pool = pools.filter((p) => p.pool === poolAddress);
-  if (pool.length > 0) {
+  const pool = pools.find((p) => p.pool === poolAddress);
+  if (pool) {
     return {
-      poolAddress: pool[0].pool,
-      bTokenAddress: pool[0].bToken,
-      lTokenAddress: pool[0].lToken,
-      type: pool[0].type,
+      poolAddress: pool.pool,
+      bTokenAddress: pool.bToken,
+      lTokenAddress: pool.lToken,
+      type: pool.type,
+      version: pool.version,
     };
   }
-  console.log(
-    `getLpConfig(): contract address is not found: ${chainId} ${poolAddress}`
-  );
-  return {};
+  throw new Error('CONFIG_NOT_FOUND', {
+    name: 'getLpConfig',
+    args: [chainId, poolAddress],
+  });
 };
 
-export const getDeriConfig= (chainId) => {
-  chainId = normalizeChainId(chainId);
-  const pool = getDeriConfigList(DeriEnv.get()).filter(
-    (c) => c.chainId === chainId
-  );
+export const getDeriConfig = async(chainId) => {
+  const env = DeriEnv.get()
+  chainId = checkChainId(chainId);
+  const pool = (await getDeriConfigList(env)).filter((c) => c.chainId === chainId);
   if (pool.length > 0) {
     return {
       deriAddress: pool[0].Deri,
@@ -538,14 +435,14 @@ export const getDeriConfig= (chainId) => {
       bTokenSymbol: pool[0].bTokenSymbol,
     };
   }
-  console.log(
-    `getDeriConfig(): contract address is not found: ${chainId}`
-  );
-  return {};
+  throw new Error('CONFIG_NOT_FOUND', {
+    name: 'getDeriConfig',
+    args: [env, chainId],
+  });
 };
 
 export const getMiningVaultConfig = (chainId) => {
-  chainId = normalizeChainId(chainId);
+  chainId = checkChainId(chainId);
   const pools = getPoolV1ConfigList(DeriEnv.get()).filter(
     (c) => c.chainId === chainId
   );
@@ -554,11 +451,15 @@ export const getMiningVaultConfig = (chainId) => {
       return pools[0].MiningVault;
     }
   }
+  throw new Error('CONFIG_NOT_FOUND', {
+    name: 'getMiningVaultConfi',
+    args: [chainId],
+  });
 };
 
 export const getPoolV1Config = (chainId, poolAddress) => {
-  chainId = normalizeChainId(chainId);
-  const env = DeriEnv.get()
+  chainId = checkChainId(chainId);
+  const env = DeriEnv.get();
   const pools = getPoolV1ConfigList(env)
     .concat(getPreminingConfigList(env))
     .concat(getLpConfigList(env))
@@ -577,9 +478,9 @@ export const getPoolV1Config = (chainId, poolAddress) => {
       unit: pool[0].unit,
       initialBlock: pool[0].initialBlock,
     };
-  } else {
-    throw new Error(
-      `getPoolV1Config(): contract address is not found: ${chainId} ${poolAddress}`
-    );
   }
-}
+  throw new Error('CONFIG_NOT_FOUND', {
+    name: 'getPoolV1Config',
+    args: [chainId, poolAddress],
+  });
+};

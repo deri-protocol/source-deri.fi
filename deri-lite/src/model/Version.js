@@ -2,7 +2,7 @@ import { makeAutoObservable, observable, action, computed } from "mobx";
 import { storeVersion, restoreVersion } from "../utils/utils";
 
 class Version {
-  current = 'v2';
+  current = 'v3';
 
   constructor(){
     makeAutoObservable(this,{

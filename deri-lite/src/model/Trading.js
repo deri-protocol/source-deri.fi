@@ -112,8 +112,6 @@ export default class Trading {
       isPositive: computed
     })
     this.configInfo = new Config();
-    this.indexOracle = new Oracle();
-    this.markOracle = new Oracle();
     this.positionInfo = new Position()
     this.contractInfo = new Contract();
     this.historyInfo = new History()
@@ -164,15 +162,7 @@ export default class Trading {
   }
 
   async loadByConfig(wallet, config, symbolChanged, finishedCallback, isOption) {
-    //切换指数
-    if (symbolChanged && config) {
-      this.indexOracle.addListener('indexPrice', data => {
-        this.setIndex(data.close)
-      })
-      this.markOracle.addListener('markPrice',data => {
-        this.setMarkPrice(data.close)
-      })
-    }
+    
     if (config) {
       Promise.all([
         this.positionInfo.load(wallet, config, position => {
@@ -196,8 +186,6 @@ export default class Trading {
         }
       }).finally(e => {
         finishedCallback && finishedCallback()
-        this.indexOracle.load(getFormatSymbol(config.symbol.split('-')[0]))
-        this.markOracle.load(getFormatSymbol(config.markpriceSymbolFormat || `${config.symbol}-MARKPRICE`))
         this.positionInfo.start()
         this.positionInfo.startAll();
         this.resume();
@@ -287,8 +275,6 @@ export default class Trading {
    */
   pause() {
     this.setPaused(true)
-    this.indexOracle.pause();
-    this.markOracle.pause();
     this.positionInfo.pause();
   }
 
@@ -297,8 +283,6 @@ export default class Trading {
    */
   resume() {
     this.setPaused(false)
-    this.indexOracle.resume();
-    this.markOracle.resume();
     this.positionInfo.resume();
   }
 
@@ -429,8 +413,6 @@ export default class Trading {
 
   clean() {
     this.pause();
-    this.indexOracle.clean();
-    this.markOracle.clean();
     this.positionInfo.clean();
     this.version = null;
     this.config = null;

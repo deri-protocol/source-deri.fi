@@ -6,15 +6,6 @@ import version from '../../../../model/Version'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min'
 
 export default function Lite({lang}){
-  const location = useLocation();
-  const isV1Router = location.pathname.split('/')[3]
-  if(isV1Router === 'v1'){
-    version.setCurrent('v1')
-  }else {
-    if(version.isV1){
-      version.setCurrent('v2')
-    }
-  }
   return (
     <div className='trade-container'>
       <AreaPicker lang={lang} ></AreaPicker> 

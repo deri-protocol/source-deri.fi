@@ -47,7 +47,10 @@ registerMicroApps(microApps, {
   ]
 })
 
-if(apps && apps.length > 0){
+const current = apps.find(app => app.activeRule === window.location.hash)
+if(current) {
+  setDefaultMountApp(current.activeRule)
+} else if(apps && apps.length > 0){
   setDefaultMountApp(apps[0].activeRule)
 }
 start();

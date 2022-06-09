@@ -367,7 +367,7 @@ export const getPoolViewerConfig = (chainId, version="v2_lite") => {
   if (viewer && viewer.address) {
     return viewer.address
   } else {
-    throw new AppError('CONFIG_NOT_FOUND', {
+    throw new Error('CONFIG_NOT_FOUND', {
       name: 'getPoolViewerConfig',
       args: [chainId, version],
     });
@@ -384,7 +384,7 @@ export const getPoolConfig = (poolAddress) => {
   if (pool) {
     return pool;
   }
-  throw new AppError('CONFIG_NOT_FOUND', {
+  throw new Error('CONFIG_NOT_FOUND', {
     name: 'getPoolConfig',
     args: [DeriEnv.get(), poolAddress],
   });

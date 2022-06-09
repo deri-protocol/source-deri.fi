@@ -39,5 +39,5 @@ export const getJsonConfig = (env) => {
   if (config.pools) {
     return config.pools;
   }
-  throw new AppError('CONFIG_LIST_NOT_FOUND', { name: 'getJsonConfig', env });
+  throw new Error('CONFIG_LIST_NOT_FOUND', { name: 'getJsonConfig', env });
 };

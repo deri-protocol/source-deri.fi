@@ -181,7 +181,7 @@ const aaveTokenData = [
 //   if (token) {
 //     return token;
 //   }
-//   throw new AppError(ErrorCode.CONFIG_NOT_FOUND, {
+//   throw new Error(ErrorCode.CONFIG_NOT_FOUND, {
 //     name: 'getBTokenApyAndDiscount',
 //     args: [tokenName],
 //   });

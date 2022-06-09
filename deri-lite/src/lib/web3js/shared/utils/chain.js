@@ -32,7 +32,7 @@ export const getNetworkName = (chainId) => {
   if (config && config.name)  {
     return config.name
   }
-  throw new AppError('CONFIG_NOT_FOUND', {
+  throw new Error('CONFIG_NOT_FOUND', {
     name: 'getNetworkName',
     args: [chainId],
   });
@@ -43,7 +43,7 @@ export const getChainGasUnit= (chainId) => {
   if (config && config.unit)  {
     return config.unit
   }
-  throw new AppError('CONFIG_NOT_FOUND', {
+  throw new Error('CONFIG_NOT_FOUND', {
     name: 'getChainGasUnit',
     args: [chainId],
   });

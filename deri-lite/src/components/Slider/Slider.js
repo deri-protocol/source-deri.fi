@@ -3,7 +3,7 @@ import RcSlider,{SliderTooltip} from 'rc-slider'
 import 'rc-slider/assets/index.css';
 import './slider.less'
 import classNames from 'classnames';
-import { bg } from '../../lib/web3js/indexV2';
+import { bg } from '../../lib/web3js/index';
 const { Handle } = RcSlider;
 
 

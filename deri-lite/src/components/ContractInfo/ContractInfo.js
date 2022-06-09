@@ -3,7 +3,7 @@ import NumberFormat from 'react-number-format'
 import { inject, observer } from 'mobx-react';
 import TipWrapper from '../TipWrapper/TipWrapper';
 import version from '../../model/Version';
-import { DeriEnv } from '../../lib/web3js/indexV2'
+import { DeriEnv } from '../../lib/web3js/index'
 
 function ContractInfo({ wallet, trading, lang, type }) {
 

@@ -1,6 +1,6 @@
 import { makeAutoObservable, observable, action, runInAction } from "mobx";
 import axios from "axios";
-import { DeriEnv,deriToNatural } from "../lib/web3js/indexV2";
+import { DeriEnv,deriToNatural } from "../lib/web3js/index";
 import config from '../config.json'
 
 const oracleConfig = config[DeriEnv.get()]['oracle']

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { closePosition, getWalletBalance, getPoolBTokensBySymbolId, bg } from "../../lib/web3js/indexV2";
+import { closePosition, getWalletBalance, getPoolBTokensBySymbolId, bg } from "../../lib/web3js/index";
 import className from 'classnames'
 import withModal from '../hoc/withModal';
 import DeriNumberFormat from '../../utils/DeriNumberFormat';

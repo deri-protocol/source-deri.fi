@@ -1,4 +1,4 @@
-import { getPositionInfo ,bg,getPositionInfos, DeriEnv} from "../lib/web3js/indexV2"
+import { getPositionInfo ,bg,getPositionInfos, DeriEnv} from "../lib/web3js/index"
 import { eqInNumber, getDefaultNw } from '../utils/utils';
 import type from "./Type";
 

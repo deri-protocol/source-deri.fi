@@ -6,7 +6,7 @@ import './assets/deri.less';
 import { Provider } from 'mobx-react';
 import Wallet from './model/Wallet';
 import Trading from './model/Trading';
-import { DeriEnv } from './lib/web3js/indexV2';
+import { DeriEnv } from './lib/web3js/index';
 import version from './model/Version';
 import intl from './model/Intl';
 import loading from './model/Loading';

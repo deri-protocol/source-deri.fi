@@ -7,7 +7,7 @@ import {
   getLpContractAddressConfig,
   getLpPoolInfoApy,
   getPreminingContractConfig
-} from '../lib/web3js/indexV2'
+} from '../lib/web3js/index'
 import config from '../config.json'
 import { formatAddress, isLP, isSushiLP, isCakeLP, eqInNumber, groupByNetwork, combineSymbolfromPoolConfig, mapPoolInfo } from '../utils/utils';
 import Intl from '../model/Intl';

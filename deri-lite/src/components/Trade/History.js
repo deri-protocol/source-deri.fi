@@ -1,5 +1,5 @@
 import React, { useState ,useEffect, version} from 'react'
-import { getTradeHistory,DeriEnv ,bg} from "../../lib/web3js/indexV2";
+import { getTradeHistory,DeriEnv ,bg} from "../../lib/web3js/index";
 import dateFormat from 'date-format'
 import NumberFormat from 'react-number-format';
 import useInterval from '../../hooks/useInterval';

@@ -1,5 +1,5 @@
 import { makeObservable, observable, action } from "mobx";
-import { getContractAddressConfig, DeriEnv,sortOptionSymbols,openConfigListCache } from "../lib/web3js/indexV2";
+import { getContractAddressConfig, DeriEnv,sortOptionSymbols } from "../lib/web3js/index";
 
 export default class Config {
   all = []
@@ -15,9 +15,6 @@ export default class Config {
     let current = version && version.current;
     if(isOptions){
       current = 'option'
-    }
-    if(current === 'v2_lite_open'){
-       await openConfigListCache.update()
     }
     let configs = getContractAddressConfig(DeriEnv.get(),current)
     if(isOptions){

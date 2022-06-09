@@ -1,4 +1,4 @@
-import { getSpecification, DeriEnv } from "../lib/web3js/indexV2";
+import { getSpecification, DeriEnv } from "../lib/web3js/index";
 import { makeObservable, observable, action, computed } from "mobx";
 import Intl from "./Intl";
 import version from "./Version";

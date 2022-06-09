@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from 'react'
-import { depositMargin, bg } from "../../../lib/web3js/indexV2";
+import { depositMargin, bg } from "../../../lib/web3js/index";
 import NumberFormat from 'react-number-format';
 import Button from '../../Button/Button';
 import useDisableScroll from '../../../hooks/useDisableScroll';

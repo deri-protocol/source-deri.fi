@@ -1,4 +1,4 @@
-import { getTradeHistory } from "../lib/web3js/indexV2";
+import { getTradeHistory } from "../lib/web3js/index";
 
 
 export default class History {

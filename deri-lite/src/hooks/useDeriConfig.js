@@ -1,6 +1,6 @@
 import { useState,useEffect } from 'react'
-import { getContractAddressConfig } from '../lib/web3js/indexV2';
-import {DeriEnv} from '../lib/web3js/indexV2'
+import { getContractAddressConfig } from '../lib/web3js/index';
+import {DeriEnv} from '../lib/web3js/index'
 import { eqInNumber } from '../utils/utils';
 
 export default function useDeriConfig(wallet){

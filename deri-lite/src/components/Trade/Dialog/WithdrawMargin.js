@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from 'react'
-import { withdrawMargin } from "../../../lib/web3js/indexV2";
+import { withdrawMargin } from "../../../lib/web3js/index";
 import Button from '../../Button/Button';
 import DeriNumberFormat from '../../../utils/DeriNumberFormat';
 import { bg } from '../../../utils/utils';

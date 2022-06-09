@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import Button from "../../Button/Button";
 import NumberFormat from 'react-number-format';
 import DeriNumberFormat from '../../../utils/DeriNumberFormat';
-import { tradeWithMargin } from "../../../lib/web3js/indexV2";
+import { tradeWithMargin } from "../../../lib/web3js/index";
 import type from '../../../model/Type'
 import version from '../../../model/Version'
-import { bg, DeriEnv } from '../../../lib/web3js/indexV2'
+import { bg, DeriEnv } from '../../../lib/web3js/index'
 
 export default function TradeConfirm({ wallet, spec, onClose, direction, volume, position = 0, indexPrice, leverage, afterLeverage, transFee, afterTrade, lang, markPriceAfter, trading, liquidationPrice }) {
   const [pending, setPending] = useState(false);

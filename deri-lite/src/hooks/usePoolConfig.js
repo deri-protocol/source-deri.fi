@@ -12,7 +12,7 @@ import {
   getLiquidityInfo,
   openConfigListCache,
   getPoolOpenConfigList
-} from '../lib/web3js/indexV2'
+} from '../lib/web3js/index'
 import config from '../config.json'
 import { formatAddress, isLP, isSushiLP, isCakeLP } from '../utils/utils';
 

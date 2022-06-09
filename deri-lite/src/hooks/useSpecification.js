@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getSpecification } from "../lib/web3js/indexV2";
+import { getSpecification } from "../lib/web3js/index";
 
 export default function useSpecification({wallet,address,symbolId}){
   const [spec, setSpec] = useState({});

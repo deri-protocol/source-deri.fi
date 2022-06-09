@@ -11,7 +11,7 @@ import {
   getPoolInfoApy,
   getUserInfoAll,
   getLiquidityInfo
-} from '../lib/web3js/indexV2'
+} from '../lib/web3js/index'
 import Type from '../model/Type';
 const versionKey = 'deri-current-version'
 

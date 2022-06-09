@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import classNames from "classnames";
 import Slider from '../Slider/Slider';
 import Button from '../Button/Button';
-import { DeriEnv, priceCache, getIntrinsicPrice, PerpetualPoolParametersCache, isUnlocked, unlock, getFundingRate, getWalletBalance, getSpecification, getEstimatedFee, getLiquidityUsed, hasWallet, getEstimatedLiquidityUsed, getEstimatedFundingRate, getEstimatedTimePrice, getEstimatedLiquidatePrice } from '../../lib/web3js/indexV2'
+import { DeriEnv, priceCache, getIntrinsicPrice, PerpetualPoolParametersCache, isUnlocked, unlock, getFundingRate, getWalletBalance, getSpecification, getEstimatedFee, getLiquidityUsed, hasWallet, getEstimatedLiquidityUsed, getEstimatedFundingRate, getEstimatedTimePrice, getEstimatedLiquidatePrice } from '../../lib/web3js/index'
 import withModal from '../hoc/withModal';
 import TradeConfirm from './Dialog/TradeConfirm';
 import DepositMargin from './Dialog/DepositMargin'
@@ -11,7 +11,7 @@ import DeriNumberFormat from '../../utils/DeriNumberFormat'
 import { inject, observer } from 'mobx-react';
 import { BalanceList } from './Dialog/BalanceList';
 import SymbolSelector from './SymbolSelector';
-import { bg } from "../../lib/web3js/indexV2";
+import { bg } from "../../lib/web3js/index";
 import TipWrapper from '../TipWrapper/TipWrapper';
 import removeMarginIcon from '../../assets/img/remove_margin.png'
 import addMarginIcon from '../../assets/img/add_margin.png'
@@ -516,14 +516,13 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
             <div className={`contrant-info ${version.current}`}>
               <div className='balance-contract'>
                 <TipWrapper block={false}>
-                  <span className='balance-contract-text pc' tip={lang['dynamic-effective-balance-title']}>
+                  <span className='balance-contract-text pc' tip="Total Discounted Margin + Unrealized PnL + Acc'd Funding">
                     {lang['dynamic-effective-balance']}
                   </span>
-                  <span className='balance-contract-text mobile' tip={lang['dynamic-effective-balance-title']}>
+                  <span className='balance-contract-text mobile' tip="Total Discounted Margin + Unrealized PnL + Acc'd Funding">
                     {lang['dynamic-effective-balance']}
                   </span>
                 </TipWrapper>
-
                 <span className={`balance-contract-num ${version.current}`}>
                   <TipWrapper block={false}>
                     <span

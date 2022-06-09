@@ -5,8 +5,8 @@ import Contract from "./Contract";
 import History from './History'
 import Config from "./Config";
 import { eqInNumber, storeConfig, getConfigFromStore, restoreChain, getFormatSymbol, getMarkpriceSymbol, getDefaultNw } from "../utils/utils";
-import { getFundingRate, priceCache, DeriEnv, getVolatility } from "../lib/web3js/indexV2";
-import { bg } from "../lib/web3js/indexV2";
+import { getFundingRate, priceCache, DeriEnv, getVolatility } from "../lib/web3js/index";
+import { bg } from "../lib/web3js/index";
 import Intl from "./Intl";
 import version from './Version'
 import type from './Type'

@@ -5,7 +5,7 @@ import WithdrawMagin from './WithdrawMargin';
 import removeMarginIcon from '../../../assets/img/remove-margin.svg'
 import addMarginIcon from '../../../assets/img/add-margin.svg'
 import DeriNumberFormat from '../../../utils/DeriNumberFormat';
-import { getPoolBTokensBySymbolId } from '../../../lib/web3js/indexV2';
+import { getPoolBTokensBySymbolId } from '../../../lib/web3js/index';
 import useDisableScroll from '../../../hooks/useDisableScroll';
 
 const AddMarginDialog = withModal(DepositMargin)

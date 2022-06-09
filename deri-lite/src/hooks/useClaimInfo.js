@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getUserInfoAll ,deriToNatural} from '../lib/web3js/indexV2';
+import { getUserInfoAll ,deriToNatural} from '../lib/web3js/index';
 
 
 export default function useClaimInfo(wallet){

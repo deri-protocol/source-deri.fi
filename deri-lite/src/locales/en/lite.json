@@ -32,7 +32,7 @@
   "available-balance" : "Available Balance",
   "available-balance-title" : "Dynamic Effective Bal - Margin Total Held",
   "dynamic-effective-balance" : "Dyn Effective Bal",
-  "dynamic-effective-balance-title" : "Total Discounted Margin + Unrealized PnL",
+  "dynamic-effective-balance-title" : "Total Discounted Margin + Unrealized PnL + Acc'd Funding",
   "total-held" : "total held",
   "total-held-title" : "Margin held by all positions",
   "for-this-pos" : "for this pos",

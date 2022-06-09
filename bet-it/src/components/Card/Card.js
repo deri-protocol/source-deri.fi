@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Icon,Button } from '@deri/eco-common';
+import { Icon, Button } from '@deri/eco-common';
 import classNames from 'classnames'
 // import Button from '../Button/Button'
 import './card.scss'
@@ -41,7 +41,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
         setBetInfo(res)
         return res
       }
-    } else {
+    } else if (wallet.status === "disconnected") {
       let chainId = DeriEnv.get() === "prod" ? 56 : 97
       let res = await ApiProxy.request("getBetInfo", { chainId: chainId, symbol: info.symbol })
       if (res.symbol) {
@@ -146,7 +146,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
       })
       return false;
     }
-    if(disabled){
+    if (disabled) {
       return false;
     }
     let isApproved = await getIsApprove()
@@ -235,7 +235,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
         window.setTimeout(() => {
           getLiquidationInfo()
         }, 600)
-      }else{
+      } else {
         getLiquidationInfo()
       }
     }
@@ -305,7 +305,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
               {lang['profit']}
             </div>
             <div className={+betInfo.pnl > 0 ? "symbol-pnl-num up-pnl" : "symbol-pnl-num down-pnl"}>
-              {+betInfo.pnl > 0 ? "+" : ""}{betInfo.pnl?(+betInfo.pnl).toFixed(2):0}
+              {+betInfo.pnl > 0 ? "+" : ""}{betInfo.pnl ? (+betInfo.pnl).toFixed(2) : 0}
             </div>
           </div>
           : !isLiquidated && <Input value={amount} onChange={onChange} inputDisabled={inputDisabled} setBalance={setBalance} balance={balance} bToken={bToken} setBToken={setBToken} bTokens={bTokens} lang={lang} />

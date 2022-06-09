@@ -38,13 +38,13 @@ export default function BetIt({ lang, getLang, actions }) {
     } else {
       setIsFixed(false)
     }
-    // let top = collect ? 56 : 120
-    // if (!isStartScroll(top)) {
-    //   const st = window.pageYOffset || document.documentElement.scrollTop;
-    //   bgTop.style.top = top - st + "px"
-    // } else {
-    //   bgTop.style.top = "0px"
-    // }
+    let top = collect ? 56 : 120
+    if (!isStartScroll(top)) {
+      const st = window.pageYOffset || document.documentElement.scrollTop;
+      bgTop.style.top = top - st + "px"
+    } else {
+      bgTop.style.top = "0px"
+    }
   })
 
   const switchMenu = () => {
@@ -57,31 +57,39 @@ export default function BetIt({ lang, getLang, actions }) {
   useEffect(() => {
     let bgTop = document.getElementsByClassName('bg-img-color')[0]
     document.addEventListener('scroll', handler, false);
-    // let top = collect ? 56 : 120
-    // if (!isStartScroll(top)) {
-    //   const st = window.pageYOffset || document.documentElement.scrollTop;
-    //   bgTop.style.top = top - st + "px"
-    // } else {
-    //   bgTop.style.top = "0px"
-    // }
+    let top = collect ? 56 : 120
+    if (!isStartScroll(top)) {
+      const st = window.pageYOffset || document.documentElement.scrollTop;
+      bgTop.style.top = top - st + "px"
+    } else {
+      bgTop.style.top = "0px"
+    }
     return () => {
       document.removeEventListener('scroll', handler)
     }
   }, [collect])
 
+  const setCard = () => {
+    symbols.map((item, index) => {
+      let card = document.getElementsByClassName(`${item.unit}`)[0]
+      if (card) {
+        let left = card.getBoundingClientRect()
+        if (left.x < 120 && left.x > 0) {
+          setStepNow(index + 1)
+        }
+      }
+
+    })
+  }
+
   useEffect(() => {
+
     if (symbols.length) {
-      document.addEventListener('scroll', function () {
-        symbols.map((item, index) => {
-          let card = document.getElementsByClassName(`${item.unit}`)[0]
-          let left = card.getBoundingClientRect()
-          if (left.x < 120 && left.x > 0) {
-            setStepNow(index + 1)
-          }
-        })
-
-      }, true);
-
+      document.removeEventListener('scroll', setCard)
+      document.addEventListener('scroll', setCard, true);
+    }
+    return () => {
+      document.removeEventListener('scroll', setCard)
     }
   }, [symbols])
 

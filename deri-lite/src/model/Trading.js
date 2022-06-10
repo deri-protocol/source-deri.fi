@@ -223,14 +223,14 @@ export default class Trading {
   getChainId(wallet) {
     if (wallet.isConnected()) {
       if (wallet.supportCurNetwork) {
-        return wallet.detail.chainId;
+        return wallet.detail.chainId || wallet.detail.id;
       } else {
         return getDefaultNw(DeriEnv.get()).id
       }
     } else if (wallet.status === 'disconnected') {
       return getDefaultNw(DeriEnv.get()).id
     }else {
-      return wallet.detail.chainId;
+      return wallet.detail.chainId || wallet.detail.id;
     }
   }
 

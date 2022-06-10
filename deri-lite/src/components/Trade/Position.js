@@ -25,7 +25,7 @@ function Position({ wallet, trading, version, lang, type }) {
   const [balanceListModalIsOpen, setBalanceListModalIsOpen] = useState(false)
   const [balance, setBalance] = useState('');
 
-  
+
 
   const formatNumber = (number, decimal, suffix = '', prefix = '', allowZero) => {
     let num = Math.abs(number)
@@ -49,7 +49,7 @@ function Position({ wallet, trading, version, lang, type }) {
       {
         includeResponse: true,
       })
-
+    setIsLiquidation(false)
     if (res.success) {
       refreshBalance()
     } else {

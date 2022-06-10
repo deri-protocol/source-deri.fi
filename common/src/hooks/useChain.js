@@ -23,6 +23,6 @@ export default function useChain(){
       const c = chains.sort((c1,c2) => c1.isDefault && !c2.isDefault ? -1 : !c1.isDefault && c2.isDefault  ? 1 : 0)
       setChains(c)
     }
-  }, [wallet.status,wallet.chainId]);
+  }, [wallet]);
   return chains
 }

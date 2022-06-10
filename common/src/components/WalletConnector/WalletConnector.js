@@ -46,6 +46,9 @@ export default function WalletConnector({lang,bgColor = '#FFAB00',actions}){
   }, [expand]);
 
   useEffect(() => {
+    if(!wallet.isConnected()) {
+      // wallet.connect();
+    }
     actions && actions.setGlobalState({wallet : wallet})
   }, [wallet]);
   

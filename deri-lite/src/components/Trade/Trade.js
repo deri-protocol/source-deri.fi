@@ -323,7 +323,7 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
                 {lang['mark-price']} : <span className={markPriceClass}>&nbsp; <DeriNumberFormat value={markPrice} decimalScale={4} /></span>
               </div>
               <div className='index-prcie'>
-                {trading.symbolInfo ? type.isOption ? trading.symbolInfo.symbol.split('-')[0] : '' : ''} : <span className='option-vol'>&nbsp; <span> <DeriNumberFormat value={indexPrice} decimalScale={2} /></span><span className='vol'> | </span>DVOL : <DeriNumberFormat value={trading.position.volitility} decimalScale={2} suffix='%' /></span>
+                {trading.symbolInfo ? trading.symbolInfo.underlier : ''} : <span className='option-vol'>&nbsp; <span> <DeriNumberFormat value={indexPrice} decimalScale={2} /></span><span className='vol'> | </span>DVOL : <DeriNumberFormat value={trading.position.volitility} decimalScale={2} suffix='%' /></span>
               </div>
             </>}
             {(type.isPower) && <>
@@ -367,7 +367,7 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
                 {lang['mark-price']} : <span className={markPriceClass}>&nbsp; <DeriNumberFormat value={markPrice} decimalScale={2} /></span>
               </div>
               <div className='index-prcie'>
-                {trading.symbolInfo ? type.isOption ? trading.symbolInfo.symbol.split('-')[0] : '' : ''}: <span className={indexPriceClass}>&nbsp; <DeriNumberFormat value={trading.index} decimalScale={2} /></span>
+                {trading.symbolInfo ? trading.symbolInfo.underlier : ''}: <span className={indexPriceClass}>&nbsp; <DeriNumberFormat value={trading.index} decimalScale={2} /></span>
               </div>
               <div className='index-prcie'>
                 DVOL: <DeriNumberFormat value={trading.volatility} decimalScale={2} />
@@ -529,7 +529,7 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
             </div>}
           </>}
         </div>
-        <Operator 
+        <Operator
           wallet={wallet}
           spec={trading.symbolInfo}
           indexPrice={indexPrice}

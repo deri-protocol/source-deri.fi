@@ -241,6 +241,7 @@ export default class Trading {
   async init(wallet, finishedCallback, isRetired, symbol, baseToken = '') {
     const chainId = this.getChainId(wallet);
     if (!chainId) {
+      finishedCallback && finishedCallback()
       return;
     }
     const isOption = Type.isOption
@@ -565,6 +566,7 @@ export default class Trading {
     this.setVolatility('')
     this.setPosition({})
     this.setPositions([])
+    this.setFundingRate({})
     this.setContract({})
     this.setHistory([])
     this.setLoaded(false)

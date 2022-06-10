@@ -337,83 +337,103 @@ export class PoolApi {
     const startAt = Date.now()
     debug() && console.log(`-- getPositionInfo start(${startAt})`)
     await this.pool.getSymbols();
-    await this.pool.getPositions(accountAddress);
-
-    const positions = pool.symbols.map((b) => {
-      const position = pool.positions.find((p) => p.symbol === b.symbol);
-      if (position) {
-        return { ...b, ...position };
-      } else {
-        return {
-          ...b,
-          volume: "0",
-          cost: "0",
-          cumulativeFundingPerVolume: "0",
-          traderPnl: "0",
-          dpmmTraderPnl: "0",
-          fundingAccrued: "0",
-          initialMarginRequired: "0",
-        };
+    if (accountAddress === ADDRESS_ZERO) {
+      const symbol = pool.symbols.find((s) => s.symbol === symbolName)
+      return {
+        symbol: symbolName,
+        indexPrice: symbol.curIndexPrice,
+        markPrice: symbol.markPrice,
       }
-    });
+    } else {
+      await this.pool.getPositions(accountAddress);
 
-    const position = getSymbolInfo(symbolName, positions);
+      const positions = pool.symbols.map((b) => {
+        const position = pool.positions.find((p) => p.symbol === b.symbol);
+        if (position) {
+          return { ...b, ...position };
+        } else {
+          return {
+            ...b,
+            volume: "0",
+            cost: "0",
+            cumulativeFundingPerVolume: "0",
+            traderPnl: "0",
+            dpmmTraderPnl: "0",
+            fundingAccrued: "0",
+            initialMarginRequired: "0",
+          };
+        }
+      });
 
-    ObjectCache.set(this.poolAddress, `position_info`, {
-      symbol: position,
-      margin: pool.account.margin,
-      volume: position.volume,
-      cost: position.cost,
-      trader: pool.account,
-      symbols: pool.symbols,
-      positions: pool.positions,
-    });
-    const res = {
-      symbol: normalizeDeriSymbol(position.symbol),
-      symbolUnit: normalizeSymbolUnit(position.symbol),
-      //b0Unit: pool.bTokenSymbols && pool.bTokenSymbols[0],
-      poolInitialMarginMultiplier: pool.parameters.poolInitialMarginMultiplier,
-      price: position.curIndexPrice,
-      markPrice: position.markPrice,
-      displayMarkPrice: deriSymbolScaleIn(position.symbol, position.markPrice),
-      theoreticalPrice: position.theoreticalPrice
-        ? position.theoreticalPrice.toString()
-        : "",
-      volume: position.volume,
-      cost: position.cost,
-      averageEntryPrice: bg(position.volume).eq(0)
-        ? "0"
-        : bg(position.cost).div(position.volume).toString(),
-      margin: pool.account.margin,
-      marginHeld: positions
-        .reduce(
-          (acc, p) =>
-            bg(acc).plus(bg(p.volume).eq(0) ? "0" : p.initialMarginRequired),
-          bg(0)
-        )
-        .toString(),
-      marginHeldBySymbol: bg(position.volume).eq(0)
-        ? "0"
-        : position.initialMarginRequired,
-      unrealizedPnl: positions
-        .reduce((acc, p) => bg(acc).plus(p.traderPnl), bg(0))
-        .toString(),
-      unrealizedPnlList: positions.map((p) => [p.symbol, p.traderPnl]),
-      fundingFee: positions
-        .reduce((acc, p) => bg(acc).plus(p.fundingAccrued), bg(0))
-        .toString(),
-      liquidationPrice: bg(position.volume).eq(0) ? '0' : getLiquidationPrice(
-        {
-          trader: pool.account,
-          symbols: pool.symbols,
-          positions: pool.positions,
-        },
-        position.symbol,
-        true
-      )
-    };
-    debug() &&  console.log(`-- getPositionInfo end  (${startAt}): ${(Date.now() - startAt)/1000}s`)
-    return res
+      const position = getSymbolInfo(symbolName, positions);
+
+      ObjectCache.set(this.poolAddress, `position_info`, {
+        symbol: position,
+        margin: pool.account.margin,
+        volume: position.volume,
+        cost: position.cost,
+        trader: pool.account,
+        symbols: pool.symbols,
+        positions: pool.positions,
+      });
+      const res = {
+        symbol: normalizeDeriSymbol(position.symbol),
+        symbolUnit: normalizeSymbolUnit(position.symbol),
+        //b0Unit: pool.bTokenSymbols && pool.bTokenSymbols[0],
+        poolInitialMarginMultiplier:
+          pool.parameters.poolInitialMarginMultiplier,
+        price: position.curIndexPrice,
+        markPrice: position.markPrice,
+        displayMarkPrice: deriSymbolScaleIn(
+          position.symbol,
+          position.markPrice
+        ),
+        theoreticalPrice: position.theoreticalPrice
+          ? position.theoreticalPrice.toString()
+          : "",
+        volume: position.volume,
+        cost: position.cost,
+        averageEntryPrice: bg(position.volume).eq(0)
+          ? "0"
+          : bg(position.cost).div(position.volume).toString(),
+        margin: pool.account.margin,
+        marginHeld: positions
+          .reduce(
+            (acc, p) =>
+              bg(acc).plus(bg(p.volume).eq(0) ? "0" : p.initialMarginRequired),
+            bg(0)
+          )
+          .toString(),
+        marginHeldBySymbol: bg(position.volume).eq(0)
+          ? "0"
+          : position.initialMarginRequired,
+        unrealizedPnl: positions
+          .reduce((acc, p) => bg(acc).plus(p.traderPnl), bg(0))
+          .toString(),
+        unrealizedPnlList: positions.map((p) => [p.symbol, p.traderPnl]),
+        fundingFee: positions
+          .reduce((acc, p) => bg(acc).plus(p.fundingAccrued), bg(0))
+          .toString(),
+        liquidationPrice: bg(position.volume).eq(0)
+          ? "0"
+          : getLiquidationPrice(
+              {
+                trader: pool.account,
+                symbols: pool.symbols,
+                positions: pool.positions,
+              },
+              position.symbol,
+              true
+            ),
+      };
+      debug() &&
+        console.log(
+          `-- getPositionInfo end  (${startAt}): ${
+            (Date.now() - startAt) / 1000
+          }s`
+        );
+      return res;
+    }
   }
 
   async getPositionInfos(accountAddress) {

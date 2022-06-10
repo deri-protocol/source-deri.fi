@@ -166,11 +166,13 @@ export const getPositionInfo = async (
 ) => {
   return catchApiError(
     async () => {
-      [chainId, poolAddress, accountAddress] = checkApiInput(
+      [chainId, poolAddress ] = checkApiInputWithoutAccount(
         chainId,
         poolAddress,
-        accountAddress
       );
+      if (!accountAddress) {
+        accountAddress = ADDRESS_ZERO
+      }
       symbol = checkToken(symbol);
       const api = poolApiFactory(chainId, poolAddress);
       await api.init(accountAddress);
@@ -182,6 +184,7 @@ export const getPositionInfo = async (
       symbolUnit: '',
       b0Unit: '',
       price: '',
+      indexPrice: '',
       markPrice: '',
       volume: '',
       averageEntryPrice: '',

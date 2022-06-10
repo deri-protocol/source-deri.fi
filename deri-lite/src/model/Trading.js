@@ -265,14 +265,6 @@ export default class Trading {
     let defaultSymbol = null;
     const cookie = this.getSymbolFromCookie();
     //symbol in path 优先级最高，cookie 次之，默认第一个池子和池子的第一个symbol
-    if (symbol) {
-      //&& p.bTokens.some(t => equalIgnoreCase(t.bTokenSymbol, baseToken))
-      pool = pools.find(p => equalIgnoreCase(p.bTokenSymbol, baseToken) && p.symbols.some(s => equalIgnoreCase(s.displaySymbol, symbol)))
-      defaultSymbol = pool && pool.symbols.find(s => equalIgnoreCase(s.displaySymbol, symbol))
-    } else if (cookie && cookie.symbol && !isRetired) {
-      pool = pools.find(p => (equalIgnoreCase(p.bTokenSymbol, cookie.baseToken) || p.bTokens.some(t => equalIgnoreCase(t.bTokenSymbol, cookie.baseToken))) && p.symbols.some(s => equalIgnoreCase(s.displaySymbol, cookie.symbol)))
-      defaultSymbol = allSymbols.find(s => equalIgnoreCase(s.symbol, cookie.symbol) && equalIgnoreCase(s.bTokenSymbol, cookie.baseToken))
-    }
     if (!pool) {
       pool = pools[0]
     }

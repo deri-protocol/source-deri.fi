@@ -10,6 +10,7 @@ function App(props) {
       <div className="app">
         <Navigation collect={true} {...props}/>
         <main id="subapp-viewport">
+          <Loading/>
         </main>
       </div>
     </UseWalletProvider>

@@ -107,7 +107,7 @@ export async function switchChain(chain, successCb, errorCb) {
 }
 
 export function hasParent(parent, current) {
-  if (parent === current) {
+  if (parent === current || parent && parent.getElementsByClassName(current.className).length > 0) {
     return true
   } else if (current.parentElement) {
     return hasParent(parent, current.parentElement)

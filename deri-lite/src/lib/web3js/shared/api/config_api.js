@@ -3,17 +3,11 @@ import { catchApiError } from "../utils";
 
 // config.json
 import jsonProdConfig from '../resources/config.prod.json';
-import jsonTestnetConfig from '../resources/config.testnet.json';
 import jsonDevConfig from '../resources/config.dev.json';
 
 const getJsonConfig = (env) => {
   env = checkEnv(env);
-  let rawConfig =
-    env !== 'prod'
-      ? env === 'testnet'
-        ? jsonTestnetConfig
-        : jsonDevConfig
-      : jsonProdConfig;
+  let rawConfig = env === "prod" ? jsonProdConfig : jsonDevConfig;
   // to support both nodejs and browser
   let config =
     typeof rawConfig === 'object' ? rawConfig : JSON.parse(rawConfig);

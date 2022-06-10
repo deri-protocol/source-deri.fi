@@ -93,19 +93,19 @@ describe("api", () => {
   //   },
   //   TIMEOUT
   // );
-  // it(
-  //   'getSpecification',
-  //   async () => {
-  //     expect(
-  //       await getSpecification(
-  //         chainId,
-  //         poolAddress,
-  //         symbol1
-  //       )
-  //     ).toEqual({});
-  //   },
-  //   TIMEOUT
-  // );
+  it(
+    'getSpecification',
+    async () => {
+      expect(
+        await getSpecification(
+          chainId,
+          poolAddress,
+          symbol1
+        )
+      ).toEqual({});
+    },
+    TIMEOUT
+  );
   // it(
   //   'getPositionInfo',
   //   async () => {
@@ -215,19 +215,19 @@ describe("api", () => {
   //   TIMEOUT
   // );
 
-    it(
-      'getFundingRate',
-      async () => {
-        expect(
-          await getFundingRate(
-            chainId,
-            poolAddress,
-            symbol1,
-          )
-        ).toEqual([]);
-      },
-      TIMEOUT
-    );
+    // it(
+    //   'getFundingRate',
+    //   async () => {
+    //     expect(
+    //       await getFundingRate(
+    //         chainId,
+    //         poolAddress,
+    //         symbol1,
+    //       )
+    //     ).toEqual([]);
+    //   },
+    //   TIMEOUT
+    // );
 
   // it(
   //   'getEstimatedFundingRate',
@@ -284,21 +284,21 @@ describe("api", () => {
   //   },
   //   TIMEOUT
   // );
-  it(
-    'getFundingFee',
-    async () => {
-      DeriEnv.set('prod')
-      expect(
-        await getFundingFee(
-          chainId,
-          poolAddress,
-          accountAddress,
-          symbol1,
-        )
-      ).toEqual('');
-    },
-    TIMEOUT
-  );
+  // it(
+  //   'getFundingFee',
+  //   async () => {
+  //     DeriEnv.set('prod')
+  //     expect(
+  //       await getFundingFee(
+  //         chainId,
+  //         poolAddress,
+  //         accountAddress,
+  //         symbol1,
+  //       )
+  //     ).toEqual('');
+  //   },
+  //   TIMEOUT
+  // );
   // it(
   //   'getEstimatedTimePrice',
   //   async () => {
@@ -323,15 +323,15 @@ describe("api", () => {
   //   },
   //   TIMEOUT
   // );
-  it(
-    'getVolatility',
-    async () => {
-      expect(
-        await getVolatility(chainId, poolAddress, symbol1)
-      ).toEqual('');
-    },
-    TIMEOUT
-  );
+  // it(
+  //   'getVolatility',
+  //   async () => {
+  //     expect(
+  //       await getVolatility(chainId, poolAddress, symbol1)
+  //     ).toEqual('');
+  //   },
+  //   TIMEOUT
+  // );
   // it(
   //   'getEstimatedLpInfo',
   //   async () => {
@@ -375,11 +375,11 @@ describe("api", () => {
   // }, TIMEOUT)
 
   // ================ TODO ==================
-  it('getBTokenDiscount', async() => {
-    expect(
-      await getBTokenDiscount(chainId, poolAddress)
-    ).toEqual('');
-  }, TIMEOUT)
+  // it('getBTokenDiscount', async() => {
+  //   expect(
+  //     await getBTokenDiscount(chainId, poolAddress)
+  //   ).toEqual('');
+  // }, TIMEOUT)
 
   // it(
   //   'getSimulatePnl',

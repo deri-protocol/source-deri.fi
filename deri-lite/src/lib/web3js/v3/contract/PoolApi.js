@@ -578,6 +578,7 @@ export class PoolApi {
           symbol: s.symbol,
           symbolId: s.symbolId,
           markPrice: deriSymbolScaleIn(s.symbol, s.markPrice),
+          indexPrice: s.curIndexPrice,
         };
       });
     } catch (err) {

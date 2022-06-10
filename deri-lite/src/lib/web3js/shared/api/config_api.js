@@ -5,7 +5,7 @@ import { catchApiError } from "../utils";
 import jsonProdConfig from '../resources/config.prod.json';
 import jsonDevConfig from '../resources/config.dev.json';
 
-const getJsonConfig = (env) => {
+export const getJsonConfig = (env) => {
   env = checkEnv(env);
   let rawConfig = env === "prod" ? jsonProdConfig : jsonDevConfig;
   // to support both nodejs and browser

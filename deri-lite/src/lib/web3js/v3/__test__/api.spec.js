@@ -107,20 +107,20 @@ describe("api", () => {
     },
     TIMEOUT
   );
-  // it(
-  //   'getPositionInfo',
-  //   async () => {
-  //     expect(
-  //       await getPositionInfo(
-  //         chainId,
-  //         poolAddress,
-  //         accountAddress,
-  //         symbol2,
-  //       )
-  //     ).toEqual({});
-  //   },
-  //   TIMEOUT
-  // );
+  it(
+    'getPositionInfo',
+    async () => {
+      expect(
+        await getPositionInfo(
+          chainId,
+          poolAddress,
+          accountAddress,
+          symbol2,
+        )
+      ).toEqual({});
+    },
+    TIMEOUT
+  );
 
   // it(
   //   'getPositionInfos',

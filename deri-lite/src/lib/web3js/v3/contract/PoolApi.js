@@ -383,6 +383,7 @@ export class PoolApi {
         poolInitialMarginMultiplier:
           pool.parameters.poolInitialMarginMultiplier,
         price: position.curIndexPrice,
+        indexPrice: position.curIndexPrice,
         markPrice: position.markPrice,
         displayMarkPrice: deriSymbolScaleIn(
           position.symbol,

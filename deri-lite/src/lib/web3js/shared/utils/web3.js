@@ -96,7 +96,7 @@ export const deleteIndexedKey = (obj) => {
   export const getPastEvents = async(chainId, contract, eventName, filter = {}, fromBlock = 0, to = 0) => {
     let events = [];
     let amount
-    if (['56', '97', '127', '80001'].includes(chainId)) {
+    if (['56', '97', '127', '80001', '42161', '421611'].includes(chainId)) {
       amount = 999
     } else {
       amount = 4999

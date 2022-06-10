@@ -1,3 +1,4 @@
+import { getJsonConfig } from '../../shared/api/config_api';
 import {
   catchApiError,
   getBlockInfo,
@@ -8,9 +9,11 @@ import { deriSymbolScaleIn, deriSymbolScaleOut, normalizeDeriSymbol } from '../u
 
 export const getTradeHistory = async (chainId, poolAddress, accountAddress) => {
   return catchApiError(async () => {
-    let tradeHistoryBlock = 0,
+    const poolConfig = getJsonConfig().find((c) => c.pool === poolAddress)
+    let tradeHistoryBlock = parseInt(poolConfig.initialBlock),
       tradeHistory = [];
     //if (tradeHistoryBlock !== 0) {
+    console.log('-- block', tradeHistoryBlock)
       const tradeHistoryOnline = await getTradeHistoryOnline(
         chainId,
         poolAddress,
@@ -23,7 +26,7 @@ export const getTradeHistory = async (chainId, poolAddress, accountAddress) => {
     //   // trade history is not sync
     //   return []
     // }
-  });
+  }, [], []);
 };
 
 const getTradeHistoryOnline = async (

@@ -2,7 +2,7 @@ import Body from './components/Body/Body'
 import { useLocation } from 'react-router-dom'
 import './style/index.css'
 
-export default function Desktop({ locale }) {
+export default function Desktop({ locale,actions }) {
   console.log('welcome Deri desktop app')
   const location = useLocation();
   const curRouterClass = location.pathname.split('/')[1]
@@ -15,7 +15,7 @@ export default function Desktop({ locale }) {
   }
   return (
     <div className={`desktop ${curRouterClass} ${locale} ${v1Class}`}>
-      <Body></Body>
+      <Body actions={actions}></Body>
     </div>
   )
 }

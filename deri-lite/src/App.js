@@ -20,7 +20,7 @@ function Mask({loading}){
 
 const MaskWrapper = inject('loading')(observer(Mask))
 
-function App({intl,loading}) {
+function App({intl,loading,actions}) {
   // const [isDesktop, setIsDesktop] = useState(getIsDesktop())
   // const isOptionsLite = useRouteMatch('/options/lite') ? true : false
   // const isOptionsPro = useRouteMatch('/options/pro') ? true : false
@@ -38,9 +38,9 @@ function App({intl,loading}) {
   //   return () => window.removeEventListener("resize", onResize)
   // },[]);
   if(isBrowser){
-    return <><MaskWrapper/><DesktopApp locale={intl.locale}></DesktopApp></>
+    return <><MaskWrapper/><DesktopApp locale={intl.locale} actions={actions}></DesktopApp></>
   } else {
-    return <><MaskWrapper/><MobileApp locale={intl.locale}><Mask loading={loading}/></MobileApp></>
+    return <><MaskWrapper/><MobileApp locale={intl.locale} actions={actions}><Mask loading={loading}/></MobileApp></>
   }
 }
 

@@ -229,7 +229,7 @@ export default class Trading {
       }
     } else if (wallet.status === 'disconnected') {
       return getDefaultNw(DeriEnv.get()).id
-    }else {
+    } else {
       return wallet.detail.chainId || wallet.detail.id;
     }
   }
@@ -294,8 +294,8 @@ export default class Trading {
         }
       })
       const contract = await this.contractInfo.load(wallet, currentSymbol, isOption)
-      
-      const fundingRate = await this.loadFundingRate(wallet,currentSymbol,isOption)
+
+      const fundingRate = await this.loadFundingRate(wallet, currentSymbol, isOption)
       this.setCurrentSymbol(currentSymbol)
       this.setPosition(position)
       this.setLoaded(true)
@@ -333,12 +333,13 @@ export default class Trading {
     this.positionInfo.load(this.wallet, this.symbolInfo, position => {
       this.setPosition(position);
     });
+    this.positionInfo.start();
+    this.resume();
     const history = await this.historyInfo.load(this.wallet, this.currentSymbol)
     if (history) {
       this.setHistory(history)
     }
-    this.positionInfo.start();
-    this.resume();
+
   }
 
   /**
@@ -543,7 +544,7 @@ export default class Trading {
 
 
   doTransaction() {
-    const volume = toPlainString(this.direction === SELL ? -this.realTradeVolume : this.realTradeVolume)
+    const volume = toPlainString(this.direction === SHORT ? -this.realTradeVolume : this.realTradeVolume)
     const symbolParam = this.pool.isAllV3 ? this.symbolInfo.symbol : this.symbolInfo.symbolId
     return ApiProxy.request('tradeWithMargin', [this.wallet.detail.chainId, this.currentSymbol.address, this.wallet.detail.account, volume, symbolParam, this.slippage], { includeResponse: true, write: true, subject: `${Intl.get('lite', this.direction)} ${Intl.get('lite', 'order')}` })
   }
@@ -706,7 +707,7 @@ export default class Trading {
 
   get fundingCoefficientTip() {
     if (this.contract && this.contract.fundingRateCoefficient && this.symbolInfo) {
-      const propName = this.symbolInfo.isPower ?"Theoretical Price": "Index Price"
+      const propName = this.symbolInfo.isPower ? "Theoretical Price" : "Index Price"
       return Intl.eval('lite', 'funding-coefficient-hover', {
         unit: this.symbolInfo.unit,
         value: this.contract.fundingRateCoefficient,

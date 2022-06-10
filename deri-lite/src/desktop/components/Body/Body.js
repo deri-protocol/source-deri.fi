@@ -19,7 +19,7 @@ class Body extends React.Component {
     return (
       <div className='body'>
         <Switch >
-          <Route exact path='/' component={() => <Lite lang={dict['lite']}/>}/>
+          <Route exact path='/' component={() => <Lite actions={this.props.actions} lang={dict['lite']}/>}/>
         </Switch>
       </div>
     )

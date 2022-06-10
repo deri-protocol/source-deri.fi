@@ -74,6 +74,7 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
   const directionChange = direction => {
     trading.setVolume('')
     setDirection(direction)
+    trading.setDirection(direction)
   }
 
   const switchDirection = () => {
@@ -581,7 +582,6 @@ function Operator({ wallet, spec, volume, available,
       wallet.setDetail(walletContext)
       window.ethereum = walletContext.ethereum
     } else {
-      wallet.setDetail({})
     }
   }, [walletContext, lang]);
 

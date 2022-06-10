@@ -5,13 +5,13 @@ import './lite.less'
 import version from '../../../../model/Version'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min'
 
-export default function Lite({lang}){
+export default function Lite({lang,actions}){
   return (
     <div className='trade-container'>
       <AreaPicker lang={lang} ></AreaPicker> 
       <div className='trade-body lite'>
         <Tab lite={true} lang={lang} />
-        <LiteTrade lang={lang} /> 
+        <LiteTrade lang={lang} actions={actions} /> 
       </div>
     </div>
   )

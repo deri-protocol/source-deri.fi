@@ -155,7 +155,7 @@ class Wallet {
   }
 
   refresh() {
-    this.loadWalletBalance(this.detail.chainId, this.detail.account);
+    // this.loadWalletBalance(this.detail.chainId, this.detail.account);
   }
 
   isSupportChain(isOptions) {

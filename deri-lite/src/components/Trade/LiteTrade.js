@@ -1,35 +1,39 @@
-import { useState ,useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import Position from './Position';
 import History from './History';
 import classNames from 'classnames';
 import ContractInfo from '../ContractInfo/ContractInfo';
-import {useWallet} from 'use-wallet'
+import { useWallet } from 'use-wallet'
 import Trade from './Trade';
 import { inject, observer } from 'mobx-react';
 
-function LiteTrade({wallet,trading,isPro,lang,loading,version,type}){
+function LiteTrade({ wallet, trading, isPro, lang, loading, version, type, actions }) {
   const [curTab, setCurTab] = useState('trade');
   const switchTab = current => setCurTab(current);
-  const tradeClassName = classNames('trade-position',curTab)
+  const tradeClassName = classNames('trade-position', curTab)
   const walletContext = useWallet();
+  actions.onGlobalStateChange(state => {
+    console.log('onGlobalStateChange', state.wallet)
+    wallet.setDetail(state.wallet)
+  })
   useEffect(() => {
     loading.loading()
     wallet.setStatus(walletContext.status)
     wallet.setDetail(walletContext)
-    trading.init(wallet,() => {
+    trading.init(wallet, () => {
       loading.loaded();
     })
-    return () => { trading.clean()} ;
-  }, [walletContext,type.current])
+    return () => { trading.clean() };
+  }, [walletContext, type.current])
 
   return (
-      <div className={tradeClassName}>
-        <div className='header-top'>
-          <div className='header'>
-            <span className='trade'  onClick={() => switchTab('trade')}>
-              {lang['trade']}
-            </span>
-            {!isPro && <>
+    <div className={tradeClassName}>
+      <div className='header-top'>
+        <div className='header'>
+          <span className='trade' onClick={() => switchTab('trade')}>
+            {lang['trade']}
+          </span>
+          {!isPro && <>
             <span
               className='pc position' onClick={() => switchTab('position')}>
               {lang['my-position']}
@@ -41,15 +45,15 @@ function LiteTrade({wallet,trading,isPro,lang,loading,version,type}){
             <span className='history' onClick={() => switchTab('history')}>
               {lang['history']}
             </span>
-            </>}
-          </div>
+          </>}
         </div>
-        <Trade lang={lang} />
-        <Position lang={lang} />
-        <History wallet ={wallet} spec={trading.config} specs={trading.configs} lang={lang} />
-        <ContractInfo lang={lang}/>   
-    </div> 
+      </div>
+      <Trade lang={lang} />
+      <Position lang={lang} />
+      <History wallet={wallet} spec={trading.config} specs={trading.configs} lang={lang} />
+      <ContractInfo lang={lang} />
+    </div>
   )
 }
 
-export default inject('wallet','trading','loading','version','type')(observer(LiteTrade))
+export default inject('wallet', 'trading', 'loading', 'version', 'type')(observer(LiteTrade))

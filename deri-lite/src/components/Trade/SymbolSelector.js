@@ -17,7 +17,7 @@ function SymbolSelector({ trading, loading, type, wallet }) {
     if (selected) {
       loading.loading();
       trading.pause();
-      trading.setSymbols(selected)
+      trading.setCurrentSymbol(selected)
       trading.loadBySymboInfo(wallet, selected, () => {
         loading.loaded();
       },type.isOption)

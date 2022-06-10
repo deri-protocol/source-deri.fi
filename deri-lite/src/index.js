@@ -49,7 +49,7 @@ function render(props) {
       <HashRouter basename='/deri-lite'>
         <UseWalletProvider {...useWalletOptions}>
           <Provider wallet={wallet} type={type} trading={trading} version={version} intl={intl} loading={loading}>
-            <App />
+            <App {...props} />
           </Provider>
         </UseWalletProvider>
       </HashRouter>

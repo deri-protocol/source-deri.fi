@@ -323,7 +323,7 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
                 {lang['mark-price']} : <span className={markPriceClass}>&nbsp; <DeriNumberFormat value={markPrice} decimalScale={4} /></span>
               </div>
               <div className='index-prcie'>
-                {trading.symbolInfo ? trading.symbolInfo.underlier : ''} : <span className='option-vol'>&nbsp; <span> <DeriNumberFormat value={indexPrice} decimalScale={2} /></span><span className='vol'> | </span>DVOL : <DeriNumberFormat value={trading.position.volitility} decimalScale={2} suffix='%' /></span>
+                {trading.symbolInfo ? trading.symbolInfo.underlier : ''} : <span className='option-vol'>&nbsp; <span> <DeriNumberFormat value={indexPrice} decimalScale={2} /></span><span className='vol'> | </span>DVOL : <DeriNumberFormat value={trading.position.volatility} decimalScale={2} suffix='%' /></span>
               </div>
             </>}
             {(type.isPower) && <>

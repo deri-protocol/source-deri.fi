@@ -302,18 +302,19 @@ export default class Trading {
         }
       })
       const contract = await this.contractInfo.load(wallet, currentSymbol, isOption)
-      const histories = await this.historyInfo.load(wallet, currentSymbol, isOption)
+      
       const fundingRate = await this.loadFundingRate(wallet,currentSymbol,isOption)
       this.setCurrentSymbol(currentSymbol)
       this.setPosition(position)
       this.setLoaded(true)
       this.setContract(contract)
-      this.setHistory(histories);
       this.initVenusEarned(wallet, currentSymbol)
       this.setFundingRate(fundingRate)
       this.positionInfo.start()
       this.resume();
       finishedCallback && finishedCallback()
+      const histories = await this.historyInfo.load(wallet, currentSymbol, isOption)
+      this.setHistory(histories);
     } else {
       finishedCallback && finishedCallback()
     }

@@ -1,12 +1,13 @@
 @green: #3EBF38;
 @red: #E35061;
-@text:#FFFFFF;
-@title:#AAAAAA;
+@text: #FFFFFF;
+@title: #AAAAAA;
 
 .trade-container {
   display: flex;
   flex-direction: column;
 }
+
 .trade-body {
   display: flex;
   justify-content: space-between;
@@ -14,9 +15,10 @@
   color: #AAAAAA;
   font-family: Korolev, sans-serif;
 
-  .check-lite-pro.lite .lite,.check-lite-pro.pro .pro{
+  .check-lite-pro.lite .lite,
+  .check-lite-pro.pro .pro {
     font-weight: bold;
-    color:#fff;
+    color: #fff;
     background: #41424A;
     font-weight: bold;
     // border-radius: 20px 0px 0px 5px;
@@ -27,14 +29,17 @@
     height: 100%;
     background: #232529;
     border-radius: 20px 0px 0px 20px;
+
     .lite {
       border-radius: 20px 0 0 5px;
     }
+
     .pro {
       border-radius: 5px 0 0 10px;
     }
 
-    .lite, .pro {
+    .lite,
+    .pro {
       width: 50px;
       height: 107px;
       line-height: 52px;
@@ -55,34 +60,47 @@
     .trade {
       color: #D4E05C;
     }
+
     .trade-info {
       display: block;
     }
-    .position-info,.history-info {
+
+    .position-info,
+    .history-info {
       display: none;
-    }  
+    }
   }
+
   .trade-position.position {
     z-index: 1;
+
     .position {
       color: #D4E05C;
     }
+
     .position-info {
       display: block;
     }
-    .trade-info,.history-info {
+
+    .trade-info,
+    .history-info {
       display: none;
     }
   }
+
   .trade-position.history {
     z-index: 1;
+
     .history {
       color: #D4E05C;
     }
+
     .history-info {
       display: block;
     }
-    .trade-info,.position-info {
+
+    .trade-info,
+    .position-info {
       display: none;
     }
   }
@@ -129,9 +147,10 @@
           cursor: pointer;
         }
       }
+
       .contract-info-header {
         width: 50%;
-        background-color:#1c1c22 ;
+        background-color: #1c1c22;
       }
     }
 
@@ -144,22 +163,25 @@
       .trade-peration {
         width: 530px;
         height: 650px;
-        position: relative;        
+        position: relative;
         margin: 20px 0 0 20px;
 
         .check-baseToken {
           display: flex;
-          .option-vol{
+
+          .option-vol {
             color: @text;
           }
+
           .check-baseToken-btn,
           .price-fundingRate {
             display: inline-block;
-            .vol{
+
+            .vol {
               font-size: 16px;
               vertical-align: middle;
             }
-            
+
           }
 
           .check-baseToken-btn {
@@ -171,6 +193,7 @@
             background-repeat: no-repeat;
             border-radius: 10px;
             cursor: pointer;
+
             .dropdown-menu.show {
               display: block;
               position: absolute;
@@ -182,43 +205,47 @@
               overflow-x: hidden;
               z-index: 2;
             }
+
             .dropdown-menu {
               width: 232px;
               color: #CCCCCC;
               border-radius: 12px;
               background: #252628;
               display: none;
-              box-shadow: -4px -3px 2px 1px #303031;    
+              box-shadow: -4px -3px 2px 1px #303031;
               padding: 4px 0 0 22px;
+
               span {
                 // padding-left: 12px;
               }
             }
+
             .dropdown-menu::-webkit-scrollbar {
               border-radius: 10px;
               width: 10px;
               height: 10px;
               background-color: rgb(20, 25, 36);
             }
-        
+
             /*定义滚动条轨道 内阴影+圆角*/
-        
+
             .dropdown-menu::-webkit-scrollbar-track {
               box-shadow: inset 0 0 0px rgb(20, 25, 36);
               border-radius: 10px;
               background-color: rgb(20, 25, 36);
             }
-        
+
             /*定义滑块 内阴影+圆角*/
-        
+
             .dropdown-menu::-webkit-scrollbar-thumb {
               border-radius: 10px;
               box-shadow: inset 0 0 0px rgb(20, 25, 36);
               background-color: gray;
             }
 
-            .dropdown-item-wrapper,.dropdown-item {
-              padding: 2px 0 ;
+            .dropdown-item-wrapper,
+            .dropdown-item {
+              padding: 2px 0;
               font-size: 16px;
               font-family: Korolev, sans-serif;
               font-weight: 300;
@@ -230,6 +257,7 @@
               margin-left: 20px;
               display: none;
             }
+
             .sub-menu.show {
               display: block;
             }
@@ -238,13 +266,14 @@
               display: flex;
               justify-content: space-between;
               padding-right: 24px;
+
               img {
                 width: 16px;
               }
             }
 
 
-            
+
 
             .dropdown-item:focus,
             .dropdown-item:hover {
@@ -286,6 +315,7 @@
               }
 
               .check-base-down {
+
                 // margin-left: 58px;
                 // position: absolute;
                 // right: 20px;
@@ -319,7 +349,9 @@
             .fall {
               color: @red;
             }
-            .funding-rate,.index-prcie {
+
+            .funding-rate,
+            .index-prcie {
               padding-top: 5px;
               position: relative;
 
@@ -329,6 +361,7 @@
                 border-bottom: 1px #AAAAAA dotted;
                 cursor: pointer;
               }
+
               .hover-box {
                 position: absolute;
                 background-color: #2c2d31;
@@ -342,30 +375,37 @@
                 display: none;
               }
             }
+
             .funding-rate:hover .hover-box {
               display: block;
             }
           }
-          .options{
+
+          .options {
             padding-top: 0px !important;
             margin-top: -10px;
-            .diseq{
+
+            .diseq {
               padding-top: 5px;
               display: flex;
               justify-content: space-between;
             }
-            .index-prcie{
+
+            .index-prcie {
               padding-top: 5px;
             }
-            .funding-rate{
+
+            .funding-rate {
               padding-top: 0px !important;
             }
-            .rise,.fall{
+
+            .rise,
+            .fall {
               font-size: 14px;
               font-weight: 600;
             }
           }
-          
+
         }
 
         .check-long-short {
@@ -406,9 +446,11 @@
         .checked-long.checked-short {
           font-weight: 700;
           background-image: url('../../../../assets/img/check-short.png');
-          .check-short{
+
+          .check-short {
             color: @red;
           }
+
           .check-long {
             font-weight: 400;
             color: #3A503B;
@@ -424,10 +466,12 @@
           .left {
             font-size: 12px;
             height: 115px;
-            .min-quantity{
+
+            .min-quantity {
               margin-top: 5px;
               color: #E35061;
             }
+
             .current-position {
               margin-left: 20px;
               font-weight: 500;
@@ -451,7 +495,8 @@
               // position: relative;
               align-items: center;
               height: 65px;
-              .bg-input{
+
+              .bg-input {
                 width: 229px !important;
                 height: 56px;
                 background: rgba(212, 224, 92, 0.05);
@@ -462,6 +507,7 @@
                 // flex: 1;
                 // padding-right: 5px;
               }
+
               .title-volume {
                 position: absolute;
                 top: 6px;
@@ -470,7 +516,8 @@
                 color: #D4E05C;
                 display: none;
               }
-              .option-unit{
+
+              .option-unit {
                 // position: absolute;
                 // right: 7px;
                 // top: 30px;
@@ -480,6 +527,7 @@
                 color: @text;
                 // display: none;
               }
+
               .contrant-input {
                 // max-width: 200px;
                 width: 100%;
@@ -494,9 +542,10 @@
                 padding-left: 20px;
                 color: #D4E05C;
                 border-radius: 3px;
-                font-size: 20px;               
+                font-size: 20px;
               }
-              .contrant-input::placeholder {                
+
+              .contrant-input::placeholder {
                 font-size: 20px;
                 font-family: Arial;
                 line-height: 56px;
@@ -524,8 +573,9 @@
                 display: block;
               }
             }
-            .option-input{
-              .contrant-input{
+
+            .option-input {
+              .contrant-input {
                 text-align: right;
                 font-size: 30px !important;
                 // padding-right: 30px  !important;
@@ -533,6 +583,7 @@
               }
 
             }
+
             .btc {
               text-align: right;
               padding-right: 17px;
@@ -547,19 +598,22 @@
             align-items: center;
             font-weight: 500;
 
-
-            .v2,.v2_lite,.v2_lite_open {
-              .balance-contract-text.pc,.total-held, .pos-held,.available-balance .pc{
-                cursor: pointer;
-                border-bottom: 1px dotted #aaaaaa;
-              }
+            .balance-contract-text.pc,
+            .total-held,
+            .pos-held,
+            .available-balance .pc {
+              cursor: pointer;
+              border-bottom: 1px dotted #aaaaaa;
             }
 
             .contrant-info {
               font-size: 12px;
 
 
-              .margin-held-pos,.balance-contract,.box-margin,.available-balance {
+              .margin-held-pos,
+              .balance-contract,
+              .box-margin,
+              .available-balance {
                 display: flex;
                 justify-content: space-between;
                 width: 220px;
@@ -576,22 +630,26 @@
 
               .balance-contract {
                 padding-top: 0px;
-                
+
 
                 .balance-contract-num {
                   font-size: 15px;
                   color: @text;
                   font-weight: bold;
                   white-space: nowrap;
-                  .open-add,.open-remove{
+
+                  .open-add,
+                  .open-remove {
                     padding: 5px;
                     cursor: pointer;
                   }
-                  .open-remove{
+
+                  .open-remove {
                     padding-right: 0px;
                   }
                 }
-                .balance-contract-num.v1{
+
+                .balance-contract-num.v1 {
                   display: flex;
                   align-items: flex-end;
                 }
@@ -600,6 +658,7 @@
               .balance-contract-text.mobile {
                 display: none
               }
+
               .available-balance .mobile {
                 display: none;
               }
@@ -640,7 +699,8 @@
             .text-enter {
               color: @text;
             }
-            .transaction-fee-hover{
+
+            .transaction-fee-hover {
               color: #ffffff;
               border-bottom: 1px #aaaaaa dotted;
               cursor: pointer;
@@ -683,7 +743,7 @@
     }
 
     .position-info {
-      
+
       width: 575px;
 
       .info {
@@ -700,11 +760,13 @@
 
         .pnl-list {
           vertical-align: middle;
+
           img {
             margin-left: 6px;
             vertical-align: middle;
             cursor: pointer;
           }
+
           .pnl-box {
             position: absolute;
             min-width: 260px;
@@ -720,33 +782,37 @@
             overflow: auto;
             overflow-x: hidden;
             font-size: 14px;
+
             .unrealizePnl-item {
               margin: 10px 0;
-              span:first-child {                    
+
+              span:first-child {
                 margin-left: 20px;
               }
+
               span:last-child {
                 color: #fff;
               }
             }
           }
+
           .pnl-box::-webkit-scrollbar {
             border-radius: 10px;
             width: 10px;
             height: 10px;
             background-color: rgb(20, 25, 36);
           }
-      
+
           /*定义滚动条轨道 内阴影+圆角*/
-      
+
           .pnl-box::-webkit-scrollbar-track {
             box-shadow: inset 0 0 0px rgb(20, 25, 36);
             border-radius: 10px;
             background-color: rgb(20, 25, 36);
           }
-      
+
           /*定义滑块 内阴影+圆角*/
-      
+
           .pnl-box::-webkit-scrollbar-thumb {
             border-radius: 10px;
             box-shadow: inset 0 0 0px rgb(20, 25, 36);
@@ -772,6 +838,7 @@
           .title-text {
             color: @title;
           }
+
           .funding-fee {
             border-bottom: 1px #AAAAAA dotted;
             cursor: pointer;
@@ -795,6 +862,7 @@
           padding-left: 36px;
           width: 285px;
           display: flex;
+
           div {
             width: 110px;
             height: 51px;
@@ -813,7 +881,7 @@
             //   box-shadow: -3px -3px 3px rgba(163, 163, 163, 0.2);
           }
 
-          img {            
+          img {
             margin-right: 3px;
             vertical-align: middle;
           }
@@ -823,7 +891,7 @@
             vertical-align: middle;
             margin-top: -5px;
           }
-          
+
 
           .add-margin {
             color: @green;
@@ -858,10 +926,11 @@
       max-height: 673px;
       overflow-y: auto;
 
-      .no-data{
+      .no-data {
         text-align: center;
         margin-top: 50px;
       }
+
       .history-box {
         padding-top: 20px;
         padding-bottom: 18px;
@@ -871,10 +940,13 @@
         }
 
         .view.hover {
-          .view-space ,.right-arrow {
+
+          .view-space,
+          .right-arrow {
             display: block;
           }
         }
+
         .view {
           position: absolute;
           left: 0;
@@ -885,27 +957,29 @@
 
           .view-space {
             background-color: #000;
-            padding: 2px;             
+            padding: 2px;
             font-size: 14px;
             white-space: nowrap;
             border-radius: 4px;
             display: none;
             cursor: pointer;
+
             a {
-              color : #fff;            
+              color: #fff;
             }
           }
 
           .view-arrow {
             img {
-              padding : 0 0 2px;
+              padding: 0 0 2px;
               cursor: pointer;
             }
           }
 
-          .right-arrow {            
+          .right-arrow {
             height: 14px;
             display: none;
+
             img {
               width: 14px;
               vertical-align: middle;
@@ -915,7 +989,7 @@
           }
         }
 
-        
+
 
         .time-price-volume {
           display: flex;
@@ -942,7 +1016,7 @@
           text-align: right;
           width: 140px;
 
-          .history-title.mobile{
+          .history-title.mobile {
             display: none;
           }
         }
@@ -1021,7 +1095,7 @@
     display: flex;
     flex-direction: column;
     background: #1b1c22;
-    
+
 
     .contract-header {
       height: 58px;
@@ -1037,13 +1111,15 @@
       height: 100%;
 
 
-      .v2-margin{
+      .v2-margin {
         display: flex;
-        flex-direction: column;      
+        flex-direction: column;
       }
+
       .v2-margin.pc {
         display: block;
       }
+
       .v2-margin.mobile {
         display: none;
       }
@@ -1073,21 +1149,26 @@
         .title {
           padding-left: 59px;
         }
-        .margin-per{
+
+        .margin-per {
           display: inline-block;
           border-bottom: 1px #AAAAAA dotted;
           cursor: pointer;
         }
+
         .text {
           padding-right: 28px;
-          > div{
+
+          >div {
             display: inline;
           }
         }
+
         .multiplier {
           border-bottom: 1px dotted #aaaaaa;
           cursor: pointer;
         }
+
         .btoken-symbol {
           margin-left: 10px;
         }
@@ -1099,9 +1180,11 @@
     }
   }
 }
-.options .trade-body .trade-position .history-info .history-box .view{
+
+.options .trade-body .trade-position .history-info .history-box .view {
   left: 52px;
 }
+
 .trading-dialog {
 
   .modal-dialog {
@@ -1109,7 +1192,8 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    font-family: Korolev,sans-serif;
+    font-family: Korolev, sans-serif;
+
     .modal-content {
       position: relative;
       color: #AAAAAA;
@@ -1131,18 +1215,20 @@
         padding-left: 30px;
         font-size: 15px;
         color: #D4E05C;
-        font-family: Tachyon, sans-serif;;
+        font-family: Tachyon, sans-serif;
+        ;
         display: flex;
         justify-content: space-between;
         align-items: center;
         border-radius: 20px 20px 0px 0px;
-        padding : 0 20px;
+        padding: 0 20px;
 
         .close {
           color: #fff;
           font-size: 1.5rem;
           font-weight: 700;
           cursor: pointer;
+
           span {
             cursor: pointer;
           }
@@ -1219,7 +1305,7 @@
                 height: 43px;
                 border: 0;
                 font-size: 18px;
-                
+
                 background: #1B1C1F;
                 display: flex;
                 justify-content: center;
@@ -1238,14 +1324,18 @@
               }
             }
           }
-          .remv{
-              margin-top: 36px;
+
+          .remv {
+            margin-top: 36px;
           }
+
           .max {
             margin-top: 15px;
-            .max-btn-left{
-                margin-left: 20px;
+
+            .max-btn-left {
+              margin-left: 20px;
             }
+
             span {
               color: #569BDA;
               cursor: pointer;
@@ -1281,7 +1371,7 @@
         .contract-box-info {
           width: 471px;
           // height: 422px;
-          padding : 0 10px;
+          padding: 0 10px;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -1314,7 +1404,7 @@
                 height: 43px;
                 border: 0;
                 font-size: 18px;
-                
+
                 background: #1B1C1F;
                 display: flex;
                 justify-content: center;
@@ -1335,6 +1425,7 @@
 
           .top {
             border-bottom: 1px solid rgba(112, 112, 112, 0.4470588235294118);
+
             .text {
               display: flex;
               justify-content: space-between;
@@ -1344,7 +1435,8 @@
               padding-right: 10px;
               font-size: 18px;
               color: #FFFFFF;
-              font-family:  Korolev, sans-serif;;
+              font-family: Korolev, sans-serif;
+              ;
 
               .long {
                 color: @green;
@@ -1409,14 +1501,14 @@
     left: 50%;
     top: 30%;
     transform: translate(-50%, -30%);
-    font-family: Korolev,sans-serif;
-    
+    font-family: Korolev, sans-serif;
+
     .modal-content {
       position: relative;
       display: inline-block;
       width: initial;
       height: initial;
-      border : 0;
+      border: 0;
 
       .modal-header {
         font-size: 15px;
@@ -1432,7 +1524,7 @@
         justify-content: space-between;
         align-items: center;
         border-radius: 20px 20px 0 0;
-        border : 0;
+        border: 0;
 
 
         .close {
@@ -1440,6 +1532,7 @@
           font-size: 1.5rem;
           font-weight: 700;
           cursor: pointer;
+
           span {
             cursor: pointer;
           }
@@ -1457,40 +1550,49 @@
         .balance-list .row {
           height: 50px;
           line-height: 50px;
-          padding : 0 20px;
+          padding: 0 20px;
           font-size: 16px;
-          color : #fff;
+          color: #fff;
           font-weight: 400;
           white-space: nowrap;
 
           .mobile {
             display: none
           }
+
           .btoken {
             width: 120px;
           }
-          .w-balance,.avail-balance {
+
+          .w-balance,
+          .avail-balance {
             width: 150px;
           }
+
           .action {
             span {
               margin-left: 20px;
               cursor: pointer;
             }
           }
-          .add-margin,.remove-margin {
+
+          .add-margin,
+          .remove-margin {
             background: url('../../../../assets/img/btn-bg.png') center no-repeat;
             width: 120px;
           }
         }
+
         .balance-list .row.header {
           color: #AAAAAA;
           font-size: 18px;
         }
+
         .balance-list .row span {
           display: inline-block;
           text-align: center;
         }
+
         .balance-list .row:nth-child(odd) {
           background-color: #202124;
         }

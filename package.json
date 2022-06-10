@@ -12,7 +12,7 @@
     "install:main": "cd main && yarn install --ignore-engines",
     "install:demo": "cd sub-app-demo && yarn install --ignore-engines",
     "install:bet-it": "cd bet-it && yarn install --ignore-engines",
-    "clean" : "rm -rf node_modules && rm -rf main/node_modules && rm -rf bet-it/node_modules && rm -rf node_modules",
+    "clean": "rm -rf node_modules && rm -rf main/node_modules && rm -rf bet-it/node_modules && rm -rf node_modules",
     "build": "yarn install --ignore-engines && npm run install && rm -rf build && mkdir build && npm-run-all --serial build:*",
     "build:demo": "mkdir -p build/sub-app-demo  && cd sub-app-demo && npm run build && mv ./build/* ../build/sub-app-demo",
     "build:bet-it": "mkdir -p build/bet-it  && cd bet-it && npm run build && mv ./build/* ../build/bet-it",
@@ -30,5 +30,8 @@
     "deri.fi"
   ],
   "author": "haidong.li@dfactory.tech",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "js-cookie": "^3.0.1"
+  }
 }

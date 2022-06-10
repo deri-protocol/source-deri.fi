@@ -1,5 +1,5 @@
 import { makeObservable, observable, action, computed } from "mobx";
-import { restoreLocale, storeLocale } from "../utils/utils";
+import { formatNumber, getCookie, numberWithCommas, restoreLocale, setCookie, storeLocale } from "../utils/utils";
 import supportedCatalog from '../locales/lang.json'
 
 
@@ -37,25 +37,46 @@ class Intl {
       dict : computed,
       localeLabel: computed
     })
-    const language ="EN"
-    const prefix = language && language.split('-')[0]
-    const locale = restoreLocale()
-    if(locale && Object.keys(supportedCatalog).includes(locale) ){
+    const defaultLanguage = navigator.language
+    const locale = "en"
+    if(this.supportLang(locale)){
       this.locale = locale
-    } else if(prefix && Object.keys(supportedCatalog).includes(prefix)){
-      this.locale = prefix
+    } else if(this.supportLang(defaultLanguage)){
+      this.locale = defaultLanguage
+    } else {
+      this.locale = 'en'
     }
+  }
+
+  supportLang(lang){
+    return Object.keys(supportedCatalog).includes(lang)
   }
 
   setLocale(locale){
     if(locale && supportedCatalog[locale]){
       this.locale = locale;
-      storeLocale(locale)
+      setCookie('locale',locale)
     }
   }
 
   get(page,key){
     return cache[this.locale][page][key]
+  }
+
+  eval(page,key,params = {},options = {}){
+    const {isNumberFormat,decimal = 2,} = options
+    let value = this.dict[page][key];
+    const matchs = value.match(/\$\{\w+\}/g);
+    if(!page) {
+      console.error('eval must spcify page')
+      return;
+    }
+    for(var i = 0 ; i < matchs.length ; i++){
+      const key = matchs[i].replace(/\$|\{|\}/g,'')
+      const replaced = isNumberFormat && isNaN(params[key]) ? formatNumber(params[key],decimal) : params[key]
+      value = value.replace(matchs[i], replaced)
+    }
+    return value
   }
 
   get dict(){         

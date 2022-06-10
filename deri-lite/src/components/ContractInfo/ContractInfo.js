@@ -47,7 +47,7 @@ function ContractInfo({ wallet, trading, lang, type }) {
           <div className="info">
             <div className="title"> <span>Min.Trade Unit (Notional)</span> </div>
             <div className="text">
-              {trading.contract['minTradeUnit'] ? trading.contract['minTradeUnit'] + trading.symbol.unit : ''}
+              {trading.contract['minTradeUnit'] ? trading.contract['minTradeUnit'] + trading.symbolInfo.unit : ''}
             </div>
           </div>
           <div className="info">
@@ -80,7 +80,7 @@ function ContractInfo({ wallet, trading, lang, type }) {
               </div>
             </div>
             <div className="info">
-              <div className="title"> <TipWrapper block={false}><span tip={`Funding period is the time period for which the funding fee (${this.symbol.symbol} Mark Price - ${this.symbol.symbol} ) is paid. For Funding Period = 7 days, every second a long (short) contract pays (receives) a funding fee=(${this.symbol.symbol} Mark Price - ${this.symbol.symbol} ))/(7*24*60*60)`} className='margin-per'> Funding Period</span></TipWrapper> </div>
+              <div className="title"> <TipWrapper block={false}><span tip={trading.symbolInfo ? `Funding period is the time period for which the funding fee (${trading.symbolInfo.symbol} Mark Price - ${trading.symbolInfo.symbol} ) is paid. For Funding Period = 7 days, every second a long (short) contract pays (receives) a funding fee=(${trading.symbolInfo.symbol} Mark Price - ${trading.symbolInfo.symbol} ))/(7*24*60*60)` : ""} className='margin-per'> Funding Period</span></TipWrapper> </div>
               <div className="text">
                 <NumberFormat displayType='text' value={trading.contract.maintenanceMarginRatio} decimalScale={2} />   Days
               </div>

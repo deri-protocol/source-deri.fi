@@ -22,6 +22,10 @@ export default class Trade {
     )
   }
 
+  init(wallet){
+    //1.
+  }
+
   //index changed
   freshIndex(index){
 

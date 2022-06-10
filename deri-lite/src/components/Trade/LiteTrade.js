@@ -3,6 +3,7 @@ import Position from './Position';
 import History from './History';
 import classNames from 'classnames';
 import ContractInfo from '../ContractInfo/ContractInfo';
+import {useWallet} from 'use-wallet'
 import Trade from './Trade';
 import { inject, observer } from 'mobx-react';
 
@@ -10,9 +11,11 @@ function LiteTrade({wallet,trading,isPro,lang,loading,version,type}){
   const [curTab, setCurTab] = useState('trade');
   const switchTab = current => setCurTab(current);
   const tradeClassName = classNames('trade-position',curTab)
-
+  const walletContext = useWallet();
   useEffect(() => {
     loading.loading()
+    wallet.setStatus(walletContext.status)
+    wallet.setDetail(walletContext)
     trading.init(wallet,() => {
       loading.loaded();
     })

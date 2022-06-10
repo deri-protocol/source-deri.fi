@@ -34,6 +34,20 @@ function Position({ wallet, trading, version, lang, type }) {
     }
   }
 
+  const formatNumber = (number, decimal, suffix = '', prefix = '', allowZero) => {
+    let num = Math.abs(number)
+    if (/^[1-9]{1,}0{9,}$/.test(num)) {
+      number = number.toString()
+      number = number.replace(/000000000$/, '')
+      suffix = ` g${suffix}`
+    } else if (/000$/.test(num)) {
+      number = number.toString()
+      number = number.replace(/000$/, ' ')
+      suffix = ` k${suffix}`
+    }
+    return <DeriNumberFormat value={number} isNumericString decimalScale={decimal} allowZero={allowZero} prefix={prefix} suffix={` ${suffix}`} />
+  }
+
   //平仓
   const onClosePosition = async () => {
     setIsLiquidation(true)
@@ -114,14 +128,20 @@ function Position({ wallet, trading, version, lang, type }) {
       <div className='info'>
         <div className='info-left'>
           <div className='title-text'>Entry Price</div>
-          <div className='info-num'><DeriNumberFormat value={trading.position.averageEntryPrice} decimalScale={2} /></div>
+          <div className='info-num'>
+            {type.isFuture && formatNumber(trading.position['averageEntryPrice'], trading.symbolInfo.getDecimalBySymbol && trading.symbolInfo.getDecimalBySymbol(trading.position.symbol))}
+            {type.isOption && formatNumber(trading.position['averageEntryPrice'], 2)}
+          </div>
         </div>
         <div className='info-right'></div>
       </div>
       <div className='info'>
         <div className='info-left'>
           <div className='title-text'>Mark Price</div>
-          <div className='info-num'><DeriNumberFormat value={trading.position.averageEntryPrice} decimalScale={2} /></div>
+          <div className='info-num'>
+            {type.isFuture && formatNumber(trading.position['markPrice'], trading.symbolInfo.getDecimalBySymbol && trading.symbolInfo.getDecimalBySymbol(trading.position.symbol))}
+            {type.isOption && formatNumber(trading.position['markPrice'], 2)}
+          </div>
         </div>
         <div className='info-right'></div>
       </div>
@@ -150,7 +170,7 @@ function Position({ wallet, trading, version, lang, type }) {
           <div className='title-text'>
             <TipWrapper><div className='title-text  funding-fee' tip="The margin frozen by this single position.">Margin Usage</div></TipWrapper>
           </div>
-          <div className='info-num'><DeriNumberFormat value={trading.position.marginHeld} decimalScale={2} /></div>
+          <div className='info-num'><DeriNumberFormat value={trading.position.marginHeldBySymbol} decimalScale={2} /></div>
         </div>
         <div className='info-right'></div>
       </div>
@@ -201,7 +221,7 @@ function Position({ wallet, trading, version, lang, type }) {
         </div>
         <div className='info-right'></div>
       </div>
-     
+
       <BalanceListDialog
         wallet={wallet}
         modalIsOpen={balanceListModalIsOpen}

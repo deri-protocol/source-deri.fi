@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import classNames from "classnames";
 import Slider from '../Slider/Slider';
+import { useWallet } from 'use-wallet';
 import Button from '../Button/Button';
 import { DeriEnv, priceCache, getIntrinsicPrice, PerpetualPoolParametersCache, isUnlocked, unlock, getFundingRate, getWalletBalance, getSpecification, getEstimatedFee, getLiquidityUsed, hasWallet, getEstimatedLiquidityUsed, getEstimatedFundingRate, getEstimatedTimePrice, getEstimatedLiquidatePrice } from '../../lib/web3js/index'
 import withModal from '../hoc/withModal';
@@ -28,6 +29,7 @@ const BalanceListDialog = withModal(BalanceList)
 function Trade({ wallet = {}, trading, version, lang, type }) {
   const [direction, setDirection] = useState('long');
   const [markPrice, setMarkPrice] = useState();
+  const [indexPrice, setIndexPrice] = useState();
   const [spec, setSpec] = useState({});
   const [fundingRateAfter, setFundingRateAfter] = useState('');
   const [markPriceAfter, setMarkPriceAfter] = useState('');
@@ -68,8 +70,8 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
     trading.refresh();
   }
   const loadBalance = async () => {
-    if (wallet.isConnected() && trading.config) {
-      const balance = await getWalletBalance(wallet.detail.chainId, trading.config.pool, wallet.detail.account, trading.config.bTokenId).catch(e => console.log(e))
+    if (wallet.isConnected() && trading.symbolInfo) {
+      const balance = await getWalletBalance(wallet.detail.chainId, trading.symbolInfo.address, wallet.detail.account, trading.symbolInfo.bTokenId).catch(e => console.log(e))
       if (balance) {
         setBalance(balance)
       }
@@ -111,9 +113,9 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
 
   //交易费用
   const loadTransactionFee = async () => {
-    if (hasConnectWallet() && trading.config && trading.volumeDisplay) {
+    if (hasConnectWallet() && trading.symbolInfo && trading.volumeDisplay) {
       let volume = volumeMu(trading.volumeDisplay)
-      const transFee = await getEstimatedFee(wallet.detail.chainId, trading.config.pool, Math.abs(volume), trading.config.symbolId);
+      const transFee = await getEstimatedFee(wallet.detail.chainId, trading.symbolInfo.address, Math.abs(volume), trading.symbolInfo.symbol);
       if (!isNaN(transFee)) {
         setTransFee((+transFee).toFixed(2));
       }
@@ -127,11 +129,11 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
 
   //计算流动性的变化
   const calcLiquidityUsed = async () => {
-    if (hasConnectWallet() && trading.config && trading.volumeDisplay && type.isFuture) {
+    if (hasConnectWallet() && trading.symbolInfo && trading.volumeDisplay && type.isFuture) {
       const { detail } = wallet
       const volume = direction === 'long' ? trading.volumeDisplay : -trading.volumeDisplay
-      const curLiqUsed = await getLiquidityUsed(detail.chainId, trading.config.pool, trading.config.symbolId)
-      const afterLiqUsed = await getEstimatedLiquidityUsed(detail.chainId, trading.config.pool, volume, trading.config.symbolId)
+      const curLiqUsed = await getLiquidityUsed(detail.chainId, trading.symbolInfo.address, trading.symbolInfo.symbol)
+      const afterLiqUsed = await getEstimatedLiquidityUsed(detail.chainId, trading.symbolInfo.pool, volume, trading.symbolInfo.symbol)
       if (curLiqUsed && afterLiqUsed) {
         setLiqUsedPair({ curLiqUsed: curLiqUsed.liquidityUsed0, afterLiqUsed: afterLiqUsed.liquidityUsed1 })
       }
@@ -140,10 +142,10 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
 
   //计算funding rate的变化
   const calcFundingRateAfter = async () => {
-    if (hasConnectWallet() && trading.config && trading.volumeDisplay) {
+    if (hasConnectWallet() && trading.symbolInfo && trading.volumeDisplay) {
       let num = volumeMu(trading.volumeDisplay)
       const volume = (direction === 'long' ? num : -num)
-      const fundingAfter = await getEstimatedFundingRate(wallet.detail.chainId, trading.config.pool, volume, trading.config.symbolId);
+      const fundingAfter = await getEstimatedFundingRate(wallet.detail.chainId, trading.symbolInfo.address, volume, trading.symbolInfo.symbol);
       if (fundingAfter) {
         let funding = type.isOption ? fundingAfter.deltaFunding1 : fundingAfter.fundingRate1
         setFundingRateAfter(funding);
@@ -153,10 +155,10 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
 
   //计算markPrice
   const calcMarkPriceAfter = async () => {
-    if (hasConnectWallet() && trading.config && trading.volumeDisplay) {
+    if (hasConnectWallet() && trading.symbolInfo && trading.volumeDisplay) {
       let num = volumeMu(trading.volumeDisplay)
       const volume = (direction === 'long' ? num : -num)
-      const markPriceAfter = await getEstimatedTimePrice(wallet.detail.chainId, trading.config.pool, volume, trading.config.symbolId);
+      const markPriceAfter = await getEstimatedTimePrice(wallet.detail.chainId, trading.symbolInfo.address, volume, trading.address.symbol);
       if (markPriceAfter) {
         // let markP = getIntrinsicPrice(trading.index, trading.position.strikePrice, trading.position.isCall).plus(markPriceAfter).toString()
         setMarkPriceAfter(markPriceAfter);
@@ -165,10 +167,10 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
   }
 
   const calcLiqPriceAfter = async () => {
-    if (hasConnectWallet() && trading.config && trading.volumeDisplay) {
+    if (hasConnectWallet() && trading.symbolInfo && trading.volumeDisplay) {
       let num = volumeMu(trading.volumeDisplay)
       const volume = (direction === 'long' ? num : -num)
-      const price = await getEstimatedLiquidatePrice(wallet.detail.chainId, trading.config.pool, wallet.detail.account, volume, trading.config.symbolId)
+      const price = await getEstimatedLiquidatePrice(wallet.detail.chainId, trading.symbolInfo.address, wallet.detail.account, volume, trading.symbolInfo.symbol)
       if (price) {
         setLiquidationPrice(price);
       }
@@ -276,16 +278,18 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
   useEffect(() => {
     loadBalance();
     return () => { };
-  }, [wallet.detail.account, trading.config, trading.amount.dynBalance])
+  }, [wallet.detail.account, trading.symbolInfo, trading.accountInfo.dynEffMargin])
 
   useEffect(() => {
-    if (indexPriceRef.current > trading.index) {
+    let index = (trading.position ? trading.position.indexPrice : '')
+    if (indexPriceRef.current > index) {
       setIndexPriceClass('fall')
     } else {
       setIndexPriceClass('rise')
     }
-    indexPriceRef.current = trading.index
-  }, [trading.index, trading.config]);
+    indexPriceRef.current = index
+    setIndexPrice(index)
+  }, [ trading.position.indexPrice,trading.position]);
 
   useEffect(() => {
     if (trading.position) {
@@ -296,7 +300,7 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
   }, [trading.position.volume, trading.position.margin, trading.position.unrealizedPnl]);
 
   useEffect(() => {
-    let mark = trading.markPrice || (trading.position ? trading.position.markPrice : '')
+    let mark = (trading.position ? trading.position.markPrice : '')
     if (markPriceRef.current > mark) {
       setMarkPriceClass('fall')
     } else {
@@ -304,25 +308,20 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
     }
     markPriceRef.current = mark
     setMarkPrice(mark)
-    if (mark) {
-      const formatMarkPrice = (+mark).toFixed(trading.priceDecimals)
-      const symbol = trading.config && trading.config.symbol.split('-')[0]
-      document.querySelector('head title').innerText = `$${formatMarkPrice} ${symbol}-MARK.deri`
-    }
     return () => {
       document.querySelector('head title').innerText = 'deri'
     };
-  }, [trading.index, trading.position, trading.markPrice, trading.config, trading.priceDecimals])
+  }, [trading.index, trading.position, trading.markPrice, trading.symbolInfo, trading.priceDecimals])
 
   useEffect(() => {
-    if (trading.config) {
-      setSpec(trading.config)
+    if (trading.symbolInfo) {
+      setSpec(trading.symbolInfo)
     }
     return () => {
       // setMarkPriceAfter('')
       // setFundingRateAfter('');
     };
-  }, [trading.config]);
+  }, [trading.symbolInfo]);
 
   useEffect(() => {
     if (trading.margin) {
@@ -387,14 +386,14 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
     <div className='trade-info'>
       <div className='trade-peration'>
         <div className='check-baseToken'>
-          <SymbolSelector setSpec={setSpec} spec={trading.config} isOption={type.isOption} />
+          <SymbolSelector setSpec={setSpec} spec={trading.symbolInfos} type={type} />
           <div className='price-fundingRate pc'>
             {type.isFuture && <>
               <div className='mark-price'>
-                {lang['mark-price']} : <span className={markPriceClass}>&nbsp; <DeriNumberFormat value={markPrice} decimalScale={trading.priceDecimals} /></span>
+                {lang['mark-price']} : <span className={markPriceClass}>&nbsp; <DeriNumberFormat value={markPrice} decimalScale={2} /></span>
               </div>
               <div className='index-prcie'>
-                {lang['index-price']}: <span className={indexPriceClass}>&nbsp; <DeriNumberFormat value={trading.index} decimalScale={trading.priceDecimals} /></span>
+                {lang['index-price']}: <span className={indexPriceClass}>&nbsp; <DeriNumberFormat value={indexPrice} decimalScale={2} /></span>
               </div>
             </>}
             {(type.isOption || type.isPower) && <>
@@ -402,22 +401,22 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
                 {lang['mark-price']} : <span className={markPriceClass}>&nbsp; <DeriNumberFormat value={markPrice} decimalScale={4} /></span>
               </div>
               <div className='index-prcie'>
-                {trading.config ? type.isOption ? trading.config.symbol.split('-')[0] : '' : ''} : <span className='option-vol'>&nbsp; <span> <DeriNumberFormat value={trading.index} decimalScale={2} /></span><span className='vol'> | </span>DVOL : <DeriNumberFormat value={trading.volatility} decimalScale={2} suffix='%' /></span>
+                {trading.symbolInfo ? type.isOption ? trading.symbolInfo.symbol.split('-')[0] : '' : ''} : <span className='option-vol'>&nbsp; <span> <DeriNumberFormat value={indexPrice} decimalScale={2} /></span><span className='vol'> | </span>DVOL : <DeriNumberFormat value={trading.position.volatility} decimalScale={2} suffix='%' /></span>
               </div>
             </>}
             <div className='funding-rate'>
               {(type.isOption || type.isPower) && <>
                 <span>Daily Funding : &nbsp;</span>
-                <TipWrapper block={false} tip={trading.optionFundingRateTip}>
-                  <span className='funding-per' tip={trading.optionFundingRateTip || ''}><DeriNumberFormat value={trading.fundingRate.premiumFunding0} decimalScale={4} /></span>
+                <TipWrapper block={false} tip={trading.fundingFeeValueTip}>
+                  <span className='funding-per' tip={trading.fundingFeeValueTip || ''}><DeriNumberFormat value={trading.fundingRate.funding0} decimalScale={4} /></span>
                 </TipWrapper>
               </>}
               {type.isFuture && <>
                 <span>Daily Funding: &nbsp;</span>
-                <TipWrapper block={false} tip={trading.dpmmFundingRateTip}>
-                  <span className='funding-per' tip={trading.dpmmFundingRateTip || ''}><DeriNumberFormat value={trading.fundingRate.funding0} decimalScale={4} /></span>
+                <TipWrapper block={false} >
+                  <span className='funding-per' tip={trading.fundingFeeValueTip || ''}><DeriNumberFormat value={trading.fundingRate.funding0} decimalScale={4} /></span>
                 </TipWrapper>
-                <TipWrapper block={false} tip={trading.rateTip}>
+                <TipWrapper block={false} >
                   &nbsp;  <span className='funding-per' tip={trading.rateTip || ''}>(<DeriNumberFormat value={rate} decimalScale={4} suffix='%' />)</span>
                 </TipWrapper>
               </>}
@@ -427,10 +426,10 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
           <div className='price-fundingRate mobile'>
             {type.isFuture && <>
               <div className='index-prcie'>
-                {lang['mark-price']}: <span className={markPriceClass}>&nbsp; <DeriNumberFormat value={markPrice} decimalScale={trading.priceDecimals} /></span>
+                {lang['mark-price']}: <span className={markPriceClass}>&nbsp; <DeriNumberFormat value={markPrice} decimalScale={2} /></span>
               </div>
               <div className='index-prcie'>
-                {lang['index']}: <span className={indexPriceClass}>&nbsp; <DeriNumberFormat value={trading.index} decimalScale={trading.priceDecimals} /></span>
+                {lang['index']}: <span className={indexPriceClass}>&nbsp; <DeriNumberFormat value={indexPrice} decimalScale={2} /></span>
               </div>
             </>}
             {type.isOption && <>
@@ -438,7 +437,7 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
                 {lang['mark-price']} : <span className={markPriceClass}>&nbsp; <DeriNumberFormat value={markPrice} decimalScale={2} /></span>
               </div>
               <div className='index-prcie'>
-                {trading.config ? type.isOption ? trading.config.symbol.split('-')[0] : '' : ''}: <span className={indexPriceClass}>&nbsp; <DeriNumberFormat value={trading.index} decimalScale={2} /></span>
+                {trading.symbolInfo ? type.isOption ? trading.symbolInfo.symbol.split('-')[0] : '' : ''}: <span className={indexPriceClass}>&nbsp; <DeriNumberFormat value={trading.index} decimalScale={2} /></span>
               </div>
               <div className='index-prcie'>
                 DVOL: <DeriNumberFormat value={trading.volatility} decimalScale={2} />
@@ -450,13 +449,13 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
               {type.isOption && <>
                 <span>Daily Funding : &nbsp;</span>
                 <TipWrapper block={false}>
-                  <span className='funding-per' tip={trading.optionFundingRateTip || ''}><DeriNumberFormat value={trading.fundingRate.premiumFunding0} decimalScale={4} /></span>
+                  <span className='funding-per' tip={trading.fundingFeeValueTip || ''}><DeriNumberFormat value={trading.fundingRate.premiumFunding0} decimalScale={4} /></span>
                 </TipWrapper>
               </>}
               {type.isFuture && <>
                 <span>Daily Funding : &nbsp;</span>
-                <TipWrapper block={false} tip={trading.dpmmFundingRateTip}>
-                  <span className='funding-per' tip={trading.dpmmFundingRateTip || ''}><DeriNumberFormat value={trading.fundingRate.funding0} decimalScale={4} /></span>
+                <TipWrapper block={false} tip={trading.fundingFeeValueTip}>
+                  <span className='funding-per' tip={trading.fundingFeeValueTip || ''}><DeriNumberFormat value={trading.fundingRate.funding0} decimalScale={4} /></span>
                 </TipWrapper>
               </>}
             </div>
@@ -500,7 +499,7 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
                 </div>
 
                 <div className='option-unit' >
-                  {trading.config && trading.config.unit}
+                  {trading.symbolInfo && trading.symbolInfo.unit}
                 </div>
               </div>
             </div>
@@ -508,7 +507,7 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
               <div className='min-quantity'>
                 {lang['option-input-min-quantity']}
                 &nbsp; {trading.contract.multiplier} &nbsp;
-                {trading.config && trading.config.unit}
+                {trading.symbolInfo && trading.symbolInfo.unit}
               </div>
             </>}
           </div>
@@ -534,7 +533,7 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
                       <img src={removeMarginIcon} alt='add margin' />
                     </span>
                   </TipWrapper>
-                  <DeriNumberFormat value={trading.amount.dynBalance} allowZero={true} decimalScale={2} />
+                  <DeriNumberFormat value={trading.accountInfo.dynEffMargin} allowZero={true} decimalScale={2} />
                   <TipWrapper block={false}>
                     <span className='open-remove'
                       onClick={() => setBalanceListModalIsOpen(true)}
@@ -549,11 +548,11 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
                 <div className='box-margin'>{lang['margin']}</div>
                 <div className='box-margin'>
                   <span className='total-held' tip={lang['total-held-title']}>&nbsp;- {lang['total-held']}</span>
-                  <span className='margin' ><DeriNumberFormat value={trading.amount.margin} allowZero={true} decimalScale={2} /></span>
+                  <span className='margin' ><DeriNumberFormat value={trading.position.marginHeld} allowZero={true} decimalScale={2} /></span>
                 </div>
                 <div className='margin-held-pos'>
                   <span className='pos-held' tip={lang['for-this-pos-title']}>&nbsp;- {lang['for-this-pos']} </span>
-                  <span className='margin' ><DeriNumberFormat value={trading.amount.currentSymbolMarginHeld} allowZero={true} decimalScale={2} /></span>
+                  <span className='margin' ><DeriNumberFormat value={trading.position.marginHeldBySymbol} allowZero={true} decimalScale={2} /></span>
                 </div>
               </TipWrapper>
               <TipWrapper block={true}>
@@ -561,7 +560,7 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
                   <span className='pc' tip={lang['available-balance-title']} > {lang['available-balance']} </span>
                   <span className='mobile' tip={lang['available-balance-title']}>{lang['available-balance']}</span>
                   <span className='available-balance-num'>
-                    <DeriNumberFormat value={trading.amount.available} allowZero={true} decimalScale={2} />
+                    <DeriNumberFormat value={trading.accountInfo.availableMargin} allowZero={true} decimalScale={2} />
                   </span>
                 </div>
               </TipWrapper>
@@ -569,9 +568,9 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
           </div>
         </div>
         <div className='slider mt-13'>
-          <Slider max={trading.amount.dynBalance} onValueChange={onSlide} start={trading.amount.margin} freeze={slideFreeze} currentSymbolMarginHeld={trading.position.marginHeldBySymbol} originMarginHeld={trading.position.marginHeld} setStopCalculate={(value) => setStopCalculate(value)} />
+          {/* <Slider max={trading.accountInfo.dynEffMargin} onValueChange={onSlide} start={trading.accountInfo.margin} freeze={slideFreeze} currentSymbolMarginHeld={trading.position.marginHeldBySymbol} originMarginHeld={trading.position.marginHeld} setStopCalculate={(value) => setStopCalculate(value)} /> */}
         </div>
-        <div className='title-margin'>{lang['margin']}</div>
+        {/* <div className='title-margin'>{lang['margin']}</div> */}
         <div className='enterInfo'>
           {!!trading.volumeDisplay && <>
             {type.isFuture && <>
@@ -591,7 +590,7 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
             <div className='text-info'>
               <div className='title-enter'>{lang['transaction-fee']}</div>
               <div className='text-enter'>
-                <DeriNumberFormat value={transFee} allowZero={true} decimalScale={2} suffix={` ${trading.config.bTokenSymbol}`} />
+                <DeriNumberFormat value={transFee} allowZero={true} decimalScale={2} suffix={` ${trading.symbolInfo.bTokenSymbol}`} />
               </div>
             </div>
             {(type.isFuture || type.isPower) && <div className='text-info'>
@@ -605,18 +604,18 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
         <Operator hasConnectWallet={hasConnectWallet}
           transFee={transFee}
           wallet={wallet}
-          spec={trading.config}
+          spec={trading.symbolInfo}
           indexPrice={trading.index}
-          available={trading.amount.available}
+          available={trading.accountInfo.available}
           volume={trading.volumeDisplay}
           direction={direction}
-          leverage={trading.amount.leverage}
-          afterLeverage={trading.amount.afterLeverage}
+          leverage={trading.accountInfo.leverage}
+          afterLeverage={trading.accountInfo.afterLeverage}
           afterTrade={afterTrade}
           position={trading.position}
           trading={trading}
-          // symbolId={trading.config.symbolId}
-          // bTokenId={trading.config.bTokenId}
+          // symbolId={trading.symbolInfo.symbolId}
+          // bTokenId={trading.symbolInfo.bTokenId}
           version={version}
           lang={lang}
           type={type}
@@ -627,7 +626,7 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
           wallet={wallet}
           modalIsOpen={balanceListModalIsOpen}
           onClose={onCloseBalanceList}
-          spec={trading.config}
+          spec={trading.symbolInfo}
           afterDepositAndWithdraw={afterDepositAndWithdraw}
           position={trading.position}
           overlay={{ background: '#1b1c22', top: 80 }}
@@ -648,20 +647,28 @@ function Operator({ hasConnectWallet, wallet, spec, volume, available,
   const [confirmIsOpen, setConfirmIsOpen] = useState(false);
   const [depositIsOpen, setDeposiIsOpen] = useState(false);
   const [balance, setBalance] = useState('');
-
+  const walletContext = useWallet();
   const connect = () => {
-    wallet.connect()
+    walletContext.connect()
   }
+  useEffect(() => {
+    if (walletContext.isConnected()) {
+      wallet.setDetail(walletContext)
+      window.ethereum = walletContext.ethereum
+    } else {
+      wallet.setDetail({})
+    }
+  }, [walletContext, lang]);
 
   const approve = async () => {
-    const res = await wallet.approve(spec.pool, spec.bTokenId)
-    if (res.success) {
-      setIsApprove(true);
-      loadApprove();
-    } else {
-      setIsApprove(false)
-      alert(lang['approve-failed'])
-    }
+    // const res = await wallet.approve(spec.pool, spec.symbol)
+    // if (res.success) {
+    //   setIsApprove(true);
+    //   loadApprove();
+    // } else {
+    //   setIsApprove(false)
+    //   alert(lang['approve-failed'])
+    // }
   }
 
   const afterDeposit = async () => {
@@ -677,14 +684,14 @@ function Operator({ hasConnectWallet, wallet, spec, volume, available,
   //load Approve status
   const loadApprove = async () => {
     if (hasConnectWallet() && spec) {
-      const result = await wallet.isApproved(spec.pool, spec.bTokenId)
-      setIsApprove(result);
+      // const result = await wallet.isApproved(spec.pool, spec.symbol)
+      // setIsApprove(result);
     }
   }
 
   const loadBalance = async () => {
     if (wallet.isConnected() && spec) {
-      const balance = await getWalletBalance(wallet.detail.chainId, spec.pool, wallet.detail.account, spec.bTokenId).catch(e => console.error('getWalletBalance was error,maybe network is Wrong'))
+      const balance = await getWalletBalance(wallet.detail.chainId, spec.pool, wallet.detail.account, spec.symbol).catch(e => console.error('getWalletBalance was error,maybe network is Wrong'))
       if (balance) {
         setBalance(balance)
       }

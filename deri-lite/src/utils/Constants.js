@@ -30,11 +30,47 @@ export const FUTURES = 'futures'
 export const CALL_OPTION = 'call'
 export const PUT_OPTION = 'put'
 
+export const VERSION_V2 = 'v2'
 export const VERSION_V3 = 'v3'
+export const VERSION_V2_LITE = 'v2_lite'
 export const VERSION_V3_LITE = 'v3_lite'
+export const VERSION_V2_OPEN = 'v2_lite_open'
 
+//交易输入状态
+export const TRADE_ENTRY_DOLLAR_STATUS = 'entry_by_dollar'
+export const TRADE_ENTRY_VOLUME_STATUS = 'entry_by_volume'
+export const TRADE_ENTRY_SLIDER_STATUS = 'entry_by_slider'
+export const TRADE_ENTRY_PERCENTAGE_STATUS = 'entry_by_percentage'
+
+//仓位交易状态
+export const TRADING_CREATE_POSITION_STATUS = 'trading_create_position'
+export const TRADING_APPEND_POSITION_STATUS = 'trading_append_position'
+export const TRADING_CLOSE_POSITION_STATUS = 'trading_close_position'
+
+export const SKIP_TRADE_CONFIRMATION = '_skip_trade_confirmation'
 
 export const SUPPORTED_CHAINIDS = [1, 56,137,97]
+
+export const SUPPORTED_WALLETS  = {
+  injected: {
+    connector: 'injected',
+    name: 'MetaMask',
+    icon: 'injected',
+    description: 'Easy-to-use browser extension.',
+  },
+  walletconnect: {
+    connector: 'walletconnect',
+    name: 'Wallet Connect',
+    icon: 'walletconnect',
+    description: 'Connect to Trust Wallet, Rainbow Wallet and more...',
+  },
+  walletlink: {
+    connector : 'walletlink',
+    name: 'Coinbase Wallet',
+    icon: 'walletlink',
+    description: 'Open in Coinbase Wallet app.',
+  },
+}
 export const COOKIE_DERI_DOMAIN='.deri.io'
 export const COOKIE_DEFAULT_FUTURES_SYMBOL_KEY = 'deri_default_futures_symbol'
 export const COOKIE_DEFAULT_OPTIONS_SYMBOL_KEY = 'deri_default_options_symbol'

@@ -4,20 +4,23 @@ import symbolArrowIcon from '../../assets/img/arrow-down.svg'
 import arrowDownIcon from '../../assets/img/arrow-up.svg'
 import classNames from 'classnames';
 
-function SymbolSelector({ trading, version, loading, type }) {
+function SymbolSelector({ trading, loading, type, wallet }) {
   const [dropdown, setDropdown] = useState(false);
+  const [symbolList, setSymbolList] = useState([])
   const selectClass = classNames('dropdown-menu', { 'show': dropdown })
   const onDropdown = (event) => {
     event.preventDefault();
     setDropdown(!dropdown)
   }
-  const onSelect = selected => {
-    // const selected = trading.configs.find(config => config.pool === select.pool && select.symbolId === config.symbolId )
+  const onSelect = select => {
+    const selected = trading.symbolInfos.find(config => config.pool === select.pool && select.symbol === config.symbol)
     if (selected) {
       loading.loading();
       trading.pause();
-      // trading.setConfig(selected)
-      trading.onSymbolChange(selected, () => loading.loaded(), type.isOption);
+      trading.setSymbols(selected)
+      trading.loadBySymboInfo(wallet, selected, () => {
+        loading.loaded();
+      },type.isOption)
       setDropdown(false)
     }
   }
@@ -34,28 +37,35 @@ function SymbolSelector({ trading, version, loading, type }) {
     }
   }, [])
 
+  useEffect(() => {
+    if (trading.symbolInfos.length) {
+      let current = type.current
+      if (type.current === "future") {
+        current = "futures"
+      }
+      let list = trading.symbolInfos.filter(config => config.category === current)
+      setSymbolList(list)
+    }
+
+  }, [trading, trading.symbolInfos, type])
+
   return (
     <div className='btn-group check-baseToken-btn'>
       <button
         type='button'
         onClick={onDropdown}
         className='btn chec'>
-        <SymbolDisplay spec={trading.config} version={version} type={type} />
+        <SymbolDisplay spec={trading.symbolInfo} type={type} />
         <span className='check-base-down'>{dropdown ? <img src={arrowDownIcon} alt='' /> : <img src={symbolArrowIcon} alt='' />}</span>
       </button>
       <div className={selectClass}>
-        {type.isFuture
-          ?
-          trading.configs.map((config, index) => {
+        {
+          symbolList.map((config, index) => {
             return (
               <div className='dropdown-item' key={index} onClick={(e) => onSelect(config)}>
-                <SymbolDisplay spec={config} version={version} type={type} />
+                <SymbolDisplay spec={config} type={type} />
               </div>
             )
-          })
-          :
-          Object.keys(trading.optionsConfigs).map((symbol, index) => {
-            return <SubMenu key={index} index={index} symbol={symbol} trading={trading} onSelect={onSelect} version={version} type={type} />
           })
         }
       </div>
@@ -94,4 +104,4 @@ function SymbolDisplay({ version, spec, type }) {
   }
 
 }
-export default inject('trading', 'version', 'loading', 'type')(observer(SymbolSelector))
+export default inject('trading', 'version', 'loading', 'type', "wallet")(observer(SymbolSelector))

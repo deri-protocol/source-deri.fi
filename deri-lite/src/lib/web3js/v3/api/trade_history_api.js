@@ -1,9 +1,6 @@
 import {
   catchApiError,
-  fetchJson,
-  fromWei,
   getBlockInfo,
-  getHttpBase,
   getPastEvents,
 } from '../../shared/utils';
 import { poolImplementationFactory } from '../contract/factory/pool';

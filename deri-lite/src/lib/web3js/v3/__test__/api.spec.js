@@ -1,4 +1,5 @@
 import { DeriEnv, Env } from '../../shared/config';
+import { getTradeHistory } from '../api';
 import {
   getEstimatedFee,
   getEstimatedFundingRate,
@@ -373,126 +374,9 @@ describe("api", () => {
   //     await getVenusEarned(chainId, poolAddress, accountAddress, { asLp: true })
   //   ).toEqual('');
   // }, TIMEOUT)
-
-  // ================ TODO ==================
-  // it('getBTokenDiscount', async() => {
-  //   expect(
-  //     await getBTokenDiscount(chainId, poolAddress)
-  //   ).toEqual('');
-  // }, TIMEOUT)
-
-  // it(
-  //   'getSimulatePnl',
-  //   async () => {
-  //     DeriEnv.set('prod')
-  //     expect(
-  //       await getSimulatePnl(
-  //         '56',
-  //         '0xD2D950e338478eF7FeB092F840920B3482FcaC40',
-  //        'BTC^2',
-  //        '-0.01',
-  //       )
-  //     ).toEqual([]);
-  //   },
-  //   TIMEOUT
-  // );
-  // it(
-  //   "getSimulatePnls future symbol",
-  //   async () => {
-  //     DeriEnv.set("prod");
-  //     const res = await getSimulatePnls(
-  //       "56",
-  //       "0x4ad5cb09171275A4F4fbCf348837c63a91ffaB04",
-  //       "ETHUSD"
-  //     );
-  //     console.log(JSON.stringify(res));
-  //     expect(res).toEqual([]);
-  //   },
-  //   TIMEOUT
-  // );
-  // it(
-  //   "getSimulatePnls power symbol",
-  //   async () => {
-  //     DeriEnv.set("prod");
-  //     const res = await getSimulatePnls(
-  //       "56",
-  //       "0xD2D950e338478eF7FeB092F840920B3482FcaC40",
-  //       "BTC^2"
-  //     );
-  //     console.log(JSON.stringify(res));
-  //     expect(res).toEqual([]);
-  //   },
-  //   TIMEOUT
-  // );
-  // it(
-  //   "getSimulatePnls option symbol",
-  //   async () => {
-  //     DeriEnv.set("prod");
-  //     const res = await getSimulatePnls(
-  //       "56",
-  //       "0x243681B8Cd79E3823fF574e07B2378B8Ab292c1E",
-  //       "ETHUSD-4000-C"
-  //     );
-  //     console.log(JSON.stringify(res));
-  //     expect(res).toEqual([]);
-  //   },
-  //   TIMEOUT
-  // );
-  // it(
-  //   "getSimulatePnls arbi",
-  //   async () => {
-  //     DeriEnv.set("prod");
-  //     const res = await getSimulatePnls(
-  //       chainId,
-  //       poolAddress,
-  //       'ETH^2'
-  //     );
-  //     console.log(JSON.stringify(res));
-  //     expect(res).toEqual([]);
-  //   },
-  //   TIMEOUT
-  // );
-  // it('getReward', async () => {
-  //   const res = await getPendingReward('97', '0xAADA94FcDcD7FCd7488C8DFc8eddaac81d7F71EE', "0xFefC938c543751babc46cc1D662B982bd1636721")
-  //   expect(res).toEqual('')
-  // })
-  // it('getReward in prod', async () => {
-  //   DeriEnv.set('prod')
-  //   const res = await getPendingReward('56', '0x243681B8Cd79E3823fF574e07B2378B8Ab292c1E', "0xFefC938c543751babc46cc1D662B982bd1636721")
-  //   expect(res).toEqual('')
-  //   DeriEnv.set('dev')
-  // })
-
-  // it(
-  //   'getRetiredPoolsInfo',
-  //   async () => {
-  //     DeriEnv.set(Env.PROD)
-  //     expect(
-  //       await getRetiredPoolsInfo(
-  //         '56',
-  //         accountAddress,
-  //       )
-  //     ).toEqual([]);
-  //     // expect(
-  //     //   await getPositionInfos(
-  //     //     chainId,
-  //     //     '0x265d9501724E8CFa18Ff935A1a37f18DBc05bCF6',
-  //     //     '0xFefC938c543751babc46cc1D662B982bd1636721',
-  //     //   )
-  //     // ).toEqual([]);
-  //   },
-  //   TIMEOUT
-  // );
-  // it('getReward in prod', async () => {
-  //   DeriEnv.set('prod')
-  //   const res = await getPendingReward('56', '0x243681B8Cd79E3823fF574e07B2378B8Ab292c1E', "0xFefC938c543751babc46cc1D662B982bd1636721")
-  //   expect(res).toEqual('')
-  //   DeriEnv.set('dev')
-  // }, TIMEOUT)
-  // it('getPoolOnChainApy', async () => {
-  //   DeriEnv.set('dev')
-  //   const res = await getPoolOnChainApy('97', '0xAADA94FcDcD7FCd7488C8DFc8eddaac81d7F71EE')
-  //   expect(res).toEqual({})
-  // }, TIMEOUT)
+  it('tradeHistory', async() => {
+    const res = await getTradeHistory(chainId, poolAddress, accountAddress)
+    expect(res).toEqual([])
+  }, 10000000)
 
 });

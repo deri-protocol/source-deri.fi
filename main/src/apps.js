@@ -9,7 +9,7 @@ const microApps = [
   },
   {
     name: 'deri-lite',
-    displayName : 'deri.it',
+    displayName : 'deri.lite',
     entry: process.env.REACT_APP_DERI_LITE,
     activeRule: '#/deri-lite',
     container: '#subapp-viewport'

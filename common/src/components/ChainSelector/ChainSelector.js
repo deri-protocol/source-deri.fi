@@ -1,5 +1,5 @@
 import React, { useState, useEffect ,useCallback} from 'react'
-import { isStartScroll, switchChain, hasParent,isMobile,random } from '../../utils/utils';
+import { isStartScroll, switchChain, hasParent,isMobile,random, eqInNumber } from '../../utils/utils';
 import Icon from '../Icon/Icon';
 import { useWallet } from 'use-wallet';
 import useChain from '../../hooks/useChain';
@@ -11,6 +11,7 @@ function ChainSelector({collect,id=""}){
   const [isShow, setIsShow] = useState()
   const wallet = useWallet()
   const chains = useChain();
+  const [chain, setChain] = useState()
 
   const nwSelectClass = classNames('network-select',{
     expand : isShow,
@@ -19,10 +20,12 @@ function ChainSelector({collect,id=""}){
 
   const onSelect = useCallback(async (chain) => {
     if(wallet.isConnected()){
-      switchChain(chain,() => setIsShow(false))
+      switchChain(chain,() =>  setChain(chain))
+      setIsShow(false)
     } else {
       await wallet.connect();
-      switchChain(chain,() => setIsShow(false))
+      switchChain(chain,() => setChain(chain))
+      setIsShow(false)
     }
   },[])
 
@@ -51,25 +54,36 @@ function ChainSelector({collect,id=""}){
     }
   }, [isShow]);
 
+  useEffect(() => {
+    if(chains && chains.length > 0){
+      if(wallet.isConnected()) {
+        setChain(chains.find(chain => eqInNumber(chain.chainId,wallet.chainId )))
+      } else if(wallet.status === 'disconnected'){
+        setChain(chains[0])
+      }
+    }
+  }, [chains,wallet]);
+
   return (
-    <div className={nwSelectClass}>
-      <div className='nw-wrapper' id={id}>
+    <div className={nwSelectClass}  >
+      <div className='nw-wrapper' id={id} onClickCapture={() => setIsShow(!isShow)}>
+        {!isShow && chain && <div className='nw-item'  >
+          <Icon token={isMobile() ? chain.icon  :  `${chain.icon}-LIGHT`} width='20'/>
+          <div className='name'>{chain.name}</div>
+          <Icon  width='16' token={'arrow-down'} className='arrow'/>
+        </div>}
         {chains.map((chain,index) => {
           const itemClass = classNames('nw-item',{
+            display : isShow === true,
             hidden : !isShow
           })
-          return index === 0 
-            ?
-              (<div className='nw-item' onClick={() => setIsShow(!isShow)} key={`${chain.chainId}-${index}`}>
-                <Icon token={isMobile() ? chain.icon  :  `${chain.icon}-LIGHT`} width='20'/>
-                <div className='name'>{chain.name}</div>
-                <Icon  width='16' token={'arrow-down'} className='arrow'/>
-              </div>)
-          : 
-            (<div className={itemClass} onClick={e => onSelect(chain)} key={index}>
+          return (
+            <div className={itemClass} onClick={e => onSelect(chain)} key={index}>
               <Icon token={isMobile() ? chain.icon  :  `${chain.icon}-LIGHT`} width='20'/>
               <div className='name'>{chain.name}</div>
-            </div>)
+              {index === 0 && <Icon  width='16' token={'arrow-down'} className='arrow'/>}
+            </div>
+          )
         })}
       </div>
     </div>

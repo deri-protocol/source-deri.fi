@@ -1,10 +1,3 @@
-// export let Env;
-// (function (Env) {
-//   Env["PROD"] = "prod";
-//   Env["DEV"] = "dev";
-//   Env["TESTNET"] = "testnet";
-// })(Env || (Env = {}));
-
 export const Env = {
   PROD: 'prod',
   TESTNET: 'testnet',

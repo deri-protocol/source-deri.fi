@@ -43,13 +43,6 @@ export class ContractBase {
         if (retry === 1) {
           this.web3 = null
         }
-        // if (err.toString().includes('Invalid JSON RPC response')) {
-        //   console.log(`Invalid JSON RPC response with chainId(${this.chainId})`);
-        // } else if (err.toString().includes("Returned values aren't valid,")) {
-        //   console.log(`Invalid contract address(${this.contractAddress}) and chainId(${this.chainId})`);
-        // } else {
-        //   //console.log('error:', err.toString())
-        // }
       }
       retry -= 1
     }

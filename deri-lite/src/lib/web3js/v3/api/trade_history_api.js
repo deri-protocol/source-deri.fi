@@ -12,7 +12,6 @@ export const getTradeHistory = async (chainId, poolAddress, accountAddress) => {
     const poolConfig = getJsonConfig().find((c) => c.pool === poolAddress)
     let tradeHistoryBlock = parseInt(poolConfig.initialBlock),
       tradeHistory = [];
-    //if (tradeHistoryBlock !== 0) {
     console.log('-- block', tradeHistoryBlock)
       const tradeHistoryOnline = await getTradeHistoryOnline(
         chainId,
@@ -22,10 +21,6 @@ export const getTradeHistory = async (chainId, poolAddress, accountAddress) => {
       );
       const result = tradeHistoryOnline.concat(tradeHistory);
       return result.sort((a, b) => parseInt(b.time) - parseInt(a.time));
-    // } else {
-    //   // trade history is not sync
-    //   return []
-    // }
   }, [], []);
 };
 
@@ -42,7 +37,6 @@ const getTradeHistoryOnline = async (
   const toBlock = await getBlockInfo(chainId, 'latest');
   fromBlock = parseInt(fromBlock);
   const filters = { pTokenId };
-  //console.log(fromBlock, toBlock.number, filters);
   let events = await getPastEvents(
     chainId,
     pool.symbolManager.contract,
@@ -53,7 +47,6 @@ const getTradeHistoryOnline = async (
   );
   for (let event of events) {
     const res = await pool.symbolManager.formatTradeEvent(event, pool.symbols, accountAddress);
-    //console.log('th', res)
     result.push({
       direction: res.direction.trim(),
       baseToken: "",

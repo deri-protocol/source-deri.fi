@@ -1,13 +1,7 @@
-import { DeriEnv } from '../config/env';
 import { debug, REST_API_CALL_RETRY } from '../config/constant';
-import { getRestServerConfig } from '../config/rest_server';
 import { checkChainId } from '../config';
 import { web3Factory } from '../factory';
 
-// get REST HTTP Base url
-export const getHttpBase = (env) => {
-  return getRestServerConfig(env || DeriEnv.get());
-};
 
 export const fetchJson = async (url) => {
   let retry = REST_API_CALL_RETRY
@@ -26,10 +20,6 @@ export const fetchJson = async (url) => {
       args: [url],
     });
   }
-};
-
-export const fetchRestApi = async (path, opts = { method: 'GET' }) => {
-  return await fetchJson(`${getHttpBase()}${path}`, opts);
 };
 
 // query api wrapper

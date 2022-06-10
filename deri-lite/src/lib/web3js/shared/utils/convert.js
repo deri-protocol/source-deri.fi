@@ -99,30 +99,6 @@ export const isEqualSet = (set1, set2) => {
 }
 
 
-
-// == contract gen
-// export const deleteIndexedKey = (obj) => {
-//   if (isObject(obj) && Object.keys(obj).length > 0) {
-//     const keys = Object.keys(obj);
-//     const intKeyCount = keys.reduce(
-//       (acc, k) => (intRegex.test(k) ? acc + 1 : acc),
-//       0
-//     );
-//     if (intKeyCount * 2 === keys.length) {
-//       let newObj = {};
-//       Object.keys(obj).forEach((k) => {
-//         if (!intRegex.test(k)) {
-//           newObj[k] = obj[k];
-//         }
-//       });
-//       return newObj;
-//     }
-//     return obj;
-//   } else {
-//     return obj;
-//   }
-// };
-
 export const fromWeiForObject = (obj, keyList = []) => {
   return Object.keys(obj).reduce((acc, i) => {
     if (keyList.includes(i)) {

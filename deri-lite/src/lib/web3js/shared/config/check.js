@@ -1,7 +1,6 @@
 import Web3 from 'web3';
 import { DeriEnv, Env } from './env';
 import { getChainIds } from './chain';
-import { VERSIONS_ALL, VERSION_IDS_ALL } from './version';
 
 const toChecksumAddress = (value) => Web3.utils.toChecksumAddress(value);
 
@@ -70,17 +69,3 @@ export const checkAmount = (amount) => {
   }
   throw new Error('INVALID_AMOUNT',amount)
 }
-
-export const checkVersion = (version) => {
-  if (version == null || !VERSIONS_ALL.includes(version)) {
-    throw new Error('INVALID_VERSION', version);
-  }
-  return version;
-};
-
-export const checkVersionId = (versionId) => {
-  if (versionId == null || !VERSION_IDS_ALL.includes(versionId)) {
-    throw new Error('INVALID_VERSION_ID', versionId);
-  }
-  return versionId;
-};

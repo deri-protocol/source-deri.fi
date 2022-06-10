@@ -1,9 +1,3 @@
-import { ObjectCache } from "../shared/cache/object_cache.js";
-import { DeriEnv, Env } from "../shared/config/env.js";
-import { fetchJson, getHttpBase } from "../shared/utils/api.js";
-import { asyncCache } from "./utils/cache.js";
-//import { makeGetConfig, makeGetConfigList } from "../shared/utils/config.js";
-
 export const nativeCoinSymbols = (chainId) => {
   if (['56', '97'].includes(chainId)) {
     return ["BNB"];
@@ -172,67 +166,20 @@ const aaveTokenData = [
   { symbol: 'AAVE', supplyApy: 0, factor: 0.5 },
 ];
 
-// export const getBTokenApyAndDiscount = async (tokenName) => {
-//   tokenName = tokenName ? tokenName.toUpperCase() : '';
-//   // if (tokenName === 'BNB') {
-//   //   tokenName = 'WBNB';
-//   // }
-//   const token = venusTokenData.find((d) => d.symbol === tokenName);
-//   if (token) {
-//     return token;
-//   }
-//   throw new Error(ErrorCode.CONFIG_NOT_FOUND, {
-//     name: 'getBTokenApyAndDiscount',
-//     args: [tokenName],
-//   });
-// };
-
-const getBTokenApyInfoForBsc = asyncCache(
-  async (poolAddress, tokenList) => {
-    // console.log('tokenList', tokenList)
-    tokenList = tokenList.map((t) => t.toUpperCase());
-    try {
-      const res = await asyncCache(fetchJson, 'fetch_venus_token', '', 60)(
-        `${getHttpBase()}/venus_vtoken/${poolAddress}/${JSON.stringify(
-          tokenList
-        )}`
-      );
-      if (res.success) {
-        ObjectCache.set(poolAddress, 'venusApy', res.data);
-        return res.data.map((d) => ({
-          symbol: d.symbol,
-          supplyApy: parseFloat(d.supplyApy),
-          xvsApy: parseFloat(d.xvsApy),
-          factor: parseFloat(d.factor),
-        }));
-      } else {
-        const data = ObjectCache.get(poolAddress, 'venusApy');
-        if (data) {
-          return data.map((d) => ({
-            symbol: d.symbol,
-            supplyApy: parseFloat(d.supplyApy),
-            xvsApy: parseFloat(d.xvsApy),
-            factor: parseFloat(d.factor),
-          }));
-        } else {
-          // default
-          return tokenList.map((t) => {
-            return (
-              venusTokenData.find((v) => v.symbol === t) || { symbol: t, supplyApy: '', xvsApy: '', factor: 0.6 }
-            );
-          });
-        }
+const getBTokenApyInfoForBsc = async (poolAddress, tokenList) => {
+  tokenList = tokenList.map((t) => t.toUpperCase());
+  // default
+  return tokenList.map((t) => {
+    return (
+      venusTokenData.find((v) => v.symbol === t) || {
+        symbol: t,
+        supplyApy: "",
+        xvsApy: "",
+        factor: 0.6,
       }
-    } catch (err) {
-      // default
-      return tokenList.map((t) => {
-        return venusTokenData.find((v) => v.symbol === t) || { symbol: t, supplyApy: '', xvsApy: '', factor: 0.6 };
-      });
-    }
-  },
-  'get_btoken_apy_bsc',
-  []
-);
+    );
+  });
+};
 
 const getBTokenApyInfoForArbi = async (poolAddress, bTokens) => {
   return bTokens.map((t) => {
@@ -240,7 +187,6 @@ const getBTokenApyInfoForArbi = async (poolAddress, bTokens) => {
     if (t.collateralFactor && res) {
       res.factor = t.collateralFactor
       res.xvsApy = '0'
-      // res.supplyApy
     }
     return res ? res : { symbol: t.symbol, factor: '0', supplyApy: '0', xvsApy: '0'}
   });
@@ -262,86 +208,4 @@ export const isBSCChain = (chainId) => {
 }
 export const isArbiChain = (chainId) => {
   return ['42161', '421611'].includes(chainId)
-}
-
-export const getRewardVaultConfig = (chainId, poolAddress) => {
-  const configs = [
-    {
-      chainId: '56',
-      env: 'prod',
-      pool: '0x243681B8Cd79E3823fF574e07B2378B8Ab292c1E',
-      rewardVault: '0x34Aa81135b1673Daaf7A0B71867c0e1b3D40941c',
-      rewardVaultImplementation: '0xBf6BD6Fc5e8AdcEB0b95455CD0cb803C8DB972Db',
-    },
-    {
-      chainId: '56',
-      env: 'prod',
-      pool: '0x4ad5cb09171275A4F4fbCf348837c63a91ffaB04',
-      rewardVault: '0xB52230e007bfd872Dc90C278A4A88686dD352D83',
-      rewardVaultImplementation: '0x98E9122D9dD0D06a419563a3C7e980e7222B04db',
-    },
-    {
-      chainId: '56',
-      env: 'prod',
-      pool: '0xD2D950e338478eF7FeB092F840920B3482FcaC40',
-      rewardVault: '0x78b84262e7E4f61e08970E48cf3Ba4b0d8377336',
-      rewardVaultImplementation: '0xE7999116Aa079683482861f0A7A4D31A7E91b895',
-    },
-    {
-      chainId: '42161',
-      env: 'prod',
-      pool: "0xDE3447Eb47EcDf9B5F90E7A6960a14663916CeE8",
-      rewardVault: '0x95dCE894446580Ef72Dd1d3016097cBf0D01ad91',
-    },
-    {
-      chainId: '97',
-      env: 'dev',
-      pool: "0xAADA94FcDcD7FCd7488C8DFc8eddaac81d7F71EE",
-      rewardVault: '0xE8FFe2573a03Af8620Db6AA75527078bedF0C0f7',
-      // deriToken: '0x4C927c1142Ea39e5189E5Ce4aDF1D61C3009b971'
-    },
-    // {
-    //   chainId: '421611',
-    //   env: 'dev',
-    //   pool: "0x296A1CDdE93a99B4591486244f7442E25CA596a6",
-    //   rewardVault: '0x0000000000000000000000000000000000000000',
-    // }
-  ]
-  const config = configs.find((c) => c.chainId === chainId && c.pool === poolAddress)
-  if (config) {
-    return config
-  } else {
-    throw new Error(`cannot find reward vault config using chainId(${chainId}) and pool(${poolAddress})`)
-  }
-}
-
-
-export const getVoteConfigList = (env = Env.PROD) => {
-  const configs = [
-    {
-      chainId: "56",
-      address: "0xc24dbe91022A6aE0fABF66F3B3F3B280465915e4",
-      env: "prod",
-    },
-    {
-      chainId: "42161",
-      address: "0x9fe7870ddEC43EA86F75eeE6DFce4e0337298be0",
-      env: "prod",
-    },
-    {
-      chainId: "1",
-      address: "0x1798cF111d7fF51E9F61b88Ca68b97ddE34023c2",
-      env: "prod",
-    },
-  ];
-  return configs.filter((c) => c.env === env)
-}
-
-export const getVoteConfig = (chainId) => {
-  const config = getVoteConfigList().find((c) => c.chainId === chainId)
-  if (config) {
-    return config
-  } else {
-    throw new Error(`cannot find vote config using chainId(${chainId})`)
-  }
 }

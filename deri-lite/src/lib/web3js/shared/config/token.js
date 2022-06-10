@@ -5,8 +5,6 @@ const bTokenPairs = {
 
 // for convert
 const symbolPairs = {
-  IBSCDEFI: 'iBSCDEFI',
-  IGAME: 'iGAME',
 };
 
 // todo: it's old, will clean later
@@ -14,8 +12,6 @@ const offchainSymbolPairs = {
   AXSUSDT: 'AXSUSDT',
   MANAUSDT: 'MANAUSDT',
   MBOXUSDT: 'MBOXUSDT',
-  IBSCDEFI: 'iBSCDEFI',
-  IGAME: 'iGAME',
   ALICEUSDT: 'ALICEUSDT',
   SANDUSDT: 'SANDUSDT',
   QUICKUSDT: 'QUICKUSDT',

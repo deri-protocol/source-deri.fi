@@ -8,9 +8,7 @@ import {
 import { catchApiError, catchSyncApiError } from '../../shared/utils/api';
 import { poolApiFactory } from '../contract/PoolApi';
 import { ERC20Factory } from '../../shared/contract/factory';
-import { checkToken, getBTokenAddress, getBTokenApyAndDiscounts, getRewardVaultConfig, nativeCoinSymbols } from '../config';
-import { rewardVaultFactory } from '../contract/factory/rest';
-import { poolImplementationFactory } from '../contract/factory/pool';
+import { checkToken, getBTokenAddress, getBTokenApyAndDiscounts, nativeCoinSymbols } from '../config';
 
 export const getUserStakeInfo = async (
   chainId,
@@ -598,14 +596,6 @@ export const getBTokenDiscount = async (chainId, poolAddress) => {
       );
       const api = poolApiFactory(chainId, poolAddress);
       await api.init();
-      // const bTokenMultiplier = (
-      //   await Promise.all(
-      //     api.pool.bTokens.reduce(
-      //       (acc, b) => [...acc, getBTokenApyAndDiscount(b.bTokenSymbol)],
-      //       []
-      //     )
-      //   )
-      // ).map((b) => bg(b.factor).times(1.25).toString());
       const bTokenMultiplier = (
         await getBTokenApyAndDiscounts(
           chainId,
@@ -640,91 +630,3 @@ export const getEstimatedDpmmCost = (chainId, poolAddress, newVolume) => {
     ''
   );
 };
-
-export const getSimulatePnl = async (
-  chainId,
-  poolAddress,
-  symbolName,
-  indexPriceChangeRate,
-) => {
-  return catchApiError(
-    async () => {
-      [chainId, poolAddress ] = checkApiInputWithoutAccount(
-        chainId,
-        poolAddress,
-      );
-      symbolName = checkToken(symbolName);
-      const api = poolApiFactory(chainId, poolAddress);
-      await api.init(ADDRESS_ZERO, true);
-      return await api.getSimulatePnl(symbolName, indexPriceChangeRate)
-    },
-    [],
-    ''
-  );
-};
-
-export const getSimulatePnls = async (
-  chainId,
-  poolAddress,
-  symbolName,
-  size = 100
-) => {
-  return catchApiError(
-    async () => {
-      [chainId, poolAddress ] = checkApiInputWithoutAccount(
-        chainId,
-        poolAddress,
-      );
-      symbolName = checkToken(symbolName);
-      const api = poolApiFactory(chainId, poolAddress);
-      await api.init(ADDRESS_ZERO, true);
-      return await api.getSimulatePnls(symbolName, size)
-    },
-    [],
-    ''
-  );
-};
-
-export const getPendingReward = async (
-  chainId,
-  poolAddress,
-  accountAddress,
-) => {
-  return catchApiError(
-    async () => {
-      [chainId, poolAddress, accountAddress] = checkApiInput(
-        chainId,
-        poolAddress,
-        accountAddress,
-      );
-      const rewardValut = rewardVaultFactory(chainId, getRewardVaultConfig(chainId, poolAddress).rewardVault)
-      return await rewardValut.pendingByAddress(accountAddress)
-    },
-    [],
-    ''
-  );
-}
-
-export const getPoolOnChainApy = async (chainId, poolAddress) => {
-  let res = '0'
-  try {
-    const rewardValut = rewardVaultFactory(chainId, getRewardVaultConfig(chainId, poolAddress).rewardVault)
-    const pool = poolImplementationFactory(
-      chainId,
-      poolAddress,
-    )
-    const [deriInfo, rewardPerSecond] = await Promise.all([
-      fetchJson('https://infoapi.deri.io/stats_for_token'),
-      rewardValut.rewardPerSecond(),
-      pool.init(),
-    ])
-    if (deriInfo.status.toString() === '200') {
-      const deriPrice = deriInfo.data.price
-      // console.log(rewardPerSecond, deriPrice, pool.state.liquidity)
-      res = bg(rewardPerSecond).times(60 * 60 * 24 * 365).times(deriPrice).div(pool.state.liquidity).toString()
-    }
-  } catch (err) {
-    console.log(err)
-  }
-  return res
-}

@@ -12,7 +12,6 @@ import {
   checkToken,
   getBTokenAddress,
   getDeriLensConfig,
-  getRewardVaultConfig,
   getSymbolInfo,
   isArbiChain,
   isBSCChain,
@@ -20,7 +19,7 @@ import {
 } from "../config";
 import { poolImplementationFactory } from '../contract/factory/pool';
 import { sendTxWithOracleSignature } from './shared';
-import { mintableERC20Factory, rewardVaultFactory, tokenVaultFactory } from '../contract/factory/rest';
+import { mintableERC20Factory, tokenVaultFactory } from '../contract/factory/rest';
 import { deriLensFactoryProxy } from '../contract/factory/deri_lens';
 import { calculateDpmmCost } from '../utils/futures';
 import { isPowerSymbol } from '../utils/power';
@@ -340,32 +339,6 @@ export const closePosition = async (
   }, [chainId, opts]);
 };
 
-// mining
-export const claimXVSLp = async (chainId, poolAddress, accountAddress, opts) => {
-  return catchTxApiError(async () => {
-    [chainId, poolAddress, accountAddress] = checkApiInput(
-      chainId,
-      poolAddress,
-      accountAddress
-    );
-    const pool = poolImplementationFactory(chainId, poolAddress);
-    return await pool.claimVenusLp(accountAddress, accountAddress, opts);
-  }, [chainId, opts]);
-};
-
-export const claimXVSTd = async (chainId, poolAddress, accountAddress, opts) => {
-  return catchTxApiError(async () => {
-    [chainId, poolAddress, accountAddress] = checkApiInput(
-      chainId,
-      poolAddress,
-      accountAddress
-    );
-    const pool = poolImplementationFactory(chainId, poolAddress);
-    return await pool.claimVenusTrader(accountAddress, accountAddress, opts);
-  }, [chainId, opts]);
-};
-
-
 const toWei = (amount, bTokenDecimals=18) => {
   return  bg(amount, bTokenDecimals).toFixed(0).toString()
 }
@@ -459,20 +432,3 @@ export const mintTokenV3 = async (chainId, accountAddress, bTokenSymbol, opts) =
     }
   }, [chainId, opts]);
 };
-
-export const claimReward = async (
-  chainId,
-  poolAddress,
-  accountAddress,
-  opts = {}
-) => {
-  return catchTxApiError(async () => {
-    [chainId, poolAddress, accountAddress] = checkApiInput(
-      chainId,
-      poolAddress,
-      accountAddress
-    );
-    const rewardValut = rewardVaultFactory(chainId, getRewardVaultConfig(chainId, poolAddress).rewardVault)
-    return await rewardValut.claim(accountAddress, opts)
-  }, [chainId, opts])
-}

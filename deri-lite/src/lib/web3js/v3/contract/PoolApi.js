@@ -386,6 +386,7 @@ export class PoolApi {
         price: position.curIndexPrice,
         indexPrice: position.curIndexPrice,
         markPrice: deriSymbolScaleIn(position.symbol, position.markPrice),
+        volatility: position.curVolatility,
         displayMarkPrice: deriSymbolScaleIn(
           position.symbol,
           position.markPrice

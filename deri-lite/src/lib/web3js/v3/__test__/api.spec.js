@@ -114,7 +114,8 @@ describe("api", () => {
         await getPositionInfo(
           chainId,
           poolAddress,
-          accountAddress,
+          // accountAddress,
+          null,
           symbol2,
         )
       ).toEqual({});
@@ -374,9 +375,9 @@ describe("api", () => {
   //     await getVenusEarned(chainId, poolAddress, accountAddress, { asLp: true })
   //   ).toEqual('');
   // }, TIMEOUT)
-  it('tradeHistory', async() => {
-    const res = await getTradeHistory(chainId, poolAddress, accountAddress)
-    expect(res).toEqual([])
-  }, 10000000)
+  // it('tradeHistory', async() => {
+  //   const res = await getTradeHistory(chainId, poolAddress, accountAddress)
+  //   expect(res).toEqual([])
+  // }, 10000000)
 
 });

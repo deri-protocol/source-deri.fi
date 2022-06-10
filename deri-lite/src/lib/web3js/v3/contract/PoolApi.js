@@ -343,7 +343,7 @@ export class PoolApi {
         symbol: symbolName,
         indexPrice: symbol.curIndexPrice,
         markPrice: symbol.markPrice,
-        volitility: symbol.curVolitility,
+        volatility: symbol.curVolatility,
       }
     } else {
       await this.pool.getPositions(accountAddress);

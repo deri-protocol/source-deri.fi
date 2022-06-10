@@ -228,3 +228,6 @@ export function getBtokenAmount(token) {
   }
   return arr[token]
 }
+export function random(){
+  return new Date().getTime();
+}

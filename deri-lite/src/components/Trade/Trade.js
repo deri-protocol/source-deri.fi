@@ -142,7 +142,7 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
     const target = event.target;
     // if(type.isOption){
     let value = target.value
-    let multiplier = trading.contract.multiplier
+    let multiplier = trading.contract.minTradeUnit.toString()
     if (multiplier <= 1) {
       let index = multiplier.indexOf('.')
       let num = multiplier.slice(index);
@@ -255,11 +255,11 @@ function Trade({ wallet = {}, trading, version, lang, type }) {
 
   useEffect(() => {
     let holder = '0.000'
-    if (trading.contract.multiplier <= 1) {
-      let multiplier = trading.contract.multiplier
+    if (trading.contract.minTradeUnit <= 1) {
+      let multiplier = trading.contract.minTradeUnit.toString()
       holder = multiplier.replace(/1/gi, '0')
     } else {
-      holder = trading.contract.multiplier
+      holder = trading.contract.minTradeUnit
     }
     setOptionInputHolder(holder)
   }, [trading.contract])

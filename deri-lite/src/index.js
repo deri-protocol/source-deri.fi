@@ -83,8 +83,7 @@ export async function mount(props) {
 
 export async function unmount(props) {
   const { container } = props;
-  const root = ReactDOM.createRoot(getDeriLiteRootContainer(container))
-  root.unmount(getDeriLiteRootContainer(container));
+  ReactDOM.unmountComponentAtNode(getDeriLiteRootContainer(container));
 }
 
 

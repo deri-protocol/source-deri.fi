@@ -114,8 +114,8 @@ describe("api", () => {
         await getPositionInfo(
           chainId,
           poolAddress,
-          // accountAddress,
-          null,
+          // null
+          accountAddress,
           symbol2,
         )
       ).toEqual({});
@@ -123,19 +123,19 @@ describe("api", () => {
     TIMEOUT
   );
 
-  // it(
-  //   'getPositionInfos',
-  //   async () => {
-  //     expect(
-  //       await getPositionInfos(
-  //         chainId,
-  //         poolAddress,
-  //         accountAddress,
-  //       )
-  //     ).toEqual([]);
-  //   },
-  //   TIMEOUT
-  // );
+  it(
+    'getPositionInfos',
+    async () => {
+      expect(
+        await getPositionInfos(
+          chainId,
+          poolAddress,
+          accountAddress,
+        )
+      ).toEqual([]);
+    },
+    TIMEOUT
+  );
   // it(
   //   'getPoolMarkPrices',
   //   async () => {

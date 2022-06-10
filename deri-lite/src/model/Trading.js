@@ -223,12 +223,14 @@ export default class Trading {
   getChainId(wallet) {
     if (wallet.isConnected()) {
       if (wallet.supportCurNetwork) {
-        return wallet.detail.id;
+        return wallet.detail.chainId;
       } else {
         return getDefaultNw(DeriEnv.get()).id
       }
     } else if (wallet.status === 'disconnected') {
       return getDefaultNw(DeriEnv.get()).id
+    }else {
+      return wallet.detail.chainId;
     }
   }
 
@@ -653,14 +655,14 @@ export default class Trading {
       return this.contract.feeRatio ? this.contract.feeRatio * 100 : 0
     } else {
       if (this.contract.isCall) {
-        if (this.contract.strike >= this.index) {
-          return [Intl.get('lite', 'eo-mark-price'), '*', this.contract.feeRatioOTM * 100]
+        if (this.contract.strike >= this.position.indexPrice) {
+          return [Intl.get('lite', 'mark-price'), '*', this.contract.feeRatioOTM * 100]
         } else {
           return this.contract.underlier ? [`${this.contract.underlier} ${Intl.get('lite', 'price')}`, '*', this.contract.feeRatioITM * 100] : ['', '']
         }
       } else {
-        if (this.contract.strike < this.index) {
-          return [Intl.get('lite', 'eo-mark-price'), '*', this.contract.feeRatioOTM * 100]
+        if (this.contract.strike < this.position.indexPrice) {
+          return [Intl.get('lite', 'mark-price'), '*', this.contract.feeRatioOTM * 100]
         } else {
           return this.contract.underlier ? [`${this.contract.underlier} ${Intl.get('lite', 'price')}`, '*', this.contract.feeRatioITM * 100] : ['', '']
         }

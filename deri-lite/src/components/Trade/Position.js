@@ -12,7 +12,7 @@ import marginDetailIcon from '../../assets/img/margin-detail.png'
 import pnlIcon from '../../assets/img/pnl-detail.png'
 import closePositionIcon from '../../assets/img/close-position-icon.svg'
 import TipWrapper from '../TipWrapper/TipWrapper';
-
+import ApiProxy from '../../model/ApiProxy'
 
 
 const BalanceListDialog = withModal(BalanceList)
@@ -25,14 +25,7 @@ function Position({ wallet, trading, version, lang, type }) {
   const [balanceListModalIsOpen, setBalanceListModalIsOpen] = useState(false)
   const [balance, setBalance] = useState('');
 
-  const loadBalance = async () => {
-    if (wallet.isConnected() && trading.config) {
-      const balance = await getWalletBalance(wallet.detail.chainId, trading.config.pool, wallet.detail.account, trading.config.bTokenId).catch(e => console.error('load balance error,maybe network is wrong'))
-      if (balance) {
-        setBalance(balance)
-      }
-    }
-  }
+  
 
   const formatNumber = (number, decimal, suffix = '', prefix = '', allowZero) => {
     let num = Math.abs(number)
@@ -51,7 +44,12 @@ function Position({ wallet, trading, version, lang, type }) {
   //平仓
   const onClosePosition = async () => {
     setIsLiquidation(true)
-    const res = await closePosition(wallet.detail.chainId, trading.config.pool, wallet.detail.account, trading.config.symbolId).finally(() => setIsLiquidation(false))
+    const res = await ApiProxy.request('closePosition',
+      [wallet.detail.chainId, trading.symbolInfo.address, wallet.detail.account, trading.symbolInfo.symbol],
+      {
+        includeResponse: true,
+      })
+
     if (res.success) {
       refreshBalance()
     } else {
@@ -67,7 +65,6 @@ function Position({ wallet, trading, version, lang, type }) {
 
   const refreshBalance = () => {
     trading.refresh();
-    loadBalance();
   }
 
   const afterDepositAndWithdraw = () => {
@@ -82,12 +79,6 @@ function Position({ wallet, trading, version, lang, type }) {
     'LONG': (+trading.position.volume) > 0,
     'SHORT': (+trading.position.volume) < 0
   })
-
-  useEffect(() => {
-    loadBalance();
-    return () => {
-    };
-  }, [wallet.detail.account, trading.config]);
 
   useEffect(() => {
     if (trading.position) {

@@ -95,11 +95,11 @@ function SubMenu({ symbol, trading, onSelect, index, version, type }) {
 function SymbolDisplay({ version, spec, type }) {
   if (type.isOption) {
     return (
-      `${(spec && spec.symbol) || 'BTCUSD-100000-C'}`
+      `${(spec && spec.formatedSymbol) || 'BTCUSD-100000-C'}`
     )
   } else {
     return (
-      `${(spec && spec.symbol) || 'BTCUSD'}`
+      `${(spec && spec.formatedSymbol) || 'BTCUSD'}`
     )
   }
 

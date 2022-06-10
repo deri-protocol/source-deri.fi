@@ -5,8 +5,10 @@ import WithdrawMagin from './WithdrawMargin';
 import removeMarginIcon from '../../../assets/img/remove-margin.svg'
 import addMarginIcon from '../../../assets/img/add-margin.svg'
 import DeriNumberFormat from '../../../utils/DeriNumberFormat';
-import { getUserBTokensInfo } from '../../../lib/web3js/index';
+import { DeriEnv} from '../../../lib/web3js/index';
+import apiProxy from '../../../model/ApiProxy'
 import useDisableScroll from '../../../hooks/useDisableScroll';
+import {getDefaultNw} from '../../../utils/utils'
 
 const AddMarginDialog = withModal(DepositMargin)
 const RemoveMarginDialog = withModal(WithdrawMagin)
@@ -55,8 +57,14 @@ export function BalanceList({wallet,spec,afterDepositAndWithdraw,position,onClos
   }
 
   const loadBalanceList = async () => {
-    if(wallet.detail.account && spec){
-      const list = await getUserBTokensInfo(wallet.detail.chainId,spec.pool,wallet.detail.account)
+    if( spec){
+      let params;
+      if(wallet.isConnected() && wallet.supportCurNetwork){
+        params = [wallet.detail.chainId, spec.address, wallet.detail.account]
+      }else{
+        params = [getDefaultNw(DeriEnv.get()).id,spec.address,"0x0000000000000000000000000000000000000000"]
+      }
+      const list =  await apiProxy.request('getUserBTokensInfo', params)
       setDepositAndWithdragList(list)
       if(list.length < limit){
         setPlaceholdList(Array.from({length : limit - list.length}));
@@ -110,7 +118,7 @@ export function BalanceList({wallet,spec,afterDepositAndWithdraw,position,onClos
                     </span>
                   </div>
                 ))}
-                {placeholdList.map((item,index) => <div className='row' key={index}></div>)}
+                {/* {placeholdList.map((item,index) => <div className='row' key={index}></div>)} */}
               </div>
             </div>
           </div>

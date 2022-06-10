@@ -18,12 +18,12 @@ function AreaPicker({lang,version,wallet,type,trading,loading}){
       Category.setCurrent('option')
     } else if(zone === 'Powers'){
       type.setCurrent('power')
-      Category.setCurrent('option')
+      Category.setCurrent('power')
     }
-    loading.loading()
-    trading.init(wallet,() => {
-      loading.loaded()
-    })
+    // loading.loading()
+    // trading.init(wallet,() => {
+    //   loading.loaded()
+    // })
   }
   useEffect(() => {
     wallet.supportOpen ? setStyles({width : `${100 / 3}%` }) : setStyles({width : `${100 /2 }%`})

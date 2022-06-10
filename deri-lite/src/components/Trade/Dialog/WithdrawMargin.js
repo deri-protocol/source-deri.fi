@@ -4,6 +4,7 @@ import Button from '../../Button/Button';
 import DeriNumberFormat from '../../../utils/DeriNumberFormat';
 import { bg } from '../../../utils/utils';
 import useDisableScroll from '../../../hooks/useDisableScroll';
+import ApiProxy from '../../../model/ApiProxy'
 
 export default function WithdrawMagin({wallet,spec =  {},position,onClose,afterWithdraw,availableBalance,nested,lang}){
   const [available, setAvailable] = useState('');
@@ -55,13 +56,13 @@ export default function WithdrawMagin({wallet,spec =  {},position,onClose,afterW
     }
     setPending(true);
     const isMax = max.eq(amount)
-    const res = await withdrawMargin(wallet.detail.chainId,spec.pool,wallet.detail.account,amount,spec.bTokenId,isMax);
+    const res = await ApiProxy.request("withdrawMargin",[wallet.detail.chainId,spec.address,wallet.detail.account,amount,spec.bTokenSymbol,isMax],{includeResponse: true,}) ;
     if(res.success){
       afterWithdraw();
       onClose();
     } else {
-      const msg = typeof res.error === 'string' ? res.error : res.error.errorMessage || res.error.message
-      alert(msg)
+      alert("Withdraw Failed")
+      
     }
     setPending(false);
   }

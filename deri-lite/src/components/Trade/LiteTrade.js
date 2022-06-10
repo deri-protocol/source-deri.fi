@@ -20,7 +20,7 @@ function LiteTrade({wallet,trading,isPro,lang,loading,version,type}){
       loading.loaded();
     })
     return () => { trading.clean()} ;
-  }, [wallet.detail.account,version.current])
+  }, [walletContext,type.current])
 
   return (
       <div className={tradeClassName}>

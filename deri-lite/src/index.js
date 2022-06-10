@@ -31,7 +31,7 @@ const useWalletOptions = {
       rpc: chainlist
     },
     walletlink: {
-      chainId: 1,
+      chainId: 56,
       url: 'https://mainnet.eth.aragon.network/',
     },
   },

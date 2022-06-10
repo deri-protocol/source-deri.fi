@@ -42,7 +42,6 @@ class Wallet {
       supportChain: computed,
       supportOpen: computed,
       balance: computed,
-      isApproved: computed,
       blockExploreUrl : computed,
       supportOptions : computed,
       supportPowers : computed,
@@ -56,10 +55,22 @@ class Wallet {
 
   isConnected = () => !!this.detail.account;
 
-  get isApproved() {
-    return this.detail.isApproved
+
+  async isApproved(pool,bToken){
+    if(this.detail.chainId && this.supportChain){
+      const isApproved = await isUnlocked(this.detail.chainId,pool,this.detail.account,bToken).catch(e => console.error('load approve error'))
+      this.detail.isApproved = isApproved;
+      this.setDetail(this.detail)
+      return isApproved;
+    }
   }
 
+  approve = async (pool,bToken) => {
+    if(this.detail.chainId){
+      const approved = await unlock(this.detail.chainId,pool,this.detail.account,bToken);
+      return approved
+    }
+  }
 
   switchNetwork = async (network,successCb,errorCb) => {
     const chainInfo = config[DeriEnv.get()]['chainInfo']

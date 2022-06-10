@@ -3,6 +3,7 @@ import { depositMargin, bg } from "../../../lib/web3js/index";
 import NumberFormat from 'react-number-format';
 import Button from '../../Button/Button';
 import useDisableScroll from '../../../hooks/useDisableScroll';
+import ApiProxy from '../../../model/ApiProxy'
 
 export default function DepositMargin({wallet,spec = {},onClose,balance,afterDeposit,nested,lang}){
   const [integer, setInteger] = useState('');
@@ -32,7 +33,7 @@ export default function DepositMargin({wallet,spec = {},onClose,balance,afterDep
       return;
     }
     setPending(true)
-    const res = await depositMargin(wallet.detail.chainId,spec.pool,wallet.detail.account,amount,spec.bTokenId);
+    const res = await ApiProxy.request("depositMargin",[wallet.detail.chainId,spec.address,wallet.detail.account,amount,spec.bTokenSymbol],{includeResponse: true,}) ;
     if(res.success){
       afterDeposit();
       onClose();

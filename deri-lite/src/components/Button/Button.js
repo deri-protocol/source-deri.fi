@@ -32,13 +32,13 @@ export default function Button({btnText,className,disabled,click,afterClick,chec
 
   const loadApproveStatus = async () => {
     if(checkApprove && wallet && wallet.detail.account){
-      const res = await wallet.isApproved(spec.pool,spec.bTokenId)
+      const res = await wallet.isApproved(spec.address,spec.bTokenSymbol)
       setIsApproved(res);
     }
   }
   const approve = async () => {
     beforeAction();
-    const res = await wallet.approve(spec.pool,spec.bTokenId);
+    const res = await wallet.approve(spec.address,spec.bTokenSymbol);
     if(res.success){
       setIsApproved(true);
     } else {

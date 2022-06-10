@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import NumberFormat from 'react-number-format'
 import { inject, observer } from 'mobx-react';
 import TipWrapper from '../TipWrapper/TipWrapper';
-import version from '../../model/Version';
-import { DeriEnv } from '../../lib/web3js/index'
+import { DeriEnv,bg } from '../../lib/web3js/index'
 
 function ContractInfo({ wallet, trading, lang, type }) {
 
@@ -40,7 +39,7 @@ function ContractInfo({ wallet, trading, lang, type }) {
             {lang['symbol']}
           </div>
           <div className="text">
-            {trading.contract.symbol}
+            {trading.contract.displaySymbol}
           </div>
         </div>
         {(type.isFuture || type.isPower) && <>
@@ -76,13 +75,13 @@ function ContractInfo({ wallet, trading, lang, type }) {
             <div className="info">
               <div className="title"><TipWrapper block={false}><span tip="Maintenance Margin Ratio is the percentage of notional value required to keep your open positions from being liquidated." className='margin-per'>Multiplier</span></TipWrapper></div>
               <div className="text">
-                <NumberFormat displayType='text' value={trading.contract.multiplier} decimalScale={2} />
+                <NumberFormat displayType='text' value={trading.contract.displayMultiplier}  />
               </div>
             </div>
             <div className="info">
               <div className="title"> <TipWrapper block={false}><span tip={trading.symbolInfo ? `Funding period is the time period for which the funding fee (${trading.symbolInfo.symbol} Mark Price - ${trading.symbolInfo.symbol} ) is paid. For Funding Period = 7 days, every second a long (short) contract pays (receives) a funding fee=(${trading.symbolInfo.symbol} Mark Price - ${trading.symbolInfo.symbol} ))/(7*24*60*60)` : ""} className='margin-per'> Funding Period</span></TipWrapper> </div>
               <div className="text">
-                <NumberFormat displayType='text' value={trading.contract.maintenanceMarginRatio} decimalScale={2} />   Days
+                <NumberFormat displayType='text' value={bg(trading.contract['fundingPeriod']).div(86400).toFixed(0)} decimalScale={2} suffix='Days' />  
               </div>
             </div>
           </>}
@@ -104,7 +103,7 @@ function ContractInfo({ wallet, trading, lang, type }) {
           <div className="info">
             <div className="title">{lang['option-type']}</div>
             <div className="text">
-              {trading.contract.optionType === 'C' ? `${lang['call']}` : `${lang['put']}`}
+              {trading.contract.optionType}
             </div>
           </div>
           <div className="info">
@@ -128,19 +127,19 @@ function ContractInfo({ wallet, trading, lang, type }) {
           <div className="info">
             <div className="title"> <TipWrapper block={false}><span tip={trading.maintenanceMarginRatioTip} className='margin-per'>Funding Period</span></TipWrapper> </div>
             <div className="text">
-              <NumberFormat displayType='text' value={trading.contract.maintenanceMarginRatio * 100} decimalScale={2} suffix='%' />
+              <NumberFormat displayType='text' value={bg(trading.contract['fundingPeriod']).div(86400).toFixed(0)} decimalScale={2} suffix='Days' />
             </div>
           </div>
           <div className="info">
             <div className="title"> Delta </div>
             <div className="text">
-              <NumberFormat displayType='text' value={trading.contract.maintenanceMarginRatio * 100} decimalScale={2} suffix='%' />
+              <NumberFormat displayType='text' value={trading.contract.delta} decimalScale={2}  />
             </div>
           </div>
           <div className="info">
             <div className="title"> Gamma </div>
             <div className="text">
-              <NumberFormat displayType='text' value={trading.contract.maintenanceMarginRatio * 100} decimalScale={2} suffix='%' />
+              <NumberFormat displayType='text' value={trading.contract.gamma} decimalScale={7} />
             </div>
           </div>
         </>}
@@ -157,15 +156,8 @@ function ContractInfo({ wallet, trading, lang, type }) {
           </>}
           <div className="text">
             {type.isOption && <>
-              {trading.contract.optionType === 'C' && <>
-                {trading.contract.strike >= trading.index && <>
-                  {lang['eo-mark-price']} * <NumberFormat displayType='text' value={trading.contract.feeRatioOTM * 100} decimalScale={3} suffix='%' />
-                </>}
-                {trading.contract.strike < trading.index && <>
-                  {trading.contract.underlier} {lang['price']} * <NumberFormat displayType='text' value={trading.contract.feeRatioITM * 100} decimalScale={3} suffix='%' />
-                </>}
+              {`${trading.feeDisplay.join(' ')}%`}
               </>}
-
               {trading.contract.optionType !== 'C' && <>
                 {trading.contract.strike < trading.index && <>
                   {lang['eo-mark-price']} * <NumberFormat displayType='text' value={trading.contract.feeRatioOTM * 100} decimalScale={3} suffix='%' />
@@ -174,20 +166,12 @@ function ContractInfo({ wallet, trading, lang, type }) {
                   {trading.contract.underlier} {lang['price']} * <NumberFormat displayType='text' value={trading.contract.feeRatioITM * 100} decimalScale={3} suffix='%' />
                 </>}
               </>}
-
-
-            </>}
             {(type.isFuture || type.isPower) && <>
               <NumberFormat displayType='text' value={trading.contract.feeRatio * 100} decimalScale={3} suffix='%' />
             </>}
           </div>
         </div>
-        {trading.contract.indexConstituents && trading.contract.indexConstituents.tokens.length > 0 && <div className="info">
-          <div className="title">{lang['index-constituent']}</div>
-          <div className="text">
-            {trading.contract.indexConstituents.tokens.join(' | ')}
-          </div>
-        </div>}
+      
       </div>
     </div>
   )

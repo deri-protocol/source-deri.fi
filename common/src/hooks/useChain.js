@@ -1,5 +1,5 @@
 import { useWallet } from "use-wallet";
-import { importAll,getEnv, eqInNumber } from "../utils/utils";
+import { importAll,getEnv, eqInNumber, random } from "../utils/utils";
 import {useEffect, useState} from 'react'
 
 const configs =  importAll(require.context('../config/',true,/chain.*.json/))

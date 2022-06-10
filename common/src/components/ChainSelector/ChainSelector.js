@@ -1,5 +1,5 @@
 import React, { useState, useEffect ,useCallback} from 'react'
-import { isStartScroll, switchChain, hasParent,isMobile } from '../../utils/utils';
+import { isStartScroll, switchChain, hasParent,isMobile,random } from '../../utils/utils';
 import Icon from '../Icon/Icon';
 import { useWallet } from 'use-wallet';
 import useChain from '../../hooks/useChain';
@@ -60,13 +60,13 @@ function ChainSelector({collect,id=""}){
           })
           return index === 0 
             ?
-              (<div className='nw-item' onClick={() => setIsShow(!isShow)} key={chain.chainId}>
+              (<div className='nw-item' onClick={() => setIsShow(!isShow)} key={`${chain.chainId}-${index}`}>
                 <Icon token={isMobile() ? chain.icon  :  `${chain.icon}-LIGHT`} width='20'/>
                 <div className='name'>{chain.name}</div>
                 <Icon  width='16' token={'arrow-down'} className='arrow'/>
               </div>)
           : 
-            (<div className={itemClass} onClick={e => onSelect(chain)} key={chain.chainId}>
+            (<div className={itemClass} onClick={e => onSelect(chain)} key={index}>
               <Icon token={isMobile() ? chain.icon  :  `${chain.icon}-LIGHT`} width='20'/>
               <div className='name'>{chain.name}</div>
             </div>)

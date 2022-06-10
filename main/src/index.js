@@ -5,6 +5,8 @@ import './index.css';
 import App from './App';
 import actions from './state/actions'
 import apps from './apps';
+import Loading from './components/Loading/Loading';
+
 
 const render = (props) => {
   const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -15,12 +17,17 @@ const render = (props) => {
   );
 }
 
+function loader(loading) {
+  return loading && <Loading />;
+}
+
 const microApps = apps.map(item => {
   return {
     ...item,
     props : {
       actions
-    } 
+    },
+    loader 
   }
 })
 

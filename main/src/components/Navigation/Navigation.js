@@ -36,7 +36,7 @@ export default function Navigation({ collect, lang, statusCallback, switchMenu,c
           <Icon token='m-arrow-left' width='16' className='mobile-arrow' onClick={openOrClose} />
           {apps.map(app => (
             <span  key={app.name} className={classNames('sub-app',{ 'selected' : activeUrl === app.activeRule}) } onClick={() => link(app.activeRule,app.name)}>
-              <div className='bit-it'>{app.name}</div>
+              <div className='bit-it'>{app.displayName || app.name}</div>
             </span>
           ))}
           
@@ -49,8 +49,8 @@ export default function Navigation({ collect, lang, statusCallback, switchMenu,c
         </div>
       </div>
       <div className='down-up'>
-        <ChainSelector collect={collect} id="portal-header-network" />
-        <WalletConnector lang={lang} bgColor="#FFAB00" />
+        <ChainSelector collect={collect} id="portal-header-network" actions={actions}/>
+        <WalletConnector lang={lang} bgColor="#FFAB00" actions={actions} />
       </div>
     </div>
   )

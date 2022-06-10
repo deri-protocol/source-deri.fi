@@ -1,0 +1,18 @@
+{
+  "governance-title":"DIP1：请对以下选项进行投票：",
+  "governance-options-one":"与DERI持有者共享交易费",
+  "governance-options-one-describe":"20%的交易费用将被放入一个池中，在此池中用户可以质押DERI获得xDERI。xDERI持有者将分享池的交易费用收入。",
+  "governance-options-two":"以交易费收入回购DERI",
+  "governance-options-two-describe":"20%的交易费用将投入到DAO基金中，用于定期从二级市场回购并销毁DERI（即回收再开采）。",
+  "governance-options-three":"投票情况",
+  "vote":"投票",
+  "voting-ended":"投票结束",
+  "your-vote":"你的投票",
+  "your-voting-power":"你的投票力",
+  "voting-rules":"投票规则",
+  "vote-rules-one":"投票力是DERI余额+截止日期Sushiswap上DERI-USDT SLP余额的相应DERI金额。精确公式为：",
+  "vote-rules-one-describe":"投票力=余额（DERI）+余额（DERI-USDT SLP）*Sushi总DERI/总供应（DERI-USDT SLP）",
+  "vote-rules-two":"在截止日期前，可任选三个链（ETH/BSC/HECO）中的一个来签署投票。",
+  "vote-rules-three":" 投票截止时间：北京时间2021年3月19日12:00:00",
+  "vote-rules-four":"届时将在块上取照并用于计算结果。也就是说，如果你在截止日期之前投票，但是在截止日期之前转移了你的DERI或SLP，那么截止日期的余额才算结果。"
+}

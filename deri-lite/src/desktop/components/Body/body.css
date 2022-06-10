@@ -1,0 +1,17 @@
+.body {
+  display: flex;
+  margin: 40px auto;
+  min-height: calc(100vh - 80px);
+}
+.bridge .body{
+  margin: 40px auto 60px auto;
+}
+.index .body{
+  /* margin: 0 auto; */
+  display: block;
+  margin: 0;
+  justify-content: center;
+}
+.logo .body{
+  margin: 40px 0 60px 120px;
+}

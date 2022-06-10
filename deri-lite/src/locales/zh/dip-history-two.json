@@ -1,0 +1,20 @@
+{
+  "governance-title":"MemeCoin指数创建币种收录投票",
+  "governance-describe":"随着DERI协议MemeCoin指数 (iMEME)的上线, 根据整个社区的反馈,MemeCoin指数创建币种收录投票已启动.DERI持有者可对iMEME新添加的币种进行投票.",
+  "opction-title":"请为以下Meme币投一票:",
+  "wallet-balance":"钱包余额",
+  "amount":"数量",
+  "approve":"授权",
+  "vote":"投票",
+  "vote-rules":"投票规则",
+  "vote-rules-one":"一个DERI一票，输入想投票的号码。",
+  "vote-rules-two":"投票最多的meme币将纳入Meme货币指数。",
+  "vote-rules-three":"在截止日期前，可任选三个链（ETH/BSC/HECO）中的一个来签署投票。",
+  "vote-rules-four":"投票时间：2021年5月22日18:00至2021年5月27日18:00:00（北京时间）",
+  "all-the-deri-co-wi-be-re-to-be-min-again":"所有投票所用DERI将被回收再开采。",
+  "dip-list":"DIP列表",
+  "dip-list-title":"DIP表示Deri协议改进提案",
+  "dip-list-dip1":"DIP1",
+  "dip":"DIP",
+  "detail":"详情"
+}

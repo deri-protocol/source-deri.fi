@@ -1,0 +1,17 @@
+{
+  "governance-title":"DIP1: Bitte stimmen Sie für eine der folgenden Optionen:",
+  "governance-options-one":"Die Mitbeteiligung von DERI-Inhabern an den Transaktionsgebühren :",
+  "governance-options-one-describe":"20 % der Transaktionsgebühren fließen in einen Pool, in dem man DERI staken kann, um xDERI zu erhalten. xDERI-Inhaber teilen sich die Einnahmen aus dem Pool der Transaktionsgebühren.",
+  "governance-options-two":"DERI mit Einnahmen aus Transaktionsgebühren zurückkaufen",
+  "governance-options-two-describe":"20% der Transaktionsgebühr fließen in einen DAO Fond, der regelmäßig DERI vom sekundären Markt zurückkauft und anschließend diese verbrennt (sie werden recycelt, um wieder gemint zu werden).",
+  "governance-options-three":"Status quo beibehalten",
+  "vote":"ABSTIMMEN",
+  "voting-ended":"Abstimmung beendet",
+  "your-vote":"Deine Abstimmung",
+  "your-voting-power":"Ihr Stimmrechtsanteil",
+  "voting-rules":"Abstimmungsregeln",
+  "vote-rules-one":"Ihr Stimmrechtsanteil ist Ihr DERI-Saldo + der entsprechende DERI-Anteil Ihres DERI-USDT SLP-Saldos auf Sushiswap zum Stichtag. Die genaue Formel lautet",
+  "vote-rules-two":"Sie können eine der 3 Blockchains (ETH/BSC/HECO) auswählen, um Ihre Stimmabgabe bis zum Ablauf der Frist zu bestätigen.",
+  "vote-rules-three":" Abstimmungsfrist = 2021 March 19th 4:00:00AM UTC",
+  "vote-rules-four":"Es wird eine Bestandsaufnahme des Blocks zum Stichtag durchgeführt und für die Berechnung des Wahlergebnisses herangezogen. Das heißt, wenn Sie vor dem Stichtag abstimmen, aber Ihr DERI oder SLP vor dem Stichtag transferiert haben, zählt nur der verfügbare Saldo zum Stichtag."
+}

@@ -1,0 +1,11 @@
+{
+  "balance-in-contract" : "合约余额",
+  "dynamic-balance" : "动态余额",
+  "available-balance" : "可用余额",
+  "dynamic-effective-balance" : "动态有效余额",
+  "transaction-fee" : "交易费",
+  "my-position" : "仓位",
+
+  "index" : "指数价格",
+  "funding" : "日资金费率"
+}

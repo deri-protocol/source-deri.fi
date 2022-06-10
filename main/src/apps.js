@@ -6,7 +6,15 @@ const microApps = [
     entry: process.env.REACT_APP_BET_IT,
     activeRule: '#/bet-it',
     container: '#subapp-viewport'
-  },{
+  },
+  {
+    name: 'deri-lite',
+    displayName : 'deri.it',
+    entry: process.env.REACT_APP_DERI_LITE,
+    activeRule: '#/deri-lite',
+    container: '#subapp-viewport'
+  },
+  {
     name: 'sub-app-demo',
     displayName : 'sub app deom',
     entry: process.env.REACT_APP_SUB_APP_DEMO,

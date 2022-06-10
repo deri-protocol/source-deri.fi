@@ -1,0 +1,15 @@
+html {
+  font-size: 100px;
+}
+.mobile {
+  overflow: auto;
+}
+.body {
+  margin: 0.5rem 0 0.59rem 0;
+  overflow: hidden;
+}
+.spinner-border-sm {
+  width: 0.1rem;
+  height: 0.1rem;
+  border-width: 0.2em;
+}

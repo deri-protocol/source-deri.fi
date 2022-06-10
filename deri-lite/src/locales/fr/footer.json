@@ -1,0 +1,11 @@
+{
+  "app" : "Application",
+  "docs" : "Documents",
+  "team" : "Équipe",
+  "faq" : "Questions fréquemment posées",
+  "visit-us-on" : "Visitez-nous à",
+  "deri-protocol" : "Protocole Deri",
+
+  "unsupported-chain-id" : "ID de chaîne non pris en charge",
+  "connect-wallet" : "Connecter le porte-monnaie"
+}

@@ -1,0 +1,21 @@
+{
+  "total-net-position" : "Total Net Position",
+  "min" : "min",
+  "hour" : "hour",
+  "day" : "day",
+  "week" : "week",
+  "current-position" : "CURRENT POSITION",
+  "trade-history" : "TRADE HISTORY",
+  "pool-total-liquidity" : "Pool Total Liquidity",
+  "funding-rate-delta":"Delta Funding Daily",
+  "funding-rate-premium":"Premium Funding Daily",
+  "position-info" : "POSITION INFO",
+  "option-mark-price" : "Option Mark Price",
+  "open" : "O",
+  "high" : "H",
+  "low" : "L",
+  "closed" : "C",
+  "price" : "Price",
+  "index" : "Index",
+  "option" : "Option"
+}

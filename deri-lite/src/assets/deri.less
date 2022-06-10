@@ -1,0 +1,283 @@
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('./fonts/fontawesome-webfont.eot?v=4.7.0');
+  src: url('./fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('./fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('./fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('./fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('./fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal
+}
+
+@font-face {
+  font-family: 'LED Calculator';
+  src: url(./fonts/LEDCalculator.ttf);
+}
+
+@font-face {
+  font-family: 'ArialMT';
+  src: url("./fonts/ArialMT.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Tachyon";
+  src: url("./fonts/tachyon-400.woff2") format("woff2"),
+  url("./fonts/tachyon-400.woff") format("woff"),
+  url("./fonts/tachyon-400.ttf") format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Tachyon";
+  src: url("./fonts/tachyon-200.woff2") format("woff2"),
+  url("./fonts/tachyon-200.woff") format("woff"),
+  url("./fonts/tachyon-200.ttf") format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "Tachyon";
+  src: url("./fonts/tachyon-300.woff2") format("woff2"),
+  url("./fonts/tachyon-300.woff") format("woff"),
+  url("./fonts/tachyon-300.ttf") format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Korolev";
+  src: url("./fonts/korolev-700.woff2") format("woff2"),
+  url("./fonts/korolev-700.woff") format("woff"),
+  url("./fonts/korolev-700.ttf") format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Korolev";
+  src: url("./fonts/korolev-500.woff2") format("woff2"),
+  url("./fonts/korolev-500.woff") format("woff"),
+  url("./fonts/korolev-500.ttf") format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Korolev";
+  src: url("./fonts/korolev-300.woff2") format("woff2"),
+  url("./fonts/korolev-300.woff") format("woff"),
+  url("./fonts/korolev-300.ttf") format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Termina";
+  src: url("./fonts/termina-300.woff2") format("woff2"),
+  url("./fonts/termina-300.woff") format("woff"),
+  url("./fonts/termina-300.ttf") format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Termina";
+  src: url("./fonts/termina-600.woff2") format("woff2"),
+  url("./fonts/termina-600.woff") format("woff"),
+  url("./fonts/termina-600.ttf") format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Termina";
+  src: url("./fonts/termina-700.woff2") format("woff2"),
+  url("./fonts/termina-700.woff") format("woff"),
+  url("./fonts/termina-700.ttf") format("opentype");
+  font-display: auto;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.tk-tachyon {
+  font-family: "tachyon", sans-serif;
+}
+
+.tk-korolev {
+  font-family: "korolev", sans-serif;
+}
+
+.tk-termina {
+  font-family: "termina", sans-serif;
+}
+
+
+@-webkit-keyframes spinner-border {
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn)
+  }
+}
+
+@keyframes spinner-border {
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn)
+  }
+}
+
+.spinner-border {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  border: .25em solid;
+  border-right: .25em solid transparent;
+  border-radius: 50%;
+  -webkit-animation: spinner-border .75s linear infinite;
+  animation: spinner-border .75s linear infinite;
+}
+
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: .2em;
+}
+
+
+@-webkit-keyframes spin {
+  to {
+      -webkit-transform: translateY(-6em);
+      transform: translateY(-6em)
+  }
+}
+
+@keyframes spin {
+  to {
+      -webkit-transform: translateY(-6em);
+      transform: translateY(-6em)
+  }
+}
+.loading-line {
+  display: inline-block;
+  overflow: hidden;
+  height: 1.3em;
+  margin-top: -.3em;
+  line-height: 1.5em;
+  vertical-align: text-bottom;
+}
+
+.loading-line:after {
+  content: "/\A–\A\\\A|";
+  text-align: center;
+  -webkit-animation: spin 1s steps(4) infinite;
+  animation: spin 1s steps(4) infinite;
+  display: inline-table;
+  white-space: pre;
+}
+
+
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: ArialMT, sans-serif ;
+  background-color: #1b1c22;
+  color: #fff;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  border-style: none;
+  outline: none;
+}
+
+input {
+  outline: none
+}
+
+.wrong-network {
+  color : rgb(227, 80, 97)!important;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.circle {
+  display: inline-block;
+  background-color: #FFFFFF;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
+
+  .fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    color: #2f2f2f;
+  }
+
+  .fa-envelope:before {
+    content: "\f0e0"
+  }
+
+  .fa-medium:before {
+    content: "\f23a"
+  }
+
+  .fa-twitter:before {
+    content: "\f099"
+  }
+
+  .fa-github:before {
+    content: "\f09b"
+  }
+
+  .fa-paper-plane:before {
+    content: "\f1d8"
+  }
+
+  .fa-wechat:before,
+  .fa-weixin:before {
+    content: "\f1d7"
+  }  
+
+}
+
+.red-color-font {
+  color: #E35061;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}

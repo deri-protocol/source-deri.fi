@@ -1,0 +1,13 @@
+{
+  "balance-in-contract" : "Saldo im Kontrakt",
+  "dynamic-balance" : "Dyn Sal",
+  "available-balance" : "Verfüg. Guth.",
+  "dynamic-effective-balance" : "Dyn.Eff.Sal",
+  "transaction-fee" : "Gebühr",
+  "my-position" : "POSITION",
+  "base-token" : "B Token",
+  "wallet-balance" : "Wal. Guth",
+
+  "index" : "Index",
+  "funding" : "Funding"
+}

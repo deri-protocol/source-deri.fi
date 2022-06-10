@@ -1,0 +1,18 @@
+{
+  "governance-title":"DIP1: Please vote for one of the following options:",
+  "governance-options-one":"Share transaction fee with the DERI holders:",
+  "governance-options-one-describe":"20% of the transaction fee will be put into a pool, in which one can stake DERI to get xDERI. xDERI holders will share the transaction fee income of the pool.",
+  "governance-options-two":"Buy back DERI with transaction fee income:",
+  "governance-options-two-describe":"20% of the transaction fee will be put into a DAO fund, which is to regularly buy back DERI from secondary market and burned (i.e. recycled to be mined again).",
+  "governance-options-three":"Keep the status quo",
+  "vote":"VOTE",
+  "voting-ended":"Voting ended",
+  "your-vote":"Your vote",
+  "your-voting-power":"Your voting power",
+  "voting-rules":"Voting rules",
+  "vote-rules-one":"Your voting power is your DERI balance + the corresponding DERI amount of your DERI-USDT SLP balance on Sushiswap as of the deadline. The precise formula is",
+  "vote-rules-one-describe":"Voting Power = balanceOf(DERI) + balanceOf(DERI-USDT SLP) * totalDERIonSushi / totalSupply(DERI-USDT SLP)",
+  "vote-rules-two":"You can choose any of the 3 chains (ETH/BSC/HECO) to sign your vote by the deadline",
+  "vote-rules-three":" Voting Deadline = 2021 March 19th 4:00:00AM UTC",
+  "vote-rules-four":"A snapshot will be taken at the block at deadline and used to calculate the result. That is, if you vote before the deadline but have transferred your DERI or SLP before deadline, it is the balance at the deadline that counts."
+}

@@ -1,0 +1,138 @@
+.connect {
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 16px;
+  font-weight: 300;
+
+  .network-text-logo {
+    display: flex;
+    align-items: center;
+    margin-right: 13px;
+    position: relative;
+    height: 100%;
+
+    .logo-text {
+      margin-left: 16px;
+    }
+    .arrow {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    .network-list {
+      top: 81px;
+      position: absolute;
+      min-width: 158px;
+      padding: 0 10px;
+      background-color: #0d0e0f;
+      color: #aaaaaa;
+      padding-left: 8px;
+      display: none;
+      border-radius: 6px;
+      z-index: 3;
+      .network-item {
+        text-align: left;
+        line-height: 50px;
+        cursor: pointer;
+        white-space: nowrap;
+        .logo {
+          width: 25px;
+          margin-right: 22px;
+          border-radius: 12px;
+        }
+        span {
+          background-position: center;
+          height: 50px;
+          background-size: 25px;
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+      .network-item.selected ,.network-item:hover {
+        color: #ffffff;
+      }
+    }
+
+    i {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+    }
+
+    .ETH {
+      background-image: url("../../assets/img/ethereum-logo.png");
+      background-position: 15px;
+      background-repeat: no-repeat;
+    }
+
+    .BNB {
+      background-image: url("../../assets/img/bsc-logo.png");
+      background-repeat: no-repeat;
+    }
+
+    .HT {
+      background-image: url("../../assets/img/heco-logo.png");
+      background-position: 15px;
+      background-repeat: no-repeat;
+    }
+    .POLYGON,
+    .MATIC {
+      background-image: url("../../assets/img/matic-logo.png");
+      background-repeat: no-repeat;
+    }
+  }
+
+  .network-text-logo:hover {
+    .network-list {
+      display: block;
+    }
+  }
+
+  button {
+    line-height: 48px;
+    color: #ffffff;
+    background-color: #0d0e0f;
+    background-image: url("../../assets/img/connect-bg.png");
+    background-size: 100% 100%;
+    border-radius: 17px;
+    font-size: 16px;
+    padding: 0 14px 0 14px;
+    white-space: nowrap;
+    font-family: ArialMT, sans-serif;
+    font-weight: 300;
+    .address {
+      color: #569bda;
+      margin-left: 5px;
+    }
+  }
+
+  .connect-btn {
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .no-supported {
+    color: #e35061;
+  }
+}
+.mobile {
+  .connect{
+    button {
+      line-height: 0.48rem;
+      border-radius: 0.17rem;
+      font-size: 0.16rem;
+      padding: 0 0.14rem 0 0.14rem;
+      .address {
+        color: #569bda;
+        margin-left: 0.05rem;
+      }
+    }
+    .connect-btn {
+      text-align: center;
+      min-width: 2.2rem;
+    }
+  }
+}

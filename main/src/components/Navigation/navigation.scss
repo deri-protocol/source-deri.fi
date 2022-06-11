@@ -83,10 +83,9 @@
       text-decoration: none;
     }
 
-    .bit-it,
+    .app-item,
     .coming-soon-link,
     .deri-io {
-      width: 180px;
       height: 32px;
       line-height: 32px;
       text-align: center;
@@ -116,7 +115,7 @@
     }
     
     .selected {
-      .bit-it {
+      .app-item {
         background-image: url("../../assets/img/bet-now.svg");
         background-position: 20px center;
         background-color: #59AE99;
@@ -202,8 +201,8 @@
 
       .deri-io,
       .coming-soon-link,
-      .bit-it {
-        width: 88px;
+      .app-item {
+        padding: 0 30px;
         height: 32px;
         background: #93A1B8;
         background-image: none !important;
@@ -215,7 +214,7 @@
 
   .betit-portal {
     .link-btn {
-      .bit-it {
+      .app-item {
         background: #59AE99;
       }
     }
@@ -276,7 +275,7 @@
           display: none;
         }
 
-        .bit-it,
+        .app-item,
         .coming-soon-link,
         .deri-io {
           width: 100%;

@@ -15,6 +15,13 @@ const microApps = [
     container: '#subapp-viewport'
   },
   {
+    name: 'liquidity-mining',
+    displayName : 'liquidity mining',
+    entry: process.env.REACT_APP_LIQUIDITY_MINING,
+    activeRule: '#/liquidity-mining',
+    container: '#subapp-viewport'
+  },
+  {
     name: 'sub-app-demo',
     displayName : 'sub app deom',
     entry: process.env.REACT_APP_SUB_APP_DEMO,

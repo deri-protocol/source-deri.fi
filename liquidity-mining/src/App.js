@@ -4,14 +4,13 @@ import PageRouter from './pages/PageRouter';
 import { useLocation } from 'react-router-dom'
 
 
-function App({intl,actions}) {
+export default function App({actions}) {
   const location = useLocation();
   const curRouterClass = location.pathname.split('/')[1]
   return (
     <div className={`App ${curRouterClass}`}>
-      <PageRouter intl={intl} actions={actions}></PageRouter>
+      <PageRouter  actions={actions}></PageRouter>
     </div>
   );
 }
 
-export default inject("intl")(observer(App));

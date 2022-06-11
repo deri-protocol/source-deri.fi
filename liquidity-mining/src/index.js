@@ -4,8 +4,8 @@ import './index.scss';
 import App from './App';
 import { Provider } from 'mobx-react';
 import { HashRouter } from 'react-router-dom'
-function getBetitRootContainer(container) {
-  return container ? container.querySelector('#betit-root') : document.querySelector('#betit-root');
+function getRootContainer(container) {
+  return container ? container.querySelector('#liquidity-mining-root') : document.querySelector('#liquidity-mining-root');
 }
 
 
@@ -19,7 +19,7 @@ function render(props) {
           </Provider>
       </HashRouter>
     </React.StrictMode>,
-    getBetitRootContainer(container)
+    getRootContainer(container)
   );
 }
 
@@ -40,5 +40,5 @@ export async function mount(props) {
 
 export async function unmount(props) {
   const { container } = props;
-  ReactDOM.unmountComponentAtNode(getBetitRootContainer(container));
+  ReactDOM.unmountComponentAtNode(getRootContainer(container));
 }

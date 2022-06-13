@@ -116,6 +116,12 @@
     - yarn -- install all apps
     - npm start  -- start all apps
     - npm run build -- build all apps
+  
+**_NOTE_** if you use common node_module,should use npm link
+    - cd common && npm link
+    - copy current dir
+    - cd your_app && npm link common_dir
+
 ## Communication between apps
   Every app's props has actions prop,actions has onGlobalStateChange 、getGlobalState、setGlobalState api
   - setGlobalState is change state api

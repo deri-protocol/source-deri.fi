@@ -5,7 +5,7 @@ import { formatAddress ,hasParent} from '../../utils/utils';
 import classNames from 'classnames';
 import './walletConnector.scss'
 
-export default function WalletConnector({lang,bgColor = '#FFAB00'}){
+export default function WalletConnector({lang,bgColor = '#FFAB00',actions}){
   const [bntColor, setBntColor] = useState('#FFAB00');
   const [expand, setExpand] = useState();
   const wallet = useWallet()
@@ -44,6 +44,13 @@ export default function WalletConnector({lang,bgColor = '#FFAB00'}){
       document.removeEventListener('click',onBodyClick)
     }
   }, [expand]);
+
+  useEffect(() => {
+    if(!wallet.isConnected()) {
+      // wallet.connect();
+    }
+    actions && actions.setGlobalState({wallet : wallet})
+  }, [wallet]);
   
   return(
     <div className={walletClass}>

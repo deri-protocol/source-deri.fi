@@ -1,0 +1,17 @@
+body {
+  height: 100vh;
+}
+.desktop {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.btn-loading-wrap .spinner-border-sm {
+  width: 14px;
+  height: 14px;
+  border-width: 0.2em;
+  margin-right: 4px;
+}

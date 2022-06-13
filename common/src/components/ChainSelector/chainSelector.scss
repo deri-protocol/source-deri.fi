@@ -12,6 +12,7 @@
     top : 0px;
     display : flex;
     flex-direction : column;
+    cursor: pointer;
     z-index :1;
     .cur-network {
       display : flex;
@@ -22,6 +23,7 @@
       display : flex;
       height : 44px;
       align-items: center;
+      cursor: pointer;
       position : relative;
       .name {
         white-space: nowrap;
@@ -29,6 +31,9 @@
     }
     .nw-item.hidden {
       display : none;
+    }
+    .nw-item.display{
+      display: flex;
     }
   }
 }

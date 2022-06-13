@@ -1,0 +1,29 @@
+{
+  "mining" : "矿池",
+  "trade" : "期货",
+  "options":"期权",
+  "beta":"beta",
+  "governance" : "治理",
+  "bridge" : "跨链",
+  "docs" : "文档",
+  "stats":"统计",
+  "more":"更多",
+  "broker":"经纪人挖矿",
+  "broker-bind":"绑定经纪人",
+  "signin":"活动中心",
+  "faucet":"水龙头",
+  "retired-pools":"退役市场和矿池",
+  "deri-token":"通证",
+  "team" : "团队",
+  "faq" : "FAQ",
+  "code-audit" : "审计报告",
+  "github" : "Github",
+  "guide" : "指南",
+  "whitepaper" : "白皮书",
+
+  "use-deri":"使用 DERI",
+
+  "unsupported-chain-id" : "不支持网络ID",
+  "connect-wallet" : "连接钱包", 
+  "select-network" : "选择网络"
+}

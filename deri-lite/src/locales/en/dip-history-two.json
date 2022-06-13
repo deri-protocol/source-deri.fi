@@ -1,0 +1,20 @@
+{
+  "governance-title":"Meme Coin Index Inclusion Voting",
+  "governance-describe":"As the DERI PROTOCOL Meme Coin Index (iMEME) is now live, Meme coin index inclusion voting which allows DERI holders to vote on new additions of the iMEME has kicked off based on feedback from the whole community.",
+  "opction-title":"For this kick off round, Please vote for one for the following Meme coins:",
+  "wallet-balance":"Wallet Balance",
+  "amount":"Amount",
+  "approve":"APPROVE",
+  "vote":"VOTE",
+  "vote-rules":"Voting rules",
+  "vote-rules-one":"One DERI one vote, you can input the vote number as you want.",
+  "vote-rules-two":"The most popular meme coin will be added to the Meme Coin Index.",
+  "vote-rules-three":"You can choose any of the 3 chains (ETH/BSC/HECO) to sign your vote by the deadline",
+  "vote-rules-four":"Voting Period from 10:00 May 22, 2021 to 10:00:00 May 27, 2021 (UTC)",
+  "all-the-deri-co-wi-be-re-to-be-min-again":"All the DERI collected will be recycled to be mined again.",
+  "dip-list":"DIP List",
+  "dip-list-title":"DIP stands for Deri Protocol Improvement Proposal.",
+  "dip-list-dip1":"DIP1",
+  "dip":"DIP",
+  "detail":"Detail"
+}

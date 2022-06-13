@@ -78,7 +78,7 @@ export function importAll(r, config = {}) {
 }
 
 export function getEnv() {
-  return process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
+  return process.env.REACT_APP_NETWORK === 'mainnet' || process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
 }
 
 
@@ -107,7 +107,7 @@ export async function switchChain(chain, successCb, errorCb) {
 }
 
 export function hasParent(parent, current) {
-  if (parent === current) {
+  if (parent === current || parent && parent.getElementsByClassName(current.className).length > 0) {
     return true
   } else if (current.parentElement) {
     return hasParent(parent, current.parentElement)
@@ -227,4 +227,7 @@ export function getBtokenAmount(token) {
     },
   }
   return arr[token]
+}
+export function random(){
+  return new Date().getTime();
 }

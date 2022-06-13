@@ -1,0 +1,12 @@
+{
+  "balance-in-contract" : "Balance in Contract",
+  "dynamic-balance" : "Dyn. Bal",
+  "available-balance" : "Avail. Bal",
+  "dynamic-effective-balance" : "Dyn. Eff. Bal",
+  "transaction-fee" : "Fee",
+  "my-position" : "POSITION",
+  "index" : "Index",
+  "funding" : "Funding(D)",
+  "base-token" : "B Token",
+  "wallet-balance" : "Wal. Bal"
+}

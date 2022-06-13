@@ -1,0 +1,28 @@
+{
+  "mining" : "Minen",
+  "trade" : "Futures",
+  "options":"Optionen",
+  "beta":"beta",
+  "governance" : "Governance",
+  "bridge" : "Brücke",
+  "docs" : "Docs",
+  "stats":"Statistiken",
+  "more":"Mehr",
+  "broker":"Brokerage Mining",
+  "broker-bind":"Broker Binden",
+  "signin":"Event-Promotion",
+  "faucet":"Faucet",
+  "retired-pools":"Inaktive Märkte & Pools",
+  "deri-token":"Token",
+  "team" : "Team",
+  "faq" : "FAQ",
+  "code-audit" : "Auditberichte",
+  "github" : "Github",
+  "guide" : "Anleitung",
+  "whitepaper" : "Whitepaper",
+  
+  "use-deri":"BENUTZE DERI",
+  "unsupported-chain-id" : "Nicht unterstützte Netzwerk-ID",
+  "connect-wallet" : "Wallet Verbinden",
+  "select-network" : "Netzwerk auswählen"
+}

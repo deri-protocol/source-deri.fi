@@ -1,12 +1,13 @@
 import styled from "styled-components"
-const images = require.context('../../assets/img', true)
 
+const images = require.context('../../assets/img', true)
 let imagesIncludeSrc ;
 if(process.env.NODE_ENV === 'development') {
-  imagesIncludeSrc = require.context('../../../../../../src/assets/img',true)
+  imagesIncludeSrc = require.context('../../../../bet-it/src/assets/img',true)
 } else {
   imagesIncludeSrc = require.context('../../../../../../src/assets/img',true)
 }
+
 const Wrapper = styled.img`
   width : ${props => props.width }px;
   height : ${props => props.height}px;

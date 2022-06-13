@@ -1,0 +1,11 @@
+{
+  "app" : "App",
+  "docs" : "Docs",
+  "team" : "Team",
+  "faq" : "FAQ",
+  "visit-us-on" : "Visit us on",
+  "deri-protocol" : "Deri Protocol",
+
+  "unsupported-chain-id" : "Unsupported Chain ID",
+  "connect-wallet" : "Connect Wallet"
+}

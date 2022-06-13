@@ -1,7 +1,7 @@
+import './loading.scss'
 
-export default (props) => {
-  const { loading } = props;
+export default function Loading(){
   return (
-    loading && <h4 className="mainapp-loading">loading...</h4>
+    <div className='loading'></div>
   )
 }

@@ -1,10 +1,11 @@
 import {registerMicroApps,start,setDefaultMountApp} from 'qiankun'
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import actions from './state/actions'
 import apps from './apps';
+import './index.css';
+
 
 const render = (props) => {
   const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -15,16 +16,21 @@ const render = (props) => {
   );
 }
 
+function loader(loading) {
+  return loading && <div className='loading'></div>;
+}
+
 const microApps = apps.map(item => {
   return {
     ...item,
     props : {
       actions
-    } 
+    },
+    loader 
   }
 })
 
-render({ actions });
+render({ actions});
 
 registerMicroApps(microApps, {
   beforeLoad: app => {

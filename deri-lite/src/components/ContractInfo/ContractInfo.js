@@ -25,7 +25,7 @@ function ContractInfo({ wallet, trading, lang, type }) {
           </div>
           <div className="text" >
             <TipWrapper>
-              <span className='margin-per btoken-mu' tip={trading.contract.bTokenSymbol && trading.contract.bTokenSymbol.map((token, index) => `${token} (${trading.contract.bTokenMultiplier[index]})`)}>
+              <span className='margin-per btoken-mu' tip={trading.baseTokenTip}>
                 {trading.contract.bTokenSymbol && trading.contract.bTokenSymbol.map((token, index) => {
                   return index < 3 ? (<span key={index} className='btoken-symbol'>{token}({trading.contract.bTokenMultiplier[index]})</span>) : null
                 })}...

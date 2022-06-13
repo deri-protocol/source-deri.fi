@@ -36,7 +36,7 @@ export default function Navigation({ collect, lang, statusCallback, switchMenu,c
           <Icon token='m-arrow-left' width='16' className='mobile-arrow' onClick={openOrClose} />
           {apps.map(app => (
             <span  key={app.name} className={classNames('sub-app',{ 'selected' : activeUrl === app.activeRule}) } onClick={() => link(app.activeRule,app.name)}>
-              <div className='bit-it'>{app.displayName || app.name}</div>
+              <div className='app-item'>{app.displayName || app.name}</div>
             </span>
           ))}
           

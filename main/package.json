@@ -16,6 +16,7 @@
     "react-scripts": "5.0.1",
     "sass": "^1.52.2",
     "styled-components": "^5.3.5",
+    "@deri/eco-common": "file:../common",
     "use-wallet": "^0.13.6",
     "web-vitals": "^2.1.4"
   },

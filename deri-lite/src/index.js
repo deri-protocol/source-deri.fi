@@ -43,10 +43,10 @@ if (process.env.NODE_ENV === 'production') {
 // DeriEnv.set('testnet')
 DeriEnv.set('prod')
 function render(props) {
-  const { container } = props;
+  const { container,name='' } = props;
   ReactDOM.render(
     <React.StrictMode>
-      <HashRouter basename='/deri-lite'>
+      <HashRouter basename={name}>
         <UseWalletProvider {...useWalletOptions}>
           <Provider wallet={wallet} type={type} trading={trading} version={version} intl={intl} loading={loading}>
             <App {...props} />
@@ -56,15 +56,6 @@ function render(props) {
     </React.StrictMode>,
     getDeriLiteRootContainer(container)
   );
-}
-function storeTest(props) {
-  props.onGlobalStateChange((value, prev) => console.log(`[onGlobalStateChange - ${props.name}]:`, value, prev), true);
-  props.setGlobalState({
-    ignore: props.name,
-    user: {
-      name: props.name,
-    },
-  });
 }
 
 if (!window.__POWERED_BY_QIANKUN__) {
@@ -77,7 +68,6 @@ export async function bootstrap() {
 
 export async function mount(props) {
   console.log('props from main framework', props);
-  storeTest(props);
   render(props);
 }
 

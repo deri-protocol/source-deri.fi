@@ -159,7 +159,7 @@ function Position({ wallet, trading, version, lang, type }) {
       <div className='info'>
         <div className='info-left'>
           <div className='title-text'>
-            <TipWrapper><div className='title-text  funding-fee' tip="The margin frozen by this single position.">Margin Usage</div></TipWrapper>
+            <TipWrapper><div className='funding-fee' tip="The margin frozen by this single position.">Margin Usage</div></TipWrapper>
           </div>
           <div className='info-num'><DeriNumberFormat value={trading.position.marginHeldBySymbol} decimalScale={2} /></div>
         </div>

@@ -13,7 +13,6 @@ function LiteTrade({ wallet, trading, isPro, lang, loading, version, type, actio
   const tradeClassName = classNames('trade-position', curTab)
   const walletContext = useWallet();
   actions.onGlobalStateChange(state => {
-    console.log('onGlobalStateChange', state.wallet)
     wallet.setDetail(state.wallet)
   })
   useEffect(() => {

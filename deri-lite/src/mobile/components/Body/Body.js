@@ -12,11 +12,11 @@ class Body extends React.Component {
 
 
   render() {
-    const { dict } = this.props
+    const { dict,actions } = this.props
     return (
       <div className='body'>
         <Switch>
-          <Route exact path='/' component={() => <Lite lang={dict['lite']} />} />
+          <Route exact path='/' component={() => <Lite lang={dict['lite']} actions={actions} />} />
         </Switch>
       </div>
     )

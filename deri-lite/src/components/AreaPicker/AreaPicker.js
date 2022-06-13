@@ -27,7 +27,7 @@ function AreaPicker({wallet, type, }) {
     // })
   }
   useEffect(() => {
-    wallet.supportOpen ? setStyles({ width: `${100 / 3}%` }) : setStyles({ width: `${100 / 2}%` })
+     setStyles({ width: `${100 / 3}%` }) 
     return () => { }
   }, [wallet.detailt])
   return (
@@ -35,7 +35,7 @@ function AreaPicker({wallet, type, }) {
       <div className={clazz}>
         <span className='left' style={styles} onClick={() => siwtchZone('Futures')}>Futures</span>
         <span className='middle' style={styles} onClick={() => siwtchZone('Options')}>Options</span>
-        {wallet.supportOpen && <span className='right' style={styles} onClick={() => siwtchZone('Powers')}> Powers</span>}
+        <span className='right' style={styles} onClick={() => siwtchZone('Powers')}> Powers</span>
       </div>
     </div>
   )

@@ -9,9 +9,16 @@ const microApps = [
   },
   {
     name: 'deri-lite',
-    displayName : 'deri.it',
+    displayName : 'deri.lite',
     entry: process.env.REACT_APP_DERI_LITE,
     activeRule: '#/deri-lite',
+    container: '#subapp-viewport'
+  },
+  {
+    name: 'liquidity-mining',
+    displayName : 'liquidity mining',
+    entry: process.env.REACT_APP_LIQUIDITY_MINING,
+    activeRule: '#/liquidity-mining',
     container: '#subapp-viewport'
   },
   {

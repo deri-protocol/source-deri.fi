@@ -1,6 +1,6 @@
 // debug, for logger print
 //export const debug() = false
-export const debug = () => true
+export const debug = () => false
 
 export const SECONDS_IN_A_DAY = 86400;  // 60 * 60 * 24
 

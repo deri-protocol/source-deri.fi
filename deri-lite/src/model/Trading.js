@@ -291,7 +291,6 @@ export default class Trading {
       const position = await this.positionInfo.load(wallet, currentSymbol, position => {
         if (!this.paused && (!position.symbol || position.symbol === currentSymbol.displaySymbol)) {
           this.setPosition(position)
-          this.initVenusEarned(wallet, currentSymbol);
         }
       })
       const contract = await this.contractInfo.load(wallet, currentSymbol, isOption)
@@ -301,7 +300,6 @@ export default class Trading {
       this.setPosition(position)
       this.setLoaded(true)
       this.setContract(contract)
-      this.initVenusEarned(wallet, currentSymbol)
       this.setFundingRate(fundingRate)
       this.positionInfo.start()
       this.resume();
@@ -310,16 +308,6 @@ export default class Trading {
       this.setHistory(histories);
     } else {
       finishedCallback && finishedCallback()
-    }
-  }
-
-
-
-  async initVenusEarned(wallet, symbolInfo) {
-    const chainId = wallet && wallet.isConnected() ? wallet.detail.chainId : getDefaultNw(DeriEnv.get()).id
-    if (symbolInfo && symbolInfo.isAllV3 && wallet) {
-      const venusEarned = await ApiProxy.request('getVenusEarned', [chainId, symbolInfo.address, wallet.detail.account, { asTrader: true }])
-      this.setVenusEarned(venusEarned)
     }
   }
 

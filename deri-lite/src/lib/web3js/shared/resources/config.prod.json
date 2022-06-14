@@ -258,6 +258,15 @@
           "unit": "ETH",
           "decimals": "2",
           "rank": 1000
+        },
+        {
+          "symbolId": "0x98fc75eeaf2daf20762fde47b011dc0b9bbc272d057f010223476676501d04f7",
+          "symbol": "ETHUSD-1000-P",
+          "category": "option",
+          "unit": "ETH",
+          "decimals": "2",
+          "new": true,
+          "rank": 1000
         }
       ]
     },
@@ -681,6 +690,15 @@
           "displaySymbol": "mETH^2",
           "formattedUnit": "m",
           "displayUnit": "mETH^2",
+          "rank": 1000
+        },
+        {
+          "symbolId": "0x98fc75eeaf2daf20762fde47b011dc0b9bbc272d057f010223476676501d04f7",
+          "symbol": "ETHUSD-1000-P",
+          "category": "option",
+          "unit": "ETH",
+          "decimals": "2",
+          "new": true,
           "rank": 1000
         }
       ]

@@ -5,6 +5,7 @@
   "dependencies": {
     "@babel/plugin-syntax-jsx": "^7.17.12",
     "@babel/preset-react": "^7.17.12",
+    "@deri/eco-common": "file:../common",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
@@ -16,7 +17,6 @@
     "react-scripts": "5.0.1",
     "sass": "^1.52.2",
     "styled-components": "^5.3.5",
-    "@deri/eco-common": "file:../common",
     "use-wallet": "^0.13.6",
     "web-vitals": "^2.1.4"
   },

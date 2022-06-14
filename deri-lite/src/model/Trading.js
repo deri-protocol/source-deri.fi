@@ -130,6 +130,7 @@ export default class Trading {
       TransactionFeeTip: computed,
       fundingFeeValueTip: computed,
       fundingCoefficientTip: computed,
+      baseTokenTip:computed,
       rateTip: computed,
       multiplierTip: computed,
       powerMultiplierTip: computed,
@@ -712,6 +713,15 @@ export default class Trading {
         unit: this.symbolInfo.unit,
         value: this.contract.fundingRateCoefficient,
         pricePropName: propName.toLowerCase()
+      })
+    }
+    return ''
+  }
+
+  get baseTokenTip(){
+    if(this.contract && this.contract.bTokenSymbol){
+      return this.contract.bTokenSymbol.map((token, index) => {
+        return `${token}(${this.contract.bTokenMultiplier[index]})`
       })
     }
     return ''

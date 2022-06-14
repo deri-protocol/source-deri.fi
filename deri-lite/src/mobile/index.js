@@ -3,7 +3,7 @@ import Body from './components/Body/Body'
 import './style/index.less'
 import useWindowSize from '../hooks/useWindowSize';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min'
-export default function Mobile ({locale}){
+export default function Mobile ({locale ,actions}){
   const winSize = useWindowSize();
   const location = useLocation();
   const curRouterClass = location.pathname.split('/')[1]
@@ -14,7 +14,7 @@ export default function Mobile ({locale}){
 
   return (
     <div className={`mobile ${curRouterClass} ${locale}`}>
-      <Body></Body>
+      <Body actions={actions}></Body>
     </div>
   )
 }

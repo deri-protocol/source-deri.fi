@@ -1,7 +1,7 @@
 import classNames from "classnames"
 import { Icon,ChainSelector,WalletConnector } from '@deri/eco-common';
 import './navigation.scss'
-import { useState } from 'react';
+import { useState ,useCallback,useEffect} from 'react';
 import apps from '../../apps'
 
 export default function Navigation({ collect, lang, statusCallback, switchMenu,className ,actions}) {
@@ -11,22 +11,33 @@ export default function Navigation({ collect, lang, statusCallback, switchMenu,c
   const clazz = classNames(`portal-header`,className ,{
     collapse: isCollapse,
     growup : !isCollapse,
-    expand: isExpand
+    expand: isExpand,
+    shrink : !isExpand
   })
 
-  actions.onGlobalStateChange((value,prev) => {
+  const menuStateChange = (value,prev) => {
     setIsExpand(value.menuStatus)
-  })
+  }
 
   const link = (href,title) => {
+    setIsExpand(false)
     setActiveUrl(href);
     window.history.pushState({}, title, href);
+    actions.setGlobalState({menuStatus : false});
   }
+
   const openOrClose = () => {
     const status = !isCollapse;
     setIsCollapse(status)
     actions.setGlobalState({menuStatus : false});
   }
+
+  useEffect(() => {
+    actions && actions.onGlobalStateChange(menuStateChange)
+    return () => {
+      actions && actions.offGlobalStateChange()
+    };
+  }, [actions]);
   return (
     <div className={clazz}>
       <div className='title-link'>

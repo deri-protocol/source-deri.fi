@@ -98,7 +98,7 @@ export default function BetIt({ lang, getLang, actions }) {
   useEffect(() => {
     if (actions) {
       actions.onGlobalStateChange(state => {
-        if(state.wallet.status === "connected"){
+        if(state.wallet.status === "connected" && wallet.status === "disconnected"){
           wallet.connect()
         }
       })

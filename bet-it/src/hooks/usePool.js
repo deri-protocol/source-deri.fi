@@ -76,10 +76,7 @@ export default function usePool(){
         filters  = configs.filter(c => c.default);
         setValues(filters)
       }
-    } else if(wallet.status === 'disconnected'){
-      filters  = configs.filter(c => c.default);
-      setValues(filters)
-    }
+    } 
   }, [wallet]);
   // config.bTokens;
   return [bTokens,symbols];

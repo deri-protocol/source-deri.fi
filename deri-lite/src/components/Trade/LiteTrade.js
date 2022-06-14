@@ -12,10 +12,7 @@ function LiteTrade({ wallet, trading, isPro, lang, loading, version, type, actio
   const switchTab = current => setCurTab(current);
   const tradeClassName = classNames('trade-position', curTab)
   const walletContext = useWallet();
-  actions.onGlobalStateChange(state => {
-    console.log('onGlobalStateChange', state.wallet)
-    wallet.setDetail(state.wallet)
-  })
+
   useEffect(() => {
     loading.loading()
     wallet.setStatus(walletContext.status)
@@ -25,6 +22,14 @@ function LiteTrade({ wallet, trading, isPro, lang, loading, version, type, actio
     })
     return () => { trading.clean() };
   }, [walletContext, type.current])
+
+  useEffect(() => {
+    if (actions) {
+      actions.onGlobalStateChange(state => {
+        wallet.setDetail(state.wallet)
+      })
+    }
+  }, [actions])
 
   return (
     <div className={tradeClassName}>

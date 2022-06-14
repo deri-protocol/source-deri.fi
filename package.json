@@ -35,8 +35,5 @@
     "deri.fi"
   ],
   "author": "haidong.li@dfactory.tech",
-  "license": "ISC",
-  "dependencies": {
-    "js-cookie": "^3.0.1"
-  }
+  "license": "ISC"
 }

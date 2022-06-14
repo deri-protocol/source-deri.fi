@@ -26,7 +26,10 @@ function LiteTrade({ wallet, trading, isPro, lang, loading, version, type, actio
   useEffect(() => {
     if (actions) {
       actions.onGlobalStateChange(state => {
-        wallet.setDetail(state.wallet)
+        if (state.wallet.status === "connected") {
+          walletContext.connect()
+          wallet.setDetail(state.wallet)
+        }
       })
     }
   }, [actions])

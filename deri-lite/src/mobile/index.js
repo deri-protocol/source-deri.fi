@@ -9,7 +9,7 @@ export default function Mobile ({locale ,actions}){
   const curRouterClass = location.pathname.split('/')[1]
   useEffect(() => {
     document.querySelector('html').setAttribute('style',`font-size : ${winSize.width /375 * 100}px`) 
-    return () => {}
+    return () => {document.querySelector('html').removeAttribute('style')}
   }, [winSize])
 
   return (

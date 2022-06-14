@@ -23,7 +23,7 @@ const microApps = [
   },
   {
     name: 'sub-app-demo',
-    displayName : 'sub app deom',
+    displayName : 'sub app demo',
     entry: process.env.REACT_APP_SUB_APP_DEMO,
     activeRule: '#/sub-app-demo',
     container: '#subapp-viewport',

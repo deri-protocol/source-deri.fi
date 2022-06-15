@@ -14,6 +14,7 @@ function App({ intl, actions }) {
   const curRouterClass = location.pathname.split('/')[1]
   const wallet = useWallet()
   useEffect(() => {
+    wallet.connect()
     actions && actions.onGlobalStateChange((state) => {
       if (state.wallet.isConnected()) {
         wallet.connect()

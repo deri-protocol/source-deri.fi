@@ -279,14 +279,14 @@
   .portal-header.shrink {
     animation: menuFadeout 0.5s;
     transform: translateX(-100%);
-    z-index: 2;
+    z-index: 10;
     height: 100vh;
   }
 
   .portal-header.expand {
     display: flex;
     transform: translateX(0px);
-    z-index: 2;
+    z-index: 10;
     height: 100vh;
     animation: menuFadein 0.5s;
   }

@@ -27,7 +27,7 @@ function ChainSelector({collect,id=""}){
       switchChain(chain,() => setChain(chain))
       setIsShow(false)
     }
-  },[])
+  },[wallet])
 
   const handler = useCallback(() => {
     let offset = collect ? 138 : 202
@@ -36,7 +36,7 @@ function ChainSelector({collect,id=""}){
     } else {
       setIsScroll(false)
     }
-  },[])
+  },[collect])
 
   const onBodyClick = useCallback((e) => {
     const parent = document.querySelector(`#${id}`);
@@ -66,7 +66,7 @@ function ChainSelector({collect,id=""}){
 
   return (
     <div className={nwSelectClass}  >
-      <div className='nw-wrapper' id={id} onClickCapture={() => setIsShow(!isShow)}>
+      <div className='nw-wrapper' id={id} onClick={() => setIsShow(!isShow)}>
         {!isShow && chain && <div className='nw-item'  >
           <Icon token={isMobile() ? chain.icon  :  `${chain.icon}-LIGHT`} width='20'/>
           <div className='name'>{chain.name}</div>

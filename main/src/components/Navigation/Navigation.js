@@ -29,6 +29,9 @@ export default function Navigation({ collect, lang, statusCallback, switchMenu,c
   const openOrClose = () => {
     const status = !isCollapse;
     setIsCollapse(status)
+  }
+
+  const closeMenu = () => {
     actions.setGlobalState({menuStatus : false});
   }
 
@@ -44,7 +47,7 @@ export default function Navigation({ collect, lang, statusCallback, switchMenu,c
         <div className="title-des">DERI.FI - PORTAL FOR ALL DERI PROJECTS</div>
         <div className='link-btn'>
           <Icon token={collect ? "portal-down" : "portal-up"} onClick={openOrClose} className='pc-arrow' />
-          <Icon token='m-arrow-left' width='16' className='mobile-arrow' onClick={openOrClose} />
+          <Icon token='m-arrow-left' width='16' className='mobile-arrow' onClick={closeMenu} />
           {apps.map(app => (
             <span  key={app.name} className={classNames('sub-app',{ 'selected' : activeUrl === app.activeRule}) } onClick={() => link(app.activeRule,app.name)}>
               <div className='app-item'>{app.displayName || app.name}</div>

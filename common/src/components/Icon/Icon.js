@@ -2,9 +2,9 @@ import styled from "styled-components"
 
 const images = require.context('../../assets/img', true)
 let imagesIncludeSrc ;
-if(process.env.NODE_ENV === 'development') {
-  // imagesIncludeSrc = require.context('../../../../bet-it/src/assets/img',true)
-  imagesIncludeSrc = require.context('../../../../../../src/assets/img',true)
+if(process.env.REACT_APP_DEBUG) {
+  imagesIncludeSrc = require.context('../../../../bet-it/src/assets/img',true)
+  // imagesIncludeSrc = require.context('../../../../../../src/assets/img',true)
 } else {
   imagesIncludeSrc = require.context('../../../../../../src/assets/img',true)
 }

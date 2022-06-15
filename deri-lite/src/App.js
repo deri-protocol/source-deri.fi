@@ -22,6 +22,7 @@ const MaskWrapper = inject('loading')(observer(Mask))
 function App({ intl, loading, actions }) {
   const wallet = useWallet()
   useEffect(() => {
+    wallet.connect()
     actions && actions.onGlobalStateChange((state) => {
       if (state.wallet.isConnected()) {
         wallet.connect()

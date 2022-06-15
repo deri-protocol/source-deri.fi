@@ -1,7 +1,6 @@
 import Header from "../components/Header/Header";
 import Card from "../components/Card/Card";
 import { useModal } from 'react-hooks-use-modal';
-import { useWallet } from "use-wallet";
 import classNames from 'classnames'
 import './betit.scss'
 import { useState, useEffect, useCallback } from "react";
@@ -18,7 +17,6 @@ export default function BetIt({ lang, getLang, actions }) {
   const [collect, setCollect] = useState(true)
   const [openSymbol, setOpenSymbol] = useState("")
   const [isExpand, setIsExpand] = useState();
-  const wallet = useWallet();
   const mobile = isMobile()
   const [CardModal, openCardModal, closeCardModal] = useModal('root', {
     preventScroll: true,
@@ -85,7 +83,6 @@ export default function BetIt({ lang, getLang, actions }) {
   }
 
   useEffect(() => {
-
     if (symbols.length) {
       document.removeEventListener('scroll', setCard)
       document.addEventListener('scroll', setCard, true);
@@ -94,16 +91,6 @@ export default function BetIt({ lang, getLang, actions }) {
       document.removeEventListener('scroll', setCard)
     }
   }, [symbols])
-
-  useEffect(() => {
-    if (actions) {
-      actions.onGlobalStateChange(state => {
-        if(state.wallet.status === "connected" && wallet.status === "disconnected"){
-          wallet.connect()
-        }
-      })
-    }
-  }, [actions])
 
   return (
     <>

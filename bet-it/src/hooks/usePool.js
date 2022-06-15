@@ -73,7 +73,7 @@ export default function usePool() {
       if (filters && filters.length > 0) {
         setValues(filters)
       }
-    } else if (wallet.status === 'disconnected') {
+    } else if (wallet.status === 'error' || wallet.status === 'disconnected') {
       filters = configs.filter(c => c.default);
       setValues(filters)
     }

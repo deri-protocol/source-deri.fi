@@ -4,11 +4,11 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.16.0",
+    "@deri/eco-common": "file:../common",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
-    "@deri/eco-common": "file:../common",
     "@testing-library/user-event": "^13.5.0",
     "assert": "^2.0.0",
     "axios": "^0.27.2",

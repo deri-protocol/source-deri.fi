@@ -9,6 +9,7 @@ export default function WalletConnector({lang,bgColor = '#FFAB00',actions}){
   const [bntColor, setBntColor] = useState('#FFAB00');
   const [expand, setExpand] = useState();
   const wallet = useWallet()
+
   const walletClass = classNames('wallet-view',{
     expand : expand,
     shrink : expand === false,
@@ -48,6 +49,12 @@ export default function WalletConnector({lang,bgColor = '#FFAB00',actions}){
   useEffect(() => {
     actions && actions.setGlobalState({wallet : wallet})
   }, [wallet]);
+
+  useEffect(() => {
+    if(!wallet.isConnected()){
+      wallet.connect();
+    }
+  }, [location.hash]);
   
   return(
     <div className={walletClass}>

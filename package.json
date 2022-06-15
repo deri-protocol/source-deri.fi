@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently 'npm run start:*'",
-    "start:main": "cd main && npm start",
-    "start:demo": "cd sub-app-demo && npm start",
-    "start:bet-it": "cd bet-it && npm start",
+    "start:main": "cd main && npm start --reset-cache",
+    "start:demo": "cd sub-app-demo && npm start --reset-cache",
+    "start:bet-it": "cd bet-it && npm start --reset-cache",
     "start:deri-lite": "cd deri-lite && npm start",
     "install": "npm-run-all --serial install:*",
     "install:main": "cd main && yarn install --ignore-engines",

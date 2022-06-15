@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import menu from './assets/img/menu.svg'
 import { useState } from 'react'
-import Test from './Test';
+import Test from './test/Test';
 
 
 function App(props) {
@@ -22,7 +22,6 @@ function App(props) {
         <p>
           This is react sub app's demo for deri.fi.
         </p>
-        <Test/>
       </header>
     </div>
   );

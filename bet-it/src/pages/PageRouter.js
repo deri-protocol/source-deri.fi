@@ -6,7 +6,6 @@ import { inject, observer } from 'mobx-react';
 
 // const Home = LoadableComponent(() => import('./Home/Home'))
 const BetIt = LoadableComponent(() => import('./BetIt'))
-const ComingSoon = LoadableComponent(() => import('./ComingSoon'))
 const Test = LoadableComponent(() => import('./Test'))
 
 function PageRouter({ intl,actions }) {

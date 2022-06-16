@@ -57,7 +57,12 @@ function ChainSelector({collect,id=""}){
   useEffect(() => {
     if(chains && chains.length > 0){
       if(wallet.isConnected()) {
-        setChain(chains.find(chain => eqInNumber(chain.chainId,wallet.chainId )))
+        const find = chains.find(chain => eqInNumber(chain.chainId,wallet.chainId ))
+        if(find){
+          setChain(find)
+        } else {
+          setChain(chains[0])        
+        }
       } else if(wallet.status === 'disconnected'){
         setChain(chains[0])
       }

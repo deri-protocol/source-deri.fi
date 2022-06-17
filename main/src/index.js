@@ -1,24 +1,15 @@
 import {registerMicroApps,start,setDefaultMountApp} from 'qiankun'
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import render from './App';
 import actions from './state/actions'
 import apps from './apps';
 import './index.css';
 
 
-const render = (props) => {
-  const root = ReactDOM.createRoot(document.getElementById('root'))
-  root.render(
-    <React.StrictMode>
-      <App {...props}/>
-    </React.StrictMode>
-  );
-}
 
-function loader(loading) {
-  return loading && <div className='loading'></div>;
-}
+
+const loader = loading => render({actions, loading });
 
 const microApps = apps.map(item => {
   return {
@@ -30,7 +21,7 @@ const microApps = apps.map(item => {
   }
 })
 
-render({ actions});
+render({ actions,loading: true});
 
 registerMicroApps(microApps, {
   beforeLoad: app => {
@@ -59,5 +50,7 @@ if(current) {
 } else if(apps && apps.length > 0){
   setDefaultMountApp(apps[0].activeRule)
 }
-start();
+start({
+  prefetch : false
+});
 

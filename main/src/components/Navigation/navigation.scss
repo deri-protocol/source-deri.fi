@@ -51,6 +51,13 @@
       border: 0;
     }
   }
+  .title-des {
+    display: flex;
+    align-items: center;
+    img {
+      margin-right: 8px;
+    }
+  }
 
   .link-btn {
     display: flex;

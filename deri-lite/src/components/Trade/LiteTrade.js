@@ -23,13 +23,6 @@ function LiteTrade({ wallet, trading, isPro, lang, loading, version, type, actio
     return () => { trading.clean() };
   }, [walletContext, type.current])
 
-  useEffect(() => {
-    if (actions) {
-      actions.onGlobalStateChange(state => {
-        wallet.setDetail(state.wallet)
-      })
-    }
-  }, [actions])
 
   return (
     <div className={tradeClassName}>

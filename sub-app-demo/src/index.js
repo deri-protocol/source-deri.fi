@@ -13,11 +13,11 @@ function render(props) {
   const { container,name ='' } = props;
   const root = ReactDOM.createRoot(getSubRootContainer(container))
   root.render(
-    <React.StrictMode>
+    // <React.StrictMode>
       <HashRouter basename={name}>
         <App {...props} />
       </HashRouter>
-    </React.StrictMode>
+    // </React.StrictMode>
   );
 }
 

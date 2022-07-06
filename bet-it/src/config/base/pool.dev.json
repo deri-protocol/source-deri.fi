@@ -6,6 +6,7 @@
     "zone": "main",
     "version": "v3_lite",
     "versionId": "v3",
+    "initialBlock": "16936691",
     "broker": "0xcD3B34f2942c26a5c070767441f9Fc45e6E3f4ca",
     "symbolManager": "0xf211aAC2188504B722f723Ba281462951e7349fB",
     "b0Token": "BUSD",
@@ -107,6 +108,13 @@
     ],
     "symbols": [
       {
+        "symbolId": "0x0c5eba1afaea317bd3994c932ff8027d56c2c03920e4acc162a96de171d0a7ce",
+        "symbol": "SHIBUSDT",
+        "category": "futures",
+        "leverage": "10",
+        "unit": "SHIB"
+      },
+      {
         "symbolId": "0x214dda553a3e2a23944080bfcad3566db70ebe7a599389f0f9cf73f0cf03e933",
         "symbol": "DOGEUSDT",
         "category": "futures",
@@ -139,7 +147,9 @@
           "symbolId": "0x65e24fbf23a06751b86161d24e5f25b579daa4c55aa798f102a40243baf81293",
           "symbol": "BTC^2",
           "category": "power",
-          "zone": "inno"
+          "zone": "inno",
+          "initialBlock": "16936691",
+          "symbolManager": "0xf211aAC2188504B722f723Ba281462951e7349fB"
         }
       },
       {
@@ -154,7 +164,9 @@
           "symbolId": "0x5616d0a0d05adc200b8ea37c1801762baca26da49260fa2a9ca11179cb6b7017",
           "symbol": "ETH^2",
           "category": "power",
-          "zone": "inno"
+          "zone": "inno",
+          "initialBlock": "16936691",
+          "symbolManager": "0xf211aAC2188504B722f723Ba281462951e7349fB"
         }
       }
     ]
@@ -166,6 +178,7 @@
     "zone": "main",
     "version": "v3",
     "versionId": "v3",
+    "initialBlock": "10803294",
     "broker": "0xBCf6573C113A2bCcFd00631008618Ad4ADF0E7c7",
     "symbolManager": "0xeebdD97439B9a3Ca84363190124c43c49CDca3F6",
     "b0Token": "USDC",
@@ -215,7 +228,10 @@
           "pool": "0x296A1CDdE93a99B4591486244f7442E25CA596a6",
           "symbolId": "0x65e24fbf23a06751b86161d24e5f25b579daa4c55aa798f102a40243baf81293",
           "symbol": "BTC^2",
-          "zone": "main"
+          "category": "power",
+          "zone": "main",
+          "initialBlock": "10803294",
+          "symbolManager": "0xeebdD97439B9a3Ca84363190124c43c49CDca3F6"
         }
       },
       {
@@ -229,7 +245,10 @@
           "pool": "0x296A1CDdE93a99B4591486244f7442E25CA596a6",
           "symbolId": "0x5616d0a0d05adc200b8ea37c1801762baca26da49260fa2a9ca11179cb6b7017",
           "symbol": "ETH^2",
-          "zone": "main"
+          "category": "power",
+          "zone": "main",
+          "initialBlock": "10803294",
+          "symbolManager": "0xeebdD97439B9a3Ca84363190124c43c49CDca3F6"
         }
       }
     ]

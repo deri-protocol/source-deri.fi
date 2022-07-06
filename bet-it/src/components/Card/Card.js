@@ -38,6 +38,9 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     if (wallet.isConnected()) {
       let res = await ApiProxy.request("getBetInfo", { chainId: wallet.chainId, accountAddress: wallet.account, symbol: info.symbol })
       if (res.symbol) {
+        if(res.symbol === "SHIBUSDT"){
+          console.log("SHIBI",res)
+        }
         setBetInfo(res)
         return res
       }
@@ -56,7 +59,6 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     if (wallet.isConnected()) {
       let res = await ApiProxy.request("getLiquidationInfo", { chainId: wallet.chainId, accountAddress: "0x5b984a638506797d1e6e50B4e310d8ab377D3F49", symbol: info.symbol })
       if (res) {
-        console.log("getLiquidationInfo", res.symbol, res.liquidate)
         setIsLiquidated(res.liquidate)
       }
     }

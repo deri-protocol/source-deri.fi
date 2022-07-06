@@ -1,0 +1,16 @@
+{
+  "connect-wallet": "Connect Wallet",
+  "dip-hunter":"DIP HUNTER",
+  "info-des":"helps you to buy the dip while making",
+  "info-des-tow":"A smart vault helps you to buy the dip while making",
+  "passive-income":"passive income.",
+  "how-it-works":"How It Works",
+  "how-it-works-des":"Assuming ETH price is now $1200, Alice wants to buy the dip if it drops to $1000.",
+  "she-has-two-options":"She has two options.",
+  "no-dip-hunter":"NO DIP HUNTER",
+  "no-dip-hunter-des":"Place limit orders on Binance at $1000, then wait for the order to fill.",
+  "scenario-a":"Scenario A",
+  "scenario-a-des":"ETH Price rise to $1800. Alice’s order didn’t fill.",
+  "scenario-b":"Scenario B",
+  "scenario-b-des":"ETH Price drops to $900 and Alice’s order was filled at $1000. She now has 1ETH at hand."
+}

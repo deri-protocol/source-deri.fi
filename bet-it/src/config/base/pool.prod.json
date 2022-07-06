@@ -244,6 +244,13 @@
     ],
     "symbols": [
       {
+        "symbolId": "0x0c5eba1afaea317bd3994c932ff8027d56c2c03920e4acc162a96de171d0a7ce",
+        "symbol": "SHIBUSDT",
+        "category": "futures",
+        "leverage": "10",
+        "unit": "SHIB"
+      },
+      {
         "symbolId": "0x1bc6d6279e196b1fa7b94a792d57a47433858940c1b3500f2a5e69640cd12ef4",
         "symbol": "BNBUSD",
         "category": "futures",

@@ -92,7 +92,7 @@ export const onChainSymbols = (chainId) => {
   if (isBSCChain(chainId) && DeriEnv.get() === Env.PROD) {
     return ["BTCUSD", "ETHUSD", "BNBUSD"]
   } else if (isArbiChain(chainId)) {
-    return ["ETHUSD"]
+    return ["BTCUSD", "ETHUSD"]
   } else {
     return ["BTCUSD", "ETHUSD", "BNBUSD"]
   }

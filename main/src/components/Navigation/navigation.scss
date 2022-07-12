@@ -51,6 +51,13 @@
       border: 0;
     }
   }
+  .title-des {
+    display: flex;
+    align-items: center;
+    img {
+      margin-right: 8px;
+    }
+  }
 
   .link-btn {
     display: flex;
@@ -72,6 +79,7 @@
     a {
       color: #FFFFFF;
       text-decoration: none;
+      width: 100%;
     }
 
     .app-item,
@@ -94,7 +102,7 @@
 
     .deri-io {
       background-image: url("../../assets/img/deri-io-go.svg");
-      background-position: 150px center;
+      background-position: 94px center;
     }
   }
 }
@@ -107,8 +115,6 @@
     
     .selected {
       .app-item {
-        background-image: url("../../assets/img/bet-now.svg");
-        background-position: 20px center;
         background-color: #59AE99;
       }
     }
@@ -175,8 +181,8 @@
         width: 88px;
         height: 32px;
         font-size: 16px;
-        background: #93A1B8;
-        background-image: none !important;
+        background-color: #93A1B8;
+        // background-image: none !important;
         background-repeat: no-repeat;
       }
 
@@ -186,7 +192,7 @@
   .betit-portal {
     .link-btn {
       .app-item {
-        background: #59AE99;
+        background-color: #59AE99;
       }
     }
   }
@@ -194,7 +200,7 @@
   .coming-portal {
     .link-btn {
       .coming-soon-link {
-        background: #59AE99;
+        background-color: #59AE99;
       }
     }
   }
@@ -207,8 +213,7 @@
       .app-item {
         padding: 0 30px;
         height: 32px;
-        background: #93A1B8;
-        background-image: none !important;
+        background-color: #93A1B8;
         background-repeat: no-repeat;
       }
 
@@ -253,10 +258,14 @@
         .coming-soon-link,
         .deri-io {
           width: 100%;
-          background: transparent;
+          background-color: transparent;
           text-align: left;
           margin-top: 12px;
           margin-left: 0;
+        }
+
+        .deri-io {   
+          background-position: 64px center; // background-image: url("../../assets/img/deri-io-go.svg");
         }
         
 
@@ -279,14 +288,14 @@
   .portal-header.shrink {
     animation: menuFadeout 0.5s;
     transform: translateX(-100%);
-    z-index: 2;
+    z-index: 10;
     height: 100vh;
   }
 
   .portal-header.expand {
     display: flex;
     transform: translateX(0px);
-    z-index: 2;
+    z-index: 10;
     height: 100vh;
     animation: menuFadein 0.5s;
   }

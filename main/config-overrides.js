@@ -18,16 +18,16 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
         assert: false,
         crypto: false,
       }
-      // return process.env.NODE_ENV === 'development' ? 
-      // rewireBabelLoader.include(
-      //   config,
-      //   resolveApp("../common/src")
-      // )
-      // : 
-      return rewireBabelLoader.include(
-        config,
-        resolveApp("node_modules/@deri/eco-common/src")
-      );
+      return process.env.REACT_APP_DEBUG ? 
+        rewireBabelLoader.include(
+          config,
+          resolveApp("../common/src")
+        )
+      : 
+        rewireBabelLoader.include(
+          config,
+          resolveApp("node_modules/@deri/eco-common/src")
+        );
     },
     devServer: (configFunction) => {
       return (proxy, allowedHost) => {

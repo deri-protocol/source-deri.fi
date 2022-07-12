@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import menu from './assets/img/menu.svg'
 import { useState } from 'react'
+import Test from './test/Test';
 
 
 function App(props) {

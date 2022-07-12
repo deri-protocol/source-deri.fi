@@ -6,8 +6,10 @@ import { isStartScroll, isMobile } from "../utils/utils";
 import Font from '../components/Font/Font'
 import { useState, useEffect, useCallback } from "react";
 export default function DipHunter({ lang, getLang, actions }) {
-  const [index, setIndex] = useState(2)
+  const [index, setIndex] = useState(3)
   const [isFixed, setIsFixed] = useState(false)
+  const [withDipA, setWithDipA] = useState(true)
+  const [withDipB, setWithDipB] = useState(true)
   const handler = useCallback(() => {
     let offset = 138
     let bgTop = document.getElementsByClassName('bg-img-color')[0]
@@ -105,10 +107,129 @@ export default function DipHunter({ lang, getLang, actions }) {
 
               </li>}
               {index === 2 && <li className="option-three">
-                cccc
+                <div className='option-title'>
+                  {lang["with-dip-hunter"]}
+                </div>
+                <div className='with-dip-hunter-right'>
+                  {lang["with-dip-hunter"].toLocaleLowerCase()}
+                </div>
+                <div className='option-info-text'>
+                  {lang["with-dip-hunter-des"]}
+                  <span> ETH-1000-P </span>
+                  {lang["with-dip-hunter-des-two"]}
+                </div>
+                <div className='option-info-img-text'>
+                  <div className={classNames("option-text option-three-text", { "option-up": withDipA })}>
+                    <div className='hr-orange'></div>
+                    <span className='text-span font-size-two'>
+                      <span className='scenario'>
+                        {lang["scenario-a"]}
+                      </span>
+                      <span>
+                        {lang['eth-price-rises']}
+                        <br></br>
+                      </span>
+                      {lang["with-dip-hunter-secenario-a-des"]}
+                      <div className="check-example">
+                        <div className="check-example-btn" onClick={() => setWithDipA(!withDipA)}>
+                          <span> {lang["check-example"]}</span>
+                          <Icon token={withDipA ? "up" : "down"} />
+                        </div>
+                        {withDipA && <div className='withDip-info'>
+                          <div className='symbol-list'>
+                            <div className="symbol-name">
+                              ETH-1000-P
+                            </div>
+                            <div className="symbol-list-info">
+                              <div className="symbol-list-info-title">
+                                <span>{lang["volume"]}</span>
+                                <span>{lang["entry-price"]}</span>
+                                <span>{lang["exit-price"]}</span>
+                                <span>{lang["avg-daily-funding"]}</span>
+                                <span>{lang["holding-period"]}</span>
+                              </div>
+                              <div className="symbol-list-info-num">
+                                <span className="volume">1</span>
+                                <span className="entry-price">$34.55</span>
+                                <span className="exit-price">$6.34</span>
+                                <span className="avg-daily-funding">$2.55</span>
+                                <span className="holding-period">60 days</span>
+                              </div>
+
+                            </div>
+                          </div>
+                          <div className='withDip-info-des'>
+                            <div>{lang["with-dip-hunter-scenario-a-the"]}</div>
+                            <div>{lang["with-dip-hunter-scenario-a-the-volume"]}</div>
+                          </div>
+                        </div>}
+                      </div>
+                    </span>
+                  </div>
+                </div>
               </li>}
               {index === 3 && <li className="option-four">
-                ddd
+                <div className='option-title'>
+                  {lang["with-dip-hunter"]}
+                </div>
+                <div className='with-dip-hunter-right'>
+                  {lang["with-dip-hunter"].toLocaleLowerCase()}
+                </div>
+                <div className='option-info-text'>
+                  {lang["with-dip-hunter-des"]}
+                  <span> ETH-1000-P </span>
+                  {lang["with-dip-hunter-des-two"]}
+                </div>
+                <div className='option-info-img-text'>
+                  <div className={classNames("option-text option-four-text", { "option-up-b": withDipB })}>
+                    <div className='hr-orange'></div>
+                    <span className='text-span font-size-two'>
+                      <span className='scenario'>
+                        {lang["scenario-b"]}
+                      </span>
+                      <span>
+                        {lang['eth-price-fall']}
+                        <br></br>
+                      </span>
+                      {lang["with-dip-hunter-secenario-b-des"]}
+                      <div className="check-example">
+                        <div className="check-example-btn" onClick={() => setWithDipB(!withDipB)}>
+                          <span> {lang["check-example"]}</span>
+                          <Icon token={withDipB ? "up" : "down"} />
+                        </div>
+                        {withDipB && <div className='withDip-info'>
+                          <div className='symbol-list'>
+                            <div className="symbol-name">
+                              ETH-1000-P
+                            </div>
+                            <div className="symbol-list-info">
+                              <div className="symbol-list-info-title">
+                                <span>{lang["volume"]}</span>
+                                <span>{lang["entry-price"]}</span>
+                                <span>{lang["exit-price"]}</span>
+                                <span>{lang["avg-daily-funding"]}</span>
+                                <span>{lang["holding-period"]}</span>
+                              </div>
+                              <div className="symbol-list-info-num">
+                                <span className="volume">1</span>
+                                <span className="entry-price">$34.55</span>
+                                <span className="exit-price">$143.55</span>
+                                <span className="avg-daily-funding">$2.55</span>
+                                <span className="holding-period">60 days</span>
+                              </div>
+
+                            </div>
+                          </div>
+                          <div className='withDip-info-des'>
+                            <div>{lang["with-dip-hunter-scenario-b-the"]}</div>
+                            <div>{lang["with-dip-hunter-scenario-b-the-volume"]}</div>
+                            <div>{lang["with-dip-hunter-scenario-b-alice"]}</div>
+                          </div>
+                        </div>}
+                      </div>
+                    </span>
+                  </div>
+                </div>
               </li>}
             </ul>
             <div className="arrow-container">
@@ -124,6 +245,7 @@ export default function DipHunter({ lang, getLang, actions }) {
           </div>
         </div>
       </div>
+      <div className='card-box-info'></div>
     </div>
   )
 }

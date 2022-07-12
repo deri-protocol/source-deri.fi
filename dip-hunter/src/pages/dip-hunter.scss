@@ -48,20 +48,18 @@
 
       .slieder {
         position: relative;
-        overflow: hidden;
         width: 781px;
         height: 507px;
 
         .slieder-item-container {
           position: absolute;
-          width: 3000px;
-
           li {
             list-style: none;
             float: left;
             width: 597px;
             height: 472px;
             background: #FFFFFF;
+            position: relative;
             box-shadow: 0px 15.1515px 45.4545px #F0E8D7;
             border-radius: 20px;
             font-size: 20px;
@@ -79,10 +77,29 @@
               margin: 0 auto;
             }
 
+            .with-dip-hunter-right {
+              position: absolute;
+              width: 108px;
+              height: 59px;
+              right: 0;
+              top: 0;
+              border-radius: 0 0 0 30px;
+              background: #E3F8EE;
+              font-size: 14px;
+              text-align: right;
+              line-height: 55px;
+              font-weight: 700;
+              color: #38CB89;
+            }
+
             .option-info-text {
               width: 440px;
               margin: 0 auto;
               margin-top: 25px;
+
+              span {
+                color: #FE7207;
+              }
             }
 
             .option-info-img-text {
@@ -115,9 +132,11 @@
                   .scenario {
                     font-size: 18px;
                     color: #0A1629;
+                    font-weight: 700;
                   }
                 }
-                .font-size-two{
+
+                .font-size-two {
                   font-size: 16px;
                 }
               }
@@ -136,6 +155,7 @@
                 background-repeat: no-repeat;
                 background-position: 408px;
               }
+
               .option-tow-text-two {
                 width: 512px;
                 height: 151px;
@@ -145,17 +165,159 @@
                 background-image: url("../assets/img/option-two-scenario-b.svg");
                 background-repeat: no-repeat;
                 background-position: 342px 86px;
-                .font-size-two{
+
+                .font-size-two {
                   margin-top: 20px;
-                  .scenario{
+
+                  .scenario {
                     display: block;
                     margin-bottom: 10px;
                   }
                 }
-                .hr-orange{
+
+                .hr-orange {
                   width: 2px;
                   height: 103px;
+                  margin-top: 25px;
                 }
+              }
+
+              .option-three-text,.option-four-text {
+                width: 580px;
+                min-height: 185px;
+                left: -21px;
+                top: 33px;
+                align-items: initial;
+                background-image: url('../assets/img/with-dip-hunter-senario-a.svg');
+                background-repeat: no-repeat;
+                background-position: 414px 33px;
+
+                .text-span {
+                  width: 367px;
+                  margin-left: 20px;
+                }
+
+                .check-example {
+                  margin-top: 30px;
+
+                  .check-example-btn {
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+
+                    span {
+                      display: inline-block;
+                      border-bottom: 1px solid rgba(4, 4, 21, 0.5);
+                    }
+
+                    img {
+                      margin-left: 8px;
+                    }
+                  }
+
+                  .withDip-info {
+                    margin-top: 10px;
+                    height: 130px;
+                    width: 580px;
+                    margin-left: -22px;
+
+                    .symbol-list {
+                      height: 75px;
+                      display: flex;
+
+                      .symbol-name {
+                        width: 124px;
+                        height: 75px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: #EEFAF3;
+                        font-weight: 800;
+                        color: #38CB89;
+                      }
+
+                      .symbol-list-info-title {
+                        display: flex;
+                        width: 456px;
+                        height: 32px;
+                        padding: 0 12px;
+                        font-size: 12px;
+                        align-items: center;
+                        justify-content: space-between;
+                        background: #FAFBFC;
+
+                      }
+
+                      .symbol-list-info-num {
+                        display: flex;
+                        width: 456px;
+                        height: 43px;
+                        font-size: 12px;
+                        align-items: center;
+                        padding: 0 12px;
+                        justify-content: space-between;
+
+                        .volume {
+                          width: 43px;
+                        }
+
+                        .entry-price {
+                          width: 63px;
+                        }
+
+                        .exit-price {
+                          width: 53px;
+                        }
+
+                        .avg-daily-funding {
+                          width: 106px;
+                        }
+
+                        .holding-period {
+                          width: 85px;
+                        }
+
+                        span {
+                          text-align: center;
+                        }
+                      }
+                    }
+
+                    .withDip-info-des {
+                      margin-left: 23px;
+                      margin-top: 17px;
+                      font-size: 12px;
+                    }
+                  }
+                }
+
+                .font-size-two {
+                  margin-top: 18px;
+                  font-size: 14px;
+
+                  .scenario {
+                    display: block;
+                    margin-bottom: 10px;
+                  }
+                }
+
+                .hr-orange {
+                  width: 2px;
+                  height: 144px;
+                  margin-top: 18px;
+                }
+
+              }
+              .option-four-text {
+                left: 36px;
+                background-image: url('../assets/img/with-dip-hunter-senario-b.svg');
+              }
+
+              .option-up {
+                height: 328px;
+              }
+              .option-up-b {
+                height: 348px;
               }
 
               .how-it-works-img {

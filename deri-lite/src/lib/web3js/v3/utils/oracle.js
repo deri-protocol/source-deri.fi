@@ -162,6 +162,15 @@ const normalizeOracleSymbol = (symbol) => {
   return symbol
 }
 
+const normalizePriceSymbol = (symbol) => {
+  if (isPowerSymbol(symbol)) {
+    return normalizePowerSymbolForOracle(symbol)
+  } else if (isOptionSymbol(symbol)) {
+    return normalizeOptionSymbol(symbol)
+  }
+  return symbol
+}
+
 export const getSymbolsOracleInfo = async (chainId, symbols) => {
   // const res = await getSignedPrices(this.chainId, this.symbolNames)
   if (isBSCChain(chainId)) {
@@ -190,12 +199,14 @@ export const getSymbolsOracleInfoForLens = async (chainId, symbols) => {
   const res = await getOracleInfosFromRestForLens(symbols.map((s) => normalizeOracleSymbol(s)))
   return symbols.reduce((acc, symbol, index) => {
     if (res[index]) {
+      // const oracleSymbol = normalizeOracleSymbol(symbol)
       const oracleSymbol = normalizeOracleSymbol(symbol)
-      if (!acc.find((s) => s[0] === oracleSymbol)) {
+      const priceSymbol = normalizePriceSymbol(symbol)
+      if (!acc.find((s) => s[0] === priceSymbol)) {
         if (oracleSymbol === symbol) {
-          acc.push([oracleSymbol, res[index][2], '0'])
+          acc.push([priceSymbol, res[index][2], '0'])
         } else {
-          acc.push([oracleSymbol, '0', res[index][2]])
+          acc.push([priceSymbol, '0', res[index][2]])
         }
       }
       return acc

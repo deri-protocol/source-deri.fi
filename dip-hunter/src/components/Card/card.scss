@@ -1,17 +1,13 @@
 $className: "BTC",
-"ETH",
-"BNB",
-"DOGE",
-"LUNA",
-"DOT",
-"SOL",
-"APE",
-"AXS",
-"BABYDOGE",
-"FITFI",
-"GMT",
-"SHIB",
-"X2Y2";
+"ETH";
+$Font:"BTC-price",
+"ETH-price";
+$DownColor:rgba(255, 139, 3, 0.26),
+rgba(157, 129, 223, 0.25);
+$BgColor:rgba(255, 189, 108, 0.22),
+rgba(218, 206, 255, 0.22);
+$BoxShadow: rgba(255, 189, 108, 0.56),
+rgba(106, 92, 146, 0.45);
 $Color: #F49B33,
 #7A57DD,
 #F3BA2D,
@@ -28,242 +24,185 @@ $Color: #F49B33,
 #4D41CE;
 
 .card-box {
-  width: 376px;
-  height: 616px;
+  width: 456px;
+  height: 704px;
   border-radius: 30px;
   background: #FFFFFF;
   box-shadow: 0px 23px 44px rgba(176, 183, 195, 0.14);
-  margin-top: 50px;
-  padding: 32px 0 0 36px;
   border: 1px solid transparent;
+  overflow: hidden;
   // cursor: pointer;
   margin-left: 42px;
+  margin-bottom: 72px;
 
-  .icon-name {
-    display: flex;
-    align-items: center;
+  .buy-symbol-name {
+    font-size: 110px;
+    color: #FFFFFF;
+    position: relative;
+    top: -27px;
+    left: -3px;
+    letter-spacing: -1px;
+    font-weight: 900;
+    white-space: nowrap;
+
+    text-shadow: 0px 4px 6px rgba(240, 240, 240, 0.7);
+  }
+
+  .price-text {
+    font-weight: 900;
+    position: relative;
+    left: -54px;
+    font-size: 120px;
+    margin-top: -60px;
+    white-space: nowrap;
+    letter-spacing: -1px;
+    width: 549px;
+    height: 113px;
+    text-align: center;
+
+    .price-down-text,
+    .price-up-text {
+      position: absolute;
+      left: 0px;
+      width: 549px;
+      height: 113px;
+      text-align: center;
+    }
+
+    .price-up-text {
+      z-index: 2;
+    }
+
+    .price-down-text {
+      left: 6px;
+      top: 1px;
+    }
+  }
+
+  @for $i from 1 through length($Font) {
+    .#{nth($Font, $i)} {
+      color: nth($Color, $i);
+
+      .price-down-text {
+        color: nth($DownColor, $i);
+        // color: rgba(255, 139, 3, 0.26);
+        -webkit-text-stroke: 2px rgba(255, 255, 255, 0.7);
+        text-shadow: 0px 4px 6px rgba(240, 240, 240, 0.7);
+
+      }
+    }
+  }
+
+  .card-info {
+    width: 100%;
+    height: 521px;
+    background: #FFFFFF;
+    border-radius: 30px;
+    z-index: 9;
     position: relative;
 
     .symbol-name {
-      margin-left: 12px;
-      font-weight: 700;
-      font-size: 24px;
-    }
-
-    .entered {
-      position: absolute;
-      right: 0;
-      color: #FFF;
-      text-align: center;
-      line-height: 40px;
-      font-size: 16px;
-      font-weight: 700;
-      width: 102px;
-      height: 40px;
-      border-radius: 20px 0px 0px 20px;
-      background: #FFAB00;
-    }
-    .liquidated{
-      background: #FF5630;
-    }
-
-  }
-
-  .symbol-price {
-    font-size: 34px;
-    color: #040415;
-    margin-top: 26px;
-    font-weight: 700;
-  }
-
-  .price-title,
-  .leverage-title {
-    font-size: 12px;
-    color: #C8CDD5;
-    display: flex;
-    align-items: center;
-
-    img {
-      margin-left: 4px;
-    }
-  }
-
-  .symbol-leverage {
-    font-size: 26px;
-    font-weight: 700;
-    color: #FF7914;
-    margin-top: 23px;
-  }
-
-  .input-box {
-    width: 302px;
-    height: 90px;
-    margin-top: 21px;
-    .symbol-pnl {
-      width: 100%;
-      height: 72px;
-      background: #FFFFFF;
-      border: 1px solid rgba(4, 4, 21, 0.1);
-      border-radius: 16px;
-      font-size: 12px;
-      color: #C8CDD5;
-      position: relative;
       display: flex;
       align-items: center;
-      padding-left: 23px;
+      justify-content: center;
+      padding-top: 49px;
+      font-weight: 700;
+      font-size: 28px;
+      color: #3C3C3C;
 
-      .profit {
-        position: absolute;
-        left: 15px;
-        top: -8px;
-        background: #FFFFFF;
-        padding: 0 8px;
-      }
-
-      .symbol-pnl-num {
-        font-size: 30px;
-        color: #38CB89;
-        font-weight: 700;
-      }
-
-      .down-pnl {
-        color: #FF5630;
+      img {
+        margin-right: 10px;
       }
     }
-  }
 
-  .position{
-    margin-top: 38px;
-    height: 72px;
-  }
+    .daily-income {
+      width: 346px;
+      height: 132px;
+      border-top: 1px solid #E4E6E8;
+      border-bottom: 1px solid #E4E6E8;
+      margin: 0 auto;
+      margin-top: 31px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 42px;
 
-
-  .btn-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    height: 237px;
-    .line-chart{
-      width: 376px;
-      position: relative;
-      right: 33px;
+      .daily-income-text {
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 15px;
+        color: #C8CDD5;
+        border-bottom: 1px solid #E4E6E8;
+      }
     }
-    .btn {
-      margin-top: 19px;
-      background-repeat: no-repeat;
-    }
 
-    .disabled {
-      border: 1px solid rgba(4, 4, 21, 0.1);
-      color: #999999;
-      background-color: #FFFFFF;
+    .price-postion {
+      margin: 0 auto;
+      margin-top: 46px;
+      width: 346px;
+      font-weight: 500;
+      font-size: 16px;
+
+      .price-info,
+      .position-info {
+
+        .position-title,
+        .price-title {
+          display: flex;
+          align-items: center;
+          img{
+            margin-left: 4px;
+          }
+        }
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .price-info{
+        margin-bottom: 9px;
+      }
+    }
+    .deposit-withdraw{
+      display: flex;
+      margin-top: 42px;
+      div{
+        flex-grow: 1;
+      }
     }
   }
 
 }
-.card-box:nth-child(3n+1){
+
+.card-box:nth-child(3n+1) {
   margin-left: 0px;
 }
 
 @for $i from 1 through length($className) {
   .#{nth($className, $i)} {
-    background-image: url("../../assets/img/#{nth($className, $i)}.png");
+    // background-image: url("../../assets/img/#{nth($className, $i)}.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
+    border: 1px solid nth($Color, $i);
+    background-color: nth($BgColor, $i);
 
-    .icon-name {
-      color: nth($Color, $i);
+    .card-info {
+      box-shadow: 0px -11px 18px nth($BoxShadow, $i);
+
     }
 
-    &:hover {
-      border: 1px solid nth($Color, $i);
-      box-shadow: 0px 0px 38px #FFB86580;
-    }
 
   }
 }
 
 @media only screen and (min-width : 760px) and (max-width:1339px) {
-  .card-box {
-    width: 336px;
-    height: 584px;
-    padding: 27px 0 0 28px;
-    margin-left: 0px;
-    .input-box {
-      width: 288px;
-      margin-top: 14px;
-    }
-    .position{
-      margin-top: 31px;
-      height: 72px;
-    }
+  .card-box {}
 
-    .btn-box {
-      height: 207px;
-      margin-top: 27px;
-      .line-chart{
-        width: 336px;
-        position: relative;
-        right: 28px;
-      }
-      .btn {
-        width: 288px;
-      }
-
-      .up-btn {
-        background-position: 120px;
-      }
-
-      .down-btn {
-        background-position: 105px;
-      }
-
-      .boosted-btn {
-        background-position: 85px, 190px;
-      }
-    }
-  }
-  .card-box:nth-child(2n){
+  .card-box:nth-child(2n) {
     margin-left: 20px;
 
   }
 
-}
-.mobile{
-  .card-box{
-    width: 280px;
-    height: 488px;
-    margin-left: 15px;
-    padding-left: 22px;
-    padding-top: 22px;
-    .symbol-price{
-      margin-top: 19px;
-      font-size: 28px;
-    }
-    .symbol-leverage{
-      margin-top: 16px;
-      font-size: 21px;
-    }
-    .input-box{
-      width: 240px;
-      margin-top: 11px;
-      height: 83px;
-    }
-    .btn-box{
-      width: 256px;
-      height: 174px;
-      .line-chart{
-        width: 280px;
-        right: 24px;
-      }
-      .btn{
-        width: 240px;
-        margin-top: 16px;
-        height: 48px;
-      }
-    }
-  }
-  .card-box:last-child{
-    margin-right: 15px;
-  }
 }

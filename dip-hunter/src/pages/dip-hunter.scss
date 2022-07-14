@@ -5,15 +5,15 @@
 
 .dip-hunter {
   .bg-img-color {
-    width: 100vw;
-    height: 70vh;
-    position: fixed;
+    width: 100%;
+    height: 1005px;
+    position: absolute;
     background-color: #fdf8ed;
     z-index: -1;
   }
 
   .hide-three {
-    height: 70vh;
+    height: 1005px;
     top: 0;
   }
 
@@ -392,6 +392,14 @@
       }
     }
   }
+  .card-box-info{
+    width: 1046px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    margin-top: 66px;
+  }
 }
+
 
 @media only screen and (min-width : 760px) and (max-width:1339px) {}

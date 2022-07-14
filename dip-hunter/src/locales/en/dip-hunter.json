@@ -30,5 +30,12 @@
   "with-dip-hunter-secenario-b-des": "Thanks to the continuous daily income, Alice will probably be able to buy more than 1 ETH with her account balance.",
   "with-dip-hunter-scenario-b-the": "The net loss is calculated as ",
   "with-dip-hunter-scenario-b-the-volume": "Volume * (Entry Price - Exit Price) + Avg. Daily Funding * Holding Period = -$94.22",
-  "with-dip-hunter-scenario-b-alice": "Alice has an initial deposit of $1000. Now the account balance is $912. she can buy 1.1ETH, which is 0.1ETH more than Option One."
+  "with-dip-hunter-scenario-b-alice": "Alice has an initial deposit of $1000. Now the account balance is $912. she can buy 1.1ETH, which is 0.1ETH more than Option One.",
+  "daily-income":"Daily Income",
+  "day":"day",
+  "excution-price":"Excution Price",
+  "your-position":"Your Position",
+  "deposit":"DEPOSIT",
+  "withdraw":"WITHDRAW",
+  "vault-strategy-and-positions":"VAULT STRATEGY AND POSITIONS"
 }

@@ -57,7 +57,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
 
   const getLiquidationInfo = async () => {
     if (wallet.isConnected()) {
-      let res = await ApiProxy.request("getLiquidationInfo", { chainId: wallet.chainId, accountAddress: "0x5b984a638506797d1e6e50B4e310d8ab377D3F49", symbol: info.symbol })
+      let res = await ApiProxy.request("getLiquidationInfo", { chainId: wallet.chainId, accountAddress:  wallet.account, symbol: info.symbol })
       if (res) {
         setIsLiquidated(res.liquidate)
       }

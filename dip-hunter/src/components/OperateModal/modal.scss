@@ -4,12 +4,276 @@
   border-radius: 30px;
   border: 1px solid #F49B33;
   background: #FFF;
+  margin-top: -90px;
 
   .font-box {
-    width: 456px;
+    width: 454px;
     height: 141px;
     border-radius: 30px;
     background: linear-gradient(180deg, #FF8D1F -61.09%, rgba(255, 255, 255, 0) 100%);
+    color: #FFFFFF;
+    -webkit-text-stroke: 2px #FFD5AC;
+    font-weight: 900;
+    overflow: hidden;
+
+    .font-text {
+      position: relative;
+    }
+  }
+
+  .modal-info {
+    width: 454px;
+    height: 502px;
+    background-color: #FFF;
+    box-shadow: 0px -11px 11px rgba(255, 213, 172, 0.33);
+    border-radius: 30px;
+    position: relative;
+    top: -50px;
+
+    .deposit-withdraw-input {
+      width: 376px;
+      height: 150px;
+      position: relative;
+      margin: 0 auto;
+      top: 64px;
+      display: flex;
+      align-items: flex-end;
+      color: #333333;
+
+      .input-box {
+        width: 376px;
+        height: 130px;
+        background-color: #FAFBFC;
+        border-radius: 18px;
+        padding: 0 17px;
+
+        .input-token {
+          display: flex;
+          justify-content: space-between;
+          position: relative;
+          padding-right: 20px;
+          height: 70px;
+          border-bottom: 1px solid #E4E6E8;
+
+          input {
+            background: transparent;
+            border-radius: 4px;
+            // min-width: 240px;
+            border: 0;
+            width: 170px;
+            height: 70px;
+            color: #040415;
+            font-size: 30px;
+          }
+
+          input:focus {
+            outline: none;
+          }
+
+          .baseToken {
+            width: 115px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 22px;
+            white-space: nowrap;
+          }
+        }
+
+        .button-group {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 21px;
+
+          .percent {
+            width: 54px;
+            height: 24px;
+            font-weight: 700;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            background: rgba(55, 125, 255, 0.1);
+            border: 1px solid rgba(55, 125, 255, 0.2);
+            border-radius: 6px;
+            color: #377DFF;
+            cursor: pointer;
+          }
+
+          .selected {
+            background: #377DFF;
+            border: 1px solid rgba(55, 125, 255, 0.2);
+            color: #FFFFFF;
+          }
+        }
+      }
+
+      .balance-position {
+        position: absolute;
+        width: 158px;
+        height: 90px;
+        background: #FAFBFC;
+        border-radius: 18px;
+        right: 0;
+        top: 0;
+        font-size: 12px;
+        font-weight: 600;
+        display: flex;
+        justify-content: center;
+        padding-top: 6px;
+      }
+    }
+
+    .change-box {
+      width: 376px;
+      margin: 0 auto;
+      margin-top: 40px;
+
+      .deposit-withdraw-modal-info-col {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        color: #444444;
+        font-weight: 500;
+      }
+    }
+
+    .deposit-withdraw-btn {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
   }
+
+  .close-modal {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+  }
+}
+
+.POSITION {
+  color: #444444;
+  font-weight: 500;
+
+  .font-box {
+    font-size: 96px;
+
+    .font-text {
+      position: relative;
+      left: -10px;
+    }
+  }
+
+  .position-modal-info-top {
+    width: 346px;
+    height: 292px;
+    margin: 0 auto;
+    border-bottom: 1px solid #E4E6E8;
+    padding-bottom: 20px;
+    padding-top: 59px;
+
+    .position-modal-info-col {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+  }
+
+  .value-strategy {
+    width: 346px;
+    margin: 0 auto;
+    margin-top: 47px;
+
+    .value-strategy-title {
+      font-weight: 700;
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .value-strategy-des {
+      width: 368px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+}
+
+.DEPOSIT {
+  color: #444444;
+  font-weight: 500;
+
+  .font-box {
+    font-size: 105px;
+
+    .font-text {
+      position: relative;
+      left: -5px;
+    }
+  }
+
+  .hr {
+    width: 376px;
+    height: 2px;
+    background-color: #E4E6E8;
+    margin: 0 auto;
+    margin-top: 112px;
+  }
+}
+
+.WITHDRAW {
+  color: #444444;
+  font-weight: 500;
+
+  .font-box {
+    font-size: 80px;
+
+    .font-text {
+      position: relative;
+      left: -12px;
+      top: 15px;
+    }
+  }
+
+
+
+  .modal-info {
+    .change-box {
+      margin-top: 28px;
+      .deposit-withdraw-modal-info-col{
+        margin-bottom: 12px;
+      }
+    }
+    .deposit-withdraw-btn{
+      margin-top: 40px;
+    }
+
+    .withdraw-top-info {
+      padding-top: 34px;
+      margin-top: 0px;
+    }
+    .deposit-modal-info {
+      .deposit-withdraw-input {
+        top: 0;
+        margin-top: 31px;
+        .input-box{
+          .input-token{
+            .baseToken{
+              width: 138px;
+              img{
+                margin-right: 8px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
 }

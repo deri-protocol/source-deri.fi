@@ -152,7 +152,8 @@ $Color: #F49B33,
         .price-title {
           display: flex;
           align-items: center;
-          img{
+
+          img {
             margin-left: 4px;
           }
         }
@@ -161,15 +162,42 @@ $Color: #F49B33,
         align-items: center;
         justify-content: space-between;
       }
-      .price-info{
+
+      .price-info {
         margin-bottom: 9px;
       }
     }
-    .deposit-withdraw{
+
+    .deposit-withdraw-position {
+      margin-top: 57px;
+
+      .postion-btn {
+        display: flex;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 14px;
+        color: #C8CDD5;
+        cursor: pointer;
+        img {
+          margin-left: 10px;
+        }
+      }
+    }
+
+    .deposit-withdraw {
       display: flex;
-      margin-top: 42px;
-      div{
+      margin-top: 27px;
+
+      div {
         flex-grow: 1;
+      }
+
+      .deposit {
+        border-radius: 0 0 0 30px;
+      }
+
+      .withdraw {
+        border-radius: 0 0 30px 0;
       }
     }
   }

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
+import { BigNumber as bg } from 'bignumber.js'
 // import { bg } from '../../lib/web3js';
 // import UnderlineText from '../UnderlineText/UnderlineText';
 

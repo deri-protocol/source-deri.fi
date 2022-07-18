@@ -120,7 +120,7 @@ export default function BetIt({ lang, getLang, actions }) {
           <div className={classNames("card-list", { "list-mobile": mobile })}>
             {symbols && symbols.map((item, index) => {
               return (
-                <Card info={item} showCardModal={showCardModal} bTokens={bTokens} lang={lang} key={index} getLang={getLang} />
+                <Card key={index} info={item} showCardModal={showCardModal} bTokens={bTokens} lang={lang} getLang={getLang} />
               )
             })}
           </div>

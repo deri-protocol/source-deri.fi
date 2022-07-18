@@ -163,9 +163,9 @@ export default function DipHunter({ lang, getLang, actions }) {
                               </div>
                               <div className="symbol-list-info-num">
                                 <span className="volume">1</span>
-                                <span className="entry-price">$34.55</span>
-                                <span className="exit-price">$6.34</span>
-                                <span className="avg-daily-funding">$2.55</span>
+                                <span className="entry-price">$8.56</span>
+                                <span className="exit-price">$0.2</span>
+                                <span className="avg-daily-funding">$1.15</span>
                                 <span className="holding-period">60 days</span>
                               </div>
 
@@ -225,8 +225,8 @@ export default function DipHunter({ lang, getLang, actions }) {
                               </div>
                               <div className="symbol-list-info-num">
                                 <span className="volume">1</span>
-                                <span className="entry-price">$34.55</span>
-                                <span className="exit-price">$143.55</span>
+                                <span className="entry-price">$8.56</span>
+                                <span className="exit-price">$114.67</span>
                                 <span className="avg-daily-funding">$2.55</span>
                                 <span className="holding-period">60 days</span>
                               </div>

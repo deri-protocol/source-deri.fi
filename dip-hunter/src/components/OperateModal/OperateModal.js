@@ -11,7 +11,7 @@ export default function OperateMoadl({ lang, type = "POSITION", wallet }) {
         <div className='font-text'>
           {type}
         </div>
-
+ 
       </div>
       <div className="modal-info">
         {type === "POSITION" && <div className="position-modal-info">

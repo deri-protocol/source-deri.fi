@@ -237,7 +237,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
         getLiquidationInfo()
       }
     }
-    return ()=>{
+    return () => {
       clearInterval(timer)
     }
   }, [wallet, info, wallet.account, wallet.chainId])
@@ -270,150 +270,73 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
   }, [balance, betInfo])
 
   return (
-    <>
-      { info.symbol === "ETHUSD" &&
-        <div className={classNames('card-box', info.unit)} onClick={(e) => { showModal(e) }}>
-          <div className='icon-name'>
-            <Icon token={info.symbol} width={45} height={45} />
-            <span className='symbol-name'>{info.unit}</span>
-            {betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol && <div className='entered'>
-              {lang['entered']}
-            </div>}
-            {isLiquidated && betInfo.volume === "0" && info.symbol === betInfo.symbol ? <div className='entered liquidated'>
-              {lang['liquidated']}
-            </div> : null}
-          </div>
-          <div className='price-box'>
-            <div className='symbol-price'>
-              $<DeriNumberFormat value={betInfo.markPrice} decimalScale={2} height={30} />
-            </div>
-            <div className='price-title'>
-              {lang['current-price']}
-            </div>
-          </div>
-          <div className='leverage-box'>
-            <div className='symbol-leverage'>
-              {/* {info.Leverage} */}
-              {info.leverage} X
+    <div className={classNames('card-box', info.unit)} onClick={(e) => { showModal(e) }}>
+      <div className='icon-name'>
+        <Icon token={info.symbol} width={45} height={45} />
+        <span className='symbol-name'>{info.unit}</span>
+        {betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol && <div className='entered'>
+          {lang['entered']}
+        </div>}
+        {isLiquidated && betInfo.volume === "0" && info.symbol === betInfo.symbol ? <div className='entered liquidated'>
+          {lang['liquidated']}
+        </div> : null}
+      </div>
+      <div className='price-box'>
+        <div className='symbol-price'>
+          $<DeriNumberFormat value={betInfo.markPrice} decimalScale={2} height={30} />
         </div>
-            <div className='leverage-title'>
-              {lang['leverage']}
-              {/* <UnderlineText tip={lang['leverage-tip']} key={info.symbol} > <Icon token="leverage" /></UnderlineText> */}
-            </div>
-          </div>
-          <div className={betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol ? "input-box position" : "input-box"}>
-            {betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol ?
-              <div className='symbol-pnl'>
-                <div className='profit'>
-                  {lang['profit']}
-                </div>
-                <div className={+betInfo.pnl > 0 ? "symbol-pnl-num up-pnl" : "symbol-pnl-num down-pnl"}>
-                  {+betInfo.pnl > 0 ? "+" : ""}{betInfo.pnl ? (+betInfo.pnl).toFixed(2) : 0}
-                </div>
-              </div>
-              : !isLiquidated && <Input value={amount} onChange={onChange} inputDisabled={inputDisabled} setBalance={setBalance} balance={balance} bToken={bToken} setBToken={setBToken} bTokens={bTokens} lang={lang} />
-            }
-            {isLiquidated && betInfo.volume === "0" ? <div className='symbol-pnl'>
-              <div className='profit'>
-                {lang['profit']}
-              </div>
-              <div className="symbol-pnl-num down-pnl">
-                0
-          </div>
-            </div> : null}
-          </div>
-          <div className='btn-box'>
-            {betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol ?
-              <>
-                <div className='line-chart'><LineChart symbol={info.markpriceSymbol} color={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} /></div>
-                <Button label={lang['close']} onClick={(e) => betClose(e)} className="btn close-btn" width="299" height="60" bgColor={+betInfo.pnl > 0 ? "#38CB891A" : "#FF56301A"} hoverBgColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} borderSize={0} radius={14} fontColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} />
-              </>
-              : !isLiquidated && <>
-                <Button label={lang['up']} onClick={(e) => openBet("up", e)} isAlert={true} disabled={disabled} className="btn up-btn" width="299" height="60" bgColor="#38CB891A" hoverBgColor="#38CB89" borderSize={0} radius={14} fontColor="#38CB89" icon='up' hoverIcon="up-hover" disabledIcon="up-disable" />
-                <Button label={lang['down']} onClick={(e) => openBet("down", e)} isAlert={true} disabled={disabled} className="btn down-btn" width="299" height="60" bgColor="#FF56301A" hoverBgColor="#FF5630" borderSize={0} radius={14} fontColor="#FF5630" icon='down' hoverIcon="down-hover" disabledIcon="down-disable" />
-                {info.powerSymbol && <Button label={lang['boosted-up']} isAlert={true} onClick={(e) => openBet("boostedUp", e)} disabled={disabled} className="btn boosted-btn" width="299" height="60" bgColor="#FFAB001A" hoverBgColor="#FFAB00" borderSize={0} radius={14} fontColor="#FFAB00" icon='boosted-up' hoverIcon="boosted-up-hover" disabledIcon="boosted-up-disable" tip={getLang('boosted-up-tip', { symbol: info.unit, powers: info.powerSymbol.symbol })} tipIcon='boosted-hint' hoverTipIcon="boosted-hint-hover" disabledTipIcon="boosted-hint-disable" />}
-              </>}
-            {isLiquidated && betInfo.volume === "0" && info.symbol === betInfo.symbol ?
-              <>
-                <div className='line-chart'><LineChart symbol={info.markpriceSymbol} color="#FF5630" /></div>
-                <Button label={lang['start-over']} onClick={(e) => e.preventDefault(), setIsLiquidated(false)} className="btn close-btn" width="299" height="60" bgColor="#FF56301A" hoverBgColor="#FF5630" borderSize={0} radius={14} fontColor="#FF5630" /></>
-              : null}
-          </div>
-
+        <div className='price-title'>
+          {lang['current-price']}
         </div>
-      }
-      {info.symbol === "BTCUSD"&&
-        <div className={classNames('card-box', info.unit)} onClick={(e) => { showModal(e) }}>
-          <div className='icon-name'>
-            <Icon token={info.symbol} width={45} height={45} />
-            <span className='symbol-name'>{info.unit}</span>
-            {betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol && <div className='entered'>
-              {lang['entered']}
-            </div>}
-            {isLiquidated && betInfo.volume === "0" && info.symbol === betInfo.symbol ? <div className='entered liquidated'>
-              {lang['liquidated']}
-            </div> : null}
-          </div>
-          <div className='price-box'>
-            <div className='symbol-price'>
-              $<DeriNumberFormat value={betInfo.markPrice} decimalScale={2} height={30} />
-            </div>
-            <div className='price-title'>
-              {lang['current-price']}
-            </div>
-          </div>
-          <div className='leverage-box'>
-            <div className='symbol-leverage'>
-              {/* {info.Leverage} */}
-              {info.leverage} X
+      </div>
+      <div className='leverage-box'>
+        <div className='symbol-leverage'>
+          {/* {info.Leverage} */}
+          {info.leverage} X
         </div>
-            <div className='leverage-title'>
-              {lang['leverage']}
-              {/* <UnderlineText tip={lang['leverage-tip']} key={info.symbol} > <Icon token="leverage" /></UnderlineText> */}
+        <div className='leverage-title'>
+          {lang['leverage']}
+          {/* <UnderlineText tip={lang['leverage-tip']} key={info.symbol} > <Icon token="leverage" /></UnderlineText> */}
+        </div>
+      </div>
+      <div className={betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol ? "input-box position" : "input-box"}>
+        {betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol ?
+          <div className='symbol-pnl'>
+            <div className='profit'>
+              {lang['profit']}
+            </div>
+            <div className={+betInfo.pnl > 0 ? "symbol-pnl-num up-pnl" : "symbol-pnl-num down-pnl"}>
+              {+betInfo.pnl > 0 ? "+" : ""}{betInfo.pnl ? (+betInfo.pnl).toFixed(2) : 0}
             </div>
           </div>
-          <div className={betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol ? "input-box position" : "input-box"}>
-            {betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol ?
-              <div className='symbol-pnl'>
-                <div className='profit'>
-                  {lang['profit']}
-                </div>
-                <div className={+betInfo.pnl > 0 ? "symbol-pnl-num up-pnl" : "symbol-pnl-num down-pnl"}>
-                  {+betInfo.pnl > 0 ? "+" : ""}{betInfo.pnl ? (+betInfo.pnl).toFixed(2) : 0}
-                </div>
-              </div>
-              : !isLiquidated && <Input value={amount} onChange={onChange} inputDisabled={inputDisabled} setBalance={setBalance} balance={balance} bToken={bToken} setBToken={setBToken} bTokens={bTokens} lang={lang} />
-            }
-            {isLiquidated && betInfo.volume === "0" ? <div className='symbol-pnl'>
-              <div className='profit'>
-                {lang['profit']}
-              </div>
-              <div className="symbol-pnl-num down-pnl">
-                0
+          : !isLiquidated && <Input value={amount} onChange={onChange} inputDisabled={inputDisabled} setBalance={setBalance} balance={balance} bToken={bToken} setBToken={setBToken} bTokens={bTokens} lang={lang} />
+        }
+        {isLiquidated && betInfo.volume === "0" ? <div className='symbol-pnl'>
+          <div className='profit'>
+            {lang['profit']}
           </div>
-            </div> : null}
+          <div className="symbol-pnl-num down-pnl">
+            0
           </div>
-          <div className='btn-box'>
-            {betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol ?
-              <>
-                <div className='line-chart'><LineChart symbol={info.markpriceSymbol} color={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} /></div>
-                <Button label={lang['close']} onClick={(e) => betClose(e)} className="btn close-btn" width="299" height="60" bgColor={+betInfo.pnl > 0 ? "#38CB891A" : "#FF56301A"} hoverBgColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} borderSize={0} radius={14} fontColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} />
-              </>
-              : !isLiquidated && <>
-                <Button label={lang['up']} onClick={(e) => openBet("up", e)} isAlert={true} disabled={disabled} className="btn up-btn" width="299" height="60" bgColor="#38CB891A" hoverBgColor="#38CB89" borderSize={0} radius={14} fontColor="#38CB89" icon='up' hoverIcon="up-hover" disabledIcon="up-disable" />
-                <Button label={lang['down']} onClick={(e) => openBet("down", e)} isAlert={true} disabled={disabled} className="btn down-btn" width="299" height="60" bgColor="#FF56301A" hoverBgColor="#FF5630" borderSize={0} radius={14} fontColor="#FF5630" icon='down' hoverIcon="down-hover" disabledIcon="down-disable" />
-                {info.powerSymbol && <Button label={lang['boosted-up']} isAlert={true} onClick={(e) => openBet("boostedUp", e)} disabled={disabled} className="btn boosted-btn" width="299" height="60" bgColor="#FFAB001A" hoverBgColor="#FFAB00" borderSize={0} radius={14} fontColor="#FFAB00" icon='boosted-up' hoverIcon="boosted-up-hover" disabledIcon="boosted-up-disable" tip={getLang('boosted-up-tip', { symbol: info.unit, powers: info.powerSymbol.symbol })} tipIcon='boosted-hint' hoverTipIcon="boosted-hint-hover" disabledTipIcon="boosted-hint-disable" />}
-              </>}
-            {isLiquidated && betInfo.volume === "0" && info.symbol === betInfo.symbol ?
-              <>
-                <div className='line-chart'><LineChart symbol={info.markpriceSymbol} color="#FF5630" /></div>
-                <Button label={lang['start-over']} onClick={(e) => e.preventDefault(), setIsLiquidated(false)} className="btn close-btn" width="299" height="60" bgColor="#FF56301A" hoverBgColor="#FF5630" borderSize={0} radius={14} fontColor="#FF5630" /></>
-              : null}
-          </div>
-
-        </div>
-      }
-    </>
-
+        </div> : null}
+      </div>
+      <div className='btn-box'>
+        {betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol ?
+          <>
+            <div className='line-chart'><LineChart symbol={info.markpriceSymbol} color={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} /></div>
+            <Button label={lang['close']} onClick={(e) => betClose(e)} className="btn close-btn" width="299" height="60" bgColor={+betInfo.pnl > 0 ? "#38CB891A" : "#FF56301A"} hoverBgColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} borderSize={0} radius={14} fontColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} />
+          </>
+          : !isLiquidated && <>
+            <Button label={lang['up']} onClick={(e) => openBet("up", e)} isAlert={true} disabled={disabled} className="btn up-btn" width="299" height="60" bgColor="#38CB891A" hoverBgColor="#38CB89" borderSize={0} radius={14} fontColor="#38CB89" icon='up' hoverIcon="up-hover" disabledIcon="up-disable" />
+            <Button label={lang['down']} onClick={(e) => openBet("down", e)} isAlert={true} disabled={disabled} className="btn down-btn" width="299" height="60" bgColor="#FF56301A" hoverBgColor="#FF5630" borderSize={0} radius={14} fontColor="#FF5630" icon='down' hoverIcon="down-hover" disabledIcon="down-disable" />
+            {info.powerSymbol && <Button label={lang['boosted-up']} isAlert={true} onClick={(e) => openBet("boostedUp", e)} disabled={disabled} className="btn boosted-btn" width="299" height="60" bgColor="#FFAB001A" hoverBgColor="#FFAB00" borderSize={0} radius={14} fontColor="#FFAB00" icon='boosted-up' hoverIcon="boosted-up-hover" disabledIcon="boosted-up-disable" tip={getLang('boosted-up-tip', { symbol: info.unit, powers: info.powerSymbol.symbol })} tipIcon='boosted-hint' hoverTipIcon="boosted-hint-hover" disabledTipIcon="boosted-hint-disable" />}
+          </>}
+        {isLiquidated && betInfo.volume === "0" && info.symbol === betInfo.symbol ?
+          <>
+            <div className='line-chart'><LineChart symbol={info.markpriceSymbol} color="#FF5630" /></div>
+            <Button label={lang['start-over']} onClick={(e) => e.preventDefault(), setIsLiquidated(false)} className="btn close-btn" width="299" height="60" bgColor="#FF56301A" hoverBgColor="#FF5630" borderSize={0} radius={14} fontColor="#FF5630" /></>
+          : null}
+      </div>
+    </div>
   )
 }

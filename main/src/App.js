@@ -8,8 +8,12 @@ import Loading from './components/Loading/Loading';
 
 
 function App(props) {
+  const config = {
+    ...Constants.USE_WALLET_OPTIONS,
+    autoConnect : false
+  }
   return (
-    <UseWalletProvider {...Constants.USE_WALLET_OPTIONS}>
+    <UseWalletProvider {...config}>
       <div className="app">
         <Navigation collect={true} {...props}/>
         {props.loading && <Loading className={props.loading}/>}

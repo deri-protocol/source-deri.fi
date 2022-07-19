@@ -1,32 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { AreaChart,Area,XAxis,YAxis, ResponsiveContainer } from 'recharts'
+import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from 'recharts'
 const oracleUrl = process.env.REACT_APP_ORACLE_HTTP_URL
 
-export default function LineChart({ symbol,color }) {
+export default function LineChart({ symbol, color }) {
   const [data, setData] = useState([])
   const now = new Date().getTime();
   const from = parseInt((now - 1000 * 60 * 60 * 24) / 1000);
   const to = parseInt(now / 1000);
   const loadData = async () => {
     const url = `${oracleUrl}/get_kline`
-    const res = await axios.get(url,{
-      params : {
-        symbol : symbol,
+    const res = await axios.get(url, {
+      params: {
+        symbol: symbol,
         time_type: 'hour',
-        from : from ,
-        to : to 
+        from: from,
+        to: to
       }
     })
-    if(res.status === 200 && res.data.data){
-      const data = res.data.data.map(d => ({value : d.close,time : new Date(d.time).getHours()}))
+    if (res.status === 200 && res.data.data && res.data.data.length) {
+      const data = res.data.data.map(d => ({ value: d.close, time: new Date(d.time).getHours() }))
       setData(data)
     }
   }
 
   useEffect(() => {
     loadData();
-  }, [symbol,color])
+  }, [symbol, color])
 
   return (data ?
     <ResponsiveContainer height={97}>
@@ -38,7 +38,7 @@ export default function LineChart({ symbol,color }) {
           </linearGradient>
         </defs>
         <XAxis dataKey="time" hide={true} />
-        <YAxis dataKey='value' type="number" hide domain={['dataMin - 100', 'dataMax + 100']}/>
+        <YAxis dataKey='value' type="number" hide domain={['dataMin - 100', 'dataMax + 100']} />
         <Area type="monotone" dataKey="value" stroke={color} fillOpacity={0.5} strokeWidth={3} fill={`url(#${color})`} />
       </AreaChart>
     </ResponsiveContainer>

@@ -12,15 +12,6 @@ import { useLocation } from 'react-router-dom'
 function App({ intl, actions }) {
   const location = useLocation();
   const curRouterClass = location.pathname.split('/')[1]
-  const wallet = useWallet()
-  useEffect(() => {
-    wallet.connect()
-    actions && actions.onGlobalStateChange((state) => {
-      if (state.wallet.isConnected()) {
-        wallet.connect()
-      }
-    })
-  }, [])
   return (
     <div className={`App ${curRouterClass}`}>
       <PageRouter intl={intl} actions={actions}></PageRouter>

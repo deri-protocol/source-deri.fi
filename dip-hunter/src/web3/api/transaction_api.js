@@ -37,13 +37,39 @@ export const deposit = txApi(async ({ chainId, bTokenSymbol, amount, symbol, acc
   const bTokenConfig = getBToken(chainId, bTokenSymbol)
   const pool = poolFactory(chainId, symbolConfig.pool)
   await pool.init()
-  const poolConfig = getPoolConfig(chainId, symbolConfig.pool)
   const oracleSignatures = await getSymbolsOracleInfo(chainId, pool.symbols.map((s) => s.symbol))
   const symbolInfo = pool.symbols.find((s) => s.symbol === symbol)
 
   const volume = bg(amount).div(symbolInfo.strikePrice).negated().toString()
   const priceLimit = getPriceLimit(volume)
   debug() && console.log(`amount(${amount}) strike(${symbolInfo.strikePrice}) volume(${volume}) priceLimit(${priceLimit}) bToken(${bTokenConfig.bTokenAddress}) broker(${brokerAddress})`)
-  let res = await broker.trade(accountAddress, poolConfig.pool, bTokenConfig.bTokenAddress, false, toWei(amount, bTokenConfig.bTokenDecimals || 18), symbol, toWei(volume), priceLimit, oracleSignatures, opts)
+  let res = await broker.trade(accountAddress, symbolConfig.pool, bTokenConfig.bTokenAddress, false, toWei(amount, bTokenConfig.bTokenDecimals || 18), symbol, toWei(volume), priceLimit, oracleSignatures, opts)
   return res
+})
+
+export const withdraw = txApi(async ({ chainId, bTokenSymbol, symbol, volume, accountAddress, isNodeEnv = false, ...opts }) => {
+  accountAddress = checkAddress(accountAddress)
+  bTokenSymbol = checkToken(bTokenSymbol)
+  volume = bg(volume).abs().toString()
+  symbol = checkToken(symbol)
+  const brokerAddress = getBrokerAddress(chainId)
+  const broker = dipBrokerFactory(chainId, brokerAddress, { isNodeEnv })
+  let symbolConfig = getSymbol(chainId, symbol)
+  const client = await broker.clients(accountAddress, symbolConfig.pool, symbolConfig.symbolId)
+  if (client !== ZERO_ADDRESS) {
+    const bTokenConfig = getBToken(chainId, bTokenSymbol)
+    const pool = poolFactory(chainId, symbolConfig.pool)
+    await pool.init(client)
+    const position = pool[client].positions.find((p) => p.symbol === symbol)
+    const amount = bg(pool[client].dynamicMargin).times(volume).div(position.volume).negated().toString()
+    const oracleSignatures = await getSymbolsOracleInfo(chainId, pool.symbols.map((s) => s.symbol))
+    const symbolInfo = pool.symbols.find((s) => s.symbol === symbol)
+
+    const priceLimit = getPriceLimit(volume)
+    debug() && console.log(`amount(${amount}) strike(${symbolInfo.strikePrice}) volume(${volume}) priceLimit(${priceLimit}) bToken(${bTokenConfig.bTokenAddress}) broker(${brokerAddress})`)
+    let res = await broker.trade(accountAddress, symbolConfig.pool, bTokenConfig.bTokenAddress, true, toWei(amount, bTokenConfig.bTokenDecimals || 18), symbol, toWei(volume), priceLimit, oracleSignatures, opts)
+    return res
+  } else {
+    console.log(`-- no position found in the current symbol: ${chainId} ${symbol} ${accountAddress}`)
+  }
 })

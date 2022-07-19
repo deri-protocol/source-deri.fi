@@ -1,5 +1,5 @@
 import { isUnlocked } from "../api/query_api"
-import { deposit, unlock } from "../api/transaction_api"
+import { deposit, unlock, withdraw } from "../api/transaction_api"
 import { TIMEOUT } from "./shared"
 
 // const chainId = '97'
@@ -26,10 +26,14 @@ describe('tx api', () => {
   //   expect(res.success).toEqual(true)
   //   expect(res.response.data).toEqual(true)
   // }, TIMEOUT)
-  it('trade', async() => {
-    let res = await deposit({ chainId, symbol: 'ETHUSD-1000-P', bTokenSymbol, amount: '1200',  accountAddress, isNodeEnv: true, ...callback })
+  // it('trade', async() => {
+  //   let res = await deposit({ chainId, symbol: 'ETHUSD-1000-P', bTokenSymbol, amount: '1200',  accountAddress, isNodeEnv: true, ...callback })
+  //   expect(res.success).toEqual(false)
+  //   expect(res.response.error.message).toContain('has no position')
+  // }, TIMEOUT)
+  it('withdraw', async() => {
+    let res = await withdraw({ chainId, symbol: 'ETHUSD-1000-P', bTokenSymbol, amount: '400', volume: '0.4', accountAddress, isNodeEnv: true, ...callback })
     expect(res.success).toEqual(false)
-    console.log('-res', res)
     expect(res.response.error.message).toContain('has no position')
   }, TIMEOUT)
 

@@ -12,8 +12,8 @@ import DeriNumberFormat from "../../utils/DeriNumberFormat";
 import LineChart from "../LineChart/LineChart";
 import { eqInNumber, getBtokenAmount, hasParent } from "../../utils/utils";
 import { DeriEnv, bg } from '../../web3'
-let timer;
 export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
+  let timer;
   const [amount, setAmount] = useState(100)
   const [betInfo, setBetInfo] = useState({})
   const [bToken, setBToken] = useState()
@@ -38,13 +38,10 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     if (wallet.isConnected()) {
       let res = await ApiProxy.request("getBetInfo", { chainId: wallet.chainId, accountAddress: wallet.account, symbol: info.symbol })
       if (res.symbol) {
-        if(res.symbol === "SHIBUSDT"){
-          console.log("SHIBI",res)
-        }
         setBetInfo(res)
         return res
       }
-    } else if (wallet.status === "disconnected") {
+    } else if (wallet.status === "disconnected" && !wallet.account) {
       let chainId = DeriEnv.get() === "prod" ? 56 : 97
       let res = await ApiProxy.request("getBetInfo", { chainId: chainId, symbol: info.symbol })
       if (res.symbol) {
@@ -57,7 +54,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
 
   const getLiquidationInfo = async () => {
     if (wallet.isConnected()) {
-      let res = await ApiProxy.request("getLiquidationInfo", { chainId: wallet.chainId, accountAddress:  wallet.account, symbol: info.symbol })
+      let res = await ApiProxy.request("getLiquidationInfo", { chainId: wallet.chainId, accountAddress: wallet.account, symbol: info.symbol })
       if (res) {
         setIsLiquidated(res.liquidate)
       }

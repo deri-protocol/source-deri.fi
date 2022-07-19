@@ -11,9 +11,12 @@ export {
   isUnlocked,
   getWalletBalance,
   getSymbolInfo,
+  getEstimatedDepositeInfo,
+  getEstimatedWithdrawInfo
 } from './api/query_api'
 
 export {
   unlock,
   deposit,
+  withdraw,
 } from './api/transaction_api'

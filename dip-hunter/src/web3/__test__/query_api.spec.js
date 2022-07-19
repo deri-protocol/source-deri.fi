@@ -1,4 +1,4 @@
-import { getSymbolInfo, isUnlocked } from "../api/query_api"
+import { getEstimatedDepositeInfo, getEstimatedWithdrawInfo, getSymbolInfo, isUnlocked } from "../api/query_api"
 import { DeriEnv, Env } from "../utils/env"
 import { TIMEOUT } from "./shared"
 
@@ -33,54 +33,22 @@ describe('query api', () => {
     expect(res.response.data).toEqual([])
   }, TIMEOUT)
 
-//   // it('getBetInfo with arbi', async () => {
-//   //   const res = await getBetInfo({ chainId: '421611', accountAddress, symbol: "BTCUSD"})
-//   //   expect(res.success).toEqual(true)
-//   //   expect(res.response.data).toEqual([])
-//   // }, TIMEOUT)
+  // it('getEstimatedDepositeInfo', async() => {
+  //   // prepare
+  //   await getSymbolInfo({ chainId, accountAddress, symbol: symbol2 })
 
-//   // it('getBetInfo with arbi without wallet connected', async () => {
-//   //   const res = await getBetInfo({ chainId: '421611', symbol: "BTCUSD"})
-//   //   expect(res.success).toEqual(true)
-//   //   expect(res.response.data).toEqual([])
-//   // }, TIMEOUT)
+  //   const res = await getEstimatedDepositeInfo({chainId, accountAddress, symbol: symbol2, newAmount: '600'})
+  //   expect(res.success).toEqual(true)
+  //   expect(res.response.data).toEqual([])
+  // }, TIMEOUT)
 
-//   // it('getBetsInfo', async () => {
-//   //   const res = await getBetsInfo({ chainId, accountAddress, symbols: [symbol1, symbol2] })
-//   //   expect(res.success).toEqual(true)
-//   //   expect(res.response.data).toEqual([])
-//   // }, TIMEOUT)
+  it('getEstimatedWithdrawInfo', async() => {
+    // prepare
+    await getSymbolInfo({ chainId, accountAddress, symbol: symbol2 })
 
-//   // it('getWalletBalance BNB', async () => {
-//   //   const res = await getWalletBalance({ chainId, accountAddress, bTokenSymbol: 'BNB'})
-//   //   expect(res.success).toEqual(true)
-//   //   expect(res.response.data).toEqual([])
-//   // }, TIMEOUT)
-
-//   // it('getWalletBalance CAKE bsc', async () => {
-//   //   const res = await getWalletBalance({ chainId, accountAddress, bTokenSymbol: 'CAKE'})
-//   //   expect(res.success).toEqual(true)
-//   //   expect(res.response.data).toEqual([])
-//   // }, TIMEOUT)
-
-//   // it('getWalletBalance arbi', async () => {
-//   //   const res = await getWalletBalance({ chainId: '421611', accountAddress, bTokenSymbol: 'USDC' })
-//   //   expect(res.success).toEqual(true)
-//   //   expect(res.response.data).toEqual([])
-//   // }, TIMEOUT)
-
-//   // it('getTotalPnl', async () => {
-//   //   const res = await getBetsPnl({ chainId, accountAddress })
-//   //   expect(res.success).toEqual(true)
-//   //   expect(res.response.data).toEqual('0')
-//   // }, TIMEOUT)
-
-//   it('getLiquidationInfo', async () => {
-//     DeriEnv.set(Env.PROD)
-//     const res = await getLiquidationInfo({ chainId: '56', accountAddress: '0x0000000000000000000000000000000000000000', symbol: 'ETHUSD' })
-//     expect(res.success).toEqual(true)
-//     expect(res.response.data).toEqual('')
-//     DeriEnv.set(Env.DEV)
-//   }, TIMEOUT)
+    const res = await getEstimatedWithdrawInfo({chainId, accountAddress, symbol: symbol2, newVolume: '0.4'})
+    expect(res.success).toEqual(true)
+    expect(res.response.data).toEqual([])
+  }, TIMEOUT)
 
 })

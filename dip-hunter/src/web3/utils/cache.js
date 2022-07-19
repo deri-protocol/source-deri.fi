@@ -58,3 +58,22 @@ export const asyncCache = (fn, fnName, defaultValue='', timeout = 60) => {
     }
   };
 };
+
+export const ObjectCache = (function () {
+  let _cache = {};
+  return {
+    get(key) {
+      if (Object.keys(_cache).includes(key)) {
+        return _cache[key];
+      }
+      return null
+    },
+    set(key, val) {
+      const timestamp = Math.floor(Date.now() / 1000);
+      if (typeof val === 'object' && val != null) {
+        val.timestamp = timestamp;
+        _cache[key] = val;
+      }
+    },
+  };
+})();

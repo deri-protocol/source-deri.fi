@@ -11,6 +11,9 @@ import { ZERO_ADDRESS } from '../utils/constant'
 import { fetchJson, getHttpBase } from "../utils/rest";
 import { getLastTradeInfoFromScanApi } from "../utils/scanapi";
 import { delay } from "../utils/factory";
+import { ObjectCache } from "../utils/cache";
+import { marginCacheKey, positionCacheKey, symbolCacheKey } from "./api_shared";
+import { calculateDpmmCost } from "../contract/symbol/shared";
 
 export const getWalletBalance = queryApi(async ({ chainId, bTokenSymbol, accountAddress }) => {
   accountAddress = checkAddress(accountAddress)
@@ -66,28 +69,115 @@ export const getSymbolInfo = queryApi(async ({ chainId, accountAddress, symbol})
       symbol,
       unit: symbolConfig.unit,
       pnlPerDay: symbolInfo.fundingPerDay,
-      pnl: '',
+      // pnl: '',
       margin: '',
+      funding: '',
       volume,
       price: symbolInfo.strikePrice,
+      indexPrice: symbolInfo.curIndexPrice,
     }
   } else {
-    console.log()
-    console.log('-', pool[client].positions)
     const position = pool[client].positions.find((p) => p.symbol === symbol)
     const margin = pool[client].margin
+    ObjectCache.set(symbolCacheKey(chainId, symbol), symbolInfo)
+    ObjectCache.set(positionCacheKey(chainId, symbol, accountAddress), position)
+    ObjectCache.set(marginCacheKey(chainId, symbol, accountAddress), {
+      margin: pool[client].margin,
+      dynamicMargin: pool[client].dynamicMargin,
+    });
     return {
       symbol,
       unit: symbolConfig.unit,
       pnlPerDay: bg(symbolInfo.fundingPerDay).times(volume).abs().toString(),
-      pnl: position && position.dpmmTraderPnl || '',
+      // pnl: position && position.dpmmTraderPnl || '',
+      funding: position && bg(position.fundingAccrued).negated().toString() || '',
       margin: margin || '',
-      volume,
+      volume: bg(volume).negated().toString(),
       price: symbolInfo.strikePrice,
+      indexPrice: symbolInfo.curIndexPrice,
     }
   }
     // originPool is the pool of the future symbol
 }, {})
 
-// export const getPositionInfo = queryApi(async ({ chainId, accountAddress, symbol}) => {
-// }, {})
+export const getEstimatedDepositeInfo = queryApi(async ({ chainId, accountAddress, symbol, newAmount}) => {
+  accountAddress = checkAddress(accountAddress)
+  symbol = checkToken(symbol)
+  const symbolInfo = ObjectCache.get(symbolCacheKey(chainId, symbol))
+  const position = ObjectCache.get(positionCacheKey(chainId, symbol, accountAddress))
+  const newVolume = bg(newAmount).div(symbolInfo.strikePrice).negated().toString()
+  if (symbolInfo && position) {
+    let fee;
+    if (bg(symbolInfo.intrinsicValue).gt(0)) {
+      fee = bg(newVolume)
+        .abs()
+        .times(symbolInfo.curIndexPrice)
+        .times(symbolInfo.feeRatioITM)
+        .toString();
+    } else {
+      const cost = calculateDpmmCost(
+        symbolInfo.theoreticalPrice,
+        symbolInfo.K,
+        symbolInfo.netVolume,
+        newVolume
+      );
+      fee = bg(cost).abs().times(symbolInfo.feeRatioOTM).toString();
+    }
+    return {
+      symbol,
+      volume: bg(position.volume).plus(newVolume).abs().toString(),
+      fee,
+    }
+  } else {
+    console.log(`-- cannot get cached symbol and position: ${chainId} ${symbol} ${accountAddress}`)
+    return {
+      symbol,
+      volume: '',
+      fee: '',
+    }
+  }
+    // originPool is the pool of the future symbol
+}, {})
+
+
+export const getEstimatedWithdrawInfo = queryApi(async ({ chainId, accountAddress, symbol, newVolume}) => {
+  accountAddress = checkAddress(accountAddress)
+  symbol = checkToken(symbol)
+  const symbolInfo = ObjectCache.get(symbolCacheKey(chainId, symbol))
+  const position = ObjectCache.get(positionCacheKey(chainId, symbol, accountAddress))
+  const marginInfo = ObjectCache.get(marginCacheKey(chainId, symbol, accountAddress))
+  newVolume = bg(newVolume).abs().toString()
+  if (symbolInfo && position) {
+    let fee;
+    if (bg(symbolInfo.intrinsicValue).gt(0)) {
+      fee = bg(newVolume)
+        .abs()
+        .times(symbolInfo.curIndexPrice)
+        .times(symbolInfo.feeRatioITM)
+        .toString();
+    } else {
+      const cost = calculateDpmmCost(
+        symbolInfo.theoreticalPrice,
+        symbolInfo.K,
+        symbolInfo.netVolume,
+        newVolume
+      );
+      fee = bg(cost).abs().times(symbolInfo.feeRatioOTM).toString();
+    }
+    return {
+      symbol,
+      volume: bg(position.volume).plus(newVolume).negated().toString(),
+      fee,
+      amount: bg(marginInfo.dynamicMargin).times(newVolume).div(position.volume).negated().toString(),
+    }
+  } else {
+    console.log(`-- cannot get cached symbol and position: ${chainId} ${symbol} ${accountAddress}`)
+    return {
+      symbol,
+      volume: '',
+      fee: '',
+      amount: '',
+    }
+  }
+    // originPool is the pool of the future symbol
+}, {})

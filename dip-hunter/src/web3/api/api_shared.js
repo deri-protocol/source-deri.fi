@@ -15,3 +15,7 @@ export const getLastTradeRecord = async (chainId, poolAddress, accountAddress) =
     return {}
   }
 }
+
+export const symbolCacheKey = (chainId, symbol) => `${chainId}_${symbol}_symbol`
+export const positionCacheKey = (chainId, symbol, account) => `${chainId}_${symbol}_${account}_position`
+export const marginCacheKey = (chainId, symbol, account) => `${chainId}_${symbol}_${account}_margin`

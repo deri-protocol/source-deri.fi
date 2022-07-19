@@ -227,7 +227,6 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
 
   useEffect(() => {
     if (info) {
-      clearTimeout(timer)
       getBetInfoTimeOut(getBetInfo)
       getBetInfo()
       if (info.unit === "ETH") {
@@ -238,7 +237,10 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
         getLiquidationInfo()
       }
     }
-  }, [wallet, info])
+    return ()=>{
+      clearInterval(timer)
+    }
+  }, [wallet, info, wallet.account, wallet.chainId])
 
   useEffect(() => {
     if (wallet.chainId && wallet.account && bToken) {

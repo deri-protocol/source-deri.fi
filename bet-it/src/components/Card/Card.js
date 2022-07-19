@@ -12,8 +12,8 @@ import DeriNumberFormat from "../../utils/DeriNumberFormat";
 import LineChart from "../LineChart/LineChart";
 import { eqInNumber, getBtokenAmount, hasParent } from "../../utils/utils";
 import { DeriEnv, bg } from '../../web3'
+let timer;
 export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
-  let timer;
   const [amount, setAmount] = useState(100)
   const [betInfo, setBetInfo] = useState({})
   const [bToken, setBToken] = useState()

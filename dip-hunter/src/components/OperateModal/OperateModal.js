@@ -11,7 +11,7 @@ export default function OperateMoadl({ lang, type = "POSITION", wallet }) {
         <div className='font-text'>
           {type}
         </div>
- 
+
       </div>
       <div className="modal-info">
         {type === "POSITION" && <div className="position-modal-info">
@@ -67,7 +67,7 @@ export default function OperateMoadl({ lang, type = "POSITION", wallet }) {
               <div className="input-token">
                 <input />
                 <div className='baseToken'>
-                  <Icon token="BUSD" width="22" height="22" />  BUSD <Icon token="select-token" />
+                  <Icon token="BUSD" width="22" height="22" />  BUSD
                 </div>
               </div>
               <div className="button-group">
@@ -118,7 +118,15 @@ export default function OperateMoadl({ lang, type = "POSITION", wallet }) {
                 {lang["current-withdraw-type"]}
               </div>
               <div className="deposit-withdraw-modal-info-col-num">
-                BUSD ETH
+                <div className="withdraw-busd-eth-btc  check-token">
+                  <div className="is-check">
+                    <Icon token="check-btoken"/>
+                  </div> BUSD
+                </div>
+                <div className="withdraw-busd-eth-btc">
+                  <div className="is-check"></div>
+                  ETH
+                </div>
               </div>
             </div>
           </div>

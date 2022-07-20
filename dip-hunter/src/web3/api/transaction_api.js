@@ -10,6 +10,7 @@ import { getSymbolsOracleInfo } from "../utils/oracle"
 import { checkToken, nativeCoinSymbols } from "../utils/symbol"
 import { ZeroTradeVolumeError } from "../error/error"
 import { normalizeTradeVolume } from "./api_shared"
+import { normalizeBTokenSymbol } from "../config"
 
 const getPriceLimit = (volume) => {
   return bg(volume).gt(0) ? MAX_INT256_DIV_ONE: '0'
@@ -58,6 +59,7 @@ export const deposit = txApi(async ({ chainId, bTokenSymbol, amount, symbol, acc
 export const withdraw = txApi(async ({ chainId, bTokenSymbol, symbol, volume, accountAddress, isNodeEnv = false, ...opts }) => {
   accountAddress = checkAddress(accountAddress)
   bTokenSymbol = checkToken(bTokenSymbol)
+  bTokenSymbol = normalizeBTokenSymbol(chainId, bTokenSymbol)
   symbol = checkToken(symbol)
   const brokerAddress = getBrokerAddress(chainId)
   const broker = dipBrokerFactory(chainId, brokerAddress, { isNodeEnv })

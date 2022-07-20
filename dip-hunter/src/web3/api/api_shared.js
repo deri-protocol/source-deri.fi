@@ -1,3 +1,4 @@
+import { bg } from "../utils/bignumber"
 import { DeriEnv } from "../utils/env"
 import { fetchJson, getHttpBase } from "../utils/rest"
 
@@ -19,3 +20,11 @@ export const getLastTradeRecord = async (chainId, poolAddress, accountAddress) =
 export const symbolCacheKey = (chainId, symbol) => `${chainId}_${symbol}_symbol`
 export const positionCacheKey = (chainId, symbol, account) => `${chainId}_${symbol}_${account}_position`
 export const marginCacheKey = (chainId, symbol, account) => `${chainId}_${symbol}_${account}_margin`
+
+export const normalizeTradeVolume = (volume, minTradeVolume) =>
+  bg(volume)
+    .div(minTradeVolume)
+    .toFixed(0)
+    .times(minTradeVolume)
+    .abs()
+    .toString();

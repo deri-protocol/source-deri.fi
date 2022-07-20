@@ -12,7 +12,7 @@ import { fetchJson, getHttpBase } from "../utils/rest";
 import { getLastTradeInfoFromScanApi } from "../utils/scanapi";
 import { delay } from "../utils/factory";
 import { ObjectCache } from "../utils/cache";
-import { marginCacheKey, positionCacheKey, symbolCacheKey } from "./api_shared";
+import { marginCacheKey, normalizeTradeVolume, positionCacheKey, symbolCacheKey } from "./api_shared";
 import { calculateDpmmCost } from "../contract/symbol/shared";
 
 export const getWalletBalance = queryApi(async ({ chainId, bTokenSymbol, accountAddress }) => {
@@ -109,7 +109,7 @@ export const getEstimatedDepositeInfo = queryApi(async ({ chainId, accountAddres
   if (!position) {
     position = { volume: 0 }
   }
-  const newVolume = bg(newAmount).div(symbolInfo.strikePrice).negated().toString()
+  const newVolume = normalizeTradeVolume(bg(newAmount).div(symbolInfo.strikePrice).toString(), symbolInfo.minTradeVolume)
   if (symbolInfo) {
     let fee;
     if (bg(symbolInfo.intrinsicValue).gt(0)) {
@@ -150,8 +150,8 @@ export const getEstimatedWithdrawInfo = queryApi(async ({ chainId, accountAddres
   const symbolInfo = ObjectCache.get(symbolCacheKey(chainId, symbol))
   const position = ObjectCache.get(positionCacheKey(chainId, symbol, accountAddress))
   const marginInfo = ObjectCache.get(marginCacheKey(chainId, symbol, accountAddress))
-  newVolume = bg(newVolume).abs().toString()
   if (symbolInfo && position) {
+    newVolume = normalizeTradeVolume(bg(newVolume).abs().toString(), symbolInfo.minTradeVolume)
     let fee;
     if (bg(symbolInfo.intrinsicValue).gt(0)) {
       fee = bg(newVolume)

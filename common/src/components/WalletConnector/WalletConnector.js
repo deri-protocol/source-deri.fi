@@ -51,8 +51,10 @@ export default function WalletConnector({lang,bgColor = '#FFAB00',actions}){
   }, [wallet]);
 
   useEffect(() => {
-    if(!wallet.isConnected()){
-      wallet.connect();
+    if(wallet.status === 'disconnected'){
+      window.setTimeout(() => {
+        wallet.connect();  
+      },1000)
     }
   }, [location.hash]);
   

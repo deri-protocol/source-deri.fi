@@ -115,7 +115,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
         </div>
       </div>
       <OperateModal>
-        <OperateModalDialog lang={lang} type={type} symbolInfo={symbolInfo} info={info} bTokens={bTokens} wallet={wallet} closeModal={closeOperatetModal} />
+        <OperateModalDialog lang={lang} chain={chain} alert={alert} type={type} symbolInfo={symbolInfo} info={info} bTokens={bTokens} wallet={wallet} closeModal={closeOperatetModal} />
       </OperateModal>
     </div>
   )

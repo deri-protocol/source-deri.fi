@@ -131,6 +131,7 @@
       width: 376px;
       margin: 0 auto;
       margin-top: 40px;
+      height: 70px;
 
       .deposit-withdraw-modal-info-col {
         display: flex;
@@ -143,10 +144,16 @@
     }
 
     .deposit-withdraw-btn {
-      margin-top: 18px;
+      margin-top: 48px;
       display: flex;
       justify-content: center;
       align-items: center;
+
+      .disabled {
+        background-color: #fff;
+        border: 1px solid rgba(4, 4, 21, .1);
+        color: #999;
+      }
     }
 
   }
@@ -277,7 +284,8 @@
               align-items: center;
             }
           }
-          .withdraw-busd-eth-btc:nth-child(1){
+
+          .withdraw-busd-eth-btc:nth-child(1) {
             margin-right: 11px;
           }
 
@@ -285,8 +293,9 @@
             background: #E6EEFC;
             border: 1px solid #C3D7FD;
             color: #377DFF;
+
             .is-check {
-              background:#83aefd;
+              background: #83aefd;
             }
           }
         }
@@ -311,6 +320,7 @@
 
         .input-box {
           .input-token {
+            padding-right: 20px;
             .baseToken {
               width: 138px;
 

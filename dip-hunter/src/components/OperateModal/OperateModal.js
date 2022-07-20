@@ -5,10 +5,13 @@ import classNames from "classnames"
 import './modal.scss';
 import { DeriEnv, bg } from '../../web3'
 import DeriNumberFormat from "../../utils/DeriNumberFormat";
-export default function OperateMoadl({ lang, type, symbolInfo, info, bTokens, wallet, closeModal }) {
+export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, info, bTokens, wallet, closeModal }) {
   const [percent, setPercent] = useState("")
   const [balance, setBalance] = useState()
   const [amount, setAmount] = useState()
+  const [depositEst, setDepositEst] = useState({})
+  const [withdrawEst, setWithdrawEst] = useState({})
+  const [disabled, setDisabled] = useState(true)
   const getWalletBalance = async () => {
     let res = await ApiProxy.request("getWalletBalance", { chainId: wallet.chainId, bTokenSymbol: bTokens[0].bTokenSymbol, accountAddress: wallet.account })
     setBalance(res)
@@ -19,26 +22,118 @@ export default function OperateMoadl({ lang, type, symbolInfo, info, bTokens, wa
       setAmount("")
     } else {
       setAmount(value)
+
     }
+    setPercent("")
+  }
+
+  const isUnlocked = async () => {
+    let res = await ApiProxy.request("isUnlocked", { chainId: wallet.chainId, bTokenSymbol: bTokens[0].bTokenSymbol, accountAddress: wallet.account })
+    console.log("isUnlocked", res)
+    return res
+  }
+
+  const click = async () => {
+    let isApproved = await isUnlocked()
+    let params = { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bTokens[0].bTokenSymbol, symbol: info.symbol, amount, accountAddress: wallet.account }
+    if (!isApproved) {
+      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bTokens[0].bTokenSymbol, accountAddress: wallet.account, approved: false }
+      let approved = await ApiProxy.request("unlock", paramsApprove)
+      if (approved) {
+        if (approved.success) {
+          alert.success(`Approve ${bTokens[0].bTokenSymbol}`, {
+            timeout: 8000,
+            isTransaction: true,
+            transactionHash: approved.response.data.transactionHash,
+            link: `${chain.viewUrl}/tx/${approved.response.data.transactionHash}`,
+            title: 'Approve Executed'
+          })
+        } else {
+          if (approved.transactionHash === "") {
+            return false;
+          }
+          alert.error(`Transaction Failed ${approved.response.error.message}`, {
+            timeout: 300000,
+            isTransaction: true,
+            transactionHash: approved.response.transactionHash,
+            link: `${chain.viewUrl}/tx/${approved.response.transactionHash}`,
+            title: 'Approve Failed'
+          })
+          return false;
+        }
+      }
+      params["approved"] = approved.success
+    }
+    let method = type === "DEPOSIT" ? "deposit" : "withdraw"
+    let res = await ApiProxy.request(method, params)
+    console.log(type, res)
+    if (res.success) {
+      alert.success(`${type === "DEPOSIT" ? `Deposit ${bTokens[0].bTokenSymbol}` : "Withdraw"}`, {
+        timeout: 8000,
+        isTransaction: true,
+        transactionHash: res.response.data.transactionHash,
+        link: `${chain.viewUrl}/tx/${res.response.data.transactionHash}`,
+        title: `${type === "DEPOSIT" ? "Deposit" : "Withdraw"}`
+      })
+    } else {
+      if (res.response.transactionHash === "") {
+        return false;
+      }
+      alert.error(`Transaction Failed: ${res.response.error.message}`, {
+        timeout: 300000,
+        isTransaction: true,
+        transactionHash: res.response.transactionHash,
+        link: `${chain.viewUrl}/tx/${res.response.transactionHash}`,
+        title: `${type === "DEPOSIT" ? "Deposit Failed" : "Withdraw Failed"}`
+      })
+    }
+    return true
   }
 
   useEffect(() => {
-    if(percent && balance){
-      let per = percent
-      if(percent === "MAX"){
-        per = 100
-      }else{
-        per = parseInt(per) / 100
+    if (balance || symbolInfo.volume) {
+      let aBalance = type === "DEPOSIT" ? balance : symbolInfo.volume
+      if (percent && aBalance) {
+        let per = percent
+        if (percent === "MAX") {
+          per = 100
+        } else {
+          per = parseInt(per) / 100
+        }
+        let amount = bg(aBalance).times(per).toString()
+        setAmount(amount)
       }
-      let amount = bg(balance).times(per).toString()
-      setAmount(amount)
     }
-    
-  }, [percent,balance])
+
+  }, [percent, balance])
+
+  useEffect(async () => {
+    if (balance || symbolInfo.volume) {
+      let aBalance = type === "DEPOSIT" ? balance : symbolInfo.volume
+      if (amount) {
+        if (+amount > +aBalance) {
+          setDisabled(true)
+        } else {
+          setDisabled(false)
+        }
+        if (type === "DEPOSIT") {
+          let res = await ApiProxy.request("getEstimatedDepositeInfo", { chainId: wallet.chainId, accountAddress: wallet.account, symbol: info.symbol, newAmount: amount })
+          console.log("getEstimatedDepositeInfo", res)
+          setDepositEst(res)
+        } else {
+          let res = await ApiProxy.request("getEstimatedWithdrawInfo", { chainId: wallet.chainId, accountAddress: wallet.account, symbol: info.symbol, newAmount: amount })
+          console.log("getEstimatedWithdrawInfo", res)
+          setWithdrawEst(res)
+        }
+      }
+    }
+
+  }, [amount, balance])
 
   useEffect(() => {
     if (bTokens && wallet.isConnected()) {
-      getWalletBalance()
+      if (type === "DEPOSIT") { getWalletBalance() }
+      isUnlocked()
     }
   }, [wallet, bTokens, wallet.chainId, wallet.account])
   return (
@@ -103,7 +198,7 @@ export default function OperateMoadl({ lang, type, symbolInfo, info, bTokens, wa
               <div className="input-token">
                 <input value={amount} onChange={change} />
                 <div className='baseToken'>
-                  <Icon token="BUSD" width="22" height="22" />  {bTokens[0].bTokenSymbol}
+                  <Icon token={bTokens[0].bTokenSymbol} width="22" height="22" />  {bTokens[0].bTokenSymbol}
                 </div>
               </div>
               <div className="button-group">
@@ -118,35 +213,37 @@ export default function OperateMoadl({ lang, type, symbolInfo, info, bTokens, wa
 
           </div>
           <div className="change-box">
-            <div className="deposit-withdraw-modal-info-col">
-              <div className="deposit-withdraw-modal-info-col-title">
-                {lang["position-after-deposit"]}
+            {amount && <>
+              <div className="deposit-withdraw-modal-info-col">
+                <div className="deposit-withdraw-modal-info-col-title">
+                  {lang["position-after-deposit"]}
+                </div>
+                <div className="deposit-withdraw-modal-info-col-num">
+                  <DeriNumberFormat value={depositEst.volume} decimalScale={4} /> {info.unit}
+                </div>
               </div>
-              <div className="deposit-withdraw-modal-info-col-num">
-                1.00 ETH
+              <div className="deposit-withdraw-modal-info-col">
+                <div className="deposit-withdraw-modal-info-col-title">
+                  {lang["transaction-fee"]}
+                </div>
+                <div className="deposit-withdraw-modal-info-col-num">
+                  $<DeriNumberFormat value={depositEst.fee} decimalScale={2} />
+                </div>
               </div>
-            </div>
-            <div className="deposit-withdraw-modal-info-col">
-              <div className="deposit-withdraw-modal-info-col-title">
-                {lang["transaction-fee"]}
-              </div>
-              <div className="deposit-withdraw-modal-info-col-num">
-                $0.22
-              </div>
-            </div>
+            </>}
           </div>
           <div className="deposit-withdraw-btn">
-            <Button label={`${lang["deposit"]} BUSD`} width={375} height={56} hoverBgColor="#38CB89" radius={14} bgColor="#EEFAF3" fontColor="#38CB89" borderSize="0" />
+            <Button disabled={disabled} onClick={click} label={`${lang["deposit"]}  ${bTokens[0].bTokenSymbol}`} width={375} height={56} hoverBgColor="#38CB89" radius={14} bgColor="#EEFAF3" fontColor="#38CB89" borderSize="0" />
           </div>
         </div>}
         {type === "WITHDRAW" && <div className="deposit-modal-info">
           <div className="change-box withdraw-top-info">
             <div className="deposit-withdraw-modal-info-col">
               <div className="deposit-withdraw-modal-info-col-title">
-                {lang["current"]} ETH {lang["price"]}
+                {lang["current"]} {info.unit} {lang["price"]}
               </div>
               <div className="deposit-withdraw-modal-info-col-num">
-                $1,500
+                $<DeriNumberFormat value={symbolInfo.indexPrice} decimalScale={2} />
               </div>
             </div>
             <div className="deposit-withdraw-modal-info-col">
@@ -157,24 +254,24 @@ export default function OperateMoadl({ lang, type, symbolInfo, info, bTokens, wa
                 <div className="withdraw-busd-eth-btc  check-token">
                   <div className="is-check">
                     <Icon token="check-btoken" />
-                  </div> BUSD
+                  </div> {bTokens[0].bTokenSymbol}
                 </div>
                 <div className="withdraw-busd-eth-btc">
                   <div className="is-check"></div>
-                  ETH
+                  {info.unit}
                 </div>
               </div>
             </div>
           </div>
           <div className="deposit-withdraw-input">
             <div className="balance-position">
-              {lang["current-position"]}: 2,000
+              {lang["current-position"]}: <DeriNumberFormat value={symbolInfo.volume} />
             </div>
             <div className="input-box">
               <div className="input-token">
-                <input />
+                <input value={amount} onChange={change} />
                 <div className='baseToken'>
-                  <Icon token="BUSD" width="22" height="22" /> ETH-1000-P
+                  <Icon token={info.unit} width="22" height="22" /> {info.symbol}
                 </div>
               </div>
               <div className="button-group">
@@ -189,30 +286,32 @@ export default function OperateMoadl({ lang, type, symbolInfo, info, bTokens, wa
 
           </div>
           <div className="change-box">
-            <div className="deposit-withdraw-modal-info-col">
-              <div className="deposit-withdraw-modal-info-col-title">
-                {lang["withdraw-amount"]}
+            {amount && <>
+              <div className="deposit-withdraw-modal-info-col">
+                <div className="deposit-withdraw-modal-info-col-title">
+                  {lang["withdraw-amount"]}
+                </div>
+                <div className="deposit-withdraw-modal-info-col-num">
+                  1.00 {info.unit}
+                </div>
               </div>
-              <div className="deposit-withdraw-modal-info-col-num">
-                1.00 ETH
+              <div className="deposit-withdraw-modal-info-col">
+                <div className="deposit-withdraw-modal-info-col-title">
+                  {lang["position-after-withdraw"]}
+                </div>
+                <div className="deposit-withdraw-modal-info-col-num">
+                  1.00 {info.unit}
+                </div>
               </div>
-            </div>
-            <div className="deposit-withdraw-modal-info-col">
-              <div className="deposit-withdraw-modal-info-col-title">
-                {lang["position-after-withdraw"]}
+              <div className="deposit-withdraw-modal-info-col">
+                <div className="deposit-withdraw-modal-info-col-title">
+                  {lang["transaction-fee"]}
+                </div>
+                <div className="deposit-withdraw-modal-info-col-num">
+                  $<DeriNumberFormat value={withdrawEst.fee} decimalScale={2} />
+                </div>
               </div>
-              <div className="deposit-withdraw-modal-info-col-num">
-                1.00 ETH
-              </div>
-            </div>
-            <div className="deposit-withdraw-modal-info-col">
-              <div className="deposit-withdraw-modal-info-col-title">
-                {lang["transaction-fee"]}
-              </div>
-              <div className="deposit-withdraw-modal-info-col-num">
-                $0.22
-              </div>
-            </div>
+            </>}
           </div>
           <div className="deposit-withdraw-btn">
             <Button label={`${lang["withdraw"]} BUSD`} width={375} height={56} hoverBgColor="#38CB89" radius={14} bgColor="#EEFAF3" fontColor="#38CB89" borderSize="0" />

@@ -57,5 +57,13 @@
   "current-withdraw-type":"Current Withdraw Type",
   "current-position":"Current Position",
   "withdraw-amount":"Withdraw Amount(est.)",
-  "position-after-withdraw":"Position After Withdraw"
+  "position-after-withdraw":"Position After Withdraw",
+  "waiting-for-confirmation": "Waiting For Confirmation",
+	"transaction-submitted": "Transaction Submitted",
+	"transaction-rejected": "Transaction Rejected",
+  "waiting-for-confirmation-title" : "Please confirm transaction in your wallet",
+	"waiting-for-confirmation-desc": "Confirm this transaction in your wallet",
+	"simulate-pnl-icon-tip": "Click to open PnL simulator",
+	"transaction-submitted-desc": "Your transaction has been submitted",
+	"transaction-rejected-desc": "Your transaction was rejected"
 }

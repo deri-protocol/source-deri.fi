@@ -127,14 +127,32 @@ $Color: #F49B33,
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 42px;
+      font-size: 32px;
+
+      .daily-fee-day {
+        color: #38CB89;
+      }
 
       .daily-income-text {
         font-size: 16px;
         font-weight: 600;
         margin-top: 15px;
         color: #C8CDD5;
-        border-bottom: 1px solid #E4E6E8;
+        // border-bottom: 1px solid #E4E6E8;
+        cursor: pointer;
+
+        .text {
+          display: flex;
+
+          span {
+            border-bottom: 1px solid #E4E6E8;
+          }
+
+          img {
+            margin-left: 8px;
+            align-items: center;
+          }
+        }
       }
     }
 
@@ -171,6 +189,12 @@ $Color: #F49B33,
     .deposit-withdraw-position {
       margin-top: 57px;
 
+      // .disabled {
+      //   border: 1px solid rgba(4, 4, 21, 0.1);
+      //   color: #999999;
+      //   background-color: #FFFFFF;
+      // }
+
       .postion-btn {
         display: flex;
         justify-content: center;
@@ -178,6 +202,7 @@ $Color: #F49B33,
         font-size: 14px;
         color: #C8CDD5;
         cursor: pointer;
+
         img {
           margin-left: 10px;
         }

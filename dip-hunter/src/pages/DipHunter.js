@@ -1,28 +1,19 @@
 import { useModal } from 'react-hooks-use-modal';
 import classNames from 'classnames'
 import './dip-hunter.scss'
+import usePool from "../hooks/usePool";
 import { Icon } from '@deri/eco-common';
 import { isStartScroll, isMobile } from "../utils/utils";
 import Font from '../components/Font/Font'
 import { useState, useEffect, useCallback } from "react";
 import Card from "../components/Card/Card"
-const config = [
-  {
-    symbol:"BTCUSD",
-    unit:"BTC",
-    price:20000,
-  },
-  {
-    symbol:"ETHUSD",
-    unit:"ETH",
-    price:1000,
-  }
-]
 export default function DipHunter({ lang, getLang, actions }) {
   const [index, setIndex] = useState(3)
   const [isFixed, setIsFixed] = useState(false)
   const [withDipA, setWithDipA] = useState(true)
   const [withDipB, setWithDipB] = useState(true)
+  const [bTokens, symbols] = usePool();
+  console.log(bTokens, symbols)
   const handler = useCallback(() => {
     let offset = 138
     let bgTop = document.getElementsByClassName('bg-img-color')[0]
@@ -259,9 +250,9 @@ export default function DipHunter({ lang, getLang, actions }) {
         </div>
       </div>
       <div className='card-box-info'>
-        {config.map((item,index)=>{
+        {symbols && symbols.map((item,index)=>{
           return(
-            <Card key={index} info={item} lang={lang} />
+            <Card key={index} info={item} lang={lang} bTokens={bTokens} />
           )
         })}
       </div>

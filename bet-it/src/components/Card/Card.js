@@ -12,7 +12,6 @@ import DeriNumberFormat from "../../utils/DeriNumberFormat";
 import LineChart from "../LineChart/LineChart";
 import { eqInNumber, getBtokenAmount, hasParent } from "../../utils/utils";
 import { DeriEnv, bg } from '../../web3'
-let timer;
 export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
   const [amount, setAmount] = useState(100)
   const [betInfo, setBetInfo] = useState({})
@@ -38,6 +37,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     if (wallet.isConnected()) {
       let res = await ApiProxy.request("getBetInfo", { chainId: wallet.chainId, accountAddress: wallet.account, symbol: info.symbol })
       if (res.symbol) {
+        console.log("getBetInfo", res, wallet.account)
         setBetInfo(res)
         return res
       }
@@ -46,6 +46,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
       let res = await ApiProxy.request("getBetInfo", { chainId: chainId, symbol: info.symbol })
       if (res.symbol) {
         setBetInfo(res)
+        console.log("disconnected getBetInfo", res, wallet.account)
         return res
       }
     }
@@ -62,12 +63,13 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
   }
 
   const getBetInfoTimeOut = (action) => {
-    timer = window.setTimeout(async () => {
+    let timer = window.setTimeout(async () => {
       let res = await action();
       if (res) {
         getBetInfoTimeOut(action);
       }
     }, 6000)
+    return timer
   }
 
   const getIsApprove = async () => {
@@ -226,9 +228,14 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
   }
 
   useEffect(() => {
+    let timer = 0;
+    let interval = 0;
     if (info) {
-      getBetInfoTimeOut(getBetInfo)
+      // timer = getBetInfoTimeOut(getBetInfo)
       getBetInfo()
+      interval = window.setInterval(()=>{
+        getBetInfo()
+      },6000)
       if (info.unit === "ETH") {
         window.setTimeout(() => {
           getLiquidationInfo()
@@ -237,9 +244,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
         getLiquidationInfo()
       }
     }
-    return () => {
-      clearInterval(timer)
-    }
+    return () => window.clearInterval(interval)
   }, [wallet, info, wallet.account, wallet.chainId])
 
   useEffect(() => {

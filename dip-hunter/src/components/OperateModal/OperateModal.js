@@ -1,10 +1,46 @@
-import { useEffect, useState } from "react"
-import { hide } from "react-functional-modal"
+import { useEffect, useState, useRef } from "react"
+import ApiProxy from "../../model/ApiProxy"
 import { Icon, Button } from '@deri/eco-common';
 import classNames from "classnames"
 import './modal.scss';
-export default function OperateMoadl({ lang, type = "POSITION", wallet }) {
+import { DeriEnv, bg } from '../../web3'
+import DeriNumberFormat from "../../utils/DeriNumberFormat";
+export default function OperateMoadl({ lang, type, symbolInfo, info, bTokens, wallet, closeModal }) {
   const [percent, setPercent] = useState("")
+  const [balance, setBalance] = useState()
+  const [amount, setAmount] = useState()
+  const getWalletBalance = async () => {
+    let res = await ApiProxy.request("getWalletBalance", { chainId: wallet.chainId, bTokenSymbol: bTokens[0].bTokenSymbol, accountAddress: wallet.account })
+    setBalance(res)
+  }
+  const change = e => {
+    const { value } = e.target
+    if (value < 0 || isNaN(value)) {
+      setAmount("")
+    } else {
+      setAmount(value)
+    }
+  }
+
+  useEffect(() => {
+    if(percent && balance){
+      let per = percent
+      if(percent === "MAX"){
+        per = 100
+      }else{
+        per = parseInt(per) / 100
+      }
+      let amount = bg(balance).times(per).toString()
+      setAmount(amount)
+    }
+    
+  }, [percent,balance])
+
+  useEffect(() => {
+    if (bTokens && wallet.isConnected()) {
+      getWalletBalance()
+    }
+  }, [wallet, bTokens, wallet.chainId, wallet.account])
   return (
     <div className={classNames('withdraw-deposit-position', type)}>
       <div className='font-box'>
@@ -21,7 +57,7 @@ export default function OperateMoadl({ lang, type = "POSITION", wallet }) {
                 {lang["my-position"]}
               </div>
               <div className="info-col-num">
-                1.00 ETH {lang["options"]}
+                <DeriNumberFormat value={symbolInfo.volume} /> {info.unit} {lang["options"]}
               </div>
             </div>
             <div className="position-modal-info-col">
@@ -29,7 +65,7 @@ export default function OperateMoadl({ lang, type = "POSITION", wallet }) {
                 {lang["my-deposit"]}
               </div>
               <div className="info-col-num">
-                $1,000
+                $<DeriNumberFormat value={symbolInfo.margin} decimalScale={2} />
               </div>
             </div>
             <div className="position-modal-info-col">
@@ -37,7 +73,7 @@ export default function OperateMoadl({ lang, type = "POSITION", wallet }) {
                 {lang["accumulated-income"]}
               </div>
               <div className="info-col-num">
-                $123
+                $<DeriNumberFormat value={symbolInfo.funding} decimalScale={2} />
               </div>
             </div>
             <div className="position-modal-info-col">
@@ -45,7 +81,7 @@ export default function OperateMoadl({ lang, type = "POSITION", wallet }) {
                 {lang["daily-income"]}
               </div>
               <div className="info-col-num">
-                $1.55/{lang["day"]}
+                $<DeriNumberFormat value={symbolInfo.pnlPerDay} decimalScale={2} />/{lang["day"]}
               </div>
             </div>
           </div>
@@ -61,13 +97,13 @@ export default function OperateMoadl({ lang, type = "POSITION", wallet }) {
         {type === "DEPOSIT" && <div className="deposit-modal-info">
           <div className="deposit-withdraw-input">
             <div className="balance-position">
-              {lang["wallet-balance"]}: 2,000
+              {lang["wallet-balance"]}: <DeriNumberFormat value={balance} decimalScale={2} />
             </div>
             <div className="input-box">
               <div className="input-token">
-                <input />
+                <input value={amount} onChange={change} />
                 <div className='baseToken'>
-                  <Icon token="BUSD" width="22" height="22" />  BUSD
+                  <Icon token="BUSD" width="22" height="22" />  {bTokens[0].bTokenSymbol}
                 </div>
               </div>
               <div className="button-group">
@@ -120,7 +156,7 @@ export default function OperateMoadl({ lang, type = "POSITION", wallet }) {
               <div className="deposit-withdraw-modal-info-col-num">
                 <div className="withdraw-busd-eth-btc  check-token">
                   <div className="is-check">
-                    <Icon token="check-btoken"/>
+                    <Icon token="check-btoken" />
                   </div> BUSD
                 </div>
                 <div className="withdraw-busd-eth-btc">
@@ -183,7 +219,7 @@ export default function OperateMoadl({ lang, type = "POSITION", wallet }) {
           </div>
         </div>}
       </div>
-      <div className="close-modal" onClick={() => { hide("OperateMoadl") }}>
+      <div className="close-modal" onClick={() => { closeModal() }}>
         <Icon token="close-modal" />
       </div>
     </div>

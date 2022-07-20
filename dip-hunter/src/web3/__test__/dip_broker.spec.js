@@ -17,12 +17,12 @@ describe("dipbroker", () => {
   // it("admin", async() => {
   //   expect(await dipBroker.admin()).toEqual('')
   // }, TIMEOUT)
-  it("client without a position", async() => {
-    expect(await dipBroker.clients(accountAddress2, poolAddress, symbolId2)).toEqual('')
-  }, TIMEOUT)
-  it("client with a position", async() => {
-    expect(await dipBroker.clients(accountAddress, poolAddress, symbolId2)).toEqual('')
-  }, TIMEOUT)
+  // it("client without a position", async() => {
+  //   expect(await dipBroker.clients(accountAddress2, poolAddress, symbolId2)).toEqual('')
+  // }, TIMEOUT)
+  // it("client with a position", async() => {
+  //   expect(await dipBroker.clients(accountAddress, poolAddress, symbolId2)).toEqual('')
+  // }, TIMEOUT)
 
   // it("getUserStatus", async() => {
   //   expect(await dipBroker.getUserStatus(poolAddress, accountAddress, symbolId)).toEqual('')
@@ -31,9 +31,9 @@ describe("dipbroker", () => {
   //   expect(await dipBroker.getUserStatuses(poolAddress, accountAddress, [symbol, symbol2])).toEqual([])
   // }, TIMEOUT)
 
-  // it("getVolume", async() => {
-  //   expect(await dipBroker.getVolume(accountAddress, poolAddress, symbolId2)).toEqual('')
-  // }, TIMEOUT)
+  it("getVolume", async() => {
+    expect(await dipBroker.getVolume('0xFefC938c543751babc46cc1D662B982bd1636721',poolAddress, symbolId2)).toEqual('')
+  }, TIMEOUT)
   // it("getVolumes", async() => {
   //   expect(await dipBroker.getVolumes(accountAddress, poolAddress, [symbol, symbol2])).toEqual([])
   // }, TIMEOUT)

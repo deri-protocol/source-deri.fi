@@ -6,10 +6,12 @@
     "symbols": [{
         "symbol": "BTCUSD",
         "order": 1,
+        "symbolDisplay":"BTC-20000-P",
         "price": 20000
       },
       {
         "symbol": "ETHUSD",
+        "symbolDisplay":"ETH-1000-P",
         "order": 2,
         "price": 1000
       }
@@ -22,7 +24,6 @@
     "symbols": [{
         "symbol": "BTCUSD",
         "price": 20000
-
       },
       {
         "symbol": "ETHUSD",

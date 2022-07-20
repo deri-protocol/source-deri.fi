@@ -35,7 +35,10 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
 
   const click = async () => {
     let isApproved = await isUnlocked()
-    let params = { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bTokens[0].bTokenSymbol, symbol: info.symbol, amount, accountAddress: wallet.account }
+    let params;
+    params = type === "DEPOSIT" ?
+    { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bTokens[0].bTokenSymbol, symbol: info.symbol, amount: amount, accountAddress: wallet.account } 
+    : { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bTokens[0].bTokenSymbol, symbol: info.symbol, volume: amount, accountAddress: wallet.account }
     if (!isApproved) {
       let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bTokens[0].bTokenSymbol, accountAddress: wallet.account, approved: false }
       let approved = await ApiProxy.request("unlock", paramsApprove)
@@ -314,7 +317,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
             </>}
           </div>
           <div className="deposit-withdraw-btn">
-            <Button label={`${lang["withdraw"]} BUSD`} width={375} height={56} hoverBgColor="#38CB89" radius={14} bgColor="#EEFAF3" fontColor="#38CB89" borderSize="0" />
+            <Button label={`${lang["withdraw"]} BUSD`} onClick={click} width={375} height={56} hoverBgColor="#38CB89" radius={14} bgColor="#EEFAF3" fontColor="#38CB89" borderSize="0" />
           </div>
         </div>}
       </div>

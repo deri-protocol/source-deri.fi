@@ -41,7 +41,7 @@
       color: #333333;
 
       .input-box {
-        width: 376px;
+        max-width: 376px;
         height: 130px;
         background-color: #FAFBFC;
         border-radius: 18px;
@@ -71,13 +71,13 @@
           }
 
           .baseToken {
-            width: 115px;
+            min-width: 115px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: 600;
             cursor: pointer;
-            font-size: 22px;
+            font-size: 20px;
             white-space: nowrap;
           }
         }
@@ -322,7 +322,7 @@
           .input-token {
             padding-right: 20px;
             .baseToken {
-              width: 138px;
+              min-width: 138px;
 
               img {
                 margin-right: 8px;

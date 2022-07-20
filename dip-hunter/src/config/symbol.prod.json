@@ -7,16 +7,11 @@
     "symbols": [
       {
         "symbol": "BTCUSD",
-        "order" : 1,
-        "powerSymbol": {
-          "displaySymbol": "mBTC^2"
-        }
+        "order" : 1
+        
       },
       {
-        "symbol": "ETHUSD",
-        "powerSymbol": {
-          "displaySymbol": "mETH^2"
-        }
+        "symbol": "ETHUSD"
       }
     ]
   },

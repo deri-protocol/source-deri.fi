@@ -27,3 +27,15 @@ export const getDeriLensAddress = (chainId) => {
   }
   throw new Error(`cannot find deri lens config for chainId(${chainId})`)
 }
+
+export const normalizeBTokenSymbol = (chainId, bTokenSymbol) => {
+  const config = {
+    "56": {
+      "BTC": "BTCB",
+    }
+  }
+  if (config[chainId] && config[chainId][bTokenSymbol]) {
+    return config[chainId][bTokenSymbol];
+  }
+  return bTokenSymbol
+}

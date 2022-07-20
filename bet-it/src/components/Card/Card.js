@@ -217,20 +217,24 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
 
   useEffect(() => {
     let interval = 0;
+    let timeout = 0
     if (info) {
       getBetInfo()
       interval = window.setInterval(()=>{
         getBetInfo()
       },6000)
       if (info.unit === "ETH") {
-        window.setTimeout(() => {
+        timeout= window.setTimeout(() => {
           getLiquidationInfo()
         }, 600)
       } else {
         getLiquidationInfo()
       }
     }
-    return () => window.clearInterval(interval)
+    return () => {
+      window.clearInterval(interval)
+      window.clearTimeout(timeout)
+    }
   }, [wallet, info, wallet.account, wallet.chainId])
 
   useEffect(() => {

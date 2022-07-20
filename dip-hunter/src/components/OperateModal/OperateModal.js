@@ -9,11 +9,12 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
   const [percent, setPercent] = useState("")
   const [balance, setBalance] = useState()
   const [amount, setAmount] = useState()
+  const [bToken, setBToken] = useState(bTokens[0].bTokenSymbol)
   const [depositEst, setDepositEst] = useState({})
   const [withdrawEst, setWithdrawEst] = useState({})
   const [disabled, setDisabled] = useState(true)
   const getWalletBalance = async () => {
-    let res = await ApiProxy.request("getWalletBalance", { chainId: wallet.chainId, bTokenSymbol: bTokens[0].bTokenSymbol, accountAddress: wallet.account })
+    let res = await ApiProxy.request("getWalletBalance", { chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account })
     setBalance(res)
   }
   const change = e => {
@@ -28,23 +29,26 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
   }
 
   const isUnlocked = async () => {
-    let res = await ApiProxy.request("isUnlocked", { chainId: wallet.chainId, bTokenSymbol: bTokens[0].bTokenSymbol, accountAddress: wallet.account })
+    let res = await ApiProxy.request("isUnlocked", { chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account })
     console.log("isUnlocked", res)
     return res
   }
 
   const click = async () => {
-    let isApproved = await isUnlocked()
+    let isApproved = true
+    if (type !== "WITHDRAW") {
+      isApproved = await isUnlocked()
+    }
     let params;
     params = type === "DEPOSIT" ?
-    { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bTokens[0].bTokenSymbol, symbol: info.symbol, amount: amount, accountAddress: wallet.account } 
-    : { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bTokens[0].bTokenSymbol, symbol: info.symbol, volume: amount, accountAddress: wallet.account }
+      { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, symbol: info.symbol, amount: amount, accountAddress: wallet.account }
+      : { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, symbol: info.symbol, volume: amount, accountAddress: wallet.account }
     if (!isApproved) {
-      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bTokens[0].bTokenSymbol, accountAddress: wallet.account, approved: false }
+      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, approved: false }
       let approved = await ApiProxy.request("unlock", paramsApprove)
       if (approved) {
         if (approved.success) {
-          alert.success(`Approve ${bTokens[0].bTokenSymbol}`, {
+          alert.success(`Approve ${bToken}`, {
             timeout: 8000,
             isTransaction: true,
             transactionHash: approved.response.data.transactionHash,
@@ -53,7 +57,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
           })
         } else {
           if (approved.transactionHash === "") {
-            return false;
+            return true;
           }
           alert.error(`Transaction Failed ${approved.response.error.message}`, {
             timeout: 300000,
@@ -62,7 +66,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
             link: `${chain.viewUrl}/tx/${approved.response.transactionHash}`,
             title: 'Approve Failed'
           })
-          return false;
+          return true;
         }
       }
       params["approved"] = approved.success
@@ -71,7 +75,8 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
     let res = await ApiProxy.request(method, params)
     console.log(type, res)
     if (res.success) {
-      alert.success(`${type === "DEPOSIT" ? `Deposit ${bTokens[0].bTokenSymbol}` : "Withdraw"}`, {
+      setAmount("")
+      alert.success(`${type === "DEPOSIT" ? `Deposit ${bToken}` : `Withdraw ${bToken}`}`, {
         timeout: 8000,
         isTransaction: true,
         transactionHash: res.response.data.transactionHash,
@@ -80,7 +85,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
       })
     } else {
       if (res.response.transactionHash === "") {
-        return false;
+        return true;
       }
       alert.error(`Transaction Failed: ${res.response.error.message}`, {
         timeout: 300000,
@@ -99,7 +104,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
       if (percent && aBalance) {
         let per = percent
         if (percent === "MAX") {
-          per = 100
+          per = 1
         } else {
           per = parseInt(per) / 100
         }
@@ -110,10 +115,17 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
 
   }, [percent, balance])
 
+  useEffect(() => {
+    if (symbolInfo && info && type === "WITHDRAW") {
+      let token = symbolInfo.indexPrice > info.strikePrice ? info.unit : bTokens[0].bTokenSymbol
+      setBToken(token)
+    }
+  }, [symbolInfo, info, type])
+
   useEffect(async () => {
     if (balance || symbolInfo.volume) {
       let aBalance = type === "DEPOSIT" ? balance : symbolInfo.volume
-      if (amount) {
+      if (+amount) {
         if (+amount > +aBalance) {
           setDisabled(true)
         } else {
@@ -124,8 +136,11 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
           console.log("getEstimatedDepositeInfo", res)
           setDepositEst(res)
         } else {
-          let res = await ApiProxy.request("getEstimatedWithdrawInfo", { chainId: wallet.chainId, accountAddress: wallet.account, symbol: info.symbol, newAmount: amount })
+          let res = await ApiProxy.request("getEstimatedWithdrawInfo", { chainId: wallet.chainId, accountAddress: wallet.account, symbol: info.symbol, newVolume: amount })
           console.log("getEstimatedWithdrawInfo", res)
+          if (bToken === info.unit) {
+            res.amount = bg(res.amount).div(bg(symbolInfo.indexPrice)).toString()
+          }
           setWithdrawEst(res)
         }
       }
@@ -136,7 +151,6 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
   useEffect(() => {
     if (bTokens && wallet.isConnected()) {
       if (type === "DEPOSIT") { getWalletBalance() }
-      isUnlocked()
     }
   }, [wallet, bTokens, wallet.chainId, wallet.account])
   return (
@@ -201,7 +215,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
               <div className="input-token">
                 <input value={amount} onChange={change} />
                 <div className='baseToken'>
-                  <Icon token={bTokens[0].bTokenSymbol} width="22" height="22" />  {bTokens[0].bTokenSymbol}
+                  <Icon token={bToken} width="22" height="22" />  {bToken}
                 </div>
               </div>
               <div className="button-group">
@@ -216,7 +230,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
 
           </div>
           <div className="change-box">
-            {amount && <>
+            {+amount > 0 && <>
               <div className="deposit-withdraw-modal-info-col">
                 <div className="deposit-withdraw-modal-info-col-title">
                   {lang["position-after-deposit"]}
@@ -236,7 +250,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
             </>}
           </div>
           <div className="deposit-withdraw-btn">
-            <Button disabled={disabled} onClick={click} label={`${lang["deposit"]}  ${bTokens[0].bTokenSymbol}`} width={375} height={56} hoverBgColor="#38CB89" radius={14} bgColor="#EEFAF3" fontColor="#38CB89" borderSize="0" />
+            <Button disabled={disabled} onClick={click} label={`${lang["deposit"]}  ${bToken}`} width={375} height={56} hoverBgColor="#38CB89" radius={14} bgColor="#EEFAF3" fontColor="#38CB89" borderSize="0" />
           </div>
         </div>}
         {type === "WITHDRAW" && <div className="deposit-modal-info">
@@ -254,13 +268,15 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
                 {lang["current-withdraw-type"]}
               </div>
               <div className="deposit-withdraw-modal-info-col-num">
-                <div className="withdraw-busd-eth-btc  check-token">
+                <div className={`withdraw-busd-eth-btc  ${bToken !== info.unit ? "check-token" : ""}  `}>
                   <div className="is-check">
-                    <Icon token="check-btoken" />
+                    {bToken !== info.unit && <Icon token="check-btoken" />}
                   </div> {bTokens[0].bTokenSymbol}
                 </div>
-                <div className="withdraw-busd-eth-btc">
-                  <div className="is-check"></div>
+                <div className={`withdraw-busd-eth-btc  ${bToken === info.unit ? "check-token" : ""}  `}>
+                  <div className="is-check">
+                    {bToken === info.unit && <Icon token="check-btoken" />}
+                  </div>
                   {info.unit}
                 </div>
               </div>
@@ -274,7 +290,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
               <div className="input-token">
                 <input value={amount} onChange={change} />
                 <div className='baseToken'>
-                  <Icon token={info.unit} width="22" height="22" /> {info.symbol}
+                  <Icon token={info.unit} width="22" height="22" /> {info.symbolDisplay}
                 </div>
               </div>
               <div className="button-group">
@@ -289,13 +305,13 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
 
           </div>
           <div className="change-box">
-            {amount && <>
+            {+amount > 0 && <>
               <div className="deposit-withdraw-modal-info-col">
                 <div className="deposit-withdraw-modal-info-col-title">
                   {lang["withdraw-amount"]}
                 </div>
                 <div className="deposit-withdraw-modal-info-col-num">
-                  1.00 {info.unit}
+                  <DeriNumberFormat value={withdrawEst.amount} decimalScale={2} /> {bToken}
                 </div>
               </div>
               <div className="deposit-withdraw-modal-info-col">
@@ -303,7 +319,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
                   {lang["position-after-withdraw"]}
                 </div>
                 <div className="deposit-withdraw-modal-info-col-num">
-                  1.00 {info.unit}
+                  <DeriNumberFormat value={withdrawEst.volume} /> {info.unit}
                 </div>
               </div>
               <div className="deposit-withdraw-modal-info-col">
@@ -317,7 +333,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
             </>}
           </div>
           <div className="deposit-withdraw-btn">
-            <Button label={`${lang["withdraw"]} BUSD`} onClick={click} width={375} height={56} hoverBgColor="#38CB89" radius={14} bgColor="#EEFAF3" fontColor="#38CB89" borderSize="0" />
+            <Button disabled={disabled} label={`${lang["withdraw"]} ${bToken}`} onClick={click} width={375} height={56} hoverBgColor="#38CB89" radius={14} bgColor="#EEFAF3" fontColor="#38CB89" borderSize="0" />
           </div>
         </div>}
       </div>

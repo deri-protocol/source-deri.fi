@@ -4,16 +4,14 @@
     "name": "future_inno",
     "default": true,
     "symbols": [{
-        "symbol": "BTCUSD",
+        "symbol": "BTCUSD-20000-P",
         "order": 1,
-        "symbolDisplay":"BTC-20000-P",
-        "price": 20000
+        "symbolDisplay":"BTC-20000-P"
       },
       {
-        "symbol": "ETHUSD",
+        "symbol": "ETHUSD-1000-P",
         "symbolDisplay":"ETH-1000-P",
-        "order": 2,
-        "price": 1000
+        "order": 2
       }
     ]
   },

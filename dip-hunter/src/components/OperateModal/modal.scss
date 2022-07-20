@@ -41,7 +41,7 @@
       color: #333333;
 
       .input-box {
-        max-width: 376px;
+        width: 376px;
         height: 130px;
         background-color: #FAFBFC;
         border-radius: 18px;
@@ -71,7 +71,7 @@
           }
 
           .baseToken {
-            min-width: 115px;
+            width: 115px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -305,7 +305,7 @@
     }
 
     .deposit-withdraw-btn {
-      margin-top: 40px;
+      margin-top: 68px;
     }
 
     .withdraw-top-info {
@@ -322,7 +322,7 @@
           .input-token {
             padding-right: 20px;
             .baseToken {
-              min-width: 138px;
+              width: 138px;
 
               img {
                 margin-right: 8px;

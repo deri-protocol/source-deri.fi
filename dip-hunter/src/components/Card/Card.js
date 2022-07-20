@@ -70,7 +70,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
         </div>
         <div className="daily-income">
           <div className="daily-fee-day">
-            +<DeriNumberFormat value={symbolInfo.pnlPerDay} decimalScale={2} />/{lang["day"]}
+            +$<DeriNumberFormat value={symbolInfo.pnlPerDay} decimalScale={2} />/{lang["day"]}
           </div>
           <div className='daily-income-text'>
             <UnderlineText tip={symbolInfo.volume !== "0" ? `The estimated daily income of my current position. This rate is calculated from the daily funding of ${info.symbol} paid by the option buyers.` : `The estimated daily income of 10,000USDC deposit. This rate is calculated from the daily funding of ${info.symbol} paid by the option buyers.`}>

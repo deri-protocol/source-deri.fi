@@ -58,7 +58,7 @@ export const deposit = txApi(async ({ chainId, bTokenSymbol, amount, symbol, acc
 
 export const withdraw = txApi(async ({ chainId, bTokenSymbol, symbol, volume, accountAddress, isNodeEnv = false, ...opts }) => {
   accountAddress = checkAddress(accountAddress)
-  bTokenSymbol = checkToken(bTokenSymbol)
+  // bTokenSymbol = checkToken(bTokenSymbol)
   bTokenSymbol = normalizeBTokenSymbol(chainId, bTokenSymbol)
   symbol = checkToken(symbol)
   const brokerAddress = getBrokerAddress(chainId)

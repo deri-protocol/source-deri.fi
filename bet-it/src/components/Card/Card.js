@@ -13,7 +13,6 @@ import LineChart from "../LineChart/LineChart";
 import { eqInNumber, getBtokenAmount, hasParent } from "../../utils/utils";
 import { DeriEnv, bg } from '../../web3'
 export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
-  let timer;
   const [amount, setAmount] = useState(100)
   const [betInfo, setBetInfo] = useState({})
   const [bToken, setBToken] = useState()
@@ -59,15 +58,6 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
         setIsLiquidated(res.liquidate)
       }
     }
-  }
-
-  const getBetInfoTimeOut = (action) => {
-    timer = window.setTimeout(async () => {
-      let res = await action();
-      if (res) {
-        getBetInfoTimeOut(action);
-      }
-    }, 6000)
   }
 
   const getIsApprove = async () => {
@@ -226,19 +216,24 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
   }
 
   useEffect(() => {
+    let interval = 0;
+    let timeout = 0
     if (info) {
-      getBetInfoTimeOut(getBetInfo)
       getBetInfo()
+      interval = window.setInterval(()=>{
+        getBetInfo()
+      },6000)
       if (info.unit === "ETH") {
-        window.setTimeout(() => {
+        timeout= window.setTimeout(() => {
           getLiquidationInfo()
         }, 600)
       } else {
         getLiquidationInfo()
       }
     }
-    return ()=>{
-      clearInterval(timer)
+    return () => {
+      window.clearInterval(interval)
+      window.clearTimeout(timeout)
     }
   }, [wallet, info, wallet.account, wallet.chainId])
 

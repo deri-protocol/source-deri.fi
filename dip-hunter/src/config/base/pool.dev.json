@@ -18,15 +18,13 @@
       },
       {
         "bTokenSymbol": "BTCB",
-        "vTokenSymbol": "vBTC",
-        "bToken": "0xA808e341e8e723DC6BA0Bb5204Bafc2330d7B8e4",
-        "vToken": "0xb6e9322C49FD75a367Fcb17B0Fcd62C5070EbCBe"
+        "bTokenAddress": "0xA808e341e8e723DC6BA0Bb5204Bafc2330d7B8e4",
+        "bTokenDiscount": "1"
       },
       {
         "bTokenSymbol": "ETH",
-        "vTokenSymbol": "vETH",
-        "bToken": "0x98f7A83361F7Ac8765CcEBAB1425da6b341958a7",
-        "vToken": "0x162D005F0Fff510E54958Cfc5CF32A3180A84aab"
+        "bTokenAddress": "0x98f7A83361F7Ac8765CcEBAB1425da6b341958a7",
+        "bTokenDiscount": "1"
       }
     ],
     "symbols": [

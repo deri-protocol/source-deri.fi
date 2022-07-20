@@ -65,6 +65,7 @@ export const getSymbolInfo = queryApi(async ({ chainId, accountAddress, symbol})
   }
   const symbolInfo = pool.symbols.find((s) => s.symbol === symbol)
   if (bg(volume).eq(0)) {
+    ObjectCache.set(symbolCacheKey(chainId, symbol), symbolInfo)
     return {
       symbol,
       unit: symbolConfig.unit,
@@ -104,9 +105,12 @@ export const getEstimatedDepositeInfo = queryApi(async ({ chainId, accountAddres
   accountAddress = checkAddress(accountAddress)
   symbol = checkToken(symbol)
   const symbolInfo = ObjectCache.get(symbolCacheKey(chainId, symbol))
-  const position = ObjectCache.get(positionCacheKey(chainId, symbol, accountAddress))
+  let position = ObjectCache.get(positionCacheKey(chainId, symbol, accountAddress))
+  if (!position) {
+    position = { volume: 0 }
+  }
   const newVolume = bg(newAmount).div(symbolInfo.strikePrice).negated().toString()
-  if (symbolInfo && position) {
+  if (symbolInfo) {
     let fee;
     if (bg(symbolInfo.intrinsicValue).gt(0)) {
       fee = bg(newVolume)

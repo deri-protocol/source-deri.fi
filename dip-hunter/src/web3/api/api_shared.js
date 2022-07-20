@@ -22,9 +22,9 @@ export const positionCacheKey = (chainId, symbol, account) => `${chainId}_${symb
 export const marginCacheKey = (chainId, symbol, account) => `${chainId}_${symbol}_${account}_margin`
 
 export const normalizeTradeVolume = (volume, minTradeVolume) =>
-  bg(volume)
+  bg(bg(volume)
     .div(minTradeVolume)
-    .toFixed(0)
+    .toFixed(0))
     .times(minTradeVolume)
     .abs()
     .toString();

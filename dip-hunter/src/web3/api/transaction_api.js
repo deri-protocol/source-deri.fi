@@ -41,7 +41,14 @@ export const deposit = txApi(async ({ chainId, bTokenSymbol, amount, symbol, acc
   const oracleSignatures = await getSymbolsOracleInfo(chainId, pool.symbols.map((s) => s.symbol))
   const symbolInfo = pool.symbols.find((s) => s.symbol === symbol)
 
-  const volume = normalizeTradeVolume(bg(amount).div(symbolInfo.strikePrice).toString(), symbolInfo.minTradeVolume)
+  const volume = bg(
+    normalizeTradeVolume(
+      bg(amount).div(symbolInfo.strikePrice).toString(),
+      symbolInfo.minTradeVolume
+    )
+  )
+    .negated()
+    .toString();
   const priceLimit = getPriceLimit(volume)
   debug() && console.log(`amount(${amount}) strike(${symbolInfo.strikePrice}) volume(${volume}) priceLimit(${priceLimit}) bToken(${bTokenConfig.bTokenAddress}) broker(${brokerAddress})`)
   let res = await broker.trade(accountAddress, symbolConfig.pool, bTokenConfig.bTokenAddress, false, toWei(amount, bTokenConfig.bTokenDecimals || 18), symbol, toWei(volume), priceLimit, oracleSignatures, opts)

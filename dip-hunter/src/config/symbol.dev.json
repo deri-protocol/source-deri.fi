@@ -1,55 +1,32 @@
-[
-  {
+[{
     "chainId": "97",
-    "chain" : "BSC",
+    "chain": "BSC",
     "name": "future_inno",
-    "default" : true,
-    "symbols": [
-      {
-        "symbol": "DOGEUSDT",
-        "order" : 5
+    "default": true,
+    "symbols": [{
+        "symbol": "BTCUSD-20000-P",
+        "order": 1,
+        "symbolDisplay":"BTC-20000-P"
       },
       {
-        "symbol": "SOLUSDT",
-        "order" : 4
-      },
-      {
-        "symbol": "DOTUSDT",
-        "order" : 3
-      },
-      {
-        "symbol": "BTCUSD",
-        "order" : 1,
-        "powerSymbol": {
-          "displaySymbol": "mBTC^2"
-        }
-      },
-      {
-        "symbol": "ETHUSD",
-        "order" : 2,
-        "powerSymbol": {
-          "displaySymbol": "mETH^2"
-        }
+        "symbol": "ETHUSD-1000-P",
+        "symbolDisplay":"ETH-1000-P",
+        "order": 2
       }
     ]
   },
   {
     "chainId": "421611",
-    "chain" : "ARBI",
+    "chain": "ARBI",
     "name": "pool1",
-    "symbols": [
-      {
+    "symbols": [{
         "symbol": "BTCUSD",
-        "powerSymbol": {
-          "symbol": "BTC^2",
-          "displaySymbol": "mBTC^2"
-        }
+        "price": 20000
       },
       {
         "symbol": "ETHUSD",
-        "powerSymbol": {
-          "displaySymbol": "mETH^2"
-        }
+        "price": 1000
+
       }
     ]
   }

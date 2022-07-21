@@ -1,28 +1,19 @@
 import { useModal } from 'react-hooks-use-modal';
 import classNames from 'classnames'
 import './dip-hunter.scss'
+import usePool from "../hooks/usePool";
 import { Icon } from '@deri/eco-common';
 import { isStartScroll, isMobile } from "../utils/utils";
 import Font from '../components/Font/Font'
 import { useState, useEffect, useCallback } from "react";
 import Card from "../components/Card/Card"
-const config = [
-  {
-    symbol:"BTCUSD",
-    unit:"BTC",
-    price:20000,
-  },
-  {
-    symbol:"ETHUSD",
-    unit:"ETH",
-    price:1000,
-  }
-]
 export default function DipHunter({ lang, getLang, actions }) {
   const [index, setIndex] = useState(3)
   const [isFixed, setIsFixed] = useState(false)
-  const [withDipA, setWithDipA] = useState(true)
-  const [withDipB, setWithDipB] = useState(true)
+  const [withDipA, setWithDipA] = useState(false)
+  const [withDipB, setWithDipB] = useState(false)
+  const [bTokens, symbols] = usePool();
+  console.log(bTokens, symbols)
   const handler = useCallback(() => {
     let offset = 138
     let bgTop = document.getElementsByClassName('bg-img-color')[0]
@@ -63,7 +54,7 @@ export default function DipHunter({ lang, getLang, actions }) {
             <Font text={lang["dip-hunter"]} />
           </div>
           <div className="helps-info">
-            {index === 0 ? lang["info-des"] : lang["info-des-tow"]} <span>
+            {lang["info-des"]} <span>
               {lang["passive-income"]}
             </span>
           </div>
@@ -123,9 +114,6 @@ export default function DipHunter({ lang, getLang, actions }) {
                 <div className='option-title'>
                   {lang["with-dip-hunter"]}
                 </div>
-                <div className='with-dip-hunter-right'>
-                  {lang["with-dip-hunter"].toLocaleLowerCase()}
-                </div>
                 <div className='option-info-text'>
                   {lang["with-dip-hunter-des"]}
                   <span> ETH-1000-P </span>
@@ -163,9 +151,9 @@ export default function DipHunter({ lang, getLang, actions }) {
                               </div>
                               <div className="symbol-list-info-num">
                                 <span className="volume">1</span>
-                                <span className="entry-price">$34.55</span>
-                                <span className="exit-price">$6.34</span>
-                                <span className="avg-daily-funding">$2.55</span>
+                                <span className="entry-price">$8.56</span>
+                                <span className="exit-price">$0.2</span>
+                                <span className="avg-daily-funding">$1.15</span>
                                 <span className="holding-period">60 days</span>
                               </div>
 
@@ -184,9 +172,6 @@ export default function DipHunter({ lang, getLang, actions }) {
               {index === 3 && <li className="option-four">
                 <div className='option-title'>
                   {lang["with-dip-hunter"]}
-                </div>
-                <div className='with-dip-hunter-right'>
-                  {lang["with-dip-hunter"].toLocaleLowerCase()}
                 </div>
                 <div className='option-info-text'>
                   {lang["with-dip-hunter-des"]}
@@ -225,8 +210,8 @@ export default function DipHunter({ lang, getLang, actions }) {
                               </div>
                               <div className="symbol-list-info-num">
                                 <span className="volume">1</span>
-                                <span className="entry-price">$34.55</span>
-                                <span className="exit-price">$143.55</span>
+                                <span className="entry-price">$8.56</span>
+                                <span className="exit-price">$114.67</span>
                                 <span className="avg-daily-funding">$2.55</span>
                                 <span className="holding-period">60 days</span>
                               </div>
@@ -259,9 +244,9 @@ export default function DipHunter({ lang, getLang, actions }) {
         </div>
       </div>
       <div className='card-box-info'>
-        {config.map((item,index)=>{
-          return(
-            <Card key={index} info={item} lang={lang} />
+        {symbols && symbols.map((item, index) => {
+          return (
+            <Card key={index} info={item} lang={lang} bTokens={bTokens} />
           )
         })}
       </div>

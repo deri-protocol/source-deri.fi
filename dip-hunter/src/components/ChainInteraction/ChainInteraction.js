@@ -10,17 +10,17 @@ export default function ChainInteraction({title,status = 'pending',isApproved,ap
       pending : {
         rgb : '255, 171, 0',
         icon : 'trans-waiting',
-        subTitle : Intl.get('betit','waiting-for-confirmation-title')
+        subTitle : Intl.get('dip-hunter','waiting-for-confirmation-title')
       },
       success : {
         rgb : '56, 203, 137',
         icon : 'trans-submitted',
-        subTitle :  Intl.get('betit','transaction-submitted')
+        subTitle :  Intl.get('dip-hunter','transaction-submitted')
       } ,
       reject : {
         rgb : '255, 86, 48',
         icon : 'trans-rejected',
-        subTitle :  Intl.get('betit','transaction-rejected')
+        subTitle :  Intl.get('dip-hunter','transaction-rejected')
       }
     }
   ), [])
@@ -31,5 +31,5 @@ export default function ChainInteraction({title,status = 'pending',isApproved,ap
       setData(config[status])    
     } 
   }, [status])
-  return (<TransactionBox title={title} rgb={data['rgb']} status={status} approved={approved} direction={direction} subTitle={data['subTitle']} desc={data['desc']} icon={data['icon']} close={close}/>)
+  return (<TransactionBox title={title} rgb={data['rgb']} status={status} approved={approved} direction={title} subTitle={data['subTitle']} desc={data['desc']} icon={data['icon']} close={close}/>)
 }

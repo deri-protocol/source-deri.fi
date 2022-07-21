@@ -10,8 +10,8 @@ import Card from "../components/Card/Card"
 export default function DipHunter({ lang, getLang, actions }) {
   const [index, setIndex] = useState(3)
   const [isFixed, setIsFixed] = useState(false)
-  const [withDipA, setWithDipA] = useState(true)
-  const [withDipB, setWithDipB] = useState(true)
+  const [withDipA, setWithDipA] = useState(false)
+  const [withDipB, setWithDipB] = useState(false)
   const [bTokens, symbols] = usePool();
   console.log(bTokens, symbols)
   const handler = useCallback(() => {
@@ -54,7 +54,7 @@ export default function DipHunter({ lang, getLang, actions }) {
             <Font text={lang["dip-hunter"]} />
           </div>
           <div className="helps-info">
-            {index === 0 ? lang["info-des"] : lang["info-des-tow"]} <span>
+            {lang["info-des"]} <span>
               {lang["passive-income"]}
             </span>
           </div>
@@ -114,9 +114,6 @@ export default function DipHunter({ lang, getLang, actions }) {
                 <div className='option-title'>
                   {lang["with-dip-hunter"]}
                 </div>
-                <div className='with-dip-hunter-right'>
-                  {lang["with-dip-hunter"].toLocaleLowerCase()}
-                </div>
                 <div className='option-info-text'>
                   {lang["with-dip-hunter-des"]}
                   <span> ETH-1000-P </span>
@@ -175,9 +172,6 @@ export default function DipHunter({ lang, getLang, actions }) {
               {index === 3 && <li className="option-four">
                 <div className='option-title'>
                   {lang["with-dip-hunter"]}
-                </div>
-                <div className='with-dip-hunter-right'>
-                  {lang["with-dip-hunter"].toLocaleLowerCase()}
                 </div>
                 <div className='option-info-text'>
                   {lang["with-dip-hunter-des"]}
@@ -250,8 +244,8 @@ export default function DipHunter({ lang, getLang, actions }) {
         </div>
       </div>
       <div className='card-box-info'>
-        {symbols && symbols.map((item,index)=>{
-          return(
+        {symbols && symbols.map((item, index) => {
+          return (
             <Card key={index} info={item} lang={lang} bTokens={bTokens} />
           )
         })}

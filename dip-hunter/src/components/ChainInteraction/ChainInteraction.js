@@ -31,5 +31,5 @@ export default function ChainInteraction({title,status = 'pending',isApproved,ap
       setData(config[status])    
     } 
   }, [status])
-  return (<TransactionBox title={title} rgb={data['rgb']} status={status} approved={approved} direction={direction} subTitle={data['subTitle']} desc={data['desc']} icon={data['icon']} close={close}/>)
+  return (<TransactionBox title={title} rgb={data['rgb']} status={status} approved={approved} direction={title} subTitle={data['subTitle']} desc={data['desc']} icon={data['icon']} close={close}/>)
 }

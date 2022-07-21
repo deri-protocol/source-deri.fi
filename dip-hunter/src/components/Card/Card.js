@@ -70,10 +70,10 @@ export default function Card({ info, lang, getLang, bTokens }) {
         </div>
         <div className="daily-income">
           <div className="daily-fee-day">
-            +$<DeriNumberFormat value={symbolInfo.pnlPerDay} decimalScale={2} />/{lang["day"]}
+            <span> +$<DeriNumberFormat value={symbolInfo.pnlPerDay} decimalScale={2} /></span>/{lang["day"]}
           </div>
           <div className='daily-income-text'>
-            <UnderlineText tip={symbolInfo.volume !== "0" ? `The estimated daily income of my current position. This rate is calculated from the daily funding of ${info.symbol} paid by the option buyers.` : `The estimated daily income of 10,000USDC deposit. This rate is calculated from the daily funding of ${info.symbol} paid by the option buyers.`}>
+            <UnderlineText width="220" tip={symbolInfo.volume !== "0" ? `The estimated daily income of my current position. This rate is calculated from the daily funding of ${info.symbol} paid by the option buyers.` : `The estimated daily income of 1 ${info.unit} deposit. This rate is calculated from the daily funding of ${info.symbol} paid by the option buyers.`}>
               <span>
                 {symbolInfo.volume !== "0" ? lang["my-daily-income"] : lang["est-daily-income"]}
               </span>
@@ -85,7 +85,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
           <div className='price-info'>
             <div className="price-title">
               {lang["excution-price"]}
-              <UnderlineText tip="The execution">
+              <UnderlineText tip="The excecise price of the underlier put options.">
                 <Icon token="wring" />
               </UnderlineText>
             </div>
@@ -94,7 +94,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
           <div className='position-info'>
             <div className="position-title">
               {lang["your-position"]}
-              <UnderlineText tip="selling cash-covered put options">
+              <UnderlineText tip="Selling cash-covered put options">
                 <Icon token="wring" />
               </UnderlineText>
             </div>

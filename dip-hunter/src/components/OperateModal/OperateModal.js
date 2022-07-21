@@ -117,8 +117,8 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
 
   useEffect(() => {
     if (symbolInfo && info && type === "WITHDRAW") {
-      let token = symbolInfo.indexPrice > info.strikePrice ? info.unit : bTokens[0].bTokenSymbol
-      setBToken(token)
+      let token = symbolInfo.indexPrice < info.strikePrice ? info.unit : bTokens[0].bTokenSymbol
+      // setBToken(token)
     }
   }, [symbolInfo, info, type])
 
@@ -202,7 +202,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
               {lang["value-strategy"]}
             </div>
             <div className="value-strategy-des">
-              {lang["value-strategy-des"]}
+              The vault earns yield on its {bTokens[0].bTokenSymbol} deposits by selling cash covered {info.symbolDisplay} directly to market makers on Deri Protocol.
             </div>
           </div>
         </div>}
@@ -268,13 +268,13 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
                 {lang["current-withdraw-type"]}
               </div>
               <div className="deposit-withdraw-modal-info-col-num">
-                <div className={`withdraw-busd-eth-btc  ${bToken !== info.unit ? "check-token" : ""}  `}>
-                  <div className="is-check">
+                <div onClick={() => { setBToken(bTokens[0].bTokenSymbol) }} className={`withdraw-busd-eth-btc  ${bToken !== info.unit ? "check-token" : ""}  `}>
+                  <div className="is-check" >
                     {bToken !== info.unit && <Icon token="check-btoken" />}
                   </div> {bTokens[0].bTokenSymbol}
                 </div>
-                <div className={`withdraw-busd-eth-btc  ${bToken === info.unit ? "check-token" : ""}  `}>
-                  <div className="is-check">
+                <div onClick={() => { setBToken(info.unit) }} className={`withdraw-busd-eth-btc  ${bToken === info.unit ? "check-token" : ""}  `}>
+                  <div className="is-check" >
                     {bToken === info.unit && <Icon token="check-btoken" />}
                   </div>
                   {info.unit}
@@ -290,7 +290,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
               <div className="input-token">
                 <input value={amount} onChange={change} />
                 <div className='baseToken'>
-                  <Icon token={info.unit} width="22" height="22" /> {info.symbolDisplay}
+                  <Icon token={info.unit} width="22" height="22" /> {info.unit} Options
                 </div>
               </div>
               <div className="button-group">

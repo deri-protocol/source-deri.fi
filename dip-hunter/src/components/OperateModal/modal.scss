@@ -71,12 +71,12 @@
           }
 
           .baseToken {
-            width: 115px;
+            width: 90px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: 600;
-            cursor: pointer;
+            // cursor: pointer;
             font-size: 20px;
             white-space: nowrap;
           }
@@ -112,7 +112,7 @@
 
       .balance-position {
         position: absolute;
-        width: 158px;
+        width: 165px;
         height: 90px;
         background: #FAFBFC;
         border-radius: 18px;
@@ -320,9 +320,9 @@
 
         .input-box {
           .input-token {
-            padding-right: 20px;
+            padding-right: 22px;
             .baseToken {
-              width: 138px;
+              width: 128px;
 
               img {
                 margin-right: 8px;

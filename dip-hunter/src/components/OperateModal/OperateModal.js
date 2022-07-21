@@ -81,7 +81,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
         isTransaction: true,
         transactionHash: res.response.data.transactionHash,
         link: `${chain.viewUrl}/tx/${res.response.data.transactionHash}`,
-        title: `${type === "DEPOSIT" ? "Deposit" : "Withdraw"}`
+        title: `${type === "DEPOSIT" ? "Deposit Executed" : "Withdraw Executed"}`
       })
     } else {
       if (res.response.transactionHash === "") {

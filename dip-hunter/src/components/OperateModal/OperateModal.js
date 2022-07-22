@@ -7,9 +7,9 @@ import { DeriEnv, bg } from '../../web3'
 import { hasParent } from '../../utils/utils'
 import DeriNumberFormat from "../../utils/DeriNumberFormat";
 export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, info, bTokens, wallet, closeModal }) {
-  const [percent, setPercent] = useState("") 
+  const [percent, setPercent] = useState("")
   const [balance, setBalance] = useState()
-  const [isShow,setIsShow] = useState(false)
+  const [isShow, setIsShow] = useState(false)
   const [amount, setAmount] = useState()
   const [bToken, setBToken] = useState(bTokens[0].bTokenSymbol)
   const [depositEst, setDepositEst] = useState({})
@@ -127,11 +127,10 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
   }, [percent, balance])
 
   useEffect(() => {
-    if (symbolInfo && info && type === "WITHDRAW") {
-      let token = symbolInfo.indexPrice < info.strikePrice ? info.unit : bTokens[0].bTokenSymbol
-      // setBToken(token)
+    if (wallet.isConnected()) {
+      getWalletBalance()
     }
-  }, [symbolInfo, info, type])
+  }, [wallet])
 
   useEffect(async () => {
     if (balance || symbolInfo.volume) {
@@ -157,7 +156,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
       }
     }
 
-  }, [amount, balance])
+  }, [amount, balance, bToken])
 
   return (
     <div className={classNames('withdraw-deposit-position', type)}>

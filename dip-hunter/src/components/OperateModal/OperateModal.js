@@ -1,13 +1,15 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useCallback, useRef } from "react"
 import ApiProxy from "../../model/ApiProxy"
-import { Icon, Button } from '@deri/eco-common';
+import { Icon, Button, UnderlineText } from '@deri/eco-common';
 import classNames from "classnames"
 import './modal.scss';
 import { DeriEnv, bg } from '../../web3'
+import { hasParent } from '../../utils/utils'
 import DeriNumberFormat from "../../utils/DeriNumberFormat";
 export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, info, bTokens, wallet, closeModal }) {
-  const [percent, setPercent] = useState("")
+  const [percent, setPercent] = useState("") 
   const [balance, setBalance] = useState()
+  const [isShow,setIsShow] = useState(false)
   const [amount, setAmount] = useState()
   const [bToken, setBToken] = useState(bTokens[0].bTokenSymbol)
   const [depositEst, setDepositEst] = useState({})
@@ -97,6 +99,15 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
     }
     return true
   }
+  const onBodyClick = useCallback((e) => {
+    const parent = document.querySelector('.withdraw-deposit-position');
+    if (e) {
+      if (!hasParent(parent, e.target) && isShow) {
+        closeModal()
+      }
+      setIsShow(true)
+    }
+  })
 
   useEffect(() => {
     if (balance || symbolInfo.volume) {
@@ -148,11 +159,6 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
 
   }, [amount, balance])
 
-  useEffect(() => {
-    if (bTokens && wallet.isConnected()) {
-      if (type === "DEPOSIT") { getWalletBalance() }
-    }
-  }, [wallet, bTokens, wallet.chainId, wallet.account])
   return (
     <div className={classNames('withdraw-deposit-position', type)}>
       <div className='font-box'>
@@ -266,6 +272,9 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
             <div className="deposit-withdraw-modal-info-col">
               <div className="deposit-withdraw-modal-info-col-title">
                 {lang["current-withdraw-type"]}
+                <UnderlineText width="220" tip={`The token you will receive when withdrawing funds. If ${info.unit} is selected, Dip Hunter will help to by ${info.unit} on Pancakeswap and send it to you.`}>
+                  <Icon token="wring" />
+                </UnderlineText>
               </div>
               <div className="deposit-withdraw-modal-info-col-num">
                 <div onClick={() => { setBToken(bTokens[0].bTokenSymbol) }} className={`withdraw-busd-eth-btc  ${bToken !== info.unit ? "check-token" : ""}  `}>

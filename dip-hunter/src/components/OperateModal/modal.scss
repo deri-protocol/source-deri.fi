@@ -140,6 +140,14 @@
         margin-bottom: 30px;
         color: #444444;
         font-weight: 500;
+        .deposit-withdraw-modal-info-col-title{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          img{
+            margin-left: 8px;
+          }
+        }
       }
     }
 

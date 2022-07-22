@@ -50,6 +50,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
       clearInterval(interval)
     }
   }, [wallet, info, wallet.account, wallet.chainId])
+  
   return (
     <div className={classNames('card-box', info.unit)}>
       <div className="buy-symbol-name">

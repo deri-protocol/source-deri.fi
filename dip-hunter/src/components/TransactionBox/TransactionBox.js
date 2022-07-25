@@ -195,16 +195,17 @@ function ApproveStatus({approved,direction,status}){
     if(status === 'pending') {
       if(approved) {
         setApproveStatusIcon('trans-disabled-success');
-        setTransStatusIcon(<Loading/>)
+        setTransStatusIcon(<Loading />)
       } else {
-        setApproveStatusIcon(<Loading/>);
-        setTransStatusIcon(<Loading/>)
+        setApproveStatusIcon(<Loading />);
+        setTransStatusIcon(<Loading />)
       }
     } else if(status === 'success') {
       if(approved) {
         setApproveStatusIcon('trans-success');
         setTransStatusIcon('trans-success');
       }  else {
+        setApproveStatusIcon('trans-success');
         setTransStatusIcon('trans-success');
       }
     } else {
@@ -220,7 +221,7 @@ function ApproveStatus({approved,direction,status}){
       <StatusBarWrapper className={statusBarClass}>
         <Label text={approveLabel} className='approve-label'  width='94' height='30' icon={approveStatusIcon}/>
         <ProcessBar className='process-bar-wrapper' percent='50%' width='120px'/>
-        <Label text={direction} className='direction-label' icon={transStatusIcon} width='90' height='30'/>
+        <Label text={direction} className='direction-label' icon={transStatusIcon} width='115' height='30'/>
       </StatusBarWrapper>
     )
 }

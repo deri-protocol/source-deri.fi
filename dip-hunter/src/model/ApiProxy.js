@@ -42,7 +42,7 @@ class ApiProxy {
   }
 
   onProcessing(subject,status,options){
-    const {direction = 'CLOSE',approved} = options;
+    const {direction = 'DEPOSIT',approved} = options;
     const key = this.getMessageKey(subject)
     this.close(key);
     const params = {

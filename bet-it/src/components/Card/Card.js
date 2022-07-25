@@ -62,7 +62,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
 
   const getIsApprove = async () => {
     let res = await ApiProxy.request("isUnlocked", { chainId: wallet.chainId, accountAddress: wallet.account, bTokenSymbol: bToken })
-    return res
+    return res.isUnlocked
   }
 
   const getWalletBalance = async () => {

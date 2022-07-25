@@ -129,7 +129,7 @@ export const getEstimatedDepositeInfo = queryApi(async ({ chainId, accountAddres
     }
     return {
       symbol,
-      volume: bg(position.volume).plus(newVolume).abs().toString(),
+      volume: bg(position.volume).minus(newVolume).abs().toString(),
       fee,
     }
   } else {

@@ -74,7 +74,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
             <span> +$<DeriNumberFormat value={symbolInfo.pnlPerDay} decimalScale={2} /></span>/{lang["day"]}
           </div>
           <div className='daily-income-text'>
-            <UnderlineText width="220" tip={symbolInfo.volume !== "0" ? `The estimated daily income of my current position. This rate is calculated from the daily funding of ${info.symbol} paid by the option buyers.` : `The estimated daily income of 1 ${info.unit} deposit. This rate is calculated from the daily funding of ${info.symbol} paid by the option buyers.`}>
+            <UnderlineText width="220" tip={symbolInfo.volume !== "0" ? `The estimated daily income of my current position. This rate is calculated from the daily funding of ${info.symbol} paid by the option buyers.` : ` The estimated daily income of 1 ${info.unit} position.This rate is calculated from the daily funding of ${info.symbol} paid by the option buyers.`}>
               <span>
                 {symbolInfo.volume !== "0" ? lang["my-daily-income"] : lang["est-daily-income"]}
               </span>
@@ -100,7 +100,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
               </UnderlineText>
             </div>
             <div className="position-num">
-              <DeriNumberFormat value={symbolInfo.volume} />
+              <DeriNumberFormat value={symbolInfo.volume} /> {info.unit} {lang["options"]}
             </div>
           </div>
         </div>

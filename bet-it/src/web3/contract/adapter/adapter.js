@@ -10,8 +10,13 @@ export const ERC20Adapter = (klass) => {
     "isUnlocked",
     async function (accountAddress, poolAddress) {
       const allowance = await this.allowance(accountAddress, poolAddress);
-      const res = bg(allowance).gt(0);
-      return res;
+      // const res = bg(allowance).gt(0);
+      // return res;
+      return {
+        isUnlocked: bg(allowance).gt(bg(MAX_UINT256).div(10)),
+        isZero: bg(allowance).eq(0),
+        allowance,
+      };
     }
   );
   klass = classAdapter(

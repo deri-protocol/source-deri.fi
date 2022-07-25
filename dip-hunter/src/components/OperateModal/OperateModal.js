@@ -32,7 +32,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
 
   const isUnlocked = async () => {
     let res = await ApiProxy.request("isUnlocked", { chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account })
-    console.log("isUnlocked", res)
+    console.log("isUnlocked", res.isUnlocked)
     return res
   }
 
@@ -43,10 +43,10 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
     }
     let params;
     params = type === "DEPOSIT" ?
-      { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, symbol: info.symbol, amount: amount, accountAddress: wallet.account }
-      : { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, symbol: info.symbol, volume: amount, accountAddress: wallet.account }
-    if (!isApproved) {
-      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, approved: false }
+      { includeResponse: true, write: true, subject: type.toUpperCase(), direction: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, symbol: info.symbol, amount: amount, accountAddress: wallet.account }
+      : { includeResponse: true, write: true, subject: type.toUpperCase(), direction: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, symbol: info.symbol, volume: amount, accountAddress: wallet.account }
+    if (!isApproved.isUnlocked) {
+      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, approved: false, direction: type.toUpperCase() }
       let approved = await ApiProxy.request("unlock", paramsApprove)
       if (approved) {
         if (approved.success) {

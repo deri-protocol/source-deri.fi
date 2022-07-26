@@ -90,7 +90,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
                 <Icon token="wring" />
               </UnderlineText>
             </div>
-            <div className="price-num">{info.strikePrice}</div>
+            <div className="price-num">${info.strikePrice}</div>
           </div>
           <div className='position-info'>
             <div className="position-title">

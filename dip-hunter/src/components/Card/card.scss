@@ -131,104 +131,106 @@ $Color: #F49B33,
 
       .daily-fee-day {
         color: #38CB89;
-
-        span {
+        span{
           font-size: 42px;
         }
       }
-    }
 
-    .daily-income-text {
-      font-size: 16px;
-      font-weight: 600;
-      margin-top: 15px;
-      color: #C8CDD5;
-      // border-bottom: 1px solid #E4E6E8;
-      cursor: pointer;
+      .daily-income-text {
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 15px;
+        color: #C8CDD5;
+        // border-bottom: 1px solid #E4E6E8;
+        cursor: pointer;
 
-      .text {
-        display: flex;
+        .text {
+          display: flex;
 
-        span {
-          border-bottom: 1px solid #E4E6E8;
-        }
+          span {
+            border-bottom: 1px solid #E4E6E8;
+          }
 
-        img {
-          margin-left: 8px;
-          align-items: center;
+          img {
+            margin-left: 8px;
+            align-items: center;
+          }
         }
       }
     }
-  }
+
+    .price-postion {
+      margin: 0 auto;
+      margin-top: 46px;
+      width: 346px;
+      font-weight: 500;
+      font-size: 16px;
+
+      .price-info,
+      .position-info {
+
+        .position-title,
+        .price-title {
+          display: flex;
+          align-items: center;
+
+          img {
+            margin-left: 4px;
+          }
+        }
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .price-info {
+        margin-bottom: 9px;
+      }
+    }
 
     .deposit-withdraw-position {
       margin-top: 59px;
 
-    .price-info,
-    .position-info {
+      // .disabled {
+      //   border: 1px solid rgba(4, 4, 21, 0.1);
+      //   color: #999999;
+      //   background-color: #FFFFFF;
+      // }
 
-      .position-title,
-      .price-title {
+      .postion-btn {
         display: flex;
-        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 14px;
+        color: #C8CDD5;
+        cursor: pointer;
 
         img {
-          margin-left: 4px;
+          margin-left: 10px;
         }
       }
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
     }
 
-    .price-info {
-      margin-bottom: 9px;
-    }
-  }
-
-  .deposit-withdraw-position {
-    margin-top: 57px;
-
-    // .disabled {
-    //   border: 1px solid rgba(4, 4, 21, 0.1);
-    //   color: #999999;
-    //   background-color: #FFFFFF;
-    // }
-
-    .postion-btn {
+    .deposit-withdraw {
       display: flex;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 14px;
-      color: #C8CDD5;
-      cursor: pointer;
+      margin-top: 27px;
 
-      img {
-        margin-left: 10px;
+      div {
+        flex-grow: 1;
+      }
+
+      .deposit {
+        border-radius: 0 0 0 30px;
+      }
+
+      .withdraw {
+        border-radius: 0 0 30px 0;
       }
     }
   }
 
-  .deposit-withdraw {
-    display: flex;
-    margin-top: 27px;
-
-    div {
-      flex-grow: 1;
-    }
-
-    .deposit {
-      border-radius: 0 0 0 30px;
-    }
-
-    .withdraw {
-      border-radius: 0 0 30px 0;
-    }
-  }
 }
-
-
 
 .card-box:nth-child(3n+1) {
   margin-left: 0px;

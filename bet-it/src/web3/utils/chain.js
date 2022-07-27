@@ -94,7 +94,7 @@ export const onChainSymbols = (chainId) => {
   } else if (isArbiChain(chainId)) {
     return ["BTCUSD", "ETHUSD"]
   } else {
-    return ["BTCUSD", "ETHUSD", "BNBUSD"]
+    return []
   }
 }
 

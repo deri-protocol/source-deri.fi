@@ -7,7 +7,7 @@ import Label from '../Label/Label';
 import styled from 'styled-components';
 import ProcessBar from "../ProcessBar/ProcessBar";
 
-export default function TransactionBox({title,subTitle,icon,rgb,close,direction,approved,status}) {
+export default function TransactionBox({title,subTitle,icon,rgb,close,direction,approved,status,options={}}) {
   const [current, setCurrent] = useState(rgb)
   const iconClass = classNames('trans-box-content-icon',{
     'trans-box-content-icon-fadeout' : current !== rgb
@@ -34,6 +34,7 @@ export default function TransactionBox({title,subTitle,icon,rgb,close,direction,
         </div>
         <div className={subTitleClass}>{subTitle}</div>
         <ApproveStatus direction={direction} approved={approved} status={status}/>
+        {options.approveTip && <div className='trans-box-content-approve-tip'><Icon className='icon' token='approve-warn'/>{options.approveTip}</div>}
       </div>
     </div>
   )

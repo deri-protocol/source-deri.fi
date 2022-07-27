@@ -229,7 +229,7 @@ const oracleSymbolToPriceSymbol = (symbol) => {
 export const getSymbolsOracleInfo = async (chainId, symbols) => {
   // const res = await getSignedPrices(this.chainId, this.symbolNames)
   symbols = symbols.filter((s) => !onChainSymbols(chainId).includes(s))
-  const res = await getOracleInfosFromRest([...new Set(symbols.map((s) => normalizeOracleSymbol(s)))])
+  const res = await getOracleInfosFromRest2([...new Set(symbols.map((s) => normalizeOracleSymbol(s)))])
   return res.filter((s) => s !== undefined)
 };
 

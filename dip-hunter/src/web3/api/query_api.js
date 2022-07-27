@@ -7,7 +7,7 @@ import { getBrokerAddress, getBToken, getPoolConfig, getSymbol, getSymbolList } 
 import { debug, DeriEnv } from "../utils/env";
 import { checkToken, deriSymbolScaleOut, nativeCoinSymbols, normalizeDeriSymbol, stringToId } from "../utils/symbol";
 import { getWeb3 } from "../utils/web3";
-import { ZERO_ADDRESS } from '../utils/constant'
+import { MAX_UINT256, ZERO_ADDRESS } from '../utils/constant'
 import { fetchJson, getHttpBase } from "../utils/rest";
 import { getLastTradeInfoFromScanApi } from "../utils/scanapi";
 import { delay } from "../utils/factory";
@@ -33,7 +33,11 @@ export const isUnlocked = queryApi(
     accountAddress = checkAddress(accountAddress);
     bTokenSymbol = checkToken(bTokenSymbol);
     if (nativeCoinSymbols(chainId).includes(bTokenSymbol)) {
-      return true;
+      return {
+        isUnlocked: true,
+        isZero: false,
+        allowance: bg(MAX_UINT256).toString(),
+      };
     } else {
       const brokerAddress = getBrokerAddress(chainId);
       debug() &&

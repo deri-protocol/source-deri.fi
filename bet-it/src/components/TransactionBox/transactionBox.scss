@@ -3,6 +3,15 @@
   height: 320px;
   width: 400px;
   border-radius: 10px;
+  .trans-box-content-approve-tip{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12px;
+    img{
+      margin-right: 4px;
+    }
+  }
   &-title {
     height: 60px;
     font-size: 18px;

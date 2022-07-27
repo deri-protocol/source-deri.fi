@@ -142,8 +142,8 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     let direction = type === "up" || type === "boostedUp" ? "long" : "short"
     let boostedUp = type === "boostedUp" ? true : false
     let params = { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, amount: amount, symbol: info.symbol, accountAddress: wallet.account, boostedUp: boostedUp, direction: direction }
-    if (!isApproved) {
-      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, direction: direction, approved: false }
+    if (!isApproved.isUnlocked) {
+      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, direction: direction, approved: false,approveTip: isApproved.isZero ? "" : "Changing approved amount may result transaction failure" }
       let approved = await ApiProxy.request("unlock", paramsApprove)
       if (approved) {
         if (approved.success) {

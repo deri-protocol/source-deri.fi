@@ -53,7 +53,7 @@ class ApiProxy {
         },
         key : key
     }
-    show(<ChainInteraction title={subject} status={status} direction={direction.toUpperCase()} options={options} approved={approved} close={() => this.close(subject)}/>,params)
+    show(<ChainInteraction title={subject} status={status} direction={direction.toUpperCase()} options={options}  approved={approved} close={() => this.close(subject)}/>,params)
   }
 
   

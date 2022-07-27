@@ -2,6 +2,8 @@ import { debug } from "util";
 import { asyncCache } from "./cache";
 import { onChainSymbols } from "./chain";
 import { isOptionSymbol, isPowerSymbol, normalizeOptionSymbol, normalizePowerSymbolForOracle, stringToId } from "./symbol";
+import axios from "axios";
+import { bg } from "./bignumber";
 
 const addSymbolParam = (url, symbol) => `${url}?symbol=${symbol}`;
 export const getOracleServerUrl = (symbol) => {
@@ -14,6 +16,15 @@ export const getOracleServerUrl = (symbol) => {
   } else {
     return baseUrl;
   }
+};
+
+const addSymbolParam2 = (url, symbol) => `${url}?symbols=${symbol}`;
+export const getOracleServerUrl2 = (symbolList, isSigned) => {
+  //if (/^[0-9]+$/.test(symbolId.toString())) {
+  let method = isSigned ?  "signed" : "unsigned"
+  let baseUrl = `https://sig.oraclum.io/${method}`
+
+  return addSymbolParam2(baseUrl, symbolList.join(','))
 };
 
 const delayMs = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
@@ -102,10 +113,65 @@ const _getOracleInfoFromRest  = async (symbolList) => {
     throw new Error(`REST_API_CALL_TIMEOUT: ${url}`);
   }
 }
-
+const _getOracleInfoFromRest2  = async (symbolList, isSigned=true) => {
+  let url = getOracleServerUrl2(symbolList.map((s) => normalizeOracleSymbol(s)), isSigned);
+  // console.log('-',url)
+  let retry = 2;
+  let res=[], symbolInfos;
+  while (retry > 0) {
+    try {
+      res = await axios.get(url);
+      if (res.status === 200) {
+          symbolInfos = res.data;
+          if (Array.isArray(symbolInfos)) {
+            const values = symbolInfos
+            res = symbolList.reduce((acc, s) => {
+              const info = values.find((p) => p.symbol === s)
+              if (info) {
+                acc.push([
+                  info.symbolId,
+                  info.timestamp,
+                  info.value,
+                  parseInt(info.v).toString(),
+                  info.r,
+                  info.s,
+                ]);
+              } else {
+                acc.push(undefined)
+              }
+              return acc
+            }, [])
+            return res
+          } else if (typeof symbolInfos === 'object' && symbolInfos != null) {
+            res = symbolList.reduce((acc, s) => {
+              const oracleSymbol = normalizeOracleSymbol(s);
+              acc.push([
+                oracleSymbol,
+                stringToId(oracleSymbol),
+                symbolInfos[oracleSymbol]
+                  ? bg(symbolInfos[oracleSymbol]).times(10**18).toString()
+                  : undefined,
+              ]);
+              return acc
+            }, [])
+            return res
+          }
+      }
+    } catch (err) {
+      console.log(err)
+    }
+    retry -= 1;
+  }
+  if (retry === 0) {
+    throw new Error(`REST_API_CALL_TIMEOUT: ${url}`);
+  }
+}
 
 export const getOracleInfosFromRest = asyncCache(_getOracleInfoFromRest, 'getOracleInfosFromRest', [], 3)
 export const getOracleInfosFromRestForLens = asyncCache(_getOracleInfoFromRest, 'getOracleInfosFromRest', [], 10)
+
+export const getOracleInfosFromRest2 = asyncCache(_getOracleInfoFromRest2, 'getOracleInfosFromRest2', [], 3)
+export const getOracleInfosFromRestForLens2 = asyncCache(_getOracleInfoFromRest2, 'getOracleInfosFromRest2', [], 5)
 
 // need to add cache later
 export const getSignedValues = async (symbols = []) => {
@@ -153,29 +219,39 @@ const normalizePriceSymbol = (symbol) => {
   }
   return symbol
 }
+const oracleSymbolToPriceSymbol = (symbol) => {
+  if (symbol.startsWith('VOL-')) {
+    return symbol.replace('VOL-', '')
+  }
+  return symbol
+}
 
 export const getSymbolsOracleInfo = async (chainId, symbols) => {
   // const res = await getSignedPrices(this.chainId, this.symbolNames)
   symbols = symbols.filter((s) => !onChainSymbols(chainId).includes(s))
-  const res = await getOracleInfosFromRest([...new Set(symbols.map((s) => normalizeOracleSymbol(s)))])
+  const res = await getOracleInfosFromRest2([...new Set(symbols.map((s) => normalizeOracleSymbol(s)))])
   return res.filter((s) => s !== undefined)
 };
 
 export const getSymbolsOracleInfoForLens = async (chainId, symbols) => {
   symbols = symbols.filter((s) => !onChainSymbols(chainId).includes(s))
-  const res = await getOracleInfosFromRestForLens(symbols.map((s) => normalizeOracleSymbol(s)))
-  return symbols.reduce((acc, symbol, index) => {
+
+  const compactOracleSymbols = [...new Set(symbols.map((s) => normalizeOracleSymbol(s)))]
+  const res = await getOracleInfosFromRestForLens2(compactOracleSymbols, false)
+  const result = compactOracleSymbols.reduce((acc, symbol, index) => {
     if (res[index]) {
-      const oracleSymbol = normalizeOracleSymbol(symbol)
-      const priceSymbol = normalizePriceSymbol(symbol)
+      const priceSymbol = oracleSymbolToPriceSymbol(symbol)
       if (!acc.find((s) => s[0] === priceSymbol)) {
-        if (oracleSymbol === symbol) {
-          acc.push([priceSymbol, res[index][2], '0'])
-        } else {
-          acc.push([priceSymbol, '0', res[index][2]])
+        if (res[index][2]) {
+          if (symbol.startsWith('VOL-')) {
+            acc.push([priceSymbol, '0', res[index][2]])
+          } else {
+            acc.push([priceSymbol, res[index][2], '0'])
+          }
         }
       }
       return acc
     }
   }, [])
+  return result
 };

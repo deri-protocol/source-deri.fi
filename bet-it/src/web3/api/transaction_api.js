@@ -69,7 +69,13 @@ export const openBet = txApi(async ({ chainId, bTokenSymbol, amount, symbol, acc
   // calc max volume
   const margin = bg(amount).times(bTokenInfo.bTokenPrice).times(bTokenConfig.bTokenDiscount).toString()
   let volume = pool.calcMaxVolume(symbol, margin, direction)
-  const normalizedVolume = bg(Math.floor(bg(volume).div(symbolInfo.minTradeVolume).toNumber())).times(symbolInfo.minTradeVolume).toString()
+  const normalizedVolume = bg(
+    bg(volume).gt(0)
+      ? Math.floor(bg(volume).div(symbolInfo.minTradeVolume).toNumber())
+      : Math.ceil(bg(volume).div(symbolInfo.minTradeVolume).toNumber())
+  )
+    .times(symbolInfo.minTradeVolume)
+    .toString();
   if (bg(normalizedVolume).eq(0)) {
     throw new ZeroTradeVolumeError()
   }

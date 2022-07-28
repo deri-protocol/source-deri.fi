@@ -50,6 +50,9 @@ export const deposit = txApi(async ({ chainId, bTokenSymbol, amount, symbol, acc
   )
     .negated()
     .toString();
+    if (bg(volume).eq(0)) {
+      throw new ZeroTradeVolumeError()
+    }
   const priceLimit = getPriceLimit(volume)
   debug() && console.log(`amount(${amount}) strike(${symbolInfo.strikePrice}) volume(${volume}) priceLimit(${priceLimit}) bToken(${bTokenConfig.bTokenAddress}) broker(${brokerAddress})`)
   let res = await broker.trade(accountAddress, symbolConfig.pool, bTokenConfig.bTokenAddress, false, toWei(amount, bTokenConfig.bTokenDecimals || 18), symbol, toWei(volume), priceLimit, oracleSignatures, opts)

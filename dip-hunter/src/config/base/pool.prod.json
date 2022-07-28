@@ -1,5 +1,4 @@
-[
-  {
+[{
     "name": "option",
     "chainId": "56",
     "pool": "0x243681B8Cd79E3823fF574e07B2378B8Ab292c1E",
@@ -10,8 +9,7 @@
     "broker": "0xf97C2D000Ca99895aF0483FA543689c8D5EEf559",
     "symbolManager": "0x543A9FA25ba9a16612274DD707Ac4462eD6988FA",
     "b0Token": "BUSD",
-    "bTokens": [
-      {
+    "bTokens": [{
         "bTokenSymbol": "BUSD",
         "bTokenAddress": "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
         "bTokenDiscount": "1"
@@ -27,8 +25,7 @@
         "bTokenDiscount": "1"
       }
     ],
-    "symbols": [
-      {
+    "symbols": [{
         "symbolId": "0x468e9b8afd36ecd29f819119c2dbd1b49beb3947f79ba35268299a128b96dcd1",
         "symbol": "BTCUSD-20000-P",
         "category": "option",
@@ -61,8 +58,7 @@
     "broker": "0xF059d3D7111810BaCc834FB6F429652b792Db27d",
     "symbolManager": "0x741c8e810cD1C7baB6565E850b775fc33C15C084",
     "b0Token": "USDC",
-    "bTokens": [
-      {
+    "bTokens": [{
         "bTokenSymbol": "USDC",
         "bTokenAddress": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
         "bTokenDecimals": "6",
@@ -80,7 +76,16 @@
         "bTokenDiscount": "0.875"
       }
     ],
-    "symbols": [
+    "symbols": [{
+        "symbolId": "0x468e9b8afd36ecd29f819119c2dbd1b49beb3947f79ba35268299a128b96dcd1",
+        "symbol": "BTCUSD-20000-P",
+        "category": "option",
+        "leverage": "25",
+        "unit": "BTC",
+        "decimals": "2",
+        "rank": 1000,
+        "strikePrice": "20000"
+      },
       {
         "symbolId": "0x98fc75eeaf2daf20762fde47b011dc0b9bbc272d057f010223476676501d04f7",
         "symbol": "ETHUSD-1000-P",
@@ -90,16 +95,6 @@
         "decimals": "2",
         "rank": 1000,
         "strikePrice": "1000"
-      },
-      {
-        "symbolId": "0x468e9b8afd36ecd29f819119c2dbd1b49beb3947f79ba35268299a128b96dcd1",
-        "symbol": "BTCUSD-20000-P",
-        "category": "option",
-        "leverage": "25",
-        "unit": "BTC",
-        "decimals": "2",
-        "rank": 1000,
-        "strikePrice": "20000"
       }
     ]
   }

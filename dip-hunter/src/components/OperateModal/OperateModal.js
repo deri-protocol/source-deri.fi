@@ -78,6 +78,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
     console.log(type, res)
     if (res.success) {
       setAmount("")
+      setPercent("")
       alert.success(`${type === "DEPOSIT" ? `Deposit ${bToken}` : `Withdraw ${bToken}`}`, {
         timeout: 8000,
         isTransaction: true,

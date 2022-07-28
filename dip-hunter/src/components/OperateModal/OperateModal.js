@@ -32,12 +32,12 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
 
   const isUnlocked = async () => {
     let res = await ApiProxy.request("isUnlocked", { chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account })
-    console.log("isUnlocked", res.isUnlocked)
+    console.log("isUnlocked", res)
     return res
   }
 
   const click = async () => {
-    let isApproved = true
+    let isApproved = {isUnlocked:true}
     if (type !== "WITHDRAW") {
       isApproved = await isUnlocked()
     }
@@ -46,7 +46,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
       { includeResponse: true, write: true, subject: type.toUpperCase(), direction: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, symbol: info.symbol, amount: amount, accountAddress: wallet.account }
       : { includeResponse: true, write: true, subject: type.toUpperCase(), direction: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, symbol: info.symbol, volume: amount, accountAddress: wallet.account }
     if (!isApproved.isUnlocked) {
-      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, approved: false, direction: type.toUpperCase() }
+      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, approved: false, direction: type.toUpperCase() ,approveTip: isApproved.isZero ? "" : "Changing approved amount may result transaction failure" }
       let approved = await ApiProxy.request("unlock", paramsApprove)
       if (approved) {
         if (approved.success) {
@@ -153,6 +153,8 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
           }
           setWithdrawEst(res)
         }
+      }else{
+        setDisabled(true)
       }
     }
 

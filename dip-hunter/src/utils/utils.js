@@ -78,8 +78,8 @@ export function importAll(r, config = {}) {
 }
 
 export function getEnv() {
-  return "dev"
-  // return process.env.REACT_APP_NETWORK === 'mainnet' || process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
+  // return "dev"
+  return process.env.REACT_APP_NETWORK === 'mainnet' || process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
 }
 
 

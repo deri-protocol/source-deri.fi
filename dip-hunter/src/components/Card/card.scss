@@ -144,6 +144,9 @@ $Color: #F49B33,
         color: #C8CDD5;
         // border-bottom: 1px solid #E4E6E8;
         cursor: pointer;
+        .text-left{
+          text-align: left;
+        }
 
         .text {
           display: flex;

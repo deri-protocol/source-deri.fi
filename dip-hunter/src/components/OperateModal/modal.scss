@@ -359,7 +359,7 @@
     transform: translateX(-50%);
 
     .font-box {
-      width: 375px;
+      width: 373px;
       font-size: 78px;
       border-radius: 20px;
 
@@ -369,7 +369,7 @@
     }
 
     .modal-info {
-      width: 375px;
+      width: 373px;
       height: 407px;
 
       .deposit-withdraw-input{
@@ -406,6 +406,9 @@
   }
 
   .POSITION {
+    .font-box{
+      height: 125px;
+    }
     .position-modal-info-top {
       width: 288px;
       padding-top: 51px;
@@ -486,6 +489,7 @@
       }
     }
 
+
     .modal-info {
       .withdraw-top-info {
         padding-top: 27px;
@@ -534,7 +538,7 @@
         }
       }
       .change-box{
-        margin-top: 22px;
+        margin-top: 31px;
         .deposit-withdraw-modal-info-col{
           margin-bottom: 8px;
         }

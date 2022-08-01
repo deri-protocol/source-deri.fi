@@ -36,8 +36,9 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
     return res
   }
 
+
   const click = async () => {
-    let isApproved = {isUnlocked:true}
+    let isApproved = { isUnlocked: true }
     if (type !== "WITHDRAW") {
       isApproved = await isUnlocked()
     }
@@ -46,7 +47,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
       { includeResponse: true, write: true, subject: type.toUpperCase(), direction: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, symbol: info.symbol, amount: amount, accountAddress: wallet.account }
       : { includeResponse: true, write: true, subject: type.toUpperCase(), direction: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, symbol: info.symbol, volume: amount, accountAddress: wallet.account }
     if (!isApproved.isUnlocked) {
-      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, approved: false, direction: type.toUpperCase() ,approveTip: isApproved.isZero ? "" : "Changing approved amount may result transaction failure" }
+      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, approved: false, direction: type.toUpperCase(), approveTip: isApproved.isZero ? "" : "Changing approved amount may result transaction failure" }
       let approved = await ApiProxy.request("unlock", paramsApprove)
       if (approved) {
         if (approved.success) {
@@ -100,15 +101,23 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
     }
     return true
   }
-  const onBodyClick = useCallback((e) => {
-    const parent = document.querySelector('.withdraw-deposit-position');
-    if (e) {
-      if (!hasParent(parent, e.target) && isShow) {
-        closeModal()
+
+
+  useEffect(() => {
+    const onBodyClick = (e) => {
+      const parent = document.querySelector('.withdraw-deposit-position')[0];
+      console.log("e===================", e,hasParent(parent, e.target))
+      if (e) {
+        if (!hasParent(parent, e.target)) {
+          // closeModal()
+        }
       }
-      setIsShow(true)
     }
-  })
+    document.body.addEventListener('click', onBodyClick)
+    return () => {
+      document.body.removeEventListener('click', onBodyClick)
+    }
+  }, [])
 
   useEffect(() => {
     if (balance || symbolInfo.volume) {
@@ -154,7 +163,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
           }
           setWithdrawEst(res)
         }
-      }else{
+      } else {
         setDisabled(true)
       }
     }
@@ -344,7 +353,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
             </>}
           </div>
           <div className="deposit-withdraw-btn">
-            <Button disabled={disabled} label={`${lang["withdraw"]} ${bToken}`} onClick={click} width={375} height={56} hoverBgColor="#38CB89" radius={14} bgColor="#EEFAF3" fontColor="#38CB89" borderSize="0" />
+            <Button disabled={disabled} label={`${lang["withdraw"]} ${bToken}`} onClick={click} width={375} height={56} hoverBgColor={type === "WITHDRAW" ? "#FF5630 " : "#38CB89"} radius={14} bgColor={type === "WITHDRAW" ? "#FFEEEA" : "#EEFAF3"} fontColor={type === "WITHDRAW" ? "#FF5630 " : "#38CB89"} borderSize="0" />
           </div>
         </div>}
       </div>

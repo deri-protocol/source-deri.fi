@@ -131,7 +131,8 @@ $Color: #F49B33,
 
       .daily-fee-day {
         color: #38CB89;
-        span{
+
+        span {
           font-size: 42px;
         }
       }
@@ -253,12 +254,144 @@ $Color: #F49B33,
   }
 }
 
-@media only screen and (min-width : 760px) and (max-width:1339px) {
-  .card-box {}
+@media only screen and (min-width : 760px) and (max-width:1330px) {
+  .card-box {
+    width: 320px;
+    height: 496px;
+
+    .buy-symbol-name {
+      font-size: 77px;
+      top: -19px;
+    }
+
+    .price-text {
+      font-size: 84px;
+      width: 385px;
+      left: -38px;
+      height: 80px;
+      margin-top: -43px;
+
+      .price-up-text,
+      .price-down-text {
+        width: 385px;
+      }
+    }
+    .card-info{
+      height: 365px;
+      .symbol-name{
+        padding-top: 28px;
+      }
+      .daily-income{
+        width: 255px;
+        margin-top: 23px;
+        font-size: 24px;
+        height: 94px;
+        .daily-fee-day{
+          span{
+            font-size: 29px;
+          }
+        }
+        .daily-income-text{
+          font-size: 10px;
+          margin-top: 4px;
+        }
+      }
+      .price-postion{
+        margin-top: 31px;
+        width: 246px;
+        font-size: 11px;
+        .price-info{
+          margin-bottom: 6px;
+        }
+      }
+      .deposit-withdraw-position{
+        margin-top: 20px;
+        .postion-btn{
+          font-size: 12px;
+        }
+        .deposit-withdraw{
+          margin-top: 26px;
+          div{
+            width: 160px;
+            height: 48px;
+            font-size: 11px;
+          }
+        }
+      }
+
+    }
+  }
 
   .card-box:nth-child(2n) {
     margin-left: 20px;
-
   }
 
+}
+@media only screen and (max-width:760px) {
+  .card-box{
+    margin-left: 0;
+    width: 375px;
+    height: 576px;
+    margin-bottom: 24px;
+    .buy-symbol-name{
+      font-size: 96px;
+      top: -23px;
+      left: -15px;
+    }
+    .price-text {
+      font-size: 98px;
+      width: 375px;
+      left: -21px;
+      height: 95px;
+      margin-top: -59px;
+
+      .price-up-text,
+      .price-down-text {
+        width: 375px;
+      }
+    }
+    .card-info{
+      height: 424px;
+      .symbol-name{
+        font-size: 23px;
+        padding-top: 33px;
+        img{
+          width: 36px;
+          height: 36px;
+        }
+      }
+      .daily-income{
+        width: 284px;
+        height: 108px;
+        margin-top: 26px;
+        .daily-fee-day{
+          font-size: 30px;
+          span{
+            font-size: 34px;
+          }
+        }
+        .daily-income-text{
+          margin-top: 8px;
+          font-size: 12px;
+        }
+      }
+      .price-postion{
+        width: 284px;
+        margin-top: 37px;
+        font-size: 13px;
+      }
+      .deposit-withdraw-position{
+        margin-top: 34px;
+        .postion-btn{
+          font-size: 13px;
+        }
+        .deposit-withdraw{
+          margin-top: 29px;
+          div{
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
 }

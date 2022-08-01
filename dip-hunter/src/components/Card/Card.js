@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Icon, Button, UnderlineText } from '@deri/eco-common';
 import classNames from 'classnames'
 import './card.scss'
@@ -22,35 +22,58 @@ export default function Card({ info, lang, getLang, bTokens }) {
     preventScroll: true,
     closeOnOverlayClick: false
   });
+
+  const runInAction = async (action) => {
+    let timer;
+    const doAction = async () => {
+      const position = await action();
+      console.log("wallet", wallet.account)
+      if (timer) {
+        clearTimeout(timer)
+      }
+      if (position) {
+        timer = window.setTimeout(() => doAction(action), 6000)
+      }
+    }
+    return window.setTimeout(doAction, 6000)
+  }
+
   const getSymbolInfo = async () => {
     if (wallet.isConnected()) {
       let res = await ApiProxy.request("getSymbolInfo", { chainId: wallet.chainId, accountAddress: wallet.account, symbol: info.symbol })
-      console.log("getSymbolInfo", res)
+      console.log("getSymbolInfo", res, wallet.account)
       setSymbolInfo(res)
+      return res
     } else if (wallet.status === "disconnected" && !wallet.account) {
       let chainId = DeriEnv.get() === "prod" ? 56 : 97
       let res = await ApiProxy.request("getSymbolInfo", { chainId: chainId, accountAddress: "0x0000000000000000000000000000000000000000", symbol: info.symbol })
       console.log("getSymbolInfo", res)
       setSymbolInfo(res)
+      return res
     }
   }
   const showModal = (type) => {
     setType(type)
     openOperatetModal()
   }
-  useEffect(() => {
+  useEffect(async () => {
     let interval = 0;
+    let time = 6000;
+    if (wallet.chainId && +wallet.chainId !== 56) {
+      time = 10000
+    }
     if (info) {
       interval = window.setInterval(() => {
         getSymbolInfo()
-      }, 6000)
+      }, time)
       getSymbolInfo()
     }
     return () => {
       clearInterval(interval)
     }
-  }, [wallet, info, wallet.account, wallet.chainId])
-  
+  }, [info, wallet.account, wallet.chainId])
+
+
   return (
     <div className={classNames('card-box', info.unit)}>
       <div className="buy-symbol-name">

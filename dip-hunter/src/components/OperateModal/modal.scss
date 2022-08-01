@@ -140,11 +140,13 @@
         margin-bottom: 30px;
         color: #444444;
         font-weight: 500;
-        .deposit-withdraw-modal-info-col-title{
+
+        .deposit-withdraw-modal-info-col-title {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          img{
+
+          img {
             margin-left: 8px;
           }
         }
@@ -330,6 +332,7 @@
         .input-box {
           .input-token {
             padding-right: 22px;
+
             .baseToken {
               width: 128px;
 
@@ -343,4 +346,200 @@
     }
   }
 
+}
+
+@media only screen and (max-width:760px) {
+  .withdraw-deposit-position {
+    width: 375px;
+    height: 488px;
+    border-radius: 20px 20px 0 0;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .font-box {
+      width: 375px;
+      font-size: 78px;
+      border-radius: 20px;
+
+      .font-text {
+        left: -7px;
+      }
+    }
+
+    .modal-info {
+      width: 375px;
+      height: 407px;
+
+      .deposit-withdraw-input{
+        .input-box {
+          .input-token{
+            height: 60px;
+          }
+        }
+      }
+      .change-box {
+        width: 309px;
+        font-size: 13px;
+        margin-top: 32px;
+
+        .deposit-withdraw-modal-info-col {
+          margin-bottom: 24px;
+        }
+      }
+
+      .deposit-withdraw-btn {
+        margin-top: 29px;
+
+        div {
+          width: 309px;
+          border-radius: 11px;
+          font-size: 13px;
+        }
+      }
+    }
+
+    .close-modal {
+      display: none;
+    }
+  }
+
+  .POSITION {
+    .position-modal-info-top {
+      width: 288px;
+      padding-top: 51px;
+      font-size: 13px;
+      height: 243px;
+
+      .position-modal-info-col {
+        margin-bottom: 28px;
+      }
+    }
+
+    .value-strategy {
+      width: 288px;
+      margin-top: 31px;
+      font-size: 16px;
+
+      .value-strategy-des {
+        width: 288px;
+        font-size: 13px;
+      }
+    }
+  }
+
+  .DEPOSIT {
+    .font-box {
+      .font-text {
+        font-size: 87px;
+      }
+    }
+
+    .modal-info {
+      margin-top: -8px;
+
+      .deposit-modal-info {
+        .deposit-withdraw-input {
+          top: 35px;
+          width: 309px;
+          height: 122px;
+
+          .balance-position {
+            width: 129px;
+            height: 86px;
+            font-size: 10px;
+          }
+
+          .input-box {
+            width: 309px;
+            height: 106px;
+
+            .button-group {
+              margin-top: 13px;
+
+              .percent {
+                font-size: 13px;
+                width: 46px;
+                height: 19px;
+              }
+            }
+          }
+        }
+
+        .hr {
+          width: 309px;
+          margin-top: 74px;
+        }
+        
+      }
+    }
+  }
+
+  .WITHDRAW {
+    .font-box {
+      height: 91px;
+
+      .font-text {
+        font-size: 65px;
+        top: 10px;
+      }
+    }
+
+    .modal-info {
+      .withdraw-top-info {
+        padding-top: 27px;
+
+        .deposit-withdraw-modal-info-col {
+          margin-bottom: 8px;
+        }
+      }
+
+      .deposit-modal-info {
+        .deposit-withdraw-input {
+          margin-top: 26px;
+          width: 309px;
+          height: 122px;
+
+          .balance-position {
+            width: 129px;
+            height: 86px;
+            font-size: 10px;
+          }
+
+          .input-box {
+            width: 309px;
+            height: 106px;
+
+            .input-token {
+              input {
+                width: 160px;
+              }
+
+              .baseToken {
+                font-size: 16px;
+              }
+            }
+
+            .button-group {
+              margin-top: 13px;
+
+              .percent {
+                font-size: 13px;
+                width: 46px;
+                height: 19px;
+              }
+            }
+          }
+        }
+      }
+      .change-box{
+        margin-top: 22px;
+        .deposit-withdraw-modal-info-col{
+          margin-bottom: 8px;
+        }
+      }
+
+    }
+  }
 }

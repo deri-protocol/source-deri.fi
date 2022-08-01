@@ -38,7 +38,6 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     if (wallet.isConnected()) {
       let res = await ApiProxy.request("getBetInfo", { chainId: wallet.chainId, accountAddress: wallet.account, symbol: info.symbol })
       if (res.symbol) {
-        console.log("getBetInfo", res, wallet.account)
         setBetInfo(res)
         return res
       }
@@ -47,7 +46,6 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
       let res = await ApiProxy.request("getBetInfo", { chainId: chainId, symbol: info.symbol })
       if (res.symbol) {
         setBetInfo(res)
-        console.log("disconnected getBetInfo", res, wallet.account)
         return res
       }
     }
@@ -65,7 +63,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
 
   const getIsApprove = async () => {
     let res = await ApiProxy.request("isUnlocked", { chainId: wallet.chainId, accountAddress: wallet.account, bTokenSymbol: bToken })
-    return res
+    return res.isUnlocked
   }
 
   const getWalletBalance = async () => {
@@ -275,10 +273,10 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
       <div className='icon-name'>
         <Icon token={info.symbol} width={45} height={45} />
         <span className='symbol-name'>{info.unit}</span>
-        {betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol && <div className='entered'>
+        {betInfo.volume && betInfo.volume !== "0" && <div className='entered'>
           {lang['entered']}
         </div>}
-        {isLiquidated && betInfo.volume === "0" && info.symbol === betInfo.symbol ? <div className='entered liquidated'>
+        {isLiquidated && betInfo.volume === "0" ? <div className='entered liquidated'>
           {lang['liquidated']}
         </div> : null}
       </div>
@@ -300,8 +298,8 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
           {/* <UnderlineText tip={lang['leverage-tip']} key={info.symbol} > <Icon token="leverage" /></UnderlineText> */}
         </div>
       </div>
-      <div className={betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol ? "input-box position" : "input-box"}>
-        {betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol ?
+      <div className={betInfo.volume && betInfo.volume !== "0" ? "input-box position" : "input-box"}>
+        {betInfo.volume && betInfo.volume !== "0" ?
           <div className='symbol-pnl'>
             <div className='profit'>
               {lang['profit']}
@@ -322,7 +320,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
         </div> : null}
       </div>
       <div className='btn-box'>
-        {betInfo.volume && betInfo.volume !== "0" && info.symbol === betInfo.symbol ?
+        {betInfo.volume && betInfo.volume !== "0" ?
           <>
             <div className='line-chart'><LineChart symbol={info.markpriceSymbol} color={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} /></div>
             <Button label={lang['close']} key="close" onClick={(e) => betClose(e)} className="btn close-btn" width="299" height="60" bgColor={+betInfo.pnl > 0 ? "#38CB891A" : "#FF56301A"} hoverBgColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} borderSize={0} radius={14} fontColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} />
@@ -332,12 +330,13 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
             <Button label={lang['down']} key="down" onClick={(e) => openBet("down", e)} isAlert={true} disabled={disabled} className="btn down-btn" width="299" height="60" bgColor="#FF56301A" hoverBgColor="#FF5630" borderSize={0} radius={14} fontColor="#FF5630" icon='down' hoverIcon="down-hover" disabledIcon="down-disable" />
             {info.powerSymbol && <Button label={lang['boosted-up']} key="boosted-up" isAlert={true} onClick={(e) => openBet("boostedUp", e)} disabled={disabled} className="btn boosted-btn" width="299" height="60" bgColor="#FFAB001A" hoverBgColor="#FFAB00" borderSize={0} radius={14} fontColor="#FFAB00" icon='boosted-up' hoverIcon="boosted-up-hover" disabledIcon="boosted-up-disable" tip={getLang('boosted-up-tip', { symbol: info.unit, powers: info.powerSymbol.symbol })} tipIcon='boosted-hint' hoverTipIcon="boosted-hint-hover" disabledTipIcon="boosted-hint-disable" />}
           </>}
-        {isLiquidated && betInfo.volume === "0" && info.symbol === betInfo.symbol ?
+        {isLiquidated && betInfo.volume === "0" ?
           <>
             <div className='line-chart'><LineChart symbol={info.markpriceSymbol} color="#FF5630" /></div>
             <Button label={lang['start-over']} key="start-over" onClick={(e) => e.preventDefault(), setIsLiquidated(false)} className="btn close-btn" width="299" height="60" bgColor="#FF56301A" hoverBgColor="#FF5630" borderSize={0} radius={14} fontColor="#FF5630" /></>
           : null}
       </div>
+
     </div>
   )
 }

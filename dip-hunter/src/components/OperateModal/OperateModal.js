@@ -102,23 +102,6 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
     return true
   }
 
-
-  useEffect(() => {
-    const onBodyClick = (e) => {
-      const parent = document.querySelector('.withdraw-deposit-position')[0];
-      console.log("e===================", e,hasParent(parent, e.target))
-      if (e) {
-        if (!hasParent(parent, e.target)) {
-          // closeModal()
-        }
-      }
-    }
-    document.body.addEventListener('click', onBodyClick)
-    return () => {
-      document.body.removeEventListener('click', onBodyClick)
-    }
-  }, [])
-
   useEffect(() => {
     if (balance || symbolInfo.volume) {
       let aBalance = type === "DEPOSIT" ? balance : symbolInfo.volume

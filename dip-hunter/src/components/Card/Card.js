@@ -20,7 +20,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
   const alert = useAlert();
   const [OperateModal, openOperatetModal, closeOperatetModal] = useModal('root', {
     preventScroll: true,
-    closeOnOverlayClick: false
+    closeOnOverlayClick: true
   });
 
   const runInAction = async (action) => {

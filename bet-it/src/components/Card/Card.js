@@ -69,6 +69,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
   const getWalletBalance = async () => {
     let res = await ApiProxy.request("getWalletBalance", { chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account })
     let token = getBtokenAmount(bToken)
+    setAmount("")
     if (+res >= 0 && isInit) {
       let amount = +(bg(res).div(bg(2)).toString())
       amount = amount > token.max ? token.max : amount.toFixed(token.decimalScale)
@@ -107,7 +108,8 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     console.log("betClose", res)
     getBetInfo()
     getLiquidationInfo()
-
+    getWalletBalance()
+    setAmount("")
     return true
   }
 
@@ -177,6 +179,8 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     console.log(type, res)
     getBetInfo()
     getLiquidationInfo()
+    setAmount("")
+    getWalletBalance()
     if (res.success) {
       alert.success(`${+res.response.data.volume > 0 ? lang['buy'] : lang['sell']} ${res.response.data.volume} ${info.unit} ${boostedUp ? lang['powers'] : ''} `, {
         timeout: 8000,
@@ -242,6 +246,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
 
   useEffect(() => {
     if (wallet.chainId && wallet.account && bToken) {
+      setisInit(true)
       getWalletBalance()
     }
   }, [wallet, bToken])

@@ -6,14 +6,15 @@ import { Icon } from '@deri/eco-common';
 import { isStartScroll, isMobile } from "../utils/utils";
 import Font from '../components/Font/Font'
 import { useState, useEffect, useCallback } from "react";
+import Header from "../components/Header/Header";
 import Card from "../components/Card/Card"
 export default function DipHunter({ lang, getLang, actions }) {
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState(2)
   const [isFixed, setIsFixed] = useState(false)
   const [withDipA, setWithDipA] = useState(false)
   const [withDipB, setWithDipB] = useState(false)
-  const [bTokens, symbols] = usePool();
-  console.log(bTokens, symbols)
+  const [bTokens, symbols] = usePool()
+  const mobile = isMobile()
   const handler = useCallback(() => {
     let offset = 138
     let bgTop = document.getElementsByClassName('bg-img-color')[0]
@@ -30,28 +31,39 @@ export default function DipHunter({ lang, getLang, actions }) {
       bgTop.style.top = "0px"
     }
   })
+  const switchMenu = () => {
+    const status = !actions.getGlobalState('menuStatus')
+    actions.setGlobalState({ 'menuStatus': status })
+  }
   useEffect(() => {
-    let bgTop = document.getElementsByClassName('bg-img-color')[0]
-    document.addEventListener('scroll', handler, false);
-    let top = 56
-    if (!isStartScroll(top)) {
-      const st = window.pageYOffset || document.documentElement.scrollTop;
-      bgTop.style.top = top - st + "px"
-    } else {
-      bgTop.style.top = "0px"
-    }
-    return () => {
-      document.removeEventListener('scroll', handler)
-    }
+    // let bgTop = document.getElementsByClassName('bg-img-color')[0]
+    // document.addEventListener('scroll', handler, false);
+    // let top = 56
+    // if (!isStartScroll(top)) {
+    //   const st = window.pageYOffset || document.documentElement.scrollTop;
+    //   bgTop.style.top = top - st + "px"
+    // } else {
+    //   bgTop.style.top = "0px"
+    // }
+    // return () => {
+    //   document.removeEventListener('scroll', handler)
+    // }
   }, [])
   return (
     <div className='dip-hunter'>
       <div className={isFixed ? "bg-img-color hide-three" : "bg-img-color"}>
       </div>
+      <Header lang={lang} collect={true} switchMenu={switchMenu}></Header>
       <div className='hunter-info'>
         <div className='left-info'>
           <div className='dip-hunter-title'>
             <Font text={lang["dip-hunter"]} />
+          </div>
+          <div className="mobile-dip-hunter-title">
+            <span className="dip-text">
+              DIP
+            </span>
+            Hunter
           </div>
           <div className="helps-info">
             {lang["info-des"]} <span>
@@ -143,11 +155,11 @@ export default function DipHunter({ lang, getLang, actions }) {
                             </div>
                             <div className="symbol-list-info">
                               <div className="symbol-list-info-title">
-                                <span>{lang["volume"]}</span>
-                                <span>{lang["entry-price"]}</span>
-                                <span>{lang["exit-price"]}</span>
-                                <span>{lang["avg-daily-funding"]}</span>
-                                <span>{lang["holding-period"]}</span>
+                                <span className="volume">{lang["volume"]}</span>
+                                <span className="entry-price">{lang["entry-price"]}</span>
+                                <span className="exit-price">{lang["exit-price"]}</span>
+                                <span className="avg-daily-funding">{lang["avg-daily-funding"]}</span>
+                                <span className="holding-period">{lang["holding-period"]}</span>
                               </div>
                               <div className="symbol-list-info-num">
                                 <span className="volume">1</span>

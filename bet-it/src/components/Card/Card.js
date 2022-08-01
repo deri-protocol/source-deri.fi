@@ -225,6 +225,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
   useEffect(() => {
     let interval = 0;
     let timeout = 0
+    
     if (info) {
       getBetInfo()
       interval = window.setInterval(() => {

@@ -33,6 +33,10 @@
         height: 250px;
       }
 
+      .mobile-dip-hunter-title {
+        display: none;
+      }
+
       .helps-info {
         color: rgba(4, 4, 21, 0.5);
         font-size: 22px;
@@ -53,6 +57,7 @@
 
         .slieder-item-container {
           position: absolute;
+
           li {
             list-style: none;
             float: left;
@@ -186,7 +191,8 @@
                 }
               }
 
-              .option-three-text,.option-four-text {
+              .option-three-text,
+              .option-four-text {
                 width: 580px;
                 min-height: 185px;
                 left: -21px;
@@ -312,6 +318,7 @@
                 }
 
               }
+
               .option-four-text {
                 left: 36px;
                 background-image: url('../assets/img/with-dip-hunter-senario-b.svg');
@@ -320,6 +327,7 @@
               .option-up {
                 height: 328px;
               }
+
               .option-up-b {
                 height: 348px;
               }
@@ -396,7 +404,8 @@
       }
     }
   }
-  .card-box-info{
+
+  .card-box-info {
     width: 1046px;
     display: flex;
     justify-content: space-between;
@@ -406,4 +415,518 @@
 }
 
 
-@media only screen and (min-width : 760px) and (max-width:1339px) {}
+@media only screen and (min-width : 760px) and (max-width:1330px) {
+  .dip-hunter {
+    background-color: #fdf8ed;
+
+    .hunter-info {
+      width: 680px;
+      height: 629px;
+      flex-wrap: wrap;
+
+      .left-info {
+        width: 680px;
+        margin-top: 20px;
+        height: 100px;
+        text-align: center;
+        justify-content: center;
+
+        .dip-hunter-title {
+          display: none;
+        }
+
+        .mobile-dip-hunter-title {
+          display: block;
+          font-size: 48px;
+          color: #FF891D;
+          font-weight: 800;
+
+          span {
+            color: #FFAB00;
+            margin-right: 8px;
+          }
+        }
+      }
+
+      .right-info {
+        width: 683px;
+        margin-top: 20px;
+
+        .slieder {
+          width: 683px;
+          height: 483px;
+
+          .slieder-item-container {
+            .option-one {
+              width: 559px;
+              height: 435px;
+              margin-left: 11px;
+
+              .option-info-img-text {
+                .how-it-works-img {
+                  margin-top: 20px;
+                }
+              }
+
+              img {
+                width: 316px;
+                height: 292px;
+              }
+            }
+
+            .option-two {
+              width: 523px;
+              height: 435px;
+              margin-left: 21px;
+
+              .option-info-img-text {
+                img {
+                  width: 81px;
+                  height: 119px;
+                  left: 23px;
+                }
+
+                .option-tow-text-one {
+                  background-position: 355px;
+                  top: 30px;
+                  left: 60px;
+                }
+
+                .option-tow-text-two {
+                  width: 447px;
+                  height: 132px;
+                  background-position: 284px 75px;
+                  left: 110px;
+                  top: 145px;
+
+                  .hr-orange {
+                    width: 3px;
+                    height: 90px;
+                    margin-top: 17px;
+                  }
+
+                  .font-size-two {
+                    margin-top: 16px;
+                  }
+                }
+
+                .option-text {
+                  .text-span {
+                    font-size: 14px;
+                    margin-left: 17px;
+
+                    .scenario {
+                      font-size: 15px;
+                    }
+                  }
+                }
+
+                .option-tow-text-one {
+                  width: 496px;
+                  height: 85px;
+                }
+
+                .no-dip-hunter-img {
+                  top: 74px;
+                }
+              }
+            }
+
+            .option-three {
+              width: 516px;
+              height: 438px;
+              margin-left: 59px;
+
+              .option-info-img-text {
+                .option-three-text {
+                  left: -39px;
+                  width: 501px;
+                  min-height: 159px;
+                  background-position: 360px 12px;
+
+                  .hr-orange {
+                    height: 124px;
+                  }
+
+                  .check-example {
+                    margin-top: 19px;
+
+                    .withDip-info {
+                      width: 501px;
+                    }
+                  }
+
+                  .font-size-two {
+                    font-size: 12px;
+                    width: 317px;
+
+                    .scenario {
+                      font-size: 15px;
+                    }
+                  }
+
+                }
+              }
+            }
+
+            .option-four {
+              width: 515px;
+              height: 438px;
+
+              .option-info-img-text {
+                .option-four-text {
+                  left: 30px;
+                  width: 518px;
+                  min-height: 159px;
+                  background-position: 360px 12px;
+
+                  .hr-orange {
+                    height: 124px;
+                  }
+
+                  .check-example {
+                    margin-top: 19px;
+
+                    .withDip-info {
+                      width: 501px;
+                    }
+                  }
+
+                  .font-size-two {
+                    font-size: 12px;
+                    width: 317px;
+
+                    .scenario {
+                      font-size: 15px;
+                    }
+                  }
+
+                }
+              }
+            }
+          }
+
+        }
+      }
+    }
+
+    .card-box-info {
+      width: 680px;
+    }
+  }
+}
+
+@media only screen and (max-width:760px) {
+  .dip-hunter {
+    background-color: #fdf8ed;
+    .hunter-info {
+      width: 337px;
+      height: 209px;
+
+      .left-info {
+        display: none;
+      }
+
+      .right-info {
+        margin-top: 19px;
+
+        .slieder {
+          width: 325px;
+          height: 209px;
+
+          .slieder-item-container {
+            padding: 0;
+
+            li {
+              border-radius: 8px;
+
+              .option-title {
+                width: 92px;
+                height: 22px;
+                font-size: 10px;
+                border-radius: 0 0 10px 10px;
+              }
+
+              .option-info-text {
+                font-size: 9px;
+                width: 196px;
+                margin-top: 8px;
+              }
+
+              .option-info-img-text {
+
+                .option-three-text,
+                .option-four-text {
+                  .font-size-two {
+                    .check-example {
+                      margin-top: 10px;
+
+                      .withDip-info {
+                        width: 254px;
+                        margin-left: -7px;
+                        height: 100px;
+
+                        .symbol-name {
+                          height: 60px;
+                        }
+
+                        .symbol-list {
+                          height: 60px;
+
+                          .symbol-list-info-title {
+                            font-size: 8px;
+                            width: 220px;
+                            padding: 0 4px;
+                            height: 30px;
+
+                            .entry-price {
+                              margin-left: 4px;
+                            }
+                          }
+
+                          .symbol-list-info-num {
+                            font-size: 8px;
+                            width: 220px;
+                            display: block;
+                            padding: 0 4px;
+                            height: 30px;
+
+                            span {
+                              height: 30px;
+                              line-height: 30px;
+                              text-align: center;
+                              display: inline-block;
+                            }
+
+                            .volume {
+                              width: 24px;
+                            }
+
+                            .entry-price {
+                              width: 35px;
+                            }
+
+                            .exit-price {
+                              width: 40px;
+                            }
+
+                            .avg-daily-funding {
+                              width: 48px;
+                            }
+
+                            .holding-period {
+                              width: 48px;
+                            }
+                          }
+                        }
+
+                        .withDip-info-des {
+                          margin-top: 4px;
+                          font-size: 8px;
+                          margin-left: 8px;
+                        }
+                      }
+                    }
+                  }
+                }
+
+              }
+            }
+
+            .option-one {
+              width: 266px;
+              height: 209px;
+              margin-left: 0;
+              font-size: 9px;
+              margin-left: 26px;
+
+              .option-info-img-text {
+                .option-one-text {
+                  width: 203px;
+                  height: 43px;
+                  left: -27px;
+                  top: 32px;
+                  border-radius: 6px;
+
+                  .hr-orange {
+                    width: 1px;
+                    height: 28px;
+                  }
+                }
+
+
+                img {
+                  width: 156px;
+                  height: 144px;
+                  margin-top: -5px;
+                }
+              }
+
+            }
+
+            .option-two {
+              width: 257px;
+              height: 209px;
+              margin-left: 24px;
+
+              .option-info-img-text {
+                .option-tow-text-one {
+                  width: 244px;
+                  height: 49px;
+                  border-radius: 6px;
+                  top: 15px;
+                  left: 34px;
+                  background-position: 180px;
+                  background-size: 56px 27px;
+
+                  .hr-orange {
+                    width: 1px;
+                    height: 27px;
+                  }
+
+                  .font-size-two {
+                    font-size: 7px;
+                    margin-left: 7px;
+
+                    .scenario {
+                      font-size: 8px;
+                    }
+                  }
+                }
+
+                .option-tow-text-two {
+                  width: 221px;
+                  height: 65px;
+                  border-radius: 6px;
+                  top: 68px;
+                  left: 55px;
+                  background-position: 160px 35px;
+                  background-size: 56px 27px;
+
+                  .hr-orange {
+                    width: 1px;
+                    height: 44px;
+                    margin-top: 10px;
+                  }
+
+                  .font-size-two {
+                    font-size: 7px;
+                    margin-left: 7px;
+                    margin-top: 8px;
+
+                    .scenario {
+                      font-size: 8px;
+                    }
+                  }
+                }
+
+                img {
+                  width: 40px;
+                  height: 58px;
+                  top: 35px;
+                  left: 11px;
+                }
+              }
+            }
+
+            .option-three {
+              width: 254px;
+              height: 209px;
+              margin-left: 45px;
+
+              .option-info-img-text {
+
+                .option-three-text {
+                  width: 247px;
+                  min-height: 78px;
+                  max-height: 200px;
+                  top: 10px;
+                  background-position: 180px 24px;
+                  background-size: 50px 55px;
+                  border-radius: 6px;
+
+                  .hr-orange {
+                    width: 1px;
+                    height: 61px;
+                  }
+
+                  .font-size-two {
+                    font-size: 7px;
+                    margin-left: 7px;
+                    width: 160px;
+
+                    .scenario {
+                      font-size: 8px;
+                    }
+                  }
+                }
+              }
+            }
+
+            .option-four {
+              width: 254px;
+              height: 209px;
+              margin-left: 35px;
+
+              .option-info-img-text {
+                .option-four-text {
+                  width: 256px;
+                  min-height: 78px;
+                  max-height: 230px;
+                  top: 10px;
+                  left: 15px;
+                  border-radius: 6px;
+                  background-position: 180px 24px;
+                  background-size: 50px 55px;
+
+                  .hr-orange {
+                    width: 1px;
+                    height: 61px;
+                  }
+
+                  .font-size-two {
+                    font-size: 7px;
+                    margin-left: 7px;
+                    width: 160px;
+
+                    .scenario {
+                      font-size: 8px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          .indicator-container {
+            display: none;
+          }
+
+          .arrow-container {
+
+            .right-arrow,
+            .left-arrow {
+              width: 20px;
+              height: 20px;
+
+              img {
+                width: 20px;
+                height: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .card-box-info {
+      width: 375px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin: 0 auto;
+      margin-top: 66px;
+    }
+  }
+
+}

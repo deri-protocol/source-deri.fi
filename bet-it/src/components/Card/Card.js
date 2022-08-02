@@ -145,7 +145,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     let boostedUp = type === "boostedUp" ? true : false
     let params = { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, amount: amount, symbol: info.symbol, accountAddress: wallet.account, boostedUp: boostedUp, direction: direction }
     if (!isApproved.isUnlocked) {
-      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, direction: direction, approved: false,approveTip: isApproved.isZero ? "" : "Changing approved amount may result transaction failure" }
+      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, direction: direction, approved: false, approveTip: isApproved.isZero ? "" : "Changing approved amount may result transaction failure" }
       let approved = await ApiProxy.request("unlock", paramsApprove)
       if (approved) {
         if (approved.success) {
@@ -220,12 +220,15 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
   useEffect(() => {
     let interval = 0;
     let timeout = 0
-    
+    let time = 6000;
+    if (wallet.chainId && +wallet.chainId !== 56) {
+      time = 10000
+    }
     if (info) {
       getBetInfo()
       interval = window.setInterval(() => {
         getBetInfo()
-      }, 6000)
+      }, time)
       if (info.unit === "ETH") {
         timeout = window.setTimeout(() => {
           getLiquidationInfo()

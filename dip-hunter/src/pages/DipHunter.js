@@ -188,7 +188,7 @@ export default function DipHunter({ lang, getLang, actions }) {
                 </div>
                 <div className='option-info-text'>
                   {lang["with-dip-hunter-des"]}
-                  <span> BTC-20000-P</span>
+                  <span> BTC-20000-P </span>
                   {lang["with-dip-hunter-des-two"]}
                 </div>
                 <div className='option-info-img-text'>

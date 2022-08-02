@@ -129,7 +129,7 @@ export default function DipHunter({ lang, getLang, actions }) {
                 </div>
                 <div className='option-info-text'>
                   {lang["with-dip-hunter-des"]}
-                  <span> ETH-1000-P </span>
+                  <span> BTC-20000-P </span>
                   {lang["with-dip-hunter-des-two"]}
                 </div>
                 <div className='option-info-img-text'>
@@ -152,7 +152,7 @@ export default function DipHunter({ lang, getLang, actions }) {
                         {withDipA && <div className='withDip-info'>
                           <div className='symbol-list'>
                             <div className="symbol-name">
-                              ETH-1000-P
+                              BTC-20000-P
                             </div>
                             <div className="symbol-list-info">
                               <div className="symbol-list-info-title">
@@ -164,9 +164,9 @@ export default function DipHunter({ lang, getLang, actions }) {
                               </div>
                               <div className="symbol-list-info-num">
                                 <span className="volume">1</span>
-                                <span className="entry-price">$8.56</span>
-                                <span className="exit-price">$0.2</span>
-                                <span className="avg-daily-funding">$1.15</span>
+                                <span className="entry-price">$220</span>
+                                <span className="exit-price">$38.15</span>
+                                <span className="avg-daily-funding">$18.50</span>
                                 <span className="holding-period">60 days</span>
                               </div>
 
@@ -188,7 +188,7 @@ export default function DipHunter({ lang, getLang, actions }) {
                 </div>
                 <div className='option-info-text'>
                   {lang["with-dip-hunter-des"]}
-                  <span> ETH-1000-P </span>
+                  <span> BTC-20000-P</span>
                   {lang["with-dip-hunter-des-two"]}
                 </div>
                 <div className='option-info-img-text'>
@@ -211,7 +211,7 @@ export default function DipHunter({ lang, getLang, actions }) {
                         {withDipB && <div className='withDip-info'>
                           <div className='symbol-list'>
                             <div className="symbol-name">
-                              ETH-1000-P
+                              BTC-20000-P
                             </div>
                             <div className="symbol-list-info">
                               <div className="symbol-list-info-title">
@@ -223,9 +223,9 @@ export default function DipHunter({ lang, getLang, actions }) {
                               </div>
                               <div className="symbol-list-info-num">
                                 <span className="volume">1</span>
-                                <span className="entry-price">$8.56</span>
-                                <span className="exit-price">$114.67</span>
-                                <span className="avg-daily-funding">$2.55</span>
+                                <span className="entry-price">$220</span>
+                                <span className="exit-price">$1382</span>
+                                <span className="avg-daily-funding">$43</span>
                                 <span className="holding-period">60 days</span>
                               </div>
 

@@ -266,7 +266,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
             <div className="deposit-withdraw-modal-info-col">
               <div className="deposit-withdraw-modal-info-col-title">
                 {lang["current-withdraw-type"]}
-                <UnderlineText width="220" tip={`The token you will receive when withdrawing funds. If ${info.unit} is selected, Dip Hunter will help to by ${info.unit} on Pancakeswap and send it to you.`}>
+                <UnderlineText width="220" tip={+wallet.chainId === 56 ? `The token you will receive when withdrawing funds. If ${info.unit} is selected, Dip Hunter will help to by ${info.unit} on Pancakeswap and send it to you.` : `The token you will receive when withdrawing funds. If ${info.unit} is selected, Dip Hunter will help you to swap USDC into ${info.unit} on the Uniswap.`}>
                   <Icon token="wring" />
                 </UnderlineText>
               </div>

@@ -9,7 +9,7 @@ import { useState, useEffect, useCallback } from "react";
 import Header from "../components/Header/Header";
 import Card from "../components/Card/Card"
 export default function DipHunter({ lang, getLang, actions }) {
-  const [index, setIndex] = useState(2)
+  const [index, setIndex] = useState(0)
   const [isFixed, setIsFixed] = useState(false)
   const [withDipA, setWithDipA] = useState(false)
   const [withDipB, setWithDipB] = useState(false)

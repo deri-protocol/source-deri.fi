@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Icon, Button, UnderlineText } from '@deri/eco-common';
 import classNames from 'classnames'
 import './card.scss'
@@ -18,37 +18,40 @@ export default function Card({ info, lang, getLang, bTokens }) {
   const chains = useChain()
   const chain = chains.find((item) => eqInNumber(item.chainId, wallet.chainId))
   const alert = useAlert();
+  const pausedRef = useRef()
   const [OperateModal, openOperatetModal, closeOperatetModal] = useModal('root', {
     preventScroll: true,
     closeOnOverlayClick: true
   });
 
   const runInAction = async (action) => {
-    let timer;
-    const doAction = async () => {
-      const position = await action();
-      console.log("wallet", wallet.account)
-      if (timer) {
-        clearTimeout(timer)
-      }
-      if (position) {
-        timer = window.setTimeout(() => doAction(action), 6000)
-      }
+    let timer = null;
+    const position = await action();
+    if (timer) {
+      window.clearTimeout(timer)
     }
-    return window.setTimeout(doAction, 6000)
+    console.log('paused ', pausedRef.current)
+    if (position && !pausedRef.current) {
+      timer = window.setTimeout(() => runInAction(action), 6000)
+    }
+    return timer
   }
 
   const getSymbolInfo = async () => {
     if (wallet.isConnected()) {
       let res = await ApiProxy.request("getSymbolInfo", { chainId: wallet.chainId, accountAddress: wallet.account, symbol: info.symbol })
-      console.log("getSymbolInfo", res, wallet.account)
-      setSymbolInfo(res)
+      if (res.indexPrice) {
+        console.log("getSymbolInfo", res, wallet.account)
+        setSymbolInfo(res)
+      }
       return res
     } else if (wallet.status === "disconnected" && !wallet.account) {
       let chainId = DeriEnv.get() === "prod" ? 56 : 97
       let res = await ApiProxy.request("getSymbolInfo", { chainId: chainId, accountAddress: "0x0000000000000000000000000000000000000000", symbol: info.symbol })
-      console.log("getSymbolInfo", res)
-      setSymbolInfo(res)
+      if (res.indexPrice) {
+        console.log("getSymbolInfo", res)
+        setSymbolInfo(res)
+      }
       return res
     }
   }
@@ -56,22 +59,38 @@ export default function Card({ info, lang, getLang, bTokens }) {
     setType(type)
     openOperatetModal()
   }
-  useEffect(async () => {
-    let interval = 0;
-    let time = 6000;
-    if (wallet.chainId && +wallet.chainId !== 56) {
+  // useEffect(async () => {
+  //   let interval = 0;
+  //   if (info.symbol) {
+  //     interval && window.clearTimeout(interval)
+  //     pausedRef.current = true
+  //     interval = await runInAction(getSymbolInfo)
+  //     pausedRef.current = false
+  //     getSymbolInfo()
+  //     console.log("clearTimeout", interval)
+  //   }
+  //   return () => {
+
+  //     console.log("============", interval)
+  //     interval && window.clearTimeout(interval)
+  //   }
+  // }, [wallet, info.symbol, wallet.account, wallet.chainId])
+
+  useEffect(() => {
+    let interval = null;
+    let time = 6000
+    if(wallet.chainId && +wallet.chainId !== 56){
       time = 10000
     }
-    if (info) {
+    if(info.symbol){
       interval = window.setInterval(() => {
         getSymbolInfo()
       }, time)
-      getSymbolInfo()
     }
     return () => {
-      clearInterval(interval)
+      interval && window.clearInterval(interval)
     }
-  }, [info, wallet.account, wallet.chainId])
+  }, [info.symbol, wallet.account, wallet.chainId])
 
 
   return (
@@ -94,7 +113,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
         </div>
         <div className="daily-income">
           <div className="daily-fee-day">
-            <span> +$<DeriNumberFormat value={symbolInfo.pnlPerDay} decimalScale={2} /></span>/{lang["day"]}
+            <span> +$<DeriNumberFormat width="50px" value={symbolInfo.pnlPerDay} decimalScale={2} /></span>/{lang["day"]}
           </div>
           <div className='daily-income-text'>
             <UnderlineText className="text-left" width="220" tip={symbolInfo.volume !== "0" && symbolInfo.volume ? `The estimated daily income of my current position. This rate is calculated from the daily funding of ${info.symbol} paid by the option buyers.` : ` The estimated daily income of 1 ${info.unit} position.This rate is calculated from the daily funding of ${info.symbol} paid by the option buyers.`}>
@@ -123,7 +142,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
               </UnderlineText>
             </div>
             <div className="position-num">
-              <DeriNumberFormat value={symbolInfo.volume} /> {info.unit} {lang["options"]}
+              <DeriNumberFormat value={symbolInfo.volume} width="50px" /> {info.unit} {lang["options"]}
             </div>
           </div>
         </div>

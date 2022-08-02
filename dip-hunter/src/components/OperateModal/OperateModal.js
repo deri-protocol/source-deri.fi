@@ -88,6 +88,14 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
         title: `${type === "DEPOSIT" ? "Deposit Executed" : "Withdraw Executed"}`
       })
     } else {
+      if (res.response.error.code === 1001) {
+        alert.error("Increase the input amount to open positions", {
+          timeout: 300000,
+          isTransaction: true,
+          title: "Amount too small"
+        })
+        return false;
+      }
       if (res.response.transactionHash === "") {
         return true;
       }

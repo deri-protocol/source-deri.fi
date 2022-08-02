@@ -37,6 +37,12 @@ export const normalizeBTokenSymbol = (chainId, bTokenSymbol) => {
     },
     "97": {
       "BTC": "BTCB",
+    },
+    "42161": {
+      "BTC": "WBTC",
+    },
+    "421611": {
+      "BTC": "WBTC",
     }
   }
   if (config[chainId] && config[chainId][bTokenSymbol]) {

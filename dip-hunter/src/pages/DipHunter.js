@@ -14,6 +14,7 @@ export default function DipHunter({ lang, getLang, actions }) {
   const [withDipA, setWithDipA] = useState(false)
   const [withDipB, setWithDipB] = useState(false)
   const [bTokens, symbols] = usePool()
+  console.log(bTokens, symbols)
   const mobile = isMobile()
   const handler = useCallback(() => {
     let offset = 138

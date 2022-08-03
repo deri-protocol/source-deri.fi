@@ -75,6 +75,9 @@ export const withdraw = txApi(async ({ chainId, bTokenSymbol, symbol, volume, ac
     const position = pool[client].positions.find((p) => p.symbol === symbol)
     const symbolInfo = pool.symbols.find((s) => s.symbol === symbol)
     volume = normalizeTradeVolume(bg(volume).abs().toString(), symbolInfo.minTradeVolume)
+    if (bg(volume).eq(0)) {
+      throw new ZeroTradeVolumeError()
+    }
     const amount = bg(pool[client].dynamicMargin).times(volume).div(position.volume).negated().toString()
     const oracleSignatures = await getSymbolsOracleInfo(chainId, pool.symbols.map((s) => s.symbol))
 

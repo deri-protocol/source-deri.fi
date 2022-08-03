@@ -3,8 +3,8 @@ import { poolFactory } from "../contract/pool"
 import { txApi } from "../utils/api"
 import { debug } from "../utils/env"
 import { bg, fromWei, toWei } from "../utils/bignumber"
-import { checkAddress } from "../utils/chain"
-import { getBrokerAddress, getBToken, getPoolConfig, getSymbol, getSymbolList } from "../utils/config"
+import { checkAddress, checkChainId } from "../utils/chain"
+import { getB0, getBrokerAddress, getBToken, getPoolConfig, getSymbol, getSymbolList } from "../utils/config"
 import { MAX_INT256_DIV_ONE, ZERO_ADDRESS } from "../utils/constant"
 import { getSymbolsOracleInfo } from "../utils/oracle"
 import { checkToken, nativeCoinSymbols } from "../utils/symbol"
@@ -30,6 +30,7 @@ export const unlock = txApi(async ({ chainId, bTokenSymbol, accountAddress, isNo
 })
 
 export const deposit = txApi(async ({ chainId, bTokenSymbol, amount, symbol, accountAddress, isNodeEnv = false, ...opts }) => {
+  chainId = checkChainId(chainId)
   accountAddress = checkAddress(accountAddress)
   bTokenSymbol = checkToken(bTokenSymbol)
   symbol = checkToken(symbol)
@@ -37,6 +38,7 @@ export const deposit = txApi(async ({ chainId, bTokenSymbol, amount, symbol, acc
   const broker = dipBrokerFactory(chainId, brokerAddress, { isNodeEnv })
   let symbolConfig = getSymbol(chainId, symbol)
   const bTokenConfig = getBToken(chainId, bTokenSymbol)
+  const b0Config = getB0(chainId)
   const pool = poolFactory(chainId, symbolConfig.pool)
   await pool.init()
   const oracleSignatures = await getSymbolsOracleInfo(chainId, pool.symbols.map((s) => s.symbol))
@@ -55,7 +57,7 @@ export const deposit = txApi(async ({ chainId, bTokenSymbol, amount, symbol, acc
     }
   const priceLimit = getPriceLimit(volume)
   debug() && console.log(`amount(${amount}) strike(${symbolInfo.strikePrice}) volume(${volume}) priceLimit(${priceLimit}) bToken(${bTokenConfig.bTokenAddress}) broker(${brokerAddress})`)
-  let res = await broker.trade(accountAddress, symbolConfig.pool, bTokenConfig.bTokenAddress, false, toWei(amount, bTokenConfig.bTokenDecimals || 18), symbol, toWei(volume), priceLimit, oracleSignatures, opts)
+  let res = await broker.trade(accountAddress, symbolConfig.pool, bTokenConfig.bTokenAddress, false, toWei(amount, b0Config.bTokenDecimals || 18), symbol, toWei(volume), priceLimit, oracleSignatures, opts)
   return res
 })
 
@@ -70,6 +72,7 @@ export const withdraw = txApi(async ({ chainId, bTokenSymbol, symbol, volume, ac
   const client = await broker.clients(accountAddress, symbolConfig.pool, symbolConfig.symbolId)
   if (client !== ZERO_ADDRESS) {
     const bTokenConfig = getBToken(chainId, bTokenSymbol)
+    const b0Config = getB0(chainId)
     const pool = poolFactory(chainId, symbolConfig.pool)
     await pool.init(client)
     const position = pool[client].positions.find((p) => p.symbol === symbol)
@@ -83,7 +86,7 @@ export const withdraw = txApi(async ({ chainId, bTokenSymbol, symbol, volume, ac
 
     const priceLimit = getPriceLimit(volume)
     debug() && console.log(`amount(${amount}) strike(${symbolInfo.strikePrice}) volume(${volume}) priceLimit(${priceLimit}) bToken(${bTokenConfig.bTokenAddress}) broker(${brokerAddress})`)
-    let res = await broker.trade(accountAddress, symbolConfig.pool, bTokenConfig.bTokenAddress, true, toWei(amount, bTokenConfig.bTokenDecimals || 18), symbol, toWei(volume), priceLimit, oracleSignatures, opts)
+    let res = await broker.trade(accountAddress, symbolConfig.pool, bTokenConfig.bTokenAddress, true, toWei(amount, b0Config.bTokenDecimals || 18), symbol, toWei(volume), priceLimit, oracleSignatures, opts)
     return res
   } else {
     console.log(`-- no position found in the current symbol: ${chainId} ${symbol} ${accountAddress}`)

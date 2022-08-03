@@ -25,11 +25,9 @@
     "debug:main" : "cd main && yarn remove @deri/eco-common && npm link /Users/lihaidong/work/deri-dapp-socket/common",
     "clean" : "rm -rf node_modules && rm -rf main/node_modules && rm -rf bet-it/node_modules && rm -rf dip-hunter/node_modules && rm -rf deri-lite/node_modules && rm -rf node_modules ",
     "build": "yarn install --ignore-engines && npm run install && rm -rf build && mkdir build && npm-run-all --serial build:*",
-    "build-demo": "mkdir -p build/sub-app-demo  && cd sub-app-demo && npm run build && mv ./build/* ../build/sub-app-demo",
     "build:bet-it": "mkdir -p build/bet-it  && cd bet-it && npm run build && mv ./build/* ../build/bet-it",
     "build:dip-hunter": "mkdir -p build/dip-hunter  && cd dip-hunter && npm run build && mv ./build/* ../build/dip-hunter",
     "build:deri-lite": "mkdir -p build/deri-lite  && cd deri-lite && npm run build && mv ./build/* ../build/deri-lite",
-    "build:liquidity-mining": "mkdir -p build/liquidity-mining  && cd liquidity-mining && npm run build && mv ./build/* ../build/liquidity-mining",
     "build:main": "cd main && npm run build && mv ./build/* ../build/ && cp ../public/favicon.ico ../build/"
   },
   "devDependencies": {

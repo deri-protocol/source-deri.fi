@@ -244,7 +244,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
                   {lang["position-after-deposit"]}
                 </div>
                 <div className="deposit-withdraw-modal-info-col-num">
-                  <DeriNumberFormat value={depositEst.volume} decimalScale={4} /> {info.unit} {lang["options"]}
+                  <DeriNumberFormat width="220" value={depositEst.volume} decimalScale={4} /> {info.unit} {lang["options"]}
                 </div>
               </div>
               <div className="deposit-withdraw-modal-info-col">
@@ -252,7 +252,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
                   {lang["transaction-fee"]}
                 </div>
                 <div className="deposit-withdraw-modal-info-col-num">
-                  $<DeriNumberFormat value={depositEst.fee} decimalScale={2} />
+                  $<DeriNumberFormat width="220" value={depositEst.fee} decimalScale={2} />
                 </div>
               </div>
             </>}
@@ -322,7 +322,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
                   {lang["withdraw-amount"]}
                 </div>
                 <div className="deposit-withdraw-modal-info-col-num">
-                  <DeriNumberFormat value={withdrawEst.amount} decimalScale={2} /> {bToken}
+                  <DeriNumberFormat width="220" value={withdrawEst.amount} decimalScale={2} /> {bToken}
                 </div>
               </div>
               <div className="deposit-withdraw-modal-info-col">
@@ -330,7 +330,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
                   {lang["position-after-withdraw"]}
                 </div>
                 <div className="deposit-withdraw-modal-info-col-num">
-                  <DeriNumberFormat value={withdrawEst.volume} /> {info.unit} {lang["options"]}
+                  <DeriNumberFormat width="220" value={withdrawEst.volume} /> {info.unit} {lang["options"]}
                 </div>
               </div>
               <div className="deposit-withdraw-modal-info-col">
@@ -338,7 +338,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
                   {lang["transaction-fee"]}
                 </div>
                 <div className="deposit-withdraw-modal-info-col-num">
-                  $<DeriNumberFormat value={withdrawEst.fee} decimalScale={2} />
+                  $<DeriNumberFormat width="220" value={withdrawEst.fee} decimalScale={2} />
                 </div>
               </div>
             </>}

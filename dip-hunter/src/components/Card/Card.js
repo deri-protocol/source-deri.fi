@@ -83,6 +83,8 @@ export default function Card({ info, lang, getLang, bTokens }) {
       time = 10000
     }
     if(info.symbol){
+      setSymbolInfo({})
+      getSymbolInfo()
       interval = window.setInterval(() => {
         getSymbolInfo()
       }, time)

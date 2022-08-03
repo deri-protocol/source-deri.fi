@@ -58,6 +58,15 @@ export const getBTokenList = (chainId) => {
   }, [])
 }
 
+export const getB0 = (chainId) => {
+  const bTokenList = getBTokenList(chainId);
+  if (["56", "97"].includes(chainId)) {
+    return bTokenList.find((b) => b.bTokenSymbol === "BUSD");
+  } else if (["42161", "421611"].includes(chainId)) {
+    return bTokenList.find((b) => b.bTokenSymbol === "USDC");
+  }
+};
+
 export const getBToken = (chainId, bTokenSymbol) => {
   const bTokenList = getBTokenList(chainId)
   const config = bTokenList.find((b) => b.bTokenSymbol === bTokenSymbol)

@@ -80,7 +80,7 @@ export const getSymbolInfo = queryApi(async ({ chainId, accountAddress, symbol})
   const symbolInfo = pool.symbols.find((s) => s.symbol === symbol)
   if (bg(volume).eq(0)) {
     ObjectCache.set(symbolCacheKey(chainId, symbol), symbolInfo)
-    ObjectCache.set(positionCacheKey(chainId, symbol, accountAddress), 0)
+    ObjectCache.set(positionCacheKey(chainId, symbol, accountAddress), { volume: '0'} )
     ObjectCache.set(marginCacheKey(chainId, symbol, accountAddress), {
       margin: pool[client].margin,
       dynamicMargin: pool[client].dynamicMargin,

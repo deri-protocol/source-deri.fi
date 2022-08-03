@@ -21,13 +21,13 @@ const microApps = [
     activeRule: '#/dip-hunter',
     container: '#subapp-viewport'
   },
-  {
-    name: 'liquidity-mining',
-    displayName : 'liquidity mining',
-    entry: process.env.REACT_APP_LIQUIDITY_MINING,
-    activeRule: '#/liquidity-mining',
-    container: '#subapp-viewport'
-  },
+  // {
+  //   name: 'liquidity-mining',
+  //   displayName : 'liquidity mining',
+  //   entry: process.env.REACT_APP_LIQUIDITY_MINING,
+  //   activeRule: '#/liquidity-mining',
+  //   container: '#subapp-viewport'
+  // },
   {
     name: 'sub-app-demo',
     displayName : 'sub app demo',

@@ -63,12 +63,13 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
 
   const getIsApprove = async () => {
     let res = await ApiProxy.request("isUnlocked", { chainId: wallet.chainId, accountAddress: wallet.account, bTokenSymbol: bToken })
-    return res
+    return res.isUnlocked
   }
 
   const getWalletBalance = async () => {
     let res = await ApiProxy.request("getWalletBalance", { chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account })
     let token = getBtokenAmount(bToken)
+    setAmount("")
     if (+res >= 0 && isInit) {
       let amount = +(bg(res).div(bg(2)).toString())
       amount = amount > token.max ? token.max : amount.toFixed(token.decimalScale)
@@ -106,7 +107,8 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     console.log("betClose", res)
     getBetInfo()
     getLiquidationInfo()
-
+    getWalletBalance()
+    setAmount("")
     return true
   }
 
@@ -145,7 +147,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     let boostedUp = type === "boostedUp" ? true : false
     let params = { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, amount: amount, symbol: info.symbol, accountAddress: wallet.account, boostedUp: boostedUp, direction: direction }
     if (!isApproved.isUnlocked) {
-      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, direction: direction, approved: false,approveTip: isApproved.isZero ? "" : "Changing approved amount may result transaction failure" }
+      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, direction: direction, approved: false, approveTip: isApproved.isZero ? "" : "Changing approved amount may result transaction failure" }
       let approved = await ApiProxy.request("unlock", paramsApprove)
       if (approved) {
         if (approved.success) {
@@ -176,6 +178,8 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     console.log(type, res)
     getBetInfo()
     getLiquidationInfo()
+    setAmount("")
+    getWalletBalance()
     if (res.success) {
       alert.success(`${+res.response.data.volume > 0 ? lang['buy'] : lang['sell']} ${res.response.data.volume} ${info.unit} ${boostedUp ? lang['powers'] : ''} `, {
         timeout: 8000,
@@ -220,13 +224,17 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
   useEffect(() => {
     let interval = 0;
     let timeout = 0
+    let time = 6000;
+    if (wallet.chainId && +wallet.chainId !== 56) {
+      time = 10000
+    }
     if (info) {
       getBetInfo()
-      interval = window.setInterval(()=>{
+      interval = window.setInterval(() => {
         getBetInfo()
-      },6000)
+      }, time)
       if (info.unit === "ETH") {
-        timeout= window.setTimeout(() => {
+        timeout = window.setTimeout(() => {
           getLiquidationInfo()
         }, 600)
       } else {
@@ -241,6 +249,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
 
   useEffect(() => {
     if (wallet.chainId && wallet.account && bToken) {
+      setisInit(true)
       getWalletBalance()
     }
   }, [wallet, bToken])
@@ -321,7 +330,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
         {betInfo.volume && betInfo.volume !== "0" ?
           <>
             <div className='line-chart'><LineChart symbol={info.markpriceSymbol} color={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} /></div>
-            <Button label={lang['close']} onClick={(e) => betClose(e)} className="btn close-btn" width="299" height="60" bgColor={+betInfo.pnl > 0 ? "#38CB891A" : "#FF56301A"} hoverBgColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} borderSize={0} radius={14} fontColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} />
+            <Button label={lang['close']} key="close" onClick={(e) => betClose(e)} className="btn close-btn" width="299" height="60" bgColor={+betInfo.pnl > 0 ? "#38CB891A" : "#FF56301A"} hoverBgColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} borderSize={0} radius={14} fontColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} />
           </>
           : !isLiquidated && <>
             <Button label={lang['up']} key="up" onClick={(e) => openBet("up", e)} isAlert={true} disabled={disabled} className="btn up-btn" width="299" height="60" bgColor="#38CB891A" hoverBgColor="#38CB89" borderSize={0} radius={14} fontColor="#38CB89" icon='up' hoverIcon="up-hover" disabledIcon="up-disable" />

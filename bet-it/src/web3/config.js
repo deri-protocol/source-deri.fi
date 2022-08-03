@@ -2,12 +2,14 @@ export const getDeriLensAddress = (chainId) => {
   const configs = [
     {
       chainId: "56",
-      address: "0xDe80Af93fB29f58f44601dfA270777b6785D0D08",
+      // address: "0xDe80Af93fB29f58f44601dfA270777b6785D0D08",
+      address: "0xBF9ECF8d496438D651484527a8Bd6ffecf1b5730",
       env: "prod",
     },
     {
       chainId: "97",
-      address: "0x82f664B37dD8Ba1ef6dBC624e880C4B1B1BC9FAE",
+      // address: "0x82f664B37dD8Ba1ef6dBC624e880C4B1B1BC9FAE",
+      address: "0x0a4Df7413ff9Fb1542bdDc744670A5AFc4FD4458",
       env: "dev",
     },
     {

@@ -1,0 +1,932 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.dip-hunter {
+  .bg-img-color {
+    width: 100%;
+    height: 1005px;
+    position: absolute;
+    background-color: #fdf8ed;
+    z-index: -1;
+  }
+
+  .hide-three {
+    height: 1005px;
+    top: 0;
+  }
+
+  .hunter-info {
+    width: 1303px;
+    margin: 0 auto;
+    display: flex;
+    height: 575px;
+    justify-content: space-between;
+
+    .left-info {
+      width: 507px;
+      margin-top: 132px;
+      text-align: start;
+
+      .dip-hunter-title {
+        height: 250px;
+      }
+
+      .mobile-dip-hunter-title {
+        display: none;
+      }
+
+      .helps-info {
+        color: rgba(4, 4, 21, 0.5);
+        font-size: 22px;
+
+        span {
+          color: #FF9431;
+        }
+      }
+    }
+
+    .right-info {
+      margin-top: 68px;
+
+      .slieder {
+        position: relative;
+        width: 781px;
+        height: 507px;
+
+        .slieder-item-container {
+          position: absolute;
+
+          li {
+            list-style: none;
+            float: left;
+            width: 597px;
+            height: 472px;
+            background: #FFFFFF;
+            position: relative;
+            box-shadow: 0px 15.1515px 45.4545px #F0E8D7;
+            border-radius: 20px;
+            font-size: 20px;
+            color: rgba(4, 4, 21, 0.5);
+            font-weight: 500;
+
+            .option-title {
+              width: 208px;
+              height: 51px;
+              background: #FE7207;
+              border-radius: 0 0 20px 20px;
+              color: #FFFFFF;
+              font-weight: 700;
+              font-size: 23px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 0 auto;
+            }
+
+            .with-dip-hunter-right {
+              position: absolute;
+              width: 108px;
+              height: 59px;
+              right: 0;
+              top: 0;
+              border-radius: 0 0 0 30px;
+              background: #E3F8EE;
+              font-size: 14px;
+              text-align: right;
+              line-height: 55px;
+              font-weight: 700;
+              color: #38CB89;
+            }
+
+            .option-info-text {
+              width: 440px;
+              margin: 0 auto;
+              margin-top: 25px;
+              text-align: left;
+
+              span {
+                color: #FE7207;
+              }
+            }
+
+            .option-info-img-text {
+              position: relative;
+              z-index: 2;
+
+              .option-text {
+                width: 456px;
+                height: 98px;
+                position: absolute;
+                background: #FFFFFF;
+                box-shadow: 0px 10px 30px #EDEDED;
+                border-radius: 14px;
+                display: flex;
+                justify-content: left;
+                align-items: center;
+                z-index: 1;
+
+                .hr-orange {
+                  width: 3px;
+                  height: 64px;
+                  background: #FE7207;
+                  border-radius: 2px;
+                }
+
+                .text-span {
+                  text-align: left;
+                  margin-left: 25px;
+
+                  .scenario {
+                    font-size: 18px;
+                    color: #0A1629;
+                    font-weight: 700;
+                  }
+                }
+
+                .font-size-two {
+                  font-size: 16px;
+                }
+              }
+
+              .option-one-text {
+                left: -64px;
+                top: 85px;
+              }
+
+              .option-tow-text-one {
+                width: 567px;
+                height: 98px;
+                left: 70px;
+                top: 51px;
+                background-image: url("../assets/img/option-two-scenario-a.svg");
+                background-repeat: no-repeat;
+                background-position: 408px;
+              }
+
+              .option-tow-text-two {
+                width: 512px;
+                height: 151px;
+                left: 125px;
+                top: 166px;
+                align-items: initial;
+                background-image: url("../assets/img/option-two-scenario-b.svg");
+                background-repeat: no-repeat;
+                background-position: 342px 86px;
+
+                .font-size-two {
+                  margin-top: 20px;
+
+                  .scenario {
+                    display: block;
+                    margin-bottom: 10px;
+                  }
+                }
+
+                .hr-orange {
+                  width: 2px;
+                  height: 103px;
+                  margin-top: 25px;
+                }
+              }
+
+              .option-three-text,
+              .option-four-text {
+                width: 580px;
+                min-height: 185px;
+                left: -21px;
+                top: 33px;
+                align-items: initial;
+                background-image: url('../assets/img/with-dip-hunter-senario-a.svg');
+                background-repeat: no-repeat;
+                background-position: 414px 33px;
+
+                .text-span {
+                  width: 367px;
+                  margin-left: 20px;
+                }
+
+                .check-example {
+                  margin-top: 30px;
+
+                  .check-example-btn {
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+
+                    span {
+                      display: inline-block;
+                      border-bottom: 1px solid rgba(4, 4, 21, 0.5);
+                    }
+
+                    img {
+                      margin-left: 8px;
+                    }
+                  }
+
+                  .withDip-info {
+                    margin-top: 10px;
+                    height: 130px;
+                    width: 580px;
+                    margin-left: -22px;
+
+                    .symbol-list {
+                      height: 75px;
+                      display: flex;
+
+                      .symbol-name {
+                        width: 124px;
+                        height: 75px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: #EEFAF3;
+                        font-weight: 800;
+                        color: #38CB89;
+                      }
+
+                      .symbol-list-info-title {
+                        display: flex;
+                        width: 456px;
+                        height: 32px;
+                        padding: 0 12px;
+                        font-size: 12px;
+                        align-items: center;
+                        justify-content: space-between;
+                        background: #FAFBFC;
+
+                      }
+
+                      .symbol-list-info-num {
+                        display: flex;
+                        width: 456px;
+                        height: 43px;
+                        font-size: 12px;
+                        align-items: center;
+                        padding: 0 12px;
+                        justify-content: space-between;
+
+                        .volume {
+                          width: 43px;
+                        }
+
+                        .entry-price {
+                          width: 63px;
+                        }
+
+                        .exit-price {
+                          width: 53px;
+                        }
+
+                        .avg-daily-funding {
+                          width: 106px;
+                        }
+
+                        .holding-period {
+                          width: 85px;
+                        }
+
+                        span {
+                          text-align: center;
+                        }
+                      }
+                    }
+
+                    .withDip-info-des {
+                      margin-left: 23px;
+                      margin-top: 17px;
+                      font-size: 12px;
+                    }
+                  }
+                }
+
+                .font-size-two {
+                  margin-top: 18px;
+                  font-size: 14px;
+
+                  .scenario {
+                    display: block;
+                    margin-bottom: 10px;
+                  }
+                }
+
+                .hr-orange {
+                  width: 2px;
+                  height: 144px;
+                  margin-top: 18px;
+                }
+
+              }
+
+              .option-four-text {
+                left: 36px;
+                background-image: url('../assets/img/with-dip-hunter-senario-b.svg');
+              }
+
+              .option-up {
+                height: 328px;
+              }
+
+              .option-up-b {
+                height: 348px;
+              }
+
+              .how-it-works-img {
+                margin-top: 23px;
+                position: absolute;
+                right: 0;
+              }
+
+              .no-dip-hunter-img {
+                position: absolute;
+                top: 99px;
+                left: 26px;
+              }
+
+              img {
+                z-index: 2;
+              }
+            }
+          }
+
+          .option-one,
+          .option-three {
+            margin-left: 69px;
+          }
+
+          .option-two,
+          .option-four {
+            margin-left: 32px;
+          }
+        }
+
+        .arrow-container {
+          position: absolute;
+          width: 100%;
+          height: 45px;
+          top: 50%;
+          display: flex;
+          justify-content: space-between;
+
+          span {
+            display: inline-block;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+          }
+        }
+
+        .indicator-container {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .indicator {
+            width: 10px;
+            height: 10px;
+            background-color: #FBE8D1;
+            border: 1px solid #FFFFFF;
+            border-radius: 50%;
+            margin-left: 18px;
+            cursor: pointer;
+          }
+
+          .active {
+            width: 20px;
+            border-radius: 10px;
+            background-color: #FE7207;
+          }
+        }
+      }
+    }
+  }
+
+  .card-box-info {
+    width: 1046px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    margin-top: 66px;
+  }
+}
+
+
+@media only screen and (min-width : 760px) and (max-width:1330px) {
+  .dip-hunter {
+    background-color: #fdf8ed;
+
+    .hunter-info {
+      width: 680px;
+      height: 629px;
+      flex-wrap: wrap;
+
+      .left-info {
+        width: 680px;
+        margin-top: 20px;
+        height: 100px;
+        text-align: center;
+        justify-content: center;
+
+        .dip-hunter-title {
+          display: none;
+        }
+
+        .mobile-dip-hunter-title {
+          display: block;
+          font-size: 48px;
+          color: #FF891D;
+          font-weight: 800;
+
+          span {
+            color: #FFAB00;
+            margin-right: 8px;
+          }
+        }
+      }
+
+      .right-info {
+        width: 683px;
+        margin-top: 20px;
+
+        .slieder {
+          width: 683px;
+          height: 483px;
+
+          .slieder-item-container {
+            .option-one {
+              width: 559px;
+              height: 435px;
+              margin-left: 11px;
+
+              .option-info-img-text {
+                .how-it-works-img {
+                  margin-top: 20px;
+                }
+              }
+
+              img {
+                width: 316px;
+                height: 292px;
+              }
+            }
+
+            .option-two {
+              width: 523px;
+              height: 435px;
+              margin-left: 21px;
+
+              .option-info-img-text {
+                img {
+                  width: 81px;
+                  height: 119px;
+                  left: 23px;
+                }
+
+                .option-tow-text-one {
+                  background-position: 355px;
+                  top: 30px;
+                  left: 60px;
+                }
+
+                .option-tow-text-two {
+                  width: 447px;
+                  height: 132px;
+                  background-position: 284px 75px;
+                  left: 110px;
+                  top: 145px;
+
+                  .hr-orange {
+                    width: 3px;
+                    height: 90px;
+                    margin-top: 17px;
+                  }
+
+                  .font-size-two {
+                    margin-top: 16px;
+                  }
+                }
+
+                .option-text {
+                  .text-span {
+                    font-size: 14px;
+                    margin-left: 17px;
+
+                    .scenario {
+                      font-size: 15px;
+                    }
+                  }
+                }
+
+                .option-tow-text-one {
+                  width: 496px;
+                  height: 85px;
+                }
+
+                .no-dip-hunter-img {
+                  top: 74px;
+                }
+              }
+            }
+
+            .option-three {
+              width: 516px;
+              height: 438px;
+              margin-left: 59px;
+
+              .option-info-img-text {
+                .option-three-text {
+                  left: -39px;
+                  width: 501px;
+                  min-height: 159px;
+                  background-position: 360px 12px;
+
+                  .hr-orange {
+                    height: 124px;
+                  }
+
+                  .check-example {
+                    margin-top: 19px;
+
+                    .withDip-info {
+                      width: 501px;
+                    }
+                  }
+
+                  .font-size-two {
+                    font-size: 12px;
+                    width: 317px;
+
+                    .scenario {
+                      font-size: 15px;
+                    }
+                  }
+
+                }
+              }
+            }
+
+            .option-four {
+              width: 515px;
+              height: 438px;
+
+              .option-info-img-text {
+                .option-four-text {
+                  left: 30px;
+                  width: 518px;
+                  min-height: 159px;
+                  background-position: 360px 12px;
+
+                  .hr-orange {
+                    height: 124px;
+                  }
+
+                  .check-example {
+                    margin-top: 19px;
+
+                    .withDip-info {
+                      width: 501px;
+                    }
+                  }
+
+                  .font-size-two {
+                    font-size: 12px;
+                    width: 317px;
+
+                    .scenario {
+                      font-size: 15px;
+                    }
+                  }
+
+                }
+              }
+            }
+          }
+
+        }
+      }
+    }
+
+    .card-box-info {
+      width: 680px;
+    }
+  }
+}
+
+@media only screen and (max-width:760px) {
+  .dip-hunter {
+    background-color: #fdf8ed;
+    .hunter-info {
+      width: 337px;
+      height: 209px;
+
+      .left-info {
+        display: none;
+      }
+
+      .right-info {
+        margin-top: 19px;
+
+        .slieder {
+          width: 325px;
+          height: 209px;
+
+          .slieder-item-container {
+            padding: 0;
+
+            li {
+              border-radius: 8px;
+
+              .option-title {
+                width: 92px;
+                height: 22px;
+                font-size: 10px;
+                border-radius: 0 0 10px 10px;
+              }
+
+              .option-info-text {
+                font-size: 9px;
+                width: 196px;
+                margin-top: 8px;
+              }
+
+              .option-info-img-text {
+
+                .option-three-text,
+                .option-four-text {
+                  .font-size-two {
+                    .check-example {
+                      margin-top: 10px;
+
+                      .withDip-info {
+                        width: 254px;
+                        margin-left: -7px;
+                        height: 100px;
+
+                        .symbol-name {
+                          height: 60px;
+                        }
+
+                        .symbol-list {
+                          height: 60px;
+
+                          .symbol-list-info-title {
+                            font-size: 8px;
+                            width: 220px;
+                            padding: 0 4px;
+                            height: 30px;
+
+                            .entry-price {
+                              margin-left: 4px;
+                            }
+                          }
+
+                          .symbol-list-info-num {
+                            font-size: 8px;
+                            width: 220px;
+                            display: block;
+                            padding: 0 4px;
+                            height: 30px;
+
+                            span {
+                              height: 30px;
+                              line-height: 30px;
+                              text-align: center;
+                              display: inline-block;
+                            }
+
+                            .volume {
+                              width: 24px;
+                            }
+
+                            .entry-price {
+                              width: 35px;
+                            }
+
+                            .exit-price {
+                              width: 40px;
+                            }
+
+                            .avg-daily-funding {
+                              width: 48px;
+                            }
+
+                            .holding-period {
+                              width: 48px;
+                            }
+                          }
+                        }
+
+                        .withDip-info-des {
+                          margin-top: 4px;
+                          font-size: 8px;
+                          margin-left: 8px;
+                        }
+                      }
+                    }
+                  }
+                }
+
+              }
+            }
+
+            .option-one {
+              width: 266px;
+              height: 209px;
+              margin-left: 0;
+              font-size: 9px;
+              margin-left: 26px;
+
+              .option-info-img-text {
+                .option-one-text {
+                  width: 203px;
+                  height: 43px;
+                  left: -27px;
+                  top: 32px;
+                  border-radius: 6px;
+
+                  .hr-orange {
+                    width: 1px;
+                    height: 28px;
+                  }
+                }
+
+
+                img {
+                  width: 156px;
+                  height: 144px;
+                  margin-top: -5px;
+                }
+              }
+
+            }
+
+            .option-two {
+              width: 257px;
+              height: 209px;
+              margin-left: 24px;
+
+              .option-info-img-text {
+                .option-tow-text-one {
+                  width: 244px;
+                  height: 49px;
+                  border-radius: 6px;
+                  top: 15px;
+                  left: 34px;
+                  background-position: 180px;
+                  background-size: 56px 27px;
+
+                  .hr-orange {
+                    width: 1px;
+                    height: 27px;
+                  }
+
+                  .font-size-two {
+                    font-size: 7px;
+                    margin-left: 7px;
+
+                    .scenario {
+                      font-size: 8px;
+                    }
+                  }
+                }
+
+                .option-tow-text-two {
+                  width: 221px;
+                  height: 65px;
+                  border-radius: 6px;
+                  top: 68px;
+                  left: 55px;
+                  background-position: 160px 35px;
+                  background-size: 56px 27px;
+
+                  .hr-orange {
+                    width: 1px;
+                    height: 44px;
+                    margin-top: 10px;
+                  }
+
+                  .font-size-two {
+                    font-size: 7px;
+                    margin-left: 7px;
+                    margin-top: 8px;
+
+                    .scenario {
+                      font-size: 8px;
+                    }
+                  }
+                }
+
+                img {
+                  width: 40px;
+                  height: 58px;
+                  top: 35px;
+                  left: 11px;
+                }
+              }
+            }
+
+            .option-three {
+              width: 254px;
+              height: 209px;
+              margin-left: 45px;
+
+              .option-info-img-text {
+
+                .option-three-text {
+                  width: 247px;
+                  min-height: 78px;
+                  max-height: 200px;
+                  top: 10px;
+                  background-position: 180px 24px;
+                  background-size: 50px 55px;
+                  border-radius: 6px;
+
+                  .hr-orange {
+                    width: 1px;
+                    height: 61px;
+                  }
+
+                  .font-size-two {
+                    font-size: 7px;
+                    margin-left: 7px;
+                    width: 160px;
+
+                    .scenario {
+                      font-size: 8px;
+                    }
+                  }
+                }
+              }
+            }
+
+            .option-four {
+              width: 254px;
+              height: 209px;
+              margin-left: 35px;
+
+              .option-info-img-text {
+                .option-four-text {
+                  width: 256px;
+                  min-height: 78px;
+                  max-height: 230px;
+                  top: 10px;
+                  left: 15px;
+                  border-radius: 6px;
+                  background-position: 180px 24px;
+                  background-size: 50px 55px;
+
+                  .hr-orange {
+                    width: 1px;
+                    height: 61px;
+                  }
+
+                  .font-size-two {
+                    font-size: 7px;
+                    margin-left: 7px;
+                    width: 160px;
+
+                    .scenario {
+                      font-size: 8px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          .indicator-container {
+            display: none;
+          }
+
+          .arrow-container {
+
+            .right-arrow,
+            .left-arrow {
+              width: 20px;
+              height: 20px;
+
+              img {
+                width: 20px;
+                height: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .card-box-info {
+      width: 375px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin: 0 auto;
+      margin-top: 66px;
+    }
+  }
+
+}

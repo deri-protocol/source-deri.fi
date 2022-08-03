@@ -1,0 +1,33 @@
+[{
+    "chainId": "97",
+    "chain": "BSC",
+    "name": "future_inno",
+    "default": true,
+    "symbols": [{
+        "symbol": "BTCUSD-20000-P",
+        "order": 1,
+        "symbolDisplay":"BTC-20000-P"
+      },
+      {
+        "symbol": "ETHUSD-1000-P",
+        "symbolDisplay":"ETH-1000-P",
+        "order": 2
+      }
+    ]
+  },
+  {
+    "chainId": "421611",
+    "chain": "ARBI",
+    "name": "pool1",
+    "symbols": [{
+        "symbol": "BTCUSD",
+        "price": 20000
+      },
+      {
+        "symbol": "ETHUSD",
+        "price": 1000
+
+      }
+    ]
+  }
+]

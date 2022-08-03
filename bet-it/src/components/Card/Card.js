@@ -13,7 +13,6 @@ import LineChart from "../LineChart/LineChart";
 import { eqInNumber, getBtokenAmount, hasParent } from "../../utils/utils";
 import { DeriEnv, bg } from '../../web3'
 export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
-  let timer;
   const [amount, setAmount] = useState(100)
   const [betInfo, setBetInfo] = useState({})
   const [bToken, setBToken] = useState()
@@ -21,6 +20,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
   const [disabled, setDisabled] = useState(true)
   const [inputDisabled, setInputDisabled] = useState(true)
   const [isLiquidated, setIsLiquidated] = useState(false)
+  const [isInit, setisInit] = useState(true)
   const wallet = useWallet();
   const chains = useChain()
   const chain = chains.find((item) => eqInNumber(item.chainId, wallet.chainId))
@@ -61,27 +61,20 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     }
   }
 
-  const getBetInfoTimeOut = (action) => {
-    timer = window.setTimeout(async () => {
-      let res = await action();
-      if (res) {
-        getBetInfoTimeOut(action);
-      }
-    }, 6000)
-  }
-
   const getIsApprove = async () => {
     let res = await ApiProxy.request("isUnlocked", { chainId: wallet.chainId, accountAddress: wallet.account, bTokenSymbol: bToken })
-    return res
+    return res.isUnlocked
   }
 
   const getWalletBalance = async () => {
     let res = await ApiProxy.request("getWalletBalance", { chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account })
     let token = getBtokenAmount(bToken)
-    if (+res >= 0) {
+    setAmount("")
+    if (+res >= 0 && isInit) {
       let amount = +(bg(res).div(bg(2)).toString())
       amount = amount > token.max ? token.max : amount.toFixed(token.decimalScale)
       setAmount(amount)
+      setisInit(false)
     }
     setBalance(res)
   }
@@ -114,7 +107,8 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     console.log("betClose", res)
     getBetInfo()
     getLiquidationInfo()
-
+    getWalletBalance()
+    setAmount("")
     return true
   }
 
@@ -152,8 +146,8 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     let direction = type === "up" || type === "boostedUp" ? "long" : "short"
     let boostedUp = type === "boostedUp" ? true : false
     let params = { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, amount: amount, symbol: info.symbol, accountAddress: wallet.account, boostedUp: boostedUp, direction: direction }
-    if (!isApproved) {
-      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, direction: direction, approved: false }
+    if (!isApproved.isUnlocked) {
+      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, direction: direction, approved: false, approveTip: isApproved.isZero ? "" : "Changing approved amount may result transaction failure" }
       let approved = await ApiProxy.request("unlock", paramsApprove)
       if (approved) {
         if (approved.success) {
@@ -184,6 +178,8 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     console.log(type, res)
     getBetInfo()
     getLiquidationInfo()
+    setAmount("")
+    getWalletBalance()
     if (res.success) {
       alert.success(`${+res.response.data.volume > 0 ? lang['buy'] : lang['sell']} ${res.response.data.volume} ${info.unit} ${boostedUp ? lang['powers'] : ''} `, {
         timeout: 8000,
@@ -226,24 +222,34 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
   }
 
   useEffect(() => {
+    let interval = 0;
+    let timeout = 0
+    let time = 6000;
+    if (wallet.chainId && +wallet.chainId !== 56) {
+      time = 10000
+    }
     if (info) {
-      getBetInfoTimeOut(getBetInfo)
       getBetInfo()
+      interval = window.setInterval(() => {
+        getBetInfo()
+      }, time)
       if (info.unit === "ETH") {
-        window.setTimeout(() => {
+        timeout = window.setTimeout(() => {
           getLiquidationInfo()
         }, 600)
       } else {
         getLiquidationInfo()
       }
     }
-    return ()=>{
-      clearInterval(timer)
+    return () => {
+      window.clearInterval(interval)
+      window.clearTimeout(timeout)
     }
   }, [wallet, info, wallet.account, wallet.chainId])
 
   useEffect(() => {
     if (wallet.chainId && wallet.account && bToken) {
+      setisInit(true)
       getWalletBalance()
     }
   }, [wallet, bToken])
@@ -324,17 +330,17 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
         {betInfo.volume && betInfo.volume !== "0" ?
           <>
             <div className='line-chart'><LineChart symbol={info.markpriceSymbol} color={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} /></div>
-            <Button label={lang['close']} onClick={(e) => betClose(e)} className="btn close-btn" width="299" height="60" bgColor={+betInfo.pnl > 0 ? "#38CB891A" : "#FF56301A"} hoverBgColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} borderSize={0} radius={14} fontColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} />
+            <Button label={lang['close']} key="close" onClick={(e) => betClose(e)} className="btn close-btn" width="299" height="60" bgColor={+betInfo.pnl > 0 ? "#38CB891A" : "#FF56301A"} hoverBgColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} borderSize={0} radius={14} fontColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} />
           </>
           : !isLiquidated && <>
-            <Button label={lang['up']} onClick={(e) => openBet("up", e)} isAlert={true} disabled={disabled} className="btn up-btn" width="299" height="60" bgColor="#38CB891A" hoverBgColor="#38CB89" borderSize={0} radius={14} fontColor="#38CB89" icon='up' hoverIcon="up-hover" disabledIcon="up-disable" />
-            <Button label={lang['down']} onClick={(e) => openBet("down", e)} isAlert={true} disabled={disabled} className="btn down-btn" width="299" height="60" bgColor="#FF56301A" hoverBgColor="#FF5630" borderSize={0} radius={14} fontColor="#FF5630" icon='down' hoverIcon="down-hover" disabledIcon="down-disable" />
-            {info.powerSymbol && <Button label={lang['boosted-up']} isAlert={true} onClick={(e) => openBet("boostedUp", e)} disabled={disabled} className="btn boosted-btn" width="299" height="60" bgColor="#FFAB001A" hoverBgColor="#FFAB00" borderSize={0} radius={14} fontColor="#FFAB00" icon='boosted-up' hoverIcon="boosted-up-hover" disabledIcon="boosted-up-disable" tip={getLang('boosted-up-tip', { symbol: info.unit, powers: info.powerSymbol.symbol })} tipIcon='boosted-hint' hoverTipIcon="boosted-hint-hover" disabledTipIcon="boosted-hint-disable" />}
+            <Button label={lang['up']} key="up" onClick={(e) => openBet("up", e)} isAlert={true} disabled={disabled} className="btn up-btn" width="299" height="60" bgColor="#38CB891A" hoverBgColor="#38CB89" borderSize={0} radius={14} fontColor="#38CB89" icon='up' hoverIcon="up-hover" disabledIcon="up-disable" />
+            <Button label={lang['down']} key="down" onClick={(e) => openBet("down", e)} isAlert={true} disabled={disabled} className="btn down-btn" width="299" height="60" bgColor="#FF56301A" hoverBgColor="#FF5630" borderSize={0} radius={14} fontColor="#FF5630" icon='down' hoverIcon="down-hover" disabledIcon="down-disable" />
+            {info.powerSymbol && <Button key="boosted-up" label={lang['boosted-up']} isAlert={true} onClick={(e) => openBet("boostedUp", e)} disabled={disabled} className="btn boosted-btn" width="299" height="60" bgColor="#FFAB001A" hoverBgColor="#FFAB00" borderSize={0} radius={14} fontColor="#FFAB00" icon='boosted-up' hoverIcon="boosted-up-hover" disabledIcon="boosted-up-disable" tip={getLang('boosted-up-tip', { symbol: info.unit, powers: info.powerSymbol.symbol })} tipIcon='boosted-hint' hoverTipIcon="boosted-hint-hover" disabledTipIcon="boosted-hint-disable" />}
           </>}
         {isLiquidated && betInfo.volume === "0" ?
           <>
             <div className='line-chart'><LineChart symbol={info.markpriceSymbol} color="#FF5630" /></div>
-            <Button label={lang['start-over']} onClick={(e) => e.preventDefault(), setIsLiquidated(false)} className="btn close-btn" width="299" height="60" bgColor="#FF56301A" hoverBgColor="#FF5630" borderSize={0} radius={14} fontColor="#FF5630" /></>
+            <Button label={lang['start-over']} key="start-over" onClick={(e) => e.preventDefault(), setIsLiquidated(false)} className="btn close-btn" width="299" height="60" bgColor="#FF56301A" hoverBgColor="#FF5630" borderSize={0} radius={14} fontColor="#FF5630" /></>
           : null}
       </div>
 

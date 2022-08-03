@@ -1,0 +1,48 @@
+[
+  {
+    "chainId" : "97",
+    "code" : "BSC",
+    "name" : "BSC-Testnet",
+    "icon" : "BNB",
+    "symbol" : "BNB",
+    "viewUrl" : "https://testnet.bscscan.com/",
+    "supportV1" : true,
+    "supportV2" : true,
+    "supportInnovation" : true,
+    "supportOptions":true,
+    "supportPowers":true,
+    "supportOpen" : true,
+    "isDefault" : true,
+    "metamask" : {
+      "chainName": "BSC-Testnet",
+      "nativeCurrency": {
+        "name": "BSC",
+        "symbol": "BNB",
+        "decimals" : 18
+      },
+      "rpcUrls": ["https://data-seed-prebsc-1-s1.binance.org:8545"],
+      "blockExplorerUrls": ["https://testnet.bscscan.com"]
+    }
+  },
+  {
+    "chainId" : "421611",
+    "code" : "Arbitrum",
+    "chainName" : "Arbi",
+    "name" : "Arbi-Testnet ",
+    "icon" : "arbitrum",
+    "symbol" : "ARETH",
+    "viewUrl" : "https://testnet.arbiscan.io/",
+    "supportOptions":true,
+    "supportPowers":true,
+    "metamask" : {
+      "chainName": "Arbitrum Rinkeby",
+      "nativeCurrency": {
+        "name": "Arbitrum",
+        "symbol": "ARETH",
+        "decimals" : 18
+      },
+      "rpcUrls": ["https://rinkeby.arbitrum.io/rpc"],
+      "blockExplorerUrls": ["https://testnet.arbiscan.io/"]
+    }
+  }
+]

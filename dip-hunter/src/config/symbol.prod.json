@@ -1,0 +1,63 @@
+[
+  {
+    "name": "option",
+    "chain" : "BSC",
+    "chainId": "56",
+    "default" : true,
+    "symbols": [
+      {
+        "symbol": "BTCUSD",
+        "order" : 1
+        
+      },
+      {
+        "symbol": "ETHUSD"
+      }
+    ]
+  },
+  {
+    "name": "future_inno",
+    "chain" : "BSC",
+    "chainId": "56",
+    "default" : true,
+    "symbols": [
+      {
+        "symbol": "BNBUSD",
+        "order" : 1
+      },
+      {
+        "symbol": "DOGEUSDT",        
+        "order" : 2
+      },
+      {
+        "symbol": "SOLUSDT",
+        "order" : 3
+      },
+      {
+        "symbolId": "0xb091137ce24b6cc1a176ff1c47ee784a62b93fe8cca125b8975b84c9b3c407ea",
+        "symbol": "DOTUSDT",
+        "order" : 4
+      }
+    ]
+  },
+  {
+    "name": "pool1",
+    "chain" : "ARBI",
+    "chainId": "42161",
+    "symbols": [
+      {
+        "symbol": "BTCUSD",
+        "order" : 1,
+        "powerSymbol": {
+          "displaySymbol": "mBTC^2"
+        }
+      },
+      {
+        "symbol": "ETHUSD",
+        "powerSymbol": {
+          "displatSymbol": "mETH^2"
+        }
+      }
+    ]
+  }
+]

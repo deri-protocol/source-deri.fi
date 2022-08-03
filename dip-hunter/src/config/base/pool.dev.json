@@ -1,0 +1,53 @@
+[
+  {
+    "name": "future_inno",
+    "chainId": "97",
+    "pool": "0xAADA94FcDcD7FCd7488C8DFc8eddaac81d7F71EE",
+    "zone": "inno",
+    "version": "v3_lite",
+    "versionId": "v3",
+    "initialBlock": "16936691",
+    "broker": "0xEb2De195A94f213E52350F968552931f81Fa9517",
+    "symbolManager": "0xf211aAC2188504B722f723Ba281462951e7349fB",
+    "b0Token": "BUSD",
+    "bTokens": [
+      {
+        "bTokenSymbol": "BUSD",
+        "bTokenAddress": "0x8301F2213c0eeD49a7E28Ae4c3e91722919B8B47",
+        "bTokenDiscount": "1"
+      },
+      {
+        "bTokenSymbol": "BTCB",
+        "bTokenAddress": "0xA808e341e8e723DC6BA0Bb5204Bafc2330d7B8e4",
+        "bTokenDiscount": "1"
+      },
+      {
+        "bTokenSymbol": "ETH",
+        "bTokenAddress": "0x98f7A83361F7Ac8765CcEBAB1425da6b341958a7",
+        "bTokenDiscount": "1"
+      }
+    ],
+    "symbols": [
+      {
+        "symbolId": "0x468e9b8afd36ecd29f819119c2dbd1b49beb3947f79ba35268299a128b96dcd1",
+        "symbol": "BTCUSD-20000-P",
+        "category": "option",
+        "leverage": "12.5",
+        "unit": "BTC",
+        "decimals": "2",
+        "rank": 1000,
+        "strikePrice": "20000"
+      },
+      {
+        "symbolId": "0x98fc75eeaf2daf20762fde47b011dc0b9bbc272d057f010223476676501d04f7",
+        "symbol": "ETHUSD-1000-P",
+        "category": "option",
+        "leverage": "12.5",
+        "unit": "ETH",
+        "decimals": "2",
+        "rank": 1000,
+        "strikePrice": "1000"
+      }
+    ]
+  }
+]

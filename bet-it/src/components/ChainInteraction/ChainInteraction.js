@@ -4,7 +4,7 @@ import TransactionBox from '../TransactionBox/TransactionBox';
 import Intl from '../../model/Intl'
 import Label from '../Label/Label';
 
-export default function ChainInteraction({title,status = 'pending',isApproved,approved,close,direction}){
+export default function ChainInteraction({title,status = 'pending',isApproved,approved,close,direction,options}){
   const config =  useMemo(() => (
     {
       pending : {
@@ -31,5 +31,5 @@ export default function ChainInteraction({title,status = 'pending',isApproved,ap
       setData(config[status])    
     } 
   }, [status])
-  return (<TransactionBox title={title} rgb={data['rgb']} status={status} approved={approved} direction={direction} subTitle={data['subTitle']} desc={data['desc']} icon={data['icon']} close={close}/>)
+  return (<TransactionBox title={title} rgb={data['rgb']} status={status} options={options} approved={approved} direction={direction} subTitle={data['subTitle']} desc={data['desc']} icon={data['icon']} close={close}/>)
 }

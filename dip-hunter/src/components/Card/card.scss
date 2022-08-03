@@ -1,0 +1,403 @@
+$className: "BTC",
+"ETH";
+$Font:"BTC-price",
+"ETH-price";
+$DownColor:rgba(255, 139, 3, 0.26),
+rgba(157, 129, 223, 0.25);
+$BgColor:rgba(255, 189, 108, 0.22),
+rgba(218, 206, 255, 0.22);
+$BoxShadow: rgba(255, 189, 108, 0.56),
+rgba(106, 92, 146, 0.45);
+$Color: #F49B33,
+#7A57DD,
+#F3BA2D,
+#C1A633,
+#172852,
+#E6007A,
+#865FEE,
+#0055D5,
+#0055D5,
+#FFDF0D,
+#FFD122,
+#CDA84D,
+#CDA84D,
+#4D41CE;
+
+.card-box {
+  width: 456px;
+  height: 704px;
+  border-radius: 30px;
+  background: #FFFFFF;
+  box-shadow: 0px 23px 44px rgba(176, 183, 195, 0.14);
+  border: 1px solid transparent;
+  overflow: hidden;
+  // cursor: pointer;
+  margin-left: 42px;
+  margin-bottom: 72px;
+
+  .buy-symbol-name {
+    font-size: 110px;
+    color: #FFFFFF;
+    position: relative;
+    top: -27px;
+    left: -3px;
+    letter-spacing: -1px;
+    font-weight: 900;
+    white-space: nowrap;
+
+    text-shadow: 0px 4px 6px rgba(240, 240, 240, 0.7);
+  }
+
+  .price-text {
+    font-weight: 900;
+    position: relative;
+    left: -54px;
+    font-size: 120px;
+    margin-top: -60px;
+    white-space: nowrap;
+    letter-spacing: -1px;
+    width: 549px;
+    height: 113px;
+    text-align: center;
+
+    .price-down-text,
+    .price-up-text {
+      position: absolute;
+      left: 0px;
+      width: 549px;
+      height: 113px;
+      text-align: center;
+    }
+
+    .price-up-text {
+      z-index: 2;
+    }
+
+    .price-down-text {
+      left: 6px;
+      top: 1px;
+    }
+  }
+
+  @for $i from 1 through length($Font) {
+    .#{nth($Font, $i)} {
+      color: nth($Color, $i);
+
+      .price-down-text {
+        color: nth($DownColor, $i);
+        // color: rgba(255, 139, 3, 0.26);
+        -webkit-text-stroke: 2px rgba(255, 255, 255, 0.7);
+        text-shadow: 0px 4px 6px rgba(240, 240, 240, 0.7);
+
+      }
+    }
+  }
+
+  .card-info {
+    width: 100%;
+    height: 521px;
+    background: #FFFFFF;
+    border-radius: 30px;
+    z-index: 9;
+    position: relative;
+
+    .symbol-name {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 49px;
+      font-weight: 700;
+      font-size: 28px;
+      color: #3C3C3C;
+
+      img {
+        margin-right: 10px;
+      }
+    }
+
+    .daily-income {
+      width: 346px;
+      height: 132px;
+      border-top: 1px solid #E4E6E8;
+      border-bottom: 1px solid #E4E6E8;
+      margin: 0 auto;
+      margin-top: 31px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 32px;
+
+      .daily-fee-day {
+        color: #38CB89;
+        display: flex;
+        align-items: center;
+        span {
+          font-size: 42px;
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      .daily-income-text {
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 15px;
+        color: #C8CDD5;
+        // border-bottom: 1px solid #E4E6E8;
+        cursor: pointer;
+        .text-left{
+          text-align: left;
+        }
+
+        .text {
+          display: flex;
+
+          span {
+            border-bottom: 1px solid #E4E6E8;
+          }
+
+          img {
+            margin-left: 8px;
+            align-items: center;
+          }
+        }
+      }
+    }
+
+    .price-postion {
+      margin: 0 auto;
+      margin-top: 46px;
+      width: 346px;
+      font-weight: 500;
+      font-size: 16px;
+
+      .price-info,
+      .position-info {
+
+        .position-title,
+        .price-title {
+          display: flex;
+          align-items: center;
+
+          img {
+            margin-left: 4px;
+          }
+        }
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .price-info {
+        margin-bottom: 9px;
+      }
+    }
+
+    .deposit-withdraw-position {
+      margin-top: 59px;
+
+      // .disabled {
+      //   border: 1px solid rgba(4, 4, 21, 0.1);
+      //   color: #999999;
+      //   background-color: #FFFFFF;
+      // }
+
+      .postion-btn {
+        display: flex;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 14px;
+        color: #C8CDD5;
+        cursor: pointer;
+
+        img {
+          margin-left: 10px;
+        }
+      }
+    }
+
+    .deposit-withdraw {
+      display: flex;
+      margin-top: 27px;
+
+      div {
+        flex-grow: 1;
+      }
+
+      .deposit {
+        border-radius: 0 0 0 30px;
+      }
+
+      .withdraw {
+        border-radius: 0 0 30px 0;
+      }
+    }
+  }
+
+}
+
+.card-box:nth-child(3n+1) {
+  margin-left: 0px;
+}
+
+@for $i from 1 through length($className) {
+  .#{nth($className, $i)} {
+    // background-image: url("../../assets/img/#{nth($className, $i)}.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    border: 1px solid nth($Color, $i);
+    background-color: nth($BgColor, $i);
+
+    .card-info {
+      box-shadow: 0px -11px 18px nth($BoxShadow, $i);
+
+    }
+
+
+  }
+}
+
+@media only screen and (min-width : 760px) and (max-width:1330px) {
+  .card-box {
+    width: 320px;
+    height: 496px;
+
+    .buy-symbol-name {
+      font-size: 77px;
+      top: -19px;
+    }
+
+    .price-text {
+      font-size: 84px;
+      width: 385px;
+      left: -38px;
+      height: 80px;
+      margin-top: -43px;
+
+      .price-up-text,
+      .price-down-text {
+        width: 385px;
+      }
+    }
+    .card-info{
+      height: 365px;
+      .symbol-name{
+        padding-top: 28px;
+      }
+      .daily-income{
+        width: 255px;
+        margin-top: 23px;
+        font-size: 24px;
+        height: 94px;
+        .daily-fee-day{
+          span{
+            font-size: 29px;
+          }
+        }
+        .daily-income-text{
+          font-size: 10px;
+          margin-top: 4px;
+        }
+      }
+      .price-postion{
+        margin-top: 31px;
+        width: 246px;
+        font-size: 11px;
+        .price-info{
+          margin-bottom: 6px;
+        }
+      }
+      .deposit-withdraw-position{
+        margin-top: 20px;
+        .postion-btn{
+          font-size: 12px;
+        }
+        .deposit-withdraw{
+          margin-top: 26px;
+          div{
+            width: 160px;
+            height: 48px;
+            font-size: 11px;
+          }
+        }
+      }
+
+    }
+  }
+
+  .card-box:nth-child(2n) {
+    margin-left: 20px;
+  }
+
+}
+@media only screen and (max-width:760px) {
+  .card-box{
+    margin-left: 0;
+    width: 375px;
+    height: 576px;
+    margin-bottom: 24px;
+    .buy-symbol-name{
+      font-size: 96px;
+      top: -23px;
+      left: -15px;
+    }
+    .price-text {
+      font-size: 98px;
+      width: 375px;
+      left: -21px;
+      height: 95px;
+      margin-top: -59px;
+
+      .price-up-text,
+      .price-down-text {
+        width: 375px;
+      }
+    }
+    .card-info{
+      height: 424px;
+      .symbol-name{
+        font-size: 23px;
+        padding-top: 33px;
+        img{
+          width: 36px;
+          height: 36px;
+        }
+      }
+      .daily-income{
+        width: 284px;
+        height: 108px;
+        margin-top: 26px;
+        .daily-fee-day{
+          font-size: 30px;
+          span{
+            font-size: 34px;
+          }
+        }
+        .daily-income-text{
+          margin-top: 8px;
+          font-size: 12px;
+        }
+      }
+      .price-postion{
+        width: 284px;
+        margin-top: 37px;
+        font-size: 13px;
+      }
+      .deposit-withdraw-position{
+        margin-top: 34px;
+        .postion-btn{
+          font-size: 13px;
+        }
+        .deposit-withdraw{
+          margin-top: 29px;
+          div{
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+}

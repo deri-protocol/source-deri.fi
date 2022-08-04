@@ -33,7 +33,7 @@
   "with-dip-hunter-scenario-b-alice": "Alice has an initial deposit of $20000. Now the account balance is $21418. She can buy 1.127 BTC, which is 0.127 BTC more than she expected.",
   "daily-income":"Daily Income",
   "my-daily-income":"My Daily Income",
-  "est-daily-income":"Est. Daily Income",
+  "est-daily-income":"Est. Daily Income Per",
   "day":"day",
   "excution-price":"Execution Price",
   "your-position":"My Position",

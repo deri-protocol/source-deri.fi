@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     position : initial;
     font-size :32px;
     display:none;
-    background : none;
+    background : #FF891D;
     justify-content: space-between;
     align-items: center;
     height : 88px;

@@ -34,6 +34,7 @@
         "category": "option",
         "leverage": "12.5",
         "unit": "BTC",
+        "minTradeVolume": "0.0001",
         "decimals": "2",
         "rank": 1000,
         "strikePrice": "20000"
@@ -44,6 +45,7 @@
         "category": "option",
         "leverage": "12.5",
         "unit": "ETH",
+        "minTradeVolume": "0.001",
         "decimals": "2",
         "rank": 1000,
         "strikePrice": "1000"

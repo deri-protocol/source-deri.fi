@@ -1,0 +1,26 @@
+.font-box {
+  letter-spacing: 3px;
+  font-size: 103px;
+  font-weight: 900;
+  position: relative;
+
+  .down-text,
+  .up-text {
+    position: absolute;
+    left: 0px;
+  }
+
+  .up-text {
+    color: #FF9431;
+    -webkit-text-stroke: 2px #FFF;
+    z-index: 2;
+  }
+
+  .down-text {
+    color: rgba(255, 148, 49, 0.3);
+    text-shadow: 0px 4.57912px 6.86868px rgba(255, 148, 49, 0.3);
+    left: 5px;
+    top: 5px;
+    -webkit-text-stroke: 2px #FFF;
+  }
+}

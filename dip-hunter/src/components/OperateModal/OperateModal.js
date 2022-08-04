@@ -6,7 +6,7 @@ import './modal.scss';
 import { DeriEnv, bg } from '../../web3'
 import { hasParent } from '../../utils/utils'
 import DeriNumberFormat from "../../utils/DeriNumberFormat";
-export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, info, bTokens, wallet, closeModal }) {
+export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, info, bTokens, wallet, closeModal, afterTransaction }) {
   const [percent, setPercent] = useState("")
   const [balance, setBalance] = useState()
   const [isShow, setIsShow] = useState(false)
@@ -24,7 +24,17 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
     if (value < 0 || isNaN(value)) {
       setAmount("")
     } else {
-      setAmount(value)
+      let amount = value;
+      let multiplier = info.minTradeVolume
+      let index = multiplier.indexOf('.')
+      let num = multiplier.slice(index);
+      let length = num.length
+      if (amount.indexOf(".") !== -1) {
+        console.log("amount.indexOf('.')", amount.indexOf("."))
+        amount = amount.substring(0, (amount.indexOf(".") + length))
+        amount = amount === '0' ? '' : amount
+      }
+      setAmount(amount)
 
     }
     setPercent("")
@@ -121,6 +131,16 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
           per = parseInt(per) / 100
         }
         let amount = bg(aBalance).times(per).toString()
+        if (type !== "DEPOSIT") {
+          let multiplier = info.minTradeVolume
+          let index = multiplier.indexOf('.')
+          let num = multiplier.slice(index);
+          let length = num.length
+          if (amount.indexOf(".") !== -1) {
+            amount = amount.substring(0, amount.indexOf(".") + length)
+            amount = amount === '0' ? '' : amount
+          }
+        }
         setAmount(amount)
       }
     }

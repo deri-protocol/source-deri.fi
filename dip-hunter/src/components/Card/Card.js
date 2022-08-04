@@ -38,6 +38,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
   }
 
   const getSymbolInfo = async () => {
+    console.log("wallet.status",wallet.status)
     if (wallet.isConnected()) {
       let res = await ApiProxy.request("getSymbolInfo", { chainId: wallet.chainId, accountAddress: wallet.account, symbol: info.symbol })
       if (res.indexPrice) {
@@ -96,7 +97,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
     return () => {
       interval && window.clearInterval(interval)
     }
-  }, [info.symbol, wallet.account, wallet.chainId])
+  }, [info.symbol, wallet.account, wallet.chainId,wallet.status])
 
 
   return (

@@ -38,6 +38,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
   }
 
   const getSymbolInfo = async () => {
+    console.log("wallet.status",wallet.status)
     if (wallet.isConnected()) {
       let res = await ApiProxy.request("getSymbolInfo", { chainId: wallet.chainId, accountAddress: wallet.account, symbol: info.symbol })
       if (res.indexPrice) {
@@ -45,7 +46,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
         setSymbolInfo(res)
       }
       return res
-    } else if (wallet.status === "disconnected" && !wallet.account) {
+    } else if ((wallet.status === "disconnected" || wallet.status === "error") && !wallet.account) {
       let chainId = DeriEnv.get() === "prod" ? 56 : 97
       let res = await ApiProxy.request("getSymbolInfo", { chainId: chainId, accountAddress: "0x0000000000000000000000000000000000000000", symbol: info.symbol })
       if (res.indexPrice) {
@@ -58,6 +59,10 @@ export default function Card({ info, lang, getLang, bTokens }) {
   const showModal = (type) => {
     setType(type)
     openOperatetModal()
+  }
+
+  const afterTransaction = () => {
+    getSymbolInfo()
   }
   // useEffect(async () => {
   //   let interval = 0;
@@ -79,10 +84,10 @@ export default function Card({ info, lang, getLang, bTokens }) {
   useEffect(() => {
     let interval = null;
     let time = 6000
-    if(wallet.chainId && +wallet.chainId !== 56){
+    if (wallet.isConnected() && +wallet.chainId !== 56) {
       time = 10000
     }
-    if(info.symbol){
+    if (info.symbol) {
       setSymbolInfo({})
       getSymbolInfo()
       interval = window.setInterval(() => {
@@ -92,7 +97,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
     return () => {
       interval && window.clearInterval(interval)
     }
-  }, [info.symbol, wallet.account, wallet.chainId])
+  }, [info.symbol, wallet.account, wallet.chainId,wallet.status])
 
 
   return (
@@ -120,7 +125,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
           <div className='daily-income-text'>
             <UnderlineText className="text-left" width="220" tip={symbolInfo.volume !== "0" && symbolInfo.volume ? `The estimated daily income of my current position. This rate is calculated from the daily funding of ${info.symbol} paid by the option buyers.` : ` The estimated daily income of 1 ${info.unit} position.This rate is calculated from the daily funding of ${info.symbol} paid by the option buyers.`}>
               <span>
-                {symbolInfo.volume && symbolInfo.volume !== "0" ? lang["my-daily-income"] : lang["est-daily-income"]}
+                {symbolInfo.volume && symbolInfo.volume !== "0" ? lang["my-daily-income"] : `${lang["est-daily-income"]} ${info.unit}`}
               </span>
               <Icon token="daily-tip" />
             </UnderlineText>
@@ -160,7 +165,7 @@ export default function Card({ info, lang, getLang, bTokens }) {
         </div>
       </div>
       <OperateModal>
-        <OperateModalDialog lang={lang} chain={chain} alert={alert} type={type} symbolInfo={symbolInfo} info={info} bTokens={bTokens} wallet={wallet} closeModal={closeOperatetModal} />
+        <OperateModalDialog lang={lang} afterTransaction={afterTransaction} chain={chain} alert={alert} type={type} symbolInfo={symbolInfo} info={info} bTokens={bTokens} wallet={wallet} closeModal={closeOperatetModal} />
       </OperateModal>
     </div>
   )

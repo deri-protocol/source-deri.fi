@@ -14,6 +14,7 @@ export default function BetIt({ lang, getLang, actions }) {
   const [stepNow, setStepNow] = useState(1)
   const [isFixed, setIsFixed] = useState(false)
   const [bTokens, symbols] = usePool();
+  console.log(bTokens, symbols)
   const [collect, setCollect] = useState(true)
   const [openSymbol, setOpenSymbol] = useState("")
   const [isExpand, setIsExpand] = useState();

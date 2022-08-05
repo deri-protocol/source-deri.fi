@@ -3,23 +3,26 @@ import axios from 'axios'
 import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer } from 'recharts'
 const oracleUrl = process.env.REACT_APP_ORACLE_HTTP_URL
 
-export default function LineChart({ symbol, color }) {
+export default function LineChart({ symbol, pool, chain, color }) {
   const [data, setData] = useState([])
   const now = new Date().getTime();
   const from = parseInt((now - 1000 * 60 * 60 * 24) / 1000);
   const to = parseInt(now / 1000);
   const loadData = async () => {
-    const url = `${oracleUrl}/get_kline`
+    const url = `${oracleUrl}/kline`
     const res = await axios.get(url, {
       params: {
+        chain:chain,
+        pool:pool,
         symbol: symbol,
-        time_type: 'hour',
+        type:"index",
+        period: 'hour',
         from: from,
         to: to
       }
     })
-    if (res.status === 200 && res.data.data && res.data.data.length) {
-      const data = res.data.data.map(d => ({ value: d.close, time: new Date(d.time).getHours() }))
+    if (res.status === 200 && res.data && res.data.length) {
+      const data = res.data.map(d => ({ value: d.close, time: new Date(d.time).getHours() }))
       setData(data)
     }
   }

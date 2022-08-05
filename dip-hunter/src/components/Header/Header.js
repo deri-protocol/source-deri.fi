@@ -1,6 +1,6 @@
 // import NetworkSelector from "../NetworkSelector/NetworkSelector";
 import { Icon, ChainSelector, WalletConnector } from '@deri/eco-common';
-import styled from 'styled-components';
+import styled, { StyleSheetManager } from 'styled-components';
 import { useCallback, useEffect } from 'react';
 import classNames from "classnames";
 import { useState } from 'react';
@@ -192,25 +192,27 @@ export default function Header({ lang, collect, switchMenu }) {
     }
   }, [collect])
   return (
-    <Wrapper className={clazz}>
-      <div className="left">
-        <div className="logo-title">
-          <span className='left-menu' onClick={switchMenu}><Icon token='left-menu' width='22.5' /></span>
-          <span className="f-name">Dip</span><span className="l-name">Hunter</span>
+    <StyleSheetManager disableCSSOMInjection>
+      <Wrapper className={clazz}>
+        <div className="left">
+          <div className="logo-title">
+            <span className='left-menu' onClick={switchMenu}><Icon token='left-menu' width='22.5' /></span>
+            <span className="f-name">Dip</span><span className="l-name">Hunter</span>
+          </div>
+          {!isFixed && <div className="helps-info">
+            {lang["info-des"]} <span>
+              {lang["passive-income"]}
+            </span>
+          </div>}
         </div>
-        {!isFixed &&<div className="helps-info">
-          {lang["info-des"]} <span>
-            {lang["passive-income"]}
-          </span>
-        </div>}
-      </div>
-      <div className="right">
-        <div className='chain-wallet-btn'>
-          <ChainSelector bgColor={btnMainColor} collect={collect} id="header-network" />
-          <WalletConnector lang={lang} bgColor={btnMainColor} />
+        <div className="right">
+          <div className='chain-wallet-btn'>
+            <ChainSelector bgColor={btnMainColor} collect={collect} id="header-network" />
+            <WalletConnector lang={lang} bgColor={btnMainColor} />
+          </div>
         </div>
-      </div>
 
-    </Wrapper>
+      </Wrapper>
+    </StyleSheetManager>
   )
 }

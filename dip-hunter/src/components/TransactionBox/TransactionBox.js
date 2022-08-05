@@ -1,22 +1,22 @@
 import BreatheIcon from "../BreatheEffect/BreatheIcon";
 import './transactionBox.scss'
-import { Icon,Loading } from '@deri/eco-common';
-import {useState, useEffect } from "react";
+import { Icon, Loading } from '@deri/eco-common';
+import { useState, useEffect } from "react";
 import classNames from "classnames";
 import Label from '../Label/Label';
-import styled from 'styled-components';
+import styled, { StyleSheetManager } from 'styled-components';
 import ProcessBar from "../ProcessBar/ProcessBar";
 
-export default function TransactionBox({title,subTitle,icon,rgb,close,direction,approved,status,options={}}) {
+export default function TransactionBox({ title, subTitle, icon, rgb, close, direction, approved, status, options = {} }) {
   const [current, setCurrent] = useState(rgb)
-  const iconClass = classNames('trans-box-content-icon',{
-    'trans-box-content-icon-fadeout' : current !== rgb
+  const iconClass = classNames('trans-box-content-icon', {
+    'trans-box-content-icon-fadeout': current !== rgb
   })
-  const subTitleClass = classNames('trans-box-content-bold',{
-    'trans-box-content-bold-slideout' : current !== rgb
+  const subTitleClass = classNames('trans-box-content-bold', {
+    'trans-box-content-bold-slideout': current !== rgb
   })
-  const descClass = classNames('trans-box-content-desc',{
-    'trans-box-content-desc-slideout' : current !== rgb
+  const descClass = classNames('trans-box-content-desc', {
+    'trans-box-content-desc-slideout': current !== rgb
   })
   useEffect(() => {
     setCurrent(rgb)
@@ -26,15 +26,15 @@ export default function TransactionBox({title,subTitle,icon,rgb,close,direction,
     <div className='trans-box'>
       <div className='trans-box-title'>
         {title}
-        <Icon token='trans-close' height='10' width='10' className='close-icon' onClick={close}/>
+        <Icon token='trans-close' height='10' width='10' className='close-icon' onClick={close} />
       </div>
       <div className='trans-box-content'>
         <div className={iconClass}>
-          <BreatheIcon icon={icon} rgb={rgb} key={new Date().getTime()}/>
+          <BreatheIcon icon={icon} rgb={rgb} key={new Date().getTime()} />
         </div>
         <div className={subTitleClass}>{subTitle}</div>
-        <ApproveStatus direction={direction} approved={approved} status={status}/>
-        {options.approveTip && <div className='trans-box-content-approve-tip'><Icon className='icon' token='approve-warn'/>{options.approveTip}</div>}
+        <ApproveStatus direction={direction} approved={approved} status={status} />
+        {options.approveTip && <div className='trans-box-content-approve-tip'><Icon className='icon' token='approve-warn' />{options.approveTip}</div>}
       </div>
     </div>
   )
@@ -181,31 +181,31 @@ const StatusBarWrapper = styled.div`
 `
 
 
-function ApproveStatus({approved,direction,status}){
+function ApproveStatus({ approved, direction, status }) {
   const [transStatusIcon, setTransStatusIcon] = useState()
   const [approveStatusIcon, setApproveStatusIcon] = useState()
   const [approveLabel, setApproveLabel] = useState('APPROVE')
 
 
-  const statusBarClass = classNames('status-bar',status,{
-    approving : approved === false,
-    approved : approved === true
+  const statusBarClass = classNames('status-bar', status, {
+    approving: approved === false,
+    approved: approved === true
   })
 
   useEffect(() => {
-    if(status === 'pending') {
-      if(approved) {
+    if (status === 'pending') {
+      if (approved) {
         setApproveStatusIcon('trans-disabled-success');
         setTransStatusIcon(<Loading />)
       } else {
         setApproveStatusIcon(<Loading />);
         setTransStatusIcon(<Loading />)
       }
-    } else if(status === 'success') {
-      if(approved) {
+    } else if (status === 'success') {
+      if (approved) {
         setApproveStatusIcon('trans-success');
         setTransStatusIcon('trans-success');
-      }  else {
+      } else {
         setApproveStatusIcon('trans-success');
         setTransStatusIcon('trans-success');
       }
@@ -216,13 +216,15 @@ function ApproveStatus({approved,direction,status}){
     }
 
   }, [status])
-  
 
-  return(
+
+  return (
+    <StyleSheetManager disableCSSOMInjection>
       <StatusBarWrapper className={statusBarClass}>
-        <Label text={approveLabel} className='approve-label'  width='94' height='30' icon={approveStatusIcon}/>
-        <ProcessBar className='process-bar-wrapper' percent='50%' width='120px'/>
-        <Label text={direction} className='direction-label' icon={transStatusIcon} width='115' height='30'/>
+        <Label text={approveLabel} className='approve-label' width='94' height='30' icon={approveStatusIcon} />
+        <ProcessBar className='process-bar-wrapper' percent='50%' width='120px' />
+        <Label text={direction} className='direction-label' icon={transStatusIcon} width='115' height='30' />
       </StatusBarWrapper>
-    )
+    </StyleSheetManager>
+  )
 }

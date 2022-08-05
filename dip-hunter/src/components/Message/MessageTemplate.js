@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { StyleSheetManager } from "styled-components"
 import { Icon } from '@deri/eco-common';
 import { formatAddress } from "../../utils/utils"
 import './message.scss'
@@ -55,11 +55,13 @@ export default function MessageTemplate({ style, options, message, close }) {
 
         </div>
       </div>}
-      {!options.isTransaction && <Wraper style={style}>
-        {options.type === 'success' && <Icon token='success' width={25} height={25} />}
-        {options.type === 'error' && <Icon token='error' width={25} height={25} />}
-        {message}
-      </Wraper>}
+      {!options.isTransaction && <StyleSheetManager disableCSSOMInjection>
+        <Wraper style={style}>
+          {options.type === 'success' && <Icon token='success' width={25} height={25} />}
+          {options.type === 'error' && <Icon token='error' width={25} height={25} />}
+          {message}
+        </Wraper>
+      </StyleSheetManager>}
     </>
 
   )

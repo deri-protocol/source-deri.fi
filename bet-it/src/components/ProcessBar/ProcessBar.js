@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { StyleSheetManager } from 'styled-components';
 
 const BarWrapper = styled.div`
   background : #F3F3F3;
@@ -10,10 +10,12 @@ const BarWrapper = styled.div`
     border-radius: 3px;
   }
 `
-export default function ProcessBar({width,percent,className,background='#FFAB00'}) {
+export default function ProcessBar({ width, percent, className, background = '#FFAB00' }) {
   return (
-    <BarWrapper className={className} width={width} percent={percent} background={background}>
-      <div className="process-bar"></div>
-    </BarWrapper>
+    <StyleSheetManager disableCSSOMInjection>
+      <BarWrapper className={className} width={width} percent={percent} background={background}>
+        <div className="process-bar"></div>
+      </BarWrapper>
+    </StyleSheetManager>
   )
 }

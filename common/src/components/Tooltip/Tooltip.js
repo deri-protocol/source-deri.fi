@@ -1,5 +1,5 @@
 import ReactTooltip from "react-tooltip";
-import styled from "styled-components";
+import styled, { StyleSheetManager } from "styled-components";
 import React ,{ useRef } from "react";
 
 const Wrapper = styled(ReactTooltip)`
@@ -36,9 +36,11 @@ const Wrapper = styled(ReactTooltip)`
 const Tooltip = React.forwardRef((props,ref) =>{
   const {effect = 'solid' ,place = 'bottom',className = 'tooltip',type = 'info',globalEventOff= 'click',padding,backgroundColor = '#FFFFF',color,...rest} = props
   return(
-    <Wrapper {...rest} ref={ref} effect={effect} place={place} globalEventOff ='click' className={className} type={type}  color={color} backgroundColor={backgroundColor} padding={padding} clickable width={props.width}>
-      {props.children}
-    </Wrapper>
+    <StyleSheetManager disableCSSOMInjection>
+      <Wrapper {...rest} ref={ref} effect={effect} place={place} globalEventOff ='click' className={className} type={type}  color={color} backgroundColor={backgroundColor} padding={padding} clickable width={props.width}>
+        {props.children}
+      </Wrapper>
+    </StyleSheetManager>
   )
 })
 

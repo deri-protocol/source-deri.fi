@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled ,{StyleSheetManager} from "styled-components"
 
 const images = require.context('../../assets/img', true)
 let imagesIncludeSrc ;
@@ -39,5 +39,5 @@ export default function Icon({width,height,token,secondary,className,onClick,sty
       }
     }
   }
-  return img ? <Wrapper src={img} width={width} height={height} style={{...style}} className={className} onClick={onClick} {...rest}/> : <Empty width={width} height={height} className={className}  ></Empty>
+  return img ? <StyleSheetManager disableCSSOMInjection><Wrapper src={img} width={width} height={height} style={{...style}} className={className} onClick={onClick} {...rest}/></StyleSheetManager> : <Empty width={width} height={height} className={className}  ></Empty>
 }

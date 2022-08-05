@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
+import styled,{StyleSheetManager} from 'styled-components'
 import { PRIMARY, SECONDARY } from '../../utils/Constants';
 import classNames from 'classnames';
 import Loading from '../Loading/Loading';
@@ -76,23 +76,25 @@ export default function Button({ label, fontColor = '#E0ECFF', isAlert = false, 
     disabled: disabled
   })
   return (
-    <Wrapper hoverBorderColor={hoverBorderColor}
-      selectedBorderColor={selectedBorderColor}
-      backgroundColor={backgroundColor}
-      hoverBgColor={hoverBgColor}
-      fontColor={fontColor}
-      fontSize={fontSize}
-      fontWeight={fontWeight}
-      pending={pending}
-      width={width}
-      position={position}
-      defaultBorderColor={defaultBorderColor}
-      borderSize={borderSize}
-      onMouseMove={() => { setIsHover(true) }}
-      onMouseOut={() => { setIsHover(false) }}
-      radius={radius}
-      height={height} className={clazz} style={{ ...styles }} onClick={click}>
-      {icon && <Icon token={disabled ? disabledIcon ? disabledIcon : icon : isHover ? hoverIcon ? hoverIcon : icon : pending ? hoverIcon ? hoverIcon : icon : icon} />}<span>{label}</span>  {tip && <UnderlineText multiline={true} tip={tip}> <Icon token={disabled ? disabledTipIcon ? disabledTipIcon : tipIcon : isHover ? hoverTipIcon ? hoverTipIcon : tipIcon : pending ? hoverTipIcon ? hoverTipIcon : tipIcon : tipIcon} /> </UnderlineText>}{pending && <Loading borderColor="#FFFFFF" bgColor="rgba(255, 255, 255, 0.3)" />}
-    </Wrapper>
+    <StyleSheetManager disableCSSOMInjection>
+      <Wrapper hoverBorderColor={hoverBorderColor}
+        selectedBorderColor={selectedBorderColor}
+        backgroundColor={backgroundColor}
+        hoverBgColor={hoverBgColor}
+        fontColor={fontColor}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
+        pending={pending}
+        width={width}
+        position={position}
+        defaultBorderColor={defaultBorderColor}
+        borderSize={borderSize}
+        onMouseMove={() => { setIsHover(true) }}
+        onMouseOut={() => { setIsHover(false) }}
+        radius={radius}
+        height={height} className={clazz} style={{ ...styles }} onClick={click}>
+        {icon && <Icon token={disabled ? disabledIcon ? disabledIcon : icon : isHover ? hoverIcon ? hoverIcon : icon : pending ? hoverIcon ? hoverIcon : icon : icon} />}<span>{label}</span>  {tip && <UnderlineText multiline={true} tip={tip}> <Icon token={disabled ? disabledTipIcon ? disabledTipIcon : tipIcon : isHover ? hoverTipIcon ? hoverTipIcon : tipIcon : pending ? hoverTipIcon ? hoverTipIcon : tipIcon : tipIcon} /> </UnderlineText>}{pending && <Loading borderColor="#FFFFFF" bgColor="rgba(255, 255, 255, 0.3)" />}
+      </Wrapper>
+    </StyleSheetManager>
   )
 }

@@ -63,7 +63,7 @@ function ChainSelector({collect,id=""}){
         } else {
           setChain(chains[0])        
         }
-      } else if(wallet.status === 'disconnected'){
+      } else if(wallet.status === 'disconnected' || wallet.status === 'error'){
         setChain(chains[0])
       }
     }

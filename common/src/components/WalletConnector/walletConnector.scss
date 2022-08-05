@@ -1,3 +1,9 @@
+.wallet-view {
+  .wallet-btn {
+    width: auto;
+    padding: 0 12px;
+  }
+}
 @media only screen and (min-width : 375px ) and (max-width : 760px) {
   .wallet-view {
     .wallet-btn {

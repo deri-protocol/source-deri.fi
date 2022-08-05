@@ -8,6 +8,7 @@ import './walletConnector.scss'
 export default function WalletConnector({lang,bgColor = '#FFAB00',actions}){
   const [bntColor, setBntColor] = useState('#FFAB00');
   const [expand, setExpand] = useState();
+  const [btnLabel, setBtnLabel] = useState('')
   const wallet = useWallet()
 
   const walletClass = classNames('wallet-view',{
@@ -48,6 +49,15 @@ export default function WalletConnector({lang,bgColor = '#FFAB00',actions}){
 
   useEffect(() => {
     actions && actions.setGlobalState({wallet : wallet})
+    if(wallet.isConnected()){
+      if(wallet.chainId === 56 || wallet.chainId === 42161 ){
+        setBtnLabel(formatAddress(wallet.account))
+      } else {
+        setBtnLabel(`Unsupported Chain ID ${wallet.chainId}`)
+      }
+    } else {
+      setBtnLabel('connect-wallet')
+    }
   }, [wallet]);
 
   useEffect(() => {
@@ -60,7 +70,7 @@ export default function WalletConnector({lang,bgColor = '#FFAB00',actions}){
   
   return(
     <div className={walletClass}>
-      <Button className='wallet-btn'  bgColor={bntColor} icon={'injected'} borderSize='2' defaultBorderColor='#fff' fontSize={16} fontColor='#FFF' width={200} height={48}  outline={false} radius={15} label={wallet.isConnected() ? formatAddress(wallet.account) : 'connect-wallet'} onClick={connect}></Button> 
+      <Button className='wallet-btn'  bgColor={bntColor} icon={'injected'} borderSize='2' defaultBorderColor='#fff' fontSize={16} fontColor='#FFF' width={200} height={48}  outline={false} radius={15} label={btnLabel} onClick={connect}></Button> 
     </div>
   )
 }

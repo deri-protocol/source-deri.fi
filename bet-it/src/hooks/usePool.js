@@ -11,6 +11,8 @@ const env = getEnv();
 const symbolMerge = (target, source, clonedPool) => {
   return target.map(item => {
     const sourceSymbol = source.find(s => s.symbol === item.symbol);
+    item.pool = clonedPool.pool
+    item.chain = clonedPool.chain
     if (sourceSymbol) {
       if (item.powerSymbol && sourceSymbol.powerSymbol) {
         sourceSymbol.powerSymbol = Object.assign({}, item.powerSymbol, sourceSymbol.powerSymbol, mixin(sourceSymbol.powerSymbol, clonedPool))

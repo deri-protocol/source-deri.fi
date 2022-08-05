@@ -329,7 +329,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
       <div className='btn-box'>
         {betInfo.volume && betInfo.volume !== "0" ?
           <>
-            <div className='line-chart'><LineChart symbol={info.markpriceSymbol} color={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} /></div>
+            <div className='line-chart'><LineChart symbol={info.symbol} pool={info.pool} chain={info.chain} color={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} /></div>
             <Button label={lang['close']} key="close" onClick={(e) => betClose(e)} className="btn close-btn" width="299" height="60" bgColor={+betInfo.pnl > 0 ? "#38CB891A" : "#FF56301A"} hoverBgColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} borderSize={0} radius={14} fontColor={+betInfo.pnl > 0 ? "#38CB89" : "#FF5630"} />
           </>
           : !isLiquidated && <>
@@ -339,7 +339,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
           </>}
         {isLiquidated && betInfo.volume === "0" ?
           <>
-            <div className='line-chart'><LineChart symbol={info.markpriceSymbol} color="#FF5630" /></div>
+            <div className='line-chart'><LineChart symbol={info.symbol} color="#FF5630" /></div>
             <Button label={lang['start-over']} key="start-over" onClick={(e) => e.preventDefault(), setIsLiquidated(false)} className="btn close-btn" width="299" height="60" bgColor="#FF56301A" hoverBgColor="#FF5630" borderSize={0} radius={14} fontColor="#FF5630" /></>
           : null}
       </div>

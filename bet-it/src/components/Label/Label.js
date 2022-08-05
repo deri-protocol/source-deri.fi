@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { StyleSheetManager } from "styled-components"
 import React from 'react'
 import { Icon } from '@deri/eco-common';
 const Wrapper = styled.div`
@@ -25,14 +25,16 @@ const Wrapper = styled.div`
     margin-right :8px;
   }
 `
-export default function Label({text,width,height ,borderColor ='#E0ECFF' ,color = '#E0ECFF',bgColor,borderRadius = '12',fontSize = '12',icon,className}) {
+export default function Label({ text, width, height, borderColor = '#E0ECFF', color = '#E0ECFF', bgColor, borderRadius = '12', fontSize = '12', icon, className }) {
 
   return (
-    <Wrapper className={className} width={width} height={height} borderColor={borderColor} color={color} bgColor={bgColor} borderRadius={borderRadius} fontSize={fontSize}>
-      <span className='main'>
-        {React.isValidElement(icon) ? icon : <Icon token={icon}/>}
-        {text}
-      </span>
-    </Wrapper>
+    <StyleSheetManager disableCSSOMInjection>
+      <Wrapper className={className} width={width} height={height} borderColor={borderColor} color={color} bgColor={bgColor} borderRadius={borderRadius} fontSize={fontSize}>
+        <span className='main'>
+          {React.isValidElement(icon) ? icon : <Icon token={icon} />}
+          {text}
+        </span>
+      </Wrapper>
+    </StyleSheetManager>
   )
 }

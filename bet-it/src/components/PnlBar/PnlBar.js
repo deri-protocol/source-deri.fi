@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { StyleSheetManager } from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useWallet } from 'use-wallet';
 import ApiProxy from '../../model/ApiProxy';
@@ -69,11 +69,14 @@ export default function PnlBar({ className = 'total-pnl-box', lang }) {
     }
   }, [wallet])
   return (
-    <Wrapper className={className}>
-      <div className='total-pnl'>
-        <span>{lang['total-pnl']} {+totalPnl < 0 ? lang["loss"] : lang['pnl-profit']} </span>
-        <div className='pnl-num'>${(+totalPnl).toFixed(2)}</div>
-      </div>
-    </Wrapper>
+    <StyleSheetManager disableCSSOMInjection>
+      <Wrapper className={className}>
+        <div className='total-pnl'>
+          <span>{lang['total-pnl']} {+totalPnl < 0 ? lang["loss"] : lang['pnl-profit']} </span>
+          <div className='pnl-num'>${(+totalPnl).toFixed(2)}</div>
+        </div>
+      </Wrapper>
+    </StyleSheetManager>
+
   )
 }

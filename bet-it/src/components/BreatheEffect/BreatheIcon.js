@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled, { StyleSheetManager } from 'styled-components'
 import { Icon } from '@deri/eco-common';
-export default function BreatheIcon({rgb,icon}) {
+export default function BreatheIcon({ rgb, icon }) {
 
   const Wrapper = styled.div`
     &.anim-circle {
@@ -35,9 +35,11 @@ export default function BreatheIcon({rgb,icon}) {
       }
     }
   `
-  return(
-    <Wrapper className='anim-circle' rgb={rgb}>
-      <Icon token={icon} width='22' height='22'/>
-    </Wrapper>
+  return (
+    <StyleSheetManager disableCSSOMInjection>
+      <Wrapper className='anim-circle' rgb={rgb}>
+        <Icon token={icon} width='22' height='22' />
+      </Wrapper>
+    </StyleSheetManager>
   )
 }

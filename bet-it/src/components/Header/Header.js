@@ -1,6 +1,6 @@
 // import NetworkSelector from "../NetworkSelector/NetworkSelector";
 import { Icon, ChainSelector, WalletConnector } from '@deri/eco-common';
-import styled from 'styled-components';
+import styled, { StyleSheetManager } from 'styled-components';
 import { useCallback, useEffect } from 'react';
 import classNames from "classnames";
 import { useWallet } from 'use-wallet';
@@ -170,17 +170,19 @@ export default function Header({ lang, collect, switchMenu }) {
   }, [collect])
 
   return (
-    <Wrapper className={clazz}>
-      <div className="left">
-        <span className='left-menu' onClick={switchMenu}><Icon token='left-menu' width='22.5' /></span>
-        <span className="f-name">{lang['bet'].toUpperCase()}</span><span className="l-name">{lang['it']}</span></div>
-      <div className="right">
-        <div className='chain-wallet-btn'>
-          <ChainSelector bgColor={btnMainColor} collect={collect} id="header-network" />
-          <WalletConnector lang={lang} bgColor={btnMainColor} />
+    <StyleSheetManager disableCSSOMInjection>
+      <Wrapper className={clazz}>
+        <div className="left">
+          <span className='left-menu' onClick={switchMenu}><Icon token='left-menu' width='22.5' /></span>
+          <span className="f-name">{lang['bet'].toUpperCase()}</span><span className="l-name">{lang['it']}</span></div>
+        <div className="right">
+          <div className='chain-wallet-btn'>
+            <ChainSelector bgColor={btnMainColor} collect={collect} id="header-network" />
+            <WalletConnector lang={lang} bgColor={btnMainColor} />
+          </div>
+          <PnlBar lang={lang} className='total-pnl-box' />
         </div>
-        <PnlBar lang={lang} className='total-pnl-box' />
-      </div>
-    </Wrapper>
+      </Wrapper>
+    </StyleSheetManager>
   )
 }

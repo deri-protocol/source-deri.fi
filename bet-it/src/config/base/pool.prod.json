@@ -111,13 +111,13 @@
         "unit": "BTC",
         "powerSymbol": {
           "chainId": "56",
-          "pool": "0xD2D950e338478eF7FeB092F840920B3482FcaC40",
+          "pool": "0x243681B8Cd79E3823fF574e07B2378B8Ab292c1E",
           "symbolId": "0x65e24fbf23a06751b86161d24e5f25b579daa4c55aa798f102a40243baf81293",
           "symbol": "BTC^2",
           "category": "power",
-          "zone": "inno",
-          "initialBlock": "13950984",
-          "symbolManager": "0x28ed1DBDb9BC5B7Fe67c27C1D767Db42AE6F61f7"
+          "zone": "main",
+          "initialBlock": "13930215",
+          "symbolManager": "0x543A9FA25ba9a16612274DD707Ac4462eD6988FA"
         }
       },
       {
@@ -128,13 +128,13 @@
         "unit": "ETH",
         "powerSymbol": {
           "chainId": "56",
-          "pool": "0xD2D950e338478eF7FeB092F840920B3482FcaC40",
+          "pool": "0x243681B8Cd79E3823fF574e07B2378B8Ab292c1E",
           "symbolId": "0x5616d0a0d05adc200b8ea37c1801762baca26da49260fa2a9ca11179cb6b7017",
           "symbol": "ETH^2",
           "category": "power",
-          "zone": "inno",
-          "initialBlock": "13950984",
-          "symbolManager": "0x28ed1DBDb9BC5B7Fe67c27C1D767Db42AE6F61f7"
+          "zone": "main",
+          "initialBlock": "13930215",
+          "symbolManager": "0x543A9FA25ba9a16612274DD707Ac4462eD6988FA"
         }
       }
     ]

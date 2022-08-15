@@ -13,9 +13,9 @@ export const HextoNumber = (val) => Web3.utils.hexToNumber(val)
 export const HextoNumberString = (val) => Web3.utils.hexToNumberString(val)
 
 export const _getBlockNumber = async (provider) => {
-  const web3 = new Web3(provider);
-  const start = Date.now();
   try {
+    const web3 = new Web3(provider);
+    // const start = Date.now();
     const block = await web3.eth.getBlock('latest');
     const timeNow = Math.floor(Date.now() / 1000)
     if (Math.abs(timeNow - block.timestamp) <= 30 && block.number > 0) {
@@ -33,8 +33,8 @@ export const getLatestProvider = async (providers = []) => {
 };
 
 
-export const getWeb3 = factory(async (chainId = '_') => {
-  if (typeof window !== 'undefined' && window.ethereum) {
+export const getWeb3 = factory(async (chainId = '_', isTx=false) => {
+  if (typeof window !== 'undefined' && window.ethereum && isTx) {
     // using wallet provider
     let web3 = new Web3(window.ethereum);
     web3._chainId = chainId

@@ -13,7 +13,7 @@ export class ContractBase {
     this.isNodeEnv = isNodeEnv;
   }
 
-  async _init() {
+  async _init(isTx=false) {
     // re-init web3 and contract when web3 instance is null
 
     if (!this.web3) {
@@ -24,7 +24,7 @@ export class ContractBase {
           if (this.isNodeEnv) {
             this.web3 = await getWeb3WithSigner(this.chainId);
           } else {
-            this.web3 = await getWeb3(this.chainId);
+            this.web3 = await getWeb3(this.chainId, isTx);
           }
           if (this.web3) {
             this.contract = new this.web3.eth.Contract(
@@ -83,7 +83,7 @@ export class ContractBase {
   }
 
   async _transact(method, args=[], accountAddress, opts={}) {
-    await this._init()
+    await this._init(true)
     let { onAccept, onReject, ...restOpts } = opts
     if (!onAccept) {
       onAccept = noOp

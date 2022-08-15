@@ -1,5 +1,5 @@
 /* eslint-disable react/no-danger-with-children */
-import styled from 'styled-components';
+import styled, { StyleSheetManager } from 'styled-components';
 import ReactDOMServer from 'react-dom/server';
 import Tooltip from '../Tooltip/Tooltip';
 import {isMobile} from '../../utils/utils';
@@ -54,13 +54,15 @@ export default function UnderlineText({bottomLine, text, id = String(new Date().
   }
 
   return (
-    <Wrapper className={className} block={block} isWin={isWindows} bottomLine={bottomLine}>
-      <div className='text' data-for={id}
-        data-tip={ html ? ReactDOMServer.renderToString(element) : tip} data-event-off='click' data-event={isMobile() ? 'click' : tiggerEvent} data-html={html} >
-        {text || children}
-      </div>
-      {tooltip && tip && <Tooltip id={id} width={width} padding='12' place='bottom' color='rgba(0, 0, 0, 0.3)' overridePosition={calculatePosition} html={html} borderRadius={8} multiline={multiline}>
-       </Tooltip>}
-    </Wrapper>
+    <StyleSheetManager disableCSSOMInjection>
+      <Wrapper className={className} block={block} isWin={isWindows} bottomLine={bottomLine}>
+        <div className='text' data-for={id}
+          data-tip={ html ? ReactDOMServer.renderToString(element) : tip} data-event-off='click' data-event={isMobile() ? 'click' : tiggerEvent} data-html={html} >
+          {text || children}
+        </div>
+        {tooltip && tip && <Tooltip id={id} width={width} padding='12' place='bottom' color='rgba(0, 0, 0, 0.3)' overridePosition={calculatePosition} html={html} borderRadius={8} multiline={multiline}>
+        </Tooltip>}
+      </Wrapper>
+    </StyleSheetManager>
   )
 }

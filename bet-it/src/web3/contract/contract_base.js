@@ -83,6 +83,7 @@ export class ContractBase {
   }
 
   async _transact(method, args=[], accountAddress, opts={}) {
+    delete this.web3
     await this._init(true)
     let { onAccept, onReject, ...restOpts } = opts
     if (!onAccept) {

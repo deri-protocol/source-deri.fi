@@ -127,13 +127,6 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
       setAmount("")
       setPercent("")
       afterTransaction()
-      alert.success(`${type === "DEPOSIT" ? `Deposit ${bToken}` : `Withdraw ${bToken}`}`, {
-        timeout: 8000,
-        isTransaction: true,
-        transactionHash: res.response.data.transactionHash,
-        link: `${chain.viewUrl}/tx/${res.response.data.transactionHash}`,
-        title: `${type === "DEPOSIT" ? "Deposit Executed" : "Withdraw Executed"}`
-      })
     } else {
       if (res.response.error.code === 1001) {
         alert.error("Increase the input amount to open positions", {
@@ -143,16 +136,6 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
         })
         return false;
       }
-      if (res.response.transactionHash === "") {
-        return true;
-      }
-      alert.error(`Transaction Failed: ${res.response.error.message}`, {
-        timeout: 300000,
-        isTransaction: true,
-        transactionHash: res.response.transactionHash,
-        link: `${chain.viewUrl}/tx/${res.response.transactionHash}`,
-        title: `${type === "DEPOSIT" ? "Deposit Failed" : "Withdraw Failed"}`
-      })
     }
     return true
   }

@@ -7,7 +7,7 @@ import { useWallet } from "use-wallet";
 import useChain from '../../hooks/useChain'
 import { eqInNumber } from "../../utils/utils";
 import { EVENT_TRANS_BEGIN, EVENT_TRANS_END } from '../../utils/Constants'
-import './transactionState.less'
+import './transactionState.scss'
 export default function TransactionState() {
   const [isShow, setIsShow] = useState(false)
   const [messageInfo, setMessageInfo] = useState({})
@@ -58,7 +58,7 @@ export default function TransactionState() {
       Emitter.off(EVENT_TRANS_BEGIN, onMessageInfoBgein)
       Emitter.off(EVENT_TRANS_END, onMessageInfoEnd)
     }
-  }, [])
+  }, [chain])
   return (
     <>
       {isShow ? <div className='transaction-state'>
@@ -66,12 +66,12 @@ export default function TransactionState() {
           <div className='icon message-title-text'>
             {messageInfo.type === 'success' && <Icon token='success' width={16} height={16} />}
             {messageInfo.type === 'error' && <Icon token='error' width={16} height={16} />}
-            {messageInfo.type === 'processing' && <Loading borderColor="rgba(85, 119, 253, 1)" bgColor="rgba(55, 125, 255, 0.1)" />}
+            {messageInfo.type === 'processing' && <Loading borderColor="rgba(55, 125, 255, 1)" bgColor="rgba(55, 125, 255, 0.1)" />}
             {messageInfo.title}
           </div>
           <div className={messageInfo.type !== 'success' ? 'close noAnimation' : 'close'} onClick={closeBox}>
             <div className='close-icon'>
-              <Icon token="close-modal-icon" width='7' />
+              <Icon token="close" width='7' />
             </div>
             <div className={messageInfo.type === 'success' ? "circle_process animation" : "circle_process"}>
               <div className="wrapper right">
@@ -86,7 +86,7 @@ export default function TransactionState() {
         <div className='message-text-link'>
           <div className='message-text-box'>
             <div className='message-text'>
-              {messageInfo.content}
+              {messageInfo.content} 
             </div>
             <div className={messageInfo.type === 'success' ? 'link' : messageInfo.type === "error" ? 'link error' : "link processing"}>
               <a rel='noreferrer' target='_blank' href={messageInfo.link}>Click here to view transaction {formatAddress(messageInfo.hash)}</a>

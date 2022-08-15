@@ -258,13 +258,6 @@
         "unit": "BNB"
       },
       {
-        "symbolId": "0x214dda553a3e2a23944080bfcad3566db70ebe7a599389f0f9cf73f0cf03e933",
-        "symbol": "DOGEUSDT",
-        "category": "futures",
-        "leverage": "10",
-        "unit": "DOGE"
-      },
-      {
         "symbolId": "0x3db5e9fb22b6f66ce6550ab2b9d3872f875f575780c6abb9c95f9ce03845a83e",
         "symbol": "SOLUSDT",
         "category": "futures",

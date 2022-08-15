@@ -41,7 +41,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
         setBetInfo(res)
         return res
       }
-    } else if (wallet.status === "disconnected" || !wallet.account) {
+    } else if (wallet.status === "disconnected" && !wallet.account) {
       let chainId = DeriEnv.get() === "prod" ? 56 : 97
       let res = await ApiProxy.request("getBetInfo", { chainId: chainId, symbol: info.symbol })
       if (res.symbol) {
@@ -89,22 +89,33 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
       chainId: wallet.chainId,
       symbol: betInfo.symbol,
       accountAddress: wallet.account,
-      title: {
-        processing: `${+betInfo.volume < 0 ? lang['buy-order-executed'] : lang['sell-order-executed']} Processing`,
-        success: `${+betInfo.volume < 0 ? lang['buy-order-executed'] : lang['sell-order-executed']}`,
-        error: `${+betInfo.volume < 0 ? lang['buy-order-failed'] : lang['sell-order-failed']}`
-      },
-      content: {
-        success: `${+betInfo.volume < 0 ? lang['buy'] : lang['sell']}  ${res.response.data.volume} ${info.unit} ${betInfo.isPowerSymbol ? lang['powers'] : ""}`,
-        error: lang['transaction-failed']
-      }
     }
     let res = await ApiProxy.request("closeBet", params)
     if (res.success) {
       getBetInfo()
       getLiquidationInfo()
       getWalletBalance()
-    } 
+      alert.success(`${+betInfo.volume < 0 ? lang['buy'] : lang['sell']}  ${res.response.data.volume} ${info.unit} ${betInfo.isPowerSymbol ? lang['powers'] : ""} `, {
+        timeout: 8000,
+        isTransaction: true,
+        transactionHash: res.response.data.transactionHash,
+        link: `${chain.viewUrl}/tx/${res.response.data.transactionHash}`,
+        title: `${+betInfo.volume < 0 ? lang['buy-order-executed'] : lang['sell-order-executed']}`
+      })
+    } else {
+      if (res.response.transactionHash === "") {
+        return false;
+      }
+      alert.error(`${lang['transaction-failed']} : ${res.response.error}`, {
+        timeout: 300000,
+        isTransaction: true,
+        transactionHash: res.response.transactionHash,
+        link: `${chain.viewUrl}/tx/${res.response.transactionHash}`,
+        title: `${+betInfo.volume < 0 ? lang['buy-order-failed'] : lang['sell-order-failed']}`
+      })
+    }
+    console.log("betClose", res)
+
     return true
   }
 
@@ -141,42 +152,40 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     let isApproved = await getIsApprove()
     let direction = type === "up" || type === "boostedUp" ? "long" : "short"
     let boostedUp = type === "boostedUp" ? true : false
-    let params = { 
-      includeResponse: true, 
-      write: true, 
-      subject: type.toUpperCase(), 
-      chainId: wallet.chainId, 
-      bTokenSymbol: bToken, 
-      amount: amount, 
-      symbol: info.symbol, 
-      accountAddress: wallet.account, 
-      boostedUp: boostedUp, 
-      direction: direction,
-    }
+    let params = { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, amount: amount, symbol: info.symbol, accountAddress: wallet.account, boostedUp: boostedUp, direction: direction }
     if (!isApproved.isUnlocked) {
-      let paramsApprove = {
+      let paramsApprove = { 
         includeResponse: true,
-        write: true,
-        subject: 'APPROVE',
-        chainId: wallet.chainId,
-        bTokenSymbol: bToken,
-        accountAddress: wallet.account,
-        direction: direction,
-        approved: false,
+        write: true, 
+        subject: 'APPROVE', 
+        chainId: wallet.chainId, 
+        bTokenSymbol: bToken, 
+        accountAddress: wallet.account, 
+        direction: direction, 
+        approved: false, 
         approveTip: isApproved.isZero ? "" : "Changing approved amount may result transaction failure",
-        title: {
-          processing: "Approve Executed Processing",
-          success: "Approve Executed ",
-          error: 'Approve Failed'
-        },
-        content: {
-          success: `Approve ${bToken}`,
-          error: "Transaction Failed"
-        }
-      }
+       }
       let approved = await ApiProxy.request("unlock", paramsApprove)
       if (approved) {
-        if (!approved.success) {
+        if (approved.success) {
+          alert.success(`Approve ${bToken}`, {
+            timeout: 8000,
+            isTransaction: true,
+            transactionHash: approved.response.data.transactionHash,
+            link: `${chain.viewUrl}/tx/${approved.response.data.transactionHash}`,
+            title: 'Approve Executed'
+          })
+        } else {
+          if (approved.transactionHash === "") {
+            return false;
+          }
+          alert.error(`Transaction Failed ${approved.response.error.message}`, {
+            timeout: 300000,
+            isTransaction: true,
+            transactionHash: approved.response.transactionHash,
+            link: `${chain.viewUrl}/tx/${approved.response.transactionHash}`,
+            title: 'Approve Failed'
+          })
           return false;
         }
       }

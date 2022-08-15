@@ -109,7 +109,7 @@ export class ContractBase {
       gasPrice,
       ...restOpts,
     }).on('transactionHash', (txHash) => {
-      onAccept()
+      onAccept(txHash, {...args})
     }).on('error', (error) => {
       if (error.code === 4001) { // user reject
         onReject()

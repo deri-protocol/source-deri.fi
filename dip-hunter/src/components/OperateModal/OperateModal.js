@@ -54,33 +54,69 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
     }
     let params;
     params = type === "DEPOSIT" ?
-      { includeResponse: true, write: true, subject: type.toUpperCase(), direction: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, symbol: info.symbol, amount: amount, accountAddress: wallet.account }
-      : { includeResponse: true, write: true, subject: type.toUpperCase(), direction: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, symbol: info.symbol, volume: amount, accountAddress: wallet.account }
-    if (!isApproved.isUnlocked) {
-      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, approved: false, direction: type.toUpperCase(), approveTip: isApproved.isZero ? "" : "Changing approved amount may result transaction failure" }
-      let approved = await ApiProxy.request("unlock", paramsApprove)
-      if (approved) {
-        if (approved.success) {
-          alert.success(`Approve ${bToken}`, {
-            timeout: 8000,
-            isTransaction: true,
-            transactionHash: approved.response.data.transactionHash,
-            link: `${chain.viewUrl}/tx/${approved.response.data.transactionHash}`,
-            title: 'Approve Executed'
-          })
-        } else {
-          if (approved.transactionHash === "") {
-            return true;
-          }
-          alert.error(`Transaction Failed ${approved.response.error.message}`, {
-            timeout: 300000,
-            isTransaction: true,
-            transactionHash: approved.response.transactionHash,
-            link: `${chain.viewUrl}/tx/${approved.response.transactionHash}`,
-            title: 'Approve Failed'
-          })
-          return true;
+      {
+        includeResponse: true, write:
+          true, subject: type.toUpperCase(),
+        direction: type.toUpperCase(),
+        chainId: wallet.chainId,
+        bTokenSymbol: bToken,
+        symbol: info.symbol,
+        amount: amount,
+        accountAddress: wallet.account,
+        title: {
+          processing: "Deposit Processing",
+          success: "Deposit Executed ",
+          error: 'Deposit Failed'
+        },
+        content: {
+          success: `Deposit ${bToken}`,
+          error: "Transaction Failed"
         }
+      }
+      : {
+        includeResponse: true,
+        write: true,
+        subject: type.toUpperCase(),
+        direction: type.toUpperCase(),
+        chainId: wallet.chainId,
+        bTokenSymbol: bToken,
+        symbol: info.symbol,
+        volume: amount,
+        accountAddress: wallet.account,
+        title: {
+          processing: "Withdraw Processing",
+          success: "Withdraw Executed",
+          error: 'Withdraw Failed'
+        },
+        content: {
+          success: `Withdraw ${bToken}`,
+          error: "Transaction Failed"
+        }
+      }
+    if (!isApproved.isUnlocked) {
+      let paramsApprove = {
+        includeResponse: true,
+        write: true,
+        subject: 'APPROVE',
+        chainId: wallet.chainId,
+        bTokenSymbol: bToken,
+        accountAddress: wallet.account,
+        approved: false,
+        direction: type.toUpperCase(),
+        approveTip: isApproved.isZero ? "" : "Changing approved amount may result transaction failure",
+        title: {
+          processing: "Approve Processing",
+          success: "Approve Executed ",
+          error: 'Approve Failed'
+        },
+        content: {
+          success: `Approve ${bToken}`,
+          error: "Transaction Failed"
+        }
+      }
+      let approved = await ApiProxy.request("unlock", paramsApprove)
+      if (!approved.success) {
+        return true;
       }
       params["approved"] = approved.success
     }
@@ -91,13 +127,6 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
       setAmount("")
       setPercent("")
       afterTransaction()
-      alert.success(`${type === "DEPOSIT" ? `Deposit ${bToken}` : `Withdraw ${bToken}`}`, {
-        timeout: 8000,
-        isTransaction: true,
-        transactionHash: res.response.data.transactionHash,
-        link: `${chain.viewUrl}/tx/${res.response.data.transactionHash}`,
-        title: `${type === "DEPOSIT" ? "Deposit Executed" : "Withdraw Executed"}`
-      })
     } else {
       if (res.response.error.code === 1001) {
         alert.error("Increase the input amount to open positions", {
@@ -107,16 +136,6 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
         })
         return false;
       }
-      if (res.response.transactionHash === "") {
-        return true;
-      }
-      alert.error(`Transaction Failed: ${res.response.error.message}`, {
-        timeout: 300000,
-        isTransaction: true,
-        transactionHash: res.response.transactionHash,
-        link: `${chain.viewUrl}/tx/${res.response.transactionHash}`,
-        title: `${type === "DEPOSIT" ? "Deposit Failed" : "Withdraw Failed"}`
-      })
     }
     return true
   }

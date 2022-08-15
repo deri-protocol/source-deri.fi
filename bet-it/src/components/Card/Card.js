@@ -70,10 +70,11 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     let res = await ApiProxy.request("getWalletBalance", { chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account })
     let token = getBtokenAmount(bToken)
     setAmount("")
-    if (+res >= 0) {
+    if (+res >= 0 && isInit) {
       let amount = +(bg(res).div(bg(2)).toString())
       amount = amount > token.max ? token.max : amount.toFixed(token.decimalScale)
       setAmount(amount)
+      setisInit(true)
     }
     setBalance(res)
   }
@@ -81,7 +82,14 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
 
   const betClose = async (event) => {
     event.preventDefault()
-    let params = { includeResponse: true, write: true, subject: 'CLOSE', chainId: wallet.chainId, symbol: betInfo.symbol, accountAddress: wallet.account }
+    let params = {
+      includeResponse: true,
+      write: true,
+      subject: 'CLOSE',
+      chainId: wallet.chainId,
+      symbol: betInfo.symbol,
+      accountAddress: wallet.account,
+    }
     let res = await ApiProxy.request("closeBet", params)
     if (res.success) {
       getBetInfo()
@@ -103,7 +111,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
         isTransaction: true,
         transactionHash: res.response.transactionHash,
         link: `${chain.viewUrl}/tx/${res.response.transactionHash}`,
-        title: lang['buy-order-failed']
+        title: `${+betInfo.volume < 0 ? lang['buy-order-failed'] : lang['sell-order-failed']}`
       })
     }
     console.log("betClose", res)
@@ -146,7 +154,17 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     let boostedUp = type === "boostedUp" ? true : false
     let params = { includeResponse: true, write: true, subject: type.toUpperCase(), chainId: wallet.chainId, bTokenSymbol: bToken, amount: amount, symbol: info.symbol, accountAddress: wallet.account, boostedUp: boostedUp, direction: direction }
     if (!isApproved.isUnlocked) {
-      let paramsApprove = { includeResponse: true, write: true, subject: 'APPROVE', chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account, direction: direction, approved: false, approveTip: isApproved.isZero ? "" : "Changing approved amount may result transaction failure" }
+      let paramsApprove = { 
+        includeResponse: true,
+        write: true, 
+        subject: 'APPROVE', 
+        chainId: wallet.chainId, 
+        bTokenSymbol: bToken, 
+        accountAddress: wallet.account, 
+        direction: direction, 
+        approved: false, 
+        approveTip: isApproved.isZero ? "" : "Changing approved amount may result transaction failure",
+       }
       let approved = await ApiProxy.request("unlock", paramsApprove)
       if (approved) {
         if (approved.success) {
@@ -247,7 +265,6 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
 
   useEffect(() => {
     if (wallet.chainId && wallet.account && bToken) {
-      setisInit(true)
       getWalletBalance()
     }
   }, [wallet, bToken])

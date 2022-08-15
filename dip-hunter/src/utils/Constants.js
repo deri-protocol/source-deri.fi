@@ -70,3 +70,6 @@ export const  MODAL_OPTIONS = {
     zIndex : 1
   }
 };
+
+export const EVENT_TRANS_BEGIN = 'event_trans_begin'
+export const EVENT_TRANS_END = 'event_trans_end'

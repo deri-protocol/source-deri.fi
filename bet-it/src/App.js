@@ -15,7 +15,7 @@ function App({ intl, actions }) {
   const curRouterClass = location.pathname.split('/')[1]
   return (
     <div className={`App ${curRouterClass}`}>
-      {/* <TransactionState /> */}
+      <TransactionState />
       <PageRouter intl={intl} actions={actions}></PageRouter>
     </div>
   );

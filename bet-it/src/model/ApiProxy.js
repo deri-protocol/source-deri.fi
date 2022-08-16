@@ -10,11 +10,11 @@ class ApiProxy {
     const { subject, title, content } = options
     if (options.write) {
       Object.assign(options, {
-        onAccept: (hash,volume) => {
+        onAccept: (hash, volume) => {
           this.onProcessing(subject, 'success', options)
           window.setTimeout(() => {
             this.close(subject)
-            // Emitter.emit(EVENT_TRANS_BEGIN, { title: title, content: content, hash: hash })
+            Emitter.emit(EVENT_TRANS_BEGIN, { title: title, content: content, hash: hash, volume: volume })
           }, 2000)
         },
         onReject: () => {
@@ -31,7 +31,7 @@ class ApiProxy {
     }
     res = this.processResponse(res, options)
     if (options.write) {
-      // Emitter.emit(EVENT_TRANS_END, { title: title, content: content, context: res })
+      Emitter.emit(EVENT_TRANS_END, { title: title, content: content, context: res })
     }
     return res
   }

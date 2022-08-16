@@ -17,7 +17,7 @@ export default function DipHunter({ lang, getLang, actions }) {
   const switchMenu = () => {
     const status = !actions.getGlobalState('menuStatus')
     actions.setGlobalState({ 'menuStatus': status })
-  }
+  } 
   return (
     <div className='dip-hunter'>
       <div className={isFixed ? "bg-img-color hide-three" : "bg-img-color"}>

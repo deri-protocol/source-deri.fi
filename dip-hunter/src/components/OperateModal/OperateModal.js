@@ -40,6 +40,14 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
     setPercent("")
   }
 
+
+  const blur = e => {
+    const { value } = e.target
+    if (value.indexOf(".") === 0) {
+      let text = "0" + value
+      setAmount(text)
+    }
+  }
   const isUnlocked = async () => {
     let res = await ApiProxy.request("isUnlocked", { chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account })
     console.log("isUnlocked", res)
@@ -261,7 +269,7 @@ export default function OperateMoadl({ lang, type, chain, alert, symbolInfo, inf
             </div>
             <div className="input-box">
               <div className="input-token">
-                <input value={amount} onChange={change} />
+                <input  type='number' value={amount} onBlur={blur} onChange={change} />
                 <div className='baseToken'>
                   <Icon token={bToken} width="22" height="22" />  {bToken}
                 </div>

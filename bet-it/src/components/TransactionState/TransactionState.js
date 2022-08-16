@@ -51,8 +51,8 @@ export default function TransactionState() {
       info["title"] = res.title.error
       info["content"] = `${res.content.error} : ${res.context.response.error}`
     }
-    info["hash"] = res.context.response.transactionHash
-    info["link"] = `${chain.viewUrl}/tx/${res.context.response.transactionHash}`
+    info["hash"] = res.context.response.data.transactionHash
+    info["link"] = `${chain.viewUrl}/tx/${res.context.response.data.transactionHash}`
     setMessageInfo(info)
     setIsShow(true)
   }

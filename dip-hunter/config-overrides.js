@@ -14,7 +14,7 @@ module.exports = {
     config.resolve.fallback = {
       os: false,
       // os: require.resolve(`os-browserify/browser`),
-      https: false,
+      https: "agent-base",
       // https: require.resolve(`https-browserify`),
       http: false,
       // http: require.resolve(`stream-http`),

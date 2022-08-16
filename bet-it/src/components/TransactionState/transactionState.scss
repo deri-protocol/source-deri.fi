@@ -22,9 +22,11 @@
     .icon {
       display: flex;
 
-      img,
-      .spinner-liquidity {
+      img {
         margin-right: 8px;
+      }
+      .spinner {
+        margin-right: 4px;
       }
 
     }

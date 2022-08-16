@@ -24,6 +24,10 @@ export default function TransactionState() {
     info["hash"] = data.hash
     info["title"] = data.title.processing
     info["content"] = data.content.success
+    if(data.content.isVolume){
+      let text = data.content.success.replace("$[volume]",Math.abs(data.volume[4] / 10**18))
+      info["content"] = text
+    }
     info["type"] = "processing"
     setMessageInfo(info)
   }
@@ -32,8 +36,9 @@ export default function TransactionState() {
     if (res.context.success) {
       info["type"] = "success"
       info["content"] = res.content.success
-      if (res.content.isPrice) {
-        info["content"] = `${res.content.success}`
+      if (res.content.isVolume) {
+        let text = res.content.success.replace("$[volume]",res.context.response.data.volume)
+        info["content"] = text
       }
       info["title"] = res.title.success
       window.setTimeout(() => { setIsShow(false) }, 8000)

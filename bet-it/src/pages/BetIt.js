@@ -14,7 +14,6 @@ export default function BetIt({ lang, getLang, actions }) {
   const [stepNow, setStepNow] = useState(1)
   const [isFixed, setIsFixed] = useState(false)
   const [bTokens, symbols] = usePool();
-  console.log(bTokens, symbols)
   const [collect, setCollect] = useState(true)
   const [openSymbol, setOpenSymbol] = useState("")
   const [isExpand, setIsExpand] = useState();
@@ -104,16 +103,6 @@ export default function BetIt({ lang, getLang, actions }) {
         <Header lang={lang} collect={collect} switchMenu={switchMenu}></Header>
         <div className="main-body">
           {mobile ? <PnlBar lang={lang} className='total-pnl-box mobile-total-pnl-box' /> : null}
-          {/* <div className='title-box'>
-            <div className='title-des'>
-              <div className='title-text'>
-                {lang['title-one']}
-              </div>
-              <div className='title-text-des'>
-                {lang['title-two']}
-              </div>
-            </div>
-          </div> */}
           <CardModal>
             <TinderCard bTokens={bTokens} openSymbol={openSymbol} closeModal={closeCardModal} lang={lang} symbols={symbols} getLang={getLang} />
           </CardModal>

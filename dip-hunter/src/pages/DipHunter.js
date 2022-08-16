@@ -14,42 +14,10 @@ export default function DipHunter({ lang, getLang, actions }) {
   const [withDipA, setWithDipA] = useState(false)
   const [withDipB, setWithDipB] = useState(false)
   const [bTokens, symbols] = usePool()
-  console.log(bTokens, symbols)
-  const mobile = isMobile()
-  const handler = useCallback(() => {
-    let offset = 138
-    let bgTop = document.getElementsByClassName('bg-img-color')[0]
-    if (isStartScroll(offset)) {
-      setIsFixed(true)
-    } else {
-      setIsFixed(false)
-    }
-    let top = 56
-    if (!isStartScroll(top)) {
-      const st = window.pageYOffset || document.documentElement.scrollTop;
-      bgTop.style.top = top - st + "px"
-    } else {
-      bgTop.style.top = "0px"
-    }
-  })
   const switchMenu = () => {
     const status = !actions.getGlobalState('menuStatus')
     actions.setGlobalState({ 'menuStatus': status })
-  }
-  useEffect(() => {
-    // let bgTop = document.getElementsByClassName('bg-img-color')[0]
-    // document.addEventListener('scroll', handler, false);
-    // let top = 56
-    // if (!isStartScroll(top)) {
-    //   const st = window.pageYOffset || document.documentElement.scrollTop;
-    //   bgTop.style.top = top - st + "px"
-    // } else {
-    //   bgTop.style.top = "0px"
-    // }
-    // return () => {
-    //   document.removeEventListener('scroll', handler)
-    // }
-  }, [])
+  } 
   return (
     <div className='dip-hunter'>
       <div className={isFixed ? "bg-img-color hide-three" : "bg-img-color"}>

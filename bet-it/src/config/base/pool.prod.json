@@ -265,6 +265,13 @@
         "unit": "SOL"
       },
       {
+        "symbolId": "0x3dafbe9f51a5b08f9ecc683b232c3055a6b651e25a50eaa56d6c54b7c949ac71",
+        "symbol": "AVAXUSDT",
+        "category": "futures",
+        "leverage": "10",
+        "unit": "AVAX"
+      },
+      {
         "symbolId": "0xb091137ce24b6cc1a176ff1c47ee784a62b93fe8cca125b8975b84c9b3c407ea",
         "symbol": "DOTUSDT",
         "category": "futures",

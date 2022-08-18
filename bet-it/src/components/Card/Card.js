@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Icon, Button } from '@deri/eco-common';
 import classNames from 'classnames'
 // import Button from '../Button/Button'
@@ -20,7 +20,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
   const [disabled, setDisabled] = useState(true)
   const [inputDisabled, setInputDisabled] = useState(true)
   const [isLiquidated, setIsLiquidated] = useState(false)
-  const [isInit, setisInit] = useState(true)
+  const isInitBalance = useRef()
   const wallet = useWallet();
   const chains = useChain()
   const chain = chains.find((item) => eqInNumber(item.chainId, wallet.chainId))
@@ -68,15 +68,14 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
   const getWalletBalance = async () => {
     let res = await ApiProxy.request("getWalletBalance", { chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account })
     let token = getBtokenAmount(bToken)
-    if (+res >= 0 && isInit) {
+    if (+res >= 0 && isInitBalance.current) {
       let amount = +(bg(res).div(bg(2)).toString())
       amount = amount > token.max ? token.max : amount.toFixed(token.decimalScale)
       setAmount(amount)
-      setisInit(false)
+      isInitBalance.current = false
     }
     setBalance(res)
   }
-
 
   const betClose = async (event) => {
     event.preventDefault()
@@ -93,7 +92,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
         error: lang['transaction-failed']
       },
       content: {
-        success:`${+betInfo.volume < 0 ? lang['buy'] : lang['sell']}  ${Math.abs(betInfo.volume)} ${info.unit} ${betInfo.isPowerSymbol ? lang['powers'] : ""} `,
+        success: `${+betInfo.volume < 0 ? lang['buy'] : lang['sell']}  ${Math.abs(betInfo.volume)} ${info.unit} ${betInfo.isPowerSymbol ? lang['powers'] : ""} `,
         error: `${+betInfo.volume < 0 ? lang['buy-order-failed'] : lang['sell-order-failed']}`
       }
     }
@@ -140,16 +139,16 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     let isApproved = await getIsApprove()
     let direction = type === "up" || type === "boostedUp" ? "long" : "short"
     let boostedUp = type === "boostedUp" ? true : false
-    let params = { 
-      includeResponse: true, 
-      write: true, 
-      subject: type.toUpperCase(), 
-      chainId: wallet.chainId, 
-      bTokenSymbol: bToken, 
-      amount: amount, 
-      symbol: info.symbol, 
-      accountAddress: wallet.account, 
-      boostedUp: boostedUp, 
+    let params = {
+      includeResponse: true,
+      write: true,
+      subject: type.toUpperCase(),
+      chainId: wallet.chainId,
+      bTokenSymbol: bToken,
+      amount: amount,
+      symbol: info.symbol,
+      accountAddress: wallet.account,
+      boostedUp: boostedUp,
       direction: direction,
       title: {
         processing: `${direction === "long" ? lang['buy-order-executed'] : lang['sell-order-executed']} Processing`,
@@ -157,9 +156,9 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
         error: `${direction === "long" ? lang['buy-order-failed'] : lang['sell-order-failed']}`
       },
       content: {
-        success:`${direction === "long" ? lang['buy'] : lang['sell']}  $[volume] ${info.unit} ${betInfo.isPowerSymbol ? lang['powers'] : ""} `,
+        success: `${direction === "long" ? lang['buy'] : lang['sell']}  $[volume] ${info.unit} ${betInfo.isPowerSymbol ? lang['powers'] : ""} `,
         error: `${direction === "long" ? lang['buy-order-failed'] : lang['sell-order-failed']}`,
-        isVolume:true,
+        isVolume: true,
       }
     }
     if (!isApproved.isUnlocked) {
@@ -248,9 +247,10 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
 
   useEffect(() => {
     if (wallet.chainId && wallet.account && bToken) {
+      isInitBalance.current = true
       getWalletBalance()
     }
-  }, [wallet, bToken])
+  }, [wallet.chainId, wallet.account, bToken])
   useEffect(() => {
     if (bTokens.length) {
       setBToken(bTokens[0].bTokenSymbol)

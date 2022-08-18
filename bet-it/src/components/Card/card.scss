@@ -11,7 +11,8 @@ $className: "BTC",
 "FITFI",
 "GMT",
 "SHIB",
-"X2Y2";
+"X2Y2",
+"AVAX";
 $Color: #F49B33,
 #7A57DD,
 #F3BA2D,
@@ -25,7 +26,8 @@ $Color: #F49B33,
 #FFD122,
 #CDA84D,
 #CDA84D,
-#4D41CE;
+#4D41CE,
+#FE0100;
 
 .card-box {
   width: 376px;
@@ -63,7 +65,8 @@ $Color: #F49B33,
       border-radius: 20px 0px 0px 20px;
       background: #FFAB00;
     }
-    .liquidated{
+
+    .liquidated {
       background: #FF5630;
     }
 
@@ -99,6 +102,7 @@ $Color: #F49B33,
     width: 302px;
     height: 90px;
     margin-top: 21px;
+
     .symbol-pnl {
       width: 100%;
       height: 72px;
@@ -132,7 +136,7 @@ $Color: #F49B33,
     }
   }
 
-  .position{
+  .position {
     margin-top: 38px;
     height: 72px;
   }
@@ -143,11 +147,13 @@ $Color: #F49B33,
     flex-direction: column;
     justify-content: end;
     height: 237px;
-    .line-chart{
+
+    .line-chart {
       width: 376px;
       position: relative;
       right: 33px;
     }
+
     .btn {
       margin-top: 19px;
       background-repeat: no-repeat;
@@ -161,7 +167,8 @@ $Color: #F49B33,
   }
 
 }
-.card-box:nth-child(3n+1){
+
+.card-box:nth-child(3n+1) {
   margin-left: 0px;
 }
 
@@ -189,11 +196,13 @@ $Color: #F49B33,
     height: 584px;
     padding: 27px 0 0 28px;
     margin-left: 0px;
+
     .input-box {
       width: 288px;
       margin-top: 14px;
     }
-    .position{
+
+    .position {
       margin-top: 31px;
       height: 72px;
     }
@@ -201,11 +210,13 @@ $Color: #F49B33,
     .btn-box {
       height: 207px;
       margin-top: 27px;
-      .line-chart{
+
+      .line-chart {
         width: 336px;
         position: relative;
         right: 28px;
       }
+
       .btn {
         width: 288px;
       }
@@ -223,47 +234,56 @@ $Color: #F49B33,
       }
     }
   }
-  .card-box:nth-child(2n){
+
+  .card-box:nth-child(2n) {
     margin-left: 20px;
 
   }
 
 }
-.mobile{
-  .card-box{
+
+.mobile {
+  .card-box {
     width: 280px;
     height: 488px;
     margin-left: 15px;
     padding-left: 22px;
     padding-top: 22px;
-    .symbol-price{
+
+    .symbol-price {
       margin-top: 19px;
       font-size: 28px;
     }
-    .symbol-leverage{
+
+    .symbol-leverage {
       margin-top: 16px;
       font-size: 21px;
     }
-    .input-box{
+
+    .input-box {
       width: 240px;
       margin-top: 11px;
       height: 83px;
     }
-    .btn-box{
+
+    .btn-box {
       width: 256px;
       height: 174px;
-      .line-chart{
+
+      .line-chart {
         width: 280px;
         right: 24px;
       }
-      .btn{
+
+      .btn {
         width: 240px;
         margin-top: 16px;
         height: 48px;
       }
     }
   }
-  .card-box:last-child{
+
+  .card-box:last-child {
     margin-right: 15px;
   }
 }

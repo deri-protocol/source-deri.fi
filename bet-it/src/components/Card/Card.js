@@ -33,7 +33,6 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     return chains.find((item) => eqInNumber(item.chainId, wallet.chainId))
   }
 
-
   const getBetInfo = async () => {
     if (wallet.isConnected()) {
       let res = await ApiProxy.request("getBetInfo", { chainId: wallet.chainId, accountAddress: wallet.account, symbol: info.symbol })
@@ -69,12 +68,11 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
   const getWalletBalance = async () => {
     let res = await ApiProxy.request("getWalletBalance", { chainId: wallet.chainId, bTokenSymbol: bToken, accountAddress: wallet.account })
     let token = getBtokenAmount(bToken)
-    setAmount("")
     if (+res >= 0 && isInit) {
       let amount = +(bg(res).div(bg(2)).toString())
       amount = amount > token.max ? token.max : amount.toFixed(token.decimalScale)
       setAmount(amount)
-      setisInit(true)
+      setisInit(false)
     }
     setBalance(res)
   }
@@ -103,7 +101,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     if (res.success) {
       getLiquidationInfo()
       getWalletBalance()
-      let res = await getBetInfo()
+      await getBetInfo()
     }
     console.log("betClose", res)
     return true
@@ -198,7 +196,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     if (res.success) {
       getWalletBalance()
       getLiquidationInfo()
-      let res = await getBetInfo()
+      await getBetInfo()
     } else {
       if (res.response.error.code === 1001) {
         alert.error("Increase the input amount to open positions", {

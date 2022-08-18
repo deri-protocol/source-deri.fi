@@ -37,7 +37,7 @@ export default function TransactionState() {
       info["type"] = "success"
       info["content"] = res.content.success
       if (res.content.isVolume) {
-        let text = res.content.success.replace("$[volume]",res.context.response.data.volume)
+        let text = res.content.success.replace("$[volume]",Math.abs(res.context.response.data.volume))
         info["content"] = text
       }
       info["title"] = res.title.success

@@ -33,7 +33,8 @@ const handleError = (err) => {
 
 export const toTxErrorResponse = async(err, opts) => {
   const { chainId, onReject } = opts
-  let code = '', reason = '', transactionHash = '';
+  let code = '', reason = '',
+    transactionHash = err.receipt ? err.receipt.transactionHash : err.transactionHash ? err.transactionHash : '';
   let message = err.message
   if (!message) {
     const errorArray = err.toString().split(':')
@@ -53,9 +54,13 @@ export const toTxErrorResponse = async(err, opts) => {
       // metamask gasPrice error
       const result = err.message.match(/(\{.*\})/)
       if (result) {
-        const data = JSON.parse(result[0])
-        if (data.value && data.value.data && data.value.data.message) {
-          reason = data.value.data.message
+        try {
+          const data = JSON.parse(result[0])
+          if (data.value && data.value.data && data.value.data.message) {
+            reason = data.value.data.message
+          }
+        } catch(ex) {
+          reason = err.message
         }
       } else {
         // handle custom error

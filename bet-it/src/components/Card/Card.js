@@ -192,12 +192,12 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
     }
     let res = await ApiProxy.request("openBet", params)
     console.log(type, res)
-    if (res.success) {
+    if (res && res.success) {
       getWalletBalance()
       getLiquidationInfo()
       await getBetInfo()
     } else {
-      if (res.response.error.code === 1001) {
+      if (res && res.response.error.code === 1001) {
         alert.error("Increase the input amount to open positions", {
           timeout: 300000,
           isTransaction: true,

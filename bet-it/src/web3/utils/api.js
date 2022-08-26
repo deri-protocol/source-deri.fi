@@ -21,11 +21,16 @@ export const toErrorResponse = (error, defaultValue) => {
 const handleError = (err) => {
   let result = 'Fail'
   if (err.message) {
-    const res = JSON.parse(err.message.slice(err.message.indexOf('{')))
-    if (res.message) {
-      result = res.message.replace(/execution\sreverted[:\s]?/, '')
-      result = result || 'Fail'
-      // reason = res.message.replace(/Transaction\sfailed!\s*:/, '')
+    result = err.message
+    try {
+      const res = JSON.parse(err.message.slice(err.message.indexOf('{')))
+      if (res.message) {
+        result = res.message.replace(/execution\sreverted[:\s]?/, '')
+        result = result || 'Fail'
+        // reason = res.message.replace(/Transaction\sfailed!\s*:/, '')
+      }
+    } catch(ex) {
+
     }
   }
   return result

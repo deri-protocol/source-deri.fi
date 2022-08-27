@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Icon, Loading } from "@deri/eco-common"
 import { inject, observer } from 'mobx-react'
 import { formatAddress } from "../../utils/utils"
@@ -11,15 +11,22 @@ import './transactionState.scss'
 export default function TransactionState() {
   const [isShow, setIsShow] = useState(false)
   const [messageInfo, setMessageInfo] = useState({})
+  const endTag = useRef()
   const wallet = useWallet()
   const chains = useChain()
   const chain = chains.find((item) => eqInNumber(item.chainId, wallet.chainId))
   const closeBox = () => {
     setIsShow(false)
+    setMessageInfo({});
+    endTag.current = false
   }
   const onMessageInfoBgein = (data) => {
     setIsShow(true)
     let info = {}
+    if (endTag.current) {
+      endTag.current = false
+      return;
+    }
     info["link"] = `${chain.viewUrl}/tx/${data.hash}`
     info["hash"] = data.hash
     info["title"] = data.title.processing
@@ -29,6 +36,11 @@ export default function TransactionState() {
   }
   const onMessageInfoEnd = (res) => {
     let info = {}
+    if (!res.context) {
+      closeBox()
+      return false;
+    }
+    endTag.current = true
     if (res.context.success) {
       info["type"] = "success"
       info["content"] = res.content.success
@@ -36,18 +48,19 @@ export default function TransactionState() {
         info["content"] = `${res.content.success}`
       }
       info["title"] = res.title.success
-      window.setTimeout(() => { setIsShow(false) }, 8000)
+      info["hash"] = res.context.response.data.transactionHash
+      info["link"] = `${chain.viewUrl}/tx/${res.context.response.data.transactionHash}`
     } else {
       if (res.context.response.transactionHash === "") {
-        setIsShow(false)
+        closeBox(false)
         return;
       }
       info["type"] = "error"
       info["title"] = res.title.error
-      info["content"] = `${res.content.error} : ${res.context.response.error}`
+      info["content"] = `${res.content.error} : ${res.context.response.error.message}`
+      info["hash"] = res.context.response.transactionHash
+      info["link"] = `${chain.viewUrl}/tx/${res.context.response.transactionHash}`
     }
-    info["hash"] = res.context.response.data.transactionHash
-    info["link"] = `${chain.viewUrl}/tx/${res.context.response.data.transactionHash}`
     setMessageInfo(info)
     setIsShow(true)
   }
@@ -59,6 +72,18 @@ export default function TransactionState() {
       Emitter.off(EVENT_TRANS_END, onMessageInfoEnd)
     }
   }, [chain])
+  useEffect(() => {
+    let timer
+    if (messageInfo.type === "success") {
+      timer = window.setTimeout(() => {
+        closeBox();
+        console.log("closeBox")
+      }, 8000)
+    }
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [messageInfo])
   return (
     <>
       {isShow ? <div className='transaction-state'>
@@ -86,7 +111,7 @@ export default function TransactionState() {
         <div className='message-text-link'>
           <div className='message-text-box'>
             <div className='message-text'>
-              {messageInfo.content} 
+              {messageInfo.content}
             </div>
             <div className={messageInfo.type === 'success' ? 'link' : messageInfo.type === "error" ? 'link error' : "link processing"}>
               <a rel='noreferrer' target='_blank' href={messageInfo.link}>Click here to view transaction {formatAddress(messageInfo.hash)}</a>

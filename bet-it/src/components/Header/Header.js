@@ -152,7 +152,7 @@ export default function Header({ lang, collect, switchMenu }) {
     fadeOut: !isFixed
   })
   const handler = useCallback(() => {
-    let offset = collect ? 138 : 202
+    let offset = collect ? 56 : 120
     if (isStartScroll(offset)) {
       setIsFixed(true)
       setBtnMainColor('#FF7913')

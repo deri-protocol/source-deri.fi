@@ -1,7 +1,7 @@
 import { debug } from '../utils/env';
 import { getWeb3, getWeb3WithSigner } from '../utils/web3';
 
-const MAX_GAS_AMOUNT = 713256 * 4;
+const MAX_GAS_AMOUNT = 813256 * 5;
 
 const noOp = () => {}
 

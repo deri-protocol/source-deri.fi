@@ -251,7 +251,7 @@ export default function Card({ info, lang, bTokens, getLang, showCardModal }) {
       setBalance("")
       getWalletBalance()
     }
-  }, [wallet.account, bToken])
+  }, [wallet.account, bToken,wallet])
   useEffect(() => {
     setBToken("")
     if (bTokens.length) {

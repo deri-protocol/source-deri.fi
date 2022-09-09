@@ -14,7 +14,8 @@ export const getDeriLensAddress = (chainId) => {
     },
     {
       chainId: "42161",
-      address: "0x74F8acC86D93052557752E9D0B0c7b89b53ef100",
+      // address: "0x74F8acC86D93052557752E9D0B0c7b89b53ef100",
+      address: "0x7D3568236C84452A163c85b545AFA3b812da7A54",
       env: "prod",
     },
     {

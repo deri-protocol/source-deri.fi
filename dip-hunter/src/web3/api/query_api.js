@@ -8,9 +8,9 @@ import { debug, DeriEnv } from "../utils/env";
 import { checkToken, deriSymbolScaleOut, nativeCoinSymbols, normalizeDeriSymbol, stringToId } from "../utils/symbol";
 import { getWeb3 } from "../utils/web3";
 import { MAX_UINT256, ZERO_ADDRESS } from '../utils/constant'
-import { fetchJson, getHttpBase } from "../utils/rest";
-import { getLastTradeInfoFromScanApi } from "../utils/scanapi";
-import { delay } from "../utils/factory";
+// import { fetchJson, getHttpBase } from "../utils/rest";
+// import { getLastTradeInfoFromScanApi } from "../utils/scanapi";
+// import { delay } from "../utils/factory";
 import { ObjectCache } from "../utils/cache";
 import { marginCacheKey, normalizeTradeVolume, positionCacheKey, symbolCacheKey } from "./api_shared";
 import { calculateDpmmCost } from "../contract/symbol/shared";
@@ -131,21 +131,34 @@ export const getEstimatedDepositeInfo = queryApi(async ({ chainId, accountAddres
   const newVolume = normalizeTradeVolume(bg(newAmount).div(symbolInfo.strikePrice).toString(), symbolInfo.minTradeVolume)
   if (symbolInfo) {
     let fee;
-    if (bg(symbolInfo.intrinsicValue).gt(0)) {
-      fee = bg(newVolume)
-        .abs()
-        .times(symbolInfo.curIndexPrice)
-        .times(symbolInfo.feeRatioITM)
-        .toString();
+    const feeNotional = bg(symbolInfo.curIndexPrice).times(symbolInfo.feeRatioNotional).times(newVolume).abs()
+    const cost = calculateDpmmCost(
+      symbolInfo.theoreticalPrice,
+      symbolInfo.K,
+      symbolInfo.netVolume,
+      newVolume
+    );
+    const feeMark = bg(cost).times(symbolInfo.feeRatioMark).abs()
+    if (feeNotional.lt(feeMark)) {
+      fee = feeNotional.toString()
     } else {
-      const cost = calculateDpmmCost(
-        symbolInfo.theoreticalPrice,
-        symbolInfo.K,
-        symbolInfo.netVolume,
-        newVolume
-      );
-      fee = bg(cost).abs().times(symbolInfo.feeRatioOTM).toString();
+      fee = feeMark.toString()
     }
+    // if (bg(symbolInfo.intrinsicValue).gt(0)) {
+    //   fee = bg(newVolume)
+    //     .abs()
+    //     .times(symbolInfo.curIndexPrice)
+    //     .times(symbolInfo.feeRatioITM)
+    //     .toString();
+    // } else {
+    //   const cost = calculateDpmmCost(
+    //     symbolInfo.theoreticalPrice,
+    //     symbolInfo.K,
+    //     symbolInfo.netVolume,
+    //     newVolume
+    //   );
+    //   fee = bg(cost).abs().times(symbolInfo.feeRatioOTM).toString();
+    // }
     return {
       symbol,
       volume: bg(position.volume).minus(newVolume).abs().toString(),
@@ -172,21 +185,34 @@ export const getEstimatedWithdrawInfo = queryApi(async ({ chainId, accountAddres
   if (symbolInfo && position) {
     newVolume = normalizeTradeVolume(bg(newVolume).abs().toString(), symbolInfo.minTradeVolume)
     let fee;
-    if (bg(symbolInfo.intrinsicValue).gt(0)) {
-      fee = bg(newVolume)
-        .abs()
-        .times(symbolInfo.curIndexPrice)
-        .times(symbolInfo.feeRatioITM)
-        .toString();
+    const feeNotional = bg(symbolInfo.curIndexPrice).times(symbolInfo.feeRatioNotional).times(newVolume).abs()
+    const cost = calculateDpmmCost(
+      symbolInfo.theoreticalPrice,
+      symbolInfo.K,
+      symbolInfo.netVolume,
+      newVolume
+    );
+    const feeMark = bg(cost).times(symbolInfo.feeRatioMark).abs()
+    if (feeNotional.lt(feeMark)) {
+      fee = feeNotional.toString()
     } else {
-      const cost = calculateDpmmCost(
-        symbolInfo.theoreticalPrice,
-        symbolInfo.K,
-        symbolInfo.netVolume,
-        newVolume
-      );
-      fee = bg(cost).abs().times(symbolInfo.feeRatioOTM).toString();
+      fee = feeMark.toString()
     }
+    // if (bg(symbolInfo.intrinsicValue).gt(0)) {
+    //   fee = bg(newVolume)
+    //     .abs()
+    //     .times(symbolInfo.curIndexPrice)
+    //     .times(symbolInfo.feeRatioITM)
+    //     .toString();
+    // } else {
+    //   const cost = calculateDpmmCost(
+    //     symbolInfo.theoreticalPrice,
+    //     symbolInfo.K,
+    //     symbolInfo.netVolume,
+    //     newVolume
+    //   );
+    //   fee = bg(cost).abs().times(symbolInfo.feeRatioOTM).toString();
+    // }
     return {
       symbol,
       volume: bg(position.volume).plus(newVolume).negated().toString(),

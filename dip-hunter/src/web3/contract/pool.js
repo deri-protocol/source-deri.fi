@@ -124,23 +124,35 @@ export class Pool {
   }
   getEstimatedFee(symbol, newVolume) {
     if (isOptionSymbol(symbol)) {
-      let fee;
-      if (bg(symbol.intrinsicValue).gt(0)) {
-        fee = bg(newVolume)
-          .abs()
-          .times(symbol.curIndexPrice)
-          .times(symbol.feeRatioITM)
-          .toString();
+      // let fee;
+      // if (bg(symbol.intrinsicValue).gt(0)) {
+      //   fee = bg(newVolume)
+      //     .abs()
+      //     .times(symbol.curIndexPrice)
+      //     .times(symbol.feeRatioITM)
+      //     .toString();
+      // } else {
+      //   const cost = calculateDpmmCost(
+      //     symbol.theoreticalPrice,
+      //     symbol.K,
+      //     symbol.netVolume,
+      //     newVolume
+      //   );
+      //   fee = bg(cost).abs().times(symbol.feeRatioOTM).toString();
+      // }
+      const feeNotional = bg(symbol.curIndexPrice).times(symbol.feeRatioNotional).times(newVolume).abs()
+      const cost = calculateDpmmCost(
+        symbol.theoreticalPrice,
+        symbol.K,
+        symbol.netVolume,
+        newVolume
+      );
+      const feeMark = bg(cost).times(symbol.feeRatioMark).abs()
+      if (feeNotional.lt(feeMark)) {
+        return feeNotional.toString()
       } else {
-        const cost = calculateDpmmCost(
-          symbol.theoreticalPrice,
-          symbol.K,
-          symbol.netVolume,
-          newVolume
-        );
-        fee = bg(cost).abs().times(symbol.feeRatioOTM).toString();
+        return feeMark.toString()
       }
-      return fee;
     } else if (isPowerSymbol(symbol)) {
       const cost = calculateDpmmCost(
         symbol.theoreticalPrice,
@@ -269,8 +281,10 @@ export class Pool {
         curVolatility: s.curVolatility,
         delta: s.delta,
         feeRatio: s.feeRatio,
-        feeRatioITM: s.feeRatioITM,
-        feeRatioOTM: s.feeRatioOTM,
+        // feeRatioITM: s.feeRatioITM,
+        // feeRatioOTM: s.feeRatioOTM,
+        feeRatioNotional: s.feeRatioNotional,
+        feeRatioMark: s.feeRatioMark,
         funding: s.funding,
         fundingPeriod: s.fundingPeriod,
         fundingTimestamp: s.fundingTimestamp,

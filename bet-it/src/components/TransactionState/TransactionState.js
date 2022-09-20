@@ -85,6 +85,10 @@ export default function TransactionState() {
         closeBox();
         console.log("closeBox")
       }, 8000)
+    }else {
+      timer = window.setTimeout(() => {
+        endTag.current = false
+      }, 2000)
     }
     return () => {
       clearTimeout(timer)

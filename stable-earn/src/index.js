@@ -1,22 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter } from 'react-router-dom'
-import './index.css';
+import './index.scss';
 import App from './App';
+import { UseWalletProvider } from 'use-wallet'
+import { Provider } from 'mobx-react';
+import { USE_WALLET_OPTIONS } from './utils/Constants';
+import { HashRouter } from 'react-router-dom'
+import Intl from './model/Intl';
+import { getEnv } from './utils/utils';
 function getBetitRootContainer(container) {
   return container ? container.querySelector('#stable-earn-root') : document.querySelector('#stable-earn-root');
 }
+
 function render(props) {
   const { container, name = "" } = props;
   ReactDOM.render(
     <React.StrictMode>
       <HashRouter basename={name}>
-        <App {...props} />
+        <UseWalletProvider {...USE_WALLET_OPTIONS}>
+          <Provider intl={Intl}>
+            <App {...props} />
+          </Provider>
+        </UseWalletProvider>
       </HashRouter>
     </React.StrictMode>,
     getBetitRootContainer(container)
   );
 }
+
+
+
 if (!window.__POWERED_BY_QIANKUN__) {
   render({});
 }
@@ -34,5 +47,3 @@ export async function unmount(props) {
   const { container } = props;
   ReactDOM.unmountComponentAtNode(getBetitRootContainer(container));
 }
-
-

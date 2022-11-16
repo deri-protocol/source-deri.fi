@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .App-logo {
@@ -7,6 +7,32 @@
   pointer-events: none;
 }
 
+.loading-line {
+  width: 100px;
+  height: 16px;
+  border-radius: 4px;
+  background-color: #F8F8F8;
+  animation: pulse 2s cubic-bezier(0.2, 0, 0.4, 1) infinite;
+  display: inline-block;
+}
+@-webkit-keyframes pulse {
+  50% {
+      opacity: .5
+  }
+}
+
+@keyframes pulse {
+  50% {
+      opacity: .5
+  }
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+    /* <-- Apparently some margin are still there even though it's hidden */
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

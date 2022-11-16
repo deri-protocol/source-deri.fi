@@ -1,25 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import { inject, observer } from 'mobx-react';
+import { useEffect } from 'react'
+import { useWallet } from "use-wallet";
+import PageRouter from './pages/PageRouter';
+import { useLocation } from 'react-router-dom'
+import TransactionState from './components/TransactionState/TransactionState'
 
-function App() {
+function App({ intl, actions }) {
+  const location = useLocation();
+  const curRouterClass = location.pathname.split('/')[1]
+  const wallet = useWallet()
+  useEffect(() => {
+    wallet.connect()
+    actions && actions.onGlobalStateChange((state) => {
+      if (state.wallet.isConnected()) {
+        wallet.connect()
+      }
+    })
+  }, [actions, wallet])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`App ${curRouterClass}`}>
+      <TransactionState />
+      <PageRouter intl={intl} actions={actions}></PageRouter>
     </div>
   );
 }
 
-export default App;
+export default inject("intl")(observer(App));

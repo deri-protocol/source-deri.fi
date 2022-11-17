@@ -30,9 +30,6 @@ const SUPPORTED_CHAIN_LIST = {
   "200" : "https://arbitrum.xdaichain.com"
 }
 
-
-
-
 export const USE_WALLET_OPTIONS = {
   connectors : {
     injected: {
@@ -56,17 +53,79 @@ export const SECONDARY = 'secondary'
 export const NETWORK_MAP = {
   BSC:"BNB Chain"
 }
+export const BSC_RPC_PROVIDERS = [
+  "https://bsc-dataseed.binance.org",
+  "https://bsc-dataseed1.defibit.io",
+  "https://bsc-dataseed1.ninicoin.io",
+  "https://bsc-dataseed2.defibit.io",
+  "https://bsc-dataseed3.defibit.io",
+  "https://bsc-dataseed4.defibit.io",
+  "https://bsc-dataseed2.ninicoin.io",
+  "https://bsc-dataseed3.ninicoin.io",
+  "https://bsc-dataseed4.ninicoin.io",
+  "https://bsc-dataseed1.binance.org",
+  "https://bsc-dataseed2.binance.org",
+  "https://bsc-dataseed3.binance.org",
+  "https://bsc-dataseed4.binance.org",
+]
+export const ARBITRUM_RPC_PROVIDERS = [
+  "https://arb1.arbitrum.io/rpc"
+]
+
+export const RPC_PROVIDERS = {
+  56: BSC_RPC_PROVIDERS,
+  42161: ARBITRUM_RPC_PROVIDERS
+};
+export const ARBITRUM_MAINNET_NETWORK = {
+  chainId: 42161,
+  name: "arbitrum",
+  icon: "arbitrum-chain-logo",
+  scan: "Arbiscan",
+  scanUrl: "https://arbiscan.io/",
+  isDefault: true,
+  chainName: "Arbitrum",
+  nativeCurrency: {
+    name: "Arbitrum One",
+    symbol: "ETH",
+    decimals: 18
+  },
+  rpcUrls: ["https://arb1.arbitrum.io/rpc"]
+};
+
+export const BNBCHAIN_MAINNET_NETWORK = {
+  chainId: 56,
+  name: "bsc",
+  icon: "bsc-chain-logo",
+  chainName: "BNB Chain",
+  scan: "Bscscan",
+  scanUrl: "https://bscscan.com/",
+  nativeCurrency: {
+    name: "BNB Chain",
+    symbol: "BNB",
+    decimals: 18
+  },
+  rpcUrls: ["https://bsc-dataseed1.ninicoin.io", "https://bsc-dataseed2.ninicoin.io"]
+};
+
+export const SUPPORTED_MAINNET_NETWORKS = [
+  ARBITRUM_MAINNET_NETWORK,
+  BNBCHAIN_MAINNET_NETWORK,
+]
+
+export const MAX_GAS_LIMIT = 812731 * 5
+
+export const GAS_PRICE_ADJUSTMENT_MAP = {
+  42161: "0",
+  56: "3000000000", // 3 gwei
+};
+
+export const MAX_GAS_PRICE_MAP = {
+  56: "200000000000", // 200 gwei
+};
+
+export const DEFAULT_RETRY_OPTIONS= { n: 100, minWait: 0, maxWait: 200 };
 
 export const COOKIE_DERI_DOMAIN='.deri.fi'
-
-export const  MODAL_OPTIONS = {
-  key  : 'confirmation',
-  fading: true,
-  style: {
-    background: "rgba(0, 0, 0, 0.4)" ,
-    zIndex : 1
-  }
-};
 
 export const EVENT_TRANS_BEGIN = 'event_trans_begin'
 export const EVENT_TRANS_END = 'event_trans_end'

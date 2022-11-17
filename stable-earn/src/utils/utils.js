@@ -2,6 +2,7 @@
 import Cookies from 'js-cookie'
 import { COOKIE_DERI_DOMAIN } from './Constants'
 import { BigNumber as bg } from 'bignumber.js';
+import { BigNumber} from 'ethers'
 
 export function setCookie(name, value, expires = 365, domain = COOKIE_DERI_DOMAIN, path = '/') {
   if (name && value) {
@@ -13,6 +14,17 @@ export function getCookie(name) {
   return Cookies.get(name)
 }
 
+export function bigNumberify(n) {
+  try {
+    return BigNumber.from(n)
+  } catch (e) {
+    console.error('bigNumberify error', e)
+    return undefined
+  }
+}
+export function random(min, max) {
+  return Math.round(Math.random() * Math.max(0, max - min));
+}
 
 export function removeCookie(name, domain = COOKIE_DERI_DOMAIN, path = '/') {
   Cookies.remove(name, { domain, path })

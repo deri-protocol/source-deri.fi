@@ -1,0 +1,153 @@
+.redeem-box {
+  margin-top: 30px;
+  width: 560px;
+
+  &-days {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 48px;
+
+    &-describe {
+      width: 374px;
+      background: rgba(55, 125, 255, 0.1);
+      border: 0.822633px solid rgba(55, 125, 255, 0.2);
+      border-radius: 8px;
+      padding: 6px 18px 8px 26px;
+      font-weight: 400;
+      font-size: 14px;
+      color: #377DFF;
+    }
+
+    &-off-on {
+      display: flex;
+      align-items: center;
+
+      img {
+        margin-right: 14px;
+      }
+    }
+
+
+  }
+
+  &-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 140px;
+    margin-top: 46px;
+
+    &-value {
+      width: 273px;
+      height: 100%;
+      opacity: 0.7;
+      border: 0.822633px solid rgba(119, 126, 144, .7);
+      border-radius: 18.0979px;
+      padding: 30px 14px 30px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      &-label {
+        font-weight: 600;
+        font-size: 16px;
+        color: #777E90;
+      }
+
+      &-text {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 700;
+        font-size: 32px;
+        color: #040415;
+
+        .redeem-token {
+          display: flex;
+          align-items: center;
+
+          img {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+  .open-preview {
+    margin-top: 25px;
+    font-weight: 600;
+    font-size: 16px;
+    .prop {
+      color: #777E90;
+      display: flex;
+      justify-content: space-between;
+      span{
+        display: flex;
+        align-items: center;
+        color: #040415;
+        img{
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+  .btn{
+    margin-top: 40px;
+  }
+}
+@media only screen and (max-width : 1024px){
+  .redeem-box {
+    width: 290px;
+    margin-top: 22px;
+    &-days{
+    height: 40px;
+      &-describe{
+        width: 232px;
+        font-size: 10px;
+        padding: 7px 7px;
+      }
+      &-off-on {
+        img{
+          width: 12px;
+          height: 15px;
+          margin-right: 4px;
+        }
+      }
+    }
+    &-info{
+      height: 96px;
+      margin-top: 21px; 
+      &-value{
+        width: 141px;
+        padding: 10px 7px 24px 12px;
+        &-label{
+          font-size: 12px;
+        }
+        &-text{
+          font-size: 22px;
+          .redeem-token{
+            font-size: 14px;
+            img{
+              width: 14px;
+              height: 14px;
+              margin-right: 4px;
+            }
+          }
+        }
+      }
+    }
+    .open-preview{
+      margin-top: 14px;
+      font-size: 12px;
+    }
+    .btn{
+      margin-top: 20px;
+      .redeem-btn{
+        height: 40px;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+    }
+  }
+}

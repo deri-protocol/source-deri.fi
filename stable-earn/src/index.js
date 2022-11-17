@@ -7,7 +7,6 @@ import { Provider } from 'mobx-react';
 import { USE_WALLET_OPTIONS } from './utils/Constants';
 import { HashRouter } from 'react-router-dom'
 import Intl from './model/Intl';
-import { getEnv } from './utils/utils';
 function getBetitRootContainer(container) {
   return container ? container.querySelector('#stable-earn-root') : document.querySelector('#stable-earn-root');
 }

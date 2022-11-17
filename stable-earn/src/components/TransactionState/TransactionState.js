@@ -77,7 +77,6 @@ export default function TransactionState() {
     if (messageInfo.type === "success") {
       timer = window.setTimeout(() => {
         closeBox();
-        console.log("closeBox")
       }, 8000)
     }else {
       timer = window.setTimeout(() => {

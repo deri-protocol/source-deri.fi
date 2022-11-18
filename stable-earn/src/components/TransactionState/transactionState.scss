@@ -1,10 +1,11 @@
 .transaction-state {
   width: 288px;
   background: #FFFFFF;
-  border-radius: 4px;
   box-shadow: 0px 50px 77px rgba(176, 183, 195, 0.22);
+  border-radius: 14px;
   font-size: 14px;
-  color: rgb(185, 185, 185);
+  color: #323B4B;
+  font-weight: 600;
   position: fixed;
   top: 100px;
   right: 24px;
@@ -44,7 +45,7 @@
     }
 
     .noAnimation {
-      border: 2px solid #DDDDDD;
+      border: 1px solid #DDDDDD;
     }
   }
 
@@ -117,22 +118,22 @@
   height: 16px;
   border-radius: 50%;
   position: absolute;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   top: 0;
   transform: rotate(-135deg);
 }
 
 
 .animation .rightcircle {
-  border-top: 2px solid #DDDDDD;
-  border-right: 2px solid #DDDDDD;
+  border-top: 1px solid #DDDDDD;
+  border-right: 1px solid #DDDDDD;
   right: 0;
   animation: circle_left 8s linear 1;
 }
 
 .animation .leftcircle {
-  border-bottom: 2px solid #DDDDDD;
-  border-left: 2px solid #DDDDDD;
+  border-bottom: 1px solid #DDDDDD;
+  border-left: 1px solid #DDDDDD;
   left: 0;
   animation: circle_right 8s linear 1;
 }

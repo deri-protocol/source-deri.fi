@@ -64,7 +64,10 @@
         background: #377DFF;
         color: #FFFFFF;
       }
-
+      .isMaxBalance{
+        background: #377DFF;
+        color: #FFFFFF;
+      }
       &-name {
         display: flex;
         align-items: center;
@@ -100,7 +103,13 @@
     }
   }
   .btn{
+    width: 100%;
     margin-top: 79px;
+  }
+  .btn-two{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 @media only screen and (max-width : 1024px){

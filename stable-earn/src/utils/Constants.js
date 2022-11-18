@@ -40,8 +40,8 @@ export const USE_WALLET_OPTIONS = {
       rpc : SUPPORTED_CHAIN_LIST
     },
     walletlink: {
-      chainId: 1,
-      url: 'https://mainnet.eth.aragon.network/',
+      chainId: 56,
+      url: 'https://bsc-dataseed.binance.org/',
     },
   },
   autoConnect : true
@@ -53,6 +53,9 @@ export const SECONDARY = 'secondary'
 export const NETWORK_MAP = {
   BSC:"BNB Chain"
 }
+
+
+
 export const BSC_RPC_PROVIDERS = [
   "https://bsc-dataseed.binance.org",
   "https://bsc-dataseed1.defibit.io",

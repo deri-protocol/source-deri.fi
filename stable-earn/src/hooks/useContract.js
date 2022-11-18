@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 import ERC20_ABI from '../abi/erc20.json'
-import { useWeb3React } from '@web3-react/core'
+import {Web3Provider} from '@ethersproject/providers'
 import { getContract } from '../client/helper'
+import { useWallet } from 'use-wallet'
 
 // returns null on errors
 export function useContract(
@@ -9,10 +10,11 @@ export function useContract(
   ABI,
   withSignerIfPossible = true,
 ){
-  const { provider, account, chainId } = useWeb3React()
+  const { ethereum, account, chainId } = useWallet()
   return useMemo(() => {
-    if (!addressOrAddressMap || !ABI || !provider || !chainId) return null
+    if (!addressOrAddressMap || !ABI || !ethereum || !chainId) return null
     let address
+    const provider = new Web3Provider(ethereum,'any')  
     if (typeof addressOrAddressMap === 'string') address = addressOrAddressMap
     else address = addressOrAddressMap[chainId]
     if (!address) return null
@@ -30,7 +32,7 @@ export function useContract(
   }, [
     addressOrAddressMap,
     ABI,
-    provider,
+    ethereum,
     chainId,
     withSignerIfPossible,
     account,

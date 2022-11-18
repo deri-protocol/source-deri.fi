@@ -2,7 +2,8 @@
 import Cookies from 'js-cookie'
 import { COOKIE_DERI_DOMAIN } from './Constants'
 import { BigNumber as bg } from 'bignumber.js';
-import { BigNumber} from 'ethers'
+import { BigNumber } from 'ethers'
+import { STABLE_EARN_CONTRACT, TOKEN } from '../abi/contractAddress';
 
 export function setCookie(name, value, expires = 365, domain = COOKIE_DERI_DOMAIN, path = '/') {
   if (name && value) {
@@ -129,4 +130,27 @@ export function hasParent(parent, current) {
 
 export function isMobile() {
   return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+}
+
+export function getToken(chainId) {
+  const token = TOKEN[chainId]
+  if (token) {
+    const { tokenAddress, tokenName } = token
+    return [tokenAddress, tokenName]
+  } else {
+    return ["0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56", "BUSD"]
+  }
+}
+
+export function getContractAddress(chainId){
+  const contract = STABLE_EARN_CONTRACT[chainId]
+  if (contract) {
+    return contract
+  } else {
+    return "0xEB47F807865AE53F6b2cB67296A986A7FE96a552"
+  }
+}
+
+export function toFixed(value, decaiml = 18){
+  return bg(value).toFixed(decaiml);
 }

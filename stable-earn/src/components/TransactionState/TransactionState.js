@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Icon, Loading } from "@deri/eco-common"
-import { inject, observer } from 'mobx-react'
+import { Icon } from "@deri/eco-common"
 import { formatAddress } from "../../utils/utils"
 import Emitter from "../../utils/Emitter";
 import { useWallet } from "use-wallet";
@@ -48,18 +47,18 @@ export default function TransactionState() {
         info["content"] = `${res.content.success}`
       }
       info["title"] = res.title.success
-      info["hash"] = res.context.response.data.transactionHash
-      info["link"] = `${chain.viewUrl}/tx/${res.context.response.data.transactionHash}`
+      info["hash"] = res.context.hash
+      info["link"] = `${chain.viewUrl}/tx/${res.context.hash}`
     } else {
-      if (res.context.response.transactionHash === "") {
+      if (res.context.hash === "") {
         closeBox(false)
         return;
       }
       info["type"] = "error"
       info["title"] = res.title.error
-      info["content"] = `${res.content.error} : ${res.context.response.error.message}`
-      info["hash"] = res.context.response.transactionHash
-      info["link"] = `${chain.viewUrl}/tx/${res.context.response.transactionHash}`
+      info["content"] = `${res.content.error} : ${res.context.error}`
+      info["hash"] = res.context.hash
+      info["link"] = `${chain.viewUrl}/tx/${res.context.hash}`
     }
     setMessageInfo(info)
     setIsShow(true)
@@ -94,7 +93,7 @@ export default function TransactionState() {
           <div className='icon message-title-text'>
             {messageInfo.type === 'success' && <Icon token='success' width={16} height={16} />}
             {messageInfo.type === 'error' && <Icon token='error' width={16} height={16} />}
-            {messageInfo.type === 'processing' && <Loading borderColor="rgba(55, 125, 255, 1)" bgColor="rgba(55, 125, 255, 0.1)" />}
+            {messageInfo.type === 'processing' && <Icon token='processing' width={16} height={16} />}
             {messageInfo.title}
           </div>
           <div className={messageInfo.type !== 'success' ? 'close noAnimation' : 'close'} onClick={closeBox}>

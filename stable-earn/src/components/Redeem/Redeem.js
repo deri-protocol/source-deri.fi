@@ -17,7 +17,7 @@ export default function Redeem() {
   const trade = useTrade()
   const [isApproved, approve] = useApprove(FLP_TOKEN_ADDRESS, "FLP")
   const click = useCallback(async () => {
-    let type = daysOff ? "instantRedemm" : "claimRedeem"
+    let type = daysOff ? "instantRedeem" : "claimRedeem"
     await trade(null, 0, type, () => {
 
     })

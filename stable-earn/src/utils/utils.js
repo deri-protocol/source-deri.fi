@@ -2,6 +2,7 @@
 import Cookies from 'js-cookie'
 import { COOKIE_DERI_DOMAIN } from './Constants'
 import { BigNumber } from 'bignumber.js';
+import {BigNumber as eBigNumber} from 'ethers'
 import { STABLE_EARN_CONTRACT, TOKEN } from '../abi/contractAddress';
 
 export function setCookie(name, value, expires = 365, domain = COOKIE_DERI_DOMAIN, path = '/') {
@@ -26,7 +27,7 @@ export function getCookie(name) {
 
 export function bigNumberify(n) {
   try {
-    return BigNumber.from(n)
+    return eBigNumber.from(n)
   } catch (e) {
     console.error('bigNumberify error', e)
     return undefined

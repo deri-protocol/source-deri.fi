@@ -28,7 +28,7 @@ export default function useTrade(
         parseUnits(toFixed(priceLimit), 18)
       ]
       if(type === "invest"){
-        params.shift(parseUnits(
+        params.unshift(parseUnits(
           toFixed(amount, token.tokenDecimals),
           token.tokenDecimals
         ),)

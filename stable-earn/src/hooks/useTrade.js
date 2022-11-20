@@ -24,13 +24,15 @@ export default function useTrade(
       type,
       onReceipt) => {
       let priceLimit = type === "invest" ? 0 : 400
-      const params = [
-        parseUnits(
-          toFixed(amount, token.tokenDecimals),
-          token.tokenDecimals
-        ),
+      let params = [
         parseUnits(toFixed(priceLimit), 18)
       ]
+      if(type === "invest"){
+        params.shift(parseUnits(
+          toFixed(amount, token.tokenDecimals),
+          token.tokenDecimals
+        ),)
+      }
       const [transaction, goon] = await getTransaction(
         type,
         params,

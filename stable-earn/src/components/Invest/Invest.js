@@ -14,7 +14,6 @@ export default function Invest() {
   const { account, connect } = useWallet()
   const token = useToken()
   const [isApprove, setIsApprove] = useState(false)
-  const [info] = useInfo()
   const [isApproved, approve] = useApprove(token.tokenAddress, token.tokenName)
   const trade = useTrade()
   const click = useCallback(async () => {
@@ -38,7 +37,6 @@ export default function Invest() {
       }
     })
   }, [approve])
-
   return <div className="invest-box">
     <div className="balance-box">
       <div className='balance-box-amount'>
@@ -76,7 +74,7 @@ export default function Invest() {
     <div className={classNames("btn", { "btn-two": account && (!isApproved || isApprove) })}>
       {account && isApproved && !isApprove && <Button disabled={value} label="INVEST" onClick={click} fontSize={18} className="invest-btn" width="100%" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />}
       {account && (!isApproved || isApprove) && <>
-        <Button label="APPOVE" fontSize={18} tip=" " tipIcon="success-btn" onClick={clickApprove} className="approve-btn" width="272" height="72" bgColor="#38CB89" radius="14" borderSize={0} hoverBgColor="#38CB89" fontColor="#FFFFFF" />
+        <Button label="APPOVE" fontSize={18} tip=" " tipIcon={isApprove ?"success-btn":""} onClick={clickApprove} className="approve-btn" width="272" height="72" bgColor="#38CB89" radius="14" borderSize={0} hoverBgColor="#38CB89" fontColor="#FFFFFF" />
         <Button label="START INVEST" fontSize={18} onClick={click} className="start-btn" width="272" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />
       </>}
       {!account && <Button label="CONNECT WALLET" onClick={() => connect()} fontSize={18} width="100%" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />}

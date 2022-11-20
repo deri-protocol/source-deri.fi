@@ -1,13 +1,22 @@
 
 import Cookies from 'js-cookie'
 import { COOKIE_DERI_DOMAIN } from './Constants'
-import { BigNumber as bg } from 'bignumber.js';
-import { BigNumber } from 'ethers'
+import { BigNumber } from 'bignumber.js';
 import { STABLE_EARN_CONTRACT, TOKEN } from '../abi/contractAddress';
 
 export function setCookie(name, value, expires = 365, domain = COOKIE_DERI_DOMAIN, path = '/') {
   if (name && value) {
     Cookies.set(name, value, { expires: expires, domain: domain, path: path })
+  }
+}
+
+export function bg(value, base){
+  if (base === 0) {
+    return new BigNumber(value);
+  } else if (base > 0) {
+    return new BigNumber(value).times(new BigNumber("1" + "0".repeat(base)));
+  } else {
+    return new BigNumber(value).div(new BigNumber("1" + "0".repeat(-base)));
   }
 }
 

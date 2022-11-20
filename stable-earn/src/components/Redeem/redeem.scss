@@ -95,6 +95,11 @@
   .btn{
     margin-top: 40px;
   }
+  .btn-two{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 @media only screen and (max-width : 1024px){
   .redeem-box {
@@ -149,5 +154,6 @@
         font-size: 14px;
       }
     }
+    
   }
 }

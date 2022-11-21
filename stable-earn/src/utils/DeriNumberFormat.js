@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
-import ReactDOM from 'react-dom'
 import NumberFormat from 'react-number-format'
-import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { toPlainString, countDecimal} from './utils';
 import { BigNumber as bg} from 'bignumber.js';
+bg.config({
+  ROUNDING_MODE: 1
+})
 const Wrapper = styled(NumberFormat)`
   width : ${props => props.width}px;
 `

@@ -27,10 +27,10 @@ export default function useToken(){
     loadBalance()
   },[loadBalance])
 
-  return {
+  return [{
     tokenAddress:tokenAddress,
     tokenName:tokenName,
     walletBalance:walletBalance,
     tokenDecimals:tokenDecimals
-  }
+  },loadBalance]
 }

@@ -29,7 +29,6 @@ export default function useTransaction(contractAddress, ABI) {
       let transactionResponse
       try {
         transactionResponse = await contractCall(method, params, opts);
-
       } catch (e) {
         if (e.code === 4001 || e.code === "ACTION_REJECTED") {
           return [transactionResponse, false]
@@ -40,6 +39,7 @@ export default function useTransaction(contractAddress, ABI) {
             reason = 'Unknown Error ,please check your rpc'
             goon = false
           }
+          Emitter.emit(EVENT_TRANS_END, { ...message, context: { success: false, hash: null, error: reason} })
           return [transactionResponse, goon]
         }
       }

@@ -1,17 +1,16 @@
 import './operate.scss'
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import Invest from '../Invest/Invest';
 import Redeem from '../Redeem/Redeem';
-import { Button, Icon } from '@deri/eco-common';
+import { Button, Icon, UnderlineText } from '@deri/eco-common';
 import DeriNumberFormat from '../../utils/DeriNumberFormat';
 import useToken from '../../hooks/useToken';
 import useInfo from '../../hooks/useInfo';
 export default function Operate() {
   const [operate, setOperate] = useState("invest")
-  const token = useToken()
+  const [token] = useToken()
   const [info] = useInfo()
-  console.log(info)
   return (
     <div className='stable-earn-info-operate'>
       <div className='invest-redeem-box'>
@@ -34,7 +33,7 @@ export default function Operate() {
           Stats
         </div>
         <div className='stats-box-apy'>
-          <DeriNumberFormat value={8} suffix="%" decimalScale={0} />
+          <DeriNumberFormat value={4.83} suffix="%" decimalScale={2} />
           <span>Projected APY</span>
         </div>
         <div className='stats-box-info'>
@@ -65,7 +64,9 @@ export default function Operate() {
           <div className='info-box'>
             <div className='fees'>
               Fees
-              <Icon token='fee-hint' />
+              <UnderlineText tip="Stable Earn does not charge any fees.">
+                <Icon token='fee-hint' />
+              </UnderlineText>
             </div>
             <span>
               0

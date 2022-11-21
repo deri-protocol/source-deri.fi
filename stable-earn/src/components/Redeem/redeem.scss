@@ -31,6 +31,42 @@
 
   }
 
+  &-days-countdown {
+    &-describe {
+      width: 382px;
+      background: rgba(55, 125, 255, 0.1);
+      border: 0.822633px solid rgba(55, 125, 255, 0.2);
+      border-radius: 8px;
+      font-weight: 400;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 32px;
+      color: #377DFF;
+
+      img {
+        margin-left: 4px;
+      }
+    }
+
+    .time-slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 8px;
+      background: rgba(55, 125, 255, 0.1);
+      border: 0.822633px solid rgba(55, 125, 255, 0.2);
+      margin-top: 21px;
+      &-box {
+        max-width:100%;
+        height: 8px;
+        background: #377DFF;
+        border-radius: 8px;
+        border: 0.822633px solid rgba(55, 125, 255, 0.2);
+      }
+    }
+  }
+
   &-info {
     display: flex;
     justify-content: space-between;
@@ -39,7 +75,7 @@
     margin-top: 46px;
 
     &-value {
-      width: 273px;
+      width: 100%;
       height: 100%;
       opacity: 0.7;
       border: 0.822633px solid rgba(119, 126, 144, .7);
@@ -74,66 +110,99 @@
       }
     }
   }
+  .timedown{
+    margin-top: 32px;
+  }
+
   .open-preview {
     margin-top: 25px;
     font-weight: 600;
     font-size: 16px;
+
     .prop {
       color: #777E90;
       display: flex;
       justify-content: space-between;
-      span{
+
+      span {
         display: flex;
         align-items: center;
         color: #040415;
-        img{
+
+        img {
           margin-left: 4px;
         }
       }
     }
   }
-  .btn{
+
+  .btn {
     margin-top: 40px;
   }
-  .btn-two{
+
+  .btn-two {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+
+  .redeem-btn.disabled,
+  .start-btn.disabled {
+    background-color: rgba(56, 203, 133, 0.2);
+    color: rgba(119, 126, 144, 0.5);
+  }
 }
-@media only screen and (max-width : 1024px){
+
+@media only screen and (max-width : 1024px) {
   .redeem-box {
     width: 290px;
     margin-top: 22px;
-    &-days{
-    height: 40px;
+
+    &-days-countdown{
       &-describe{
+        width: 232px;
+        font-size: 10px;
+        padding: 0 12px;
+      }
+    }
+
+    &-days {
+      height: 40px;
+
+      &-describe {
         width: 232px;
         font-size: 10px;
         padding: 7px 7px;
       }
+
       &-off-on {
-        img{
+        img {
           width: 12px;
           height: 15px;
           margin-right: 4px;
         }
       }
     }
-    &-info{
+
+    &-info {
       height: 96px;
-      margin-top: 21px; 
-      &-value{
-        width: 141px;
+      margin-top: 21px;
+
+      &-value {
+        width: 100%;
         padding: 10px 7px 24px 12px;
-        &-label{
+
+        &-label {
           font-size: 12px;
         }
-        &-text{
+
+        &-text {
           font-size: 22px;
-          .redeem-token{
+
+          .redeem-token {
             font-size: 14px;
-            img{
+
+            img {
               width: 14px;
               height: 14px;
               margin-right: 4px;
@@ -142,18 +211,21 @@
         }
       }
     }
-    .open-preview{
+
+    .open-preview {
       margin-top: 14px;
       font-size: 12px;
     }
-    .btn{
+
+    .btn {
       margin-top: 20px;
-      .redeem-btn{
+
+      .redeem-btn {
         height: 40px;
         border-radius: 6px;
         font-size: 14px;
       }
     }
-    
+
   }
 }

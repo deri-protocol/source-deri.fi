@@ -115,9 +115,9 @@ export default function TransactionState() {
             <div className='message-text'>
               {messageInfo.content}
             </div>
-            <div className={messageInfo.type === 'success' ? 'link' : messageInfo.type === "error" ? 'link error' : "link processing"}>
+           {messageInfo.hash &&  <div className={messageInfo.type === 'success' ? 'link' : messageInfo.type === "error" ? 'link error' : "link processing"}>
               <a rel='noreferrer' target='_blank' href={messageInfo.link}>Click here to view transaction {formatAddress(messageInfo.hash)}</a>
-            </div>
+            </div>}
           </div>
 
         </div>

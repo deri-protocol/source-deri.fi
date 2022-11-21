@@ -1,27 +1,63 @@
-import { Button, Icon } from '@deri/eco-common'
+import { Button, Icon, UnderlineText } from '@deri/eco-common'
 import classNames from 'classnames'
+import { set } from 'nprogress'
+import { useEffect } from 'react'
 import { useCallback, useState } from 'react'
 import { useWallet } from 'use-wallet'
 import useApprove from '../../hooks/useApprove'
 import useInfo from '../../hooks/useInfo'
+import useToken from '../../hooks/useToken'
 import useTrade from '../../hooks/useTrade'
 import { FLP_TOKEN_ADDRESS } from '../../utils/Constants'
 import DeriNumberFormat from '../../utils/DeriNumberFormat'
+import { bg } from '../../utils/utils'
 import Toggle from '../Toggle/Toggle'
 import './redeem.scss'
 export default function Redeem() {
   const [daysOff, setDaysOff] = useState(true)
   const [isApprove, setIsApprove] = useState(false)
+  const [isRemdeem, setIsRemdeem] = useState(false)
+  const [fee, setFee] = useState(0)
+  const [countime, setCountime] = useState("")
+  const [disable, setDisable] = useState(true)
+  const [endTimeProportion, setEndTimeProportion] = useState("")
+  const [isTime, setIsTime] = useState(false)
+  const [token, loadBalance] = useToken()
   const { account, connect } = useWallet()
-  const [,accountInfo] = useInfo()
+  const [, accountInfo, load] = useInfo()
   const trade = useTrade()
   const [isApproved, approve] = useApprove(FLP_TOKEN_ADDRESS, "FLP")
   const click = useCallback(async () => {
-    let type = daysOff ? "instantRedeem" : "claimRedeem"
-    await trade(null, 0, type, () => {
-
+    let type = daysOff ? isTime ? "claimRedeem" : "requestRedeem" : "instantRedeem"
+    let message = daysOff ? {
+      title: {
+        processing: `Redeem Request Processing`,
+        success: `Redeem Request Executed`,
+        error: `Redeem Request Failed`,
+      },
+      content: {
+        success: `Redeem all your fund shares`,
+        error: "Transaction Failed"
+      }
+    } : {
+      title: {
+        processing: `Instant Claim Processing`,
+        success: `Instant Claim Executed`,
+        error: `Instant Claim Failed`,
+      },
+      content: {
+        success: `Instant claimed ${accountInfo["estValue"]} ${token.tokenName}`,
+        error: "Transaction Failed"
+      }
+    }
+    await trade(null, 0, type, message, (receipt) => {
+      if (receipt) {
+        loadBalance()
+        setIsRemdeem(true)
+        load()
+      }
     })
-  }, [daysOff, trade])
+  }, [accountInfo, daysOff, isTime, load, loadBalance, token.tokenName, trade])
   const clickApprove = useCallback(async () => {
     await approve((receipt) => {
       if (receipt) {
@@ -30,9 +66,68 @@ export default function Redeem() {
       }
     })
   }, [approve])
-  console.log(accountInfo)
+
+  useEffect(() => {
+    if (accountInfo.timestamp) {
+      let timestamp = new Date()
+      let daysTime = 86400 * 15
+      let now = timestamp.getTime() / 1000
+      let end = accountInfo.timestamp
+      let start = accountInfo.timestamp - daysTime
+      if (now > end) {
+        setIsTime(true)
+      } else {
+        setIsTime(false)
+      }
+      let leftTime = (end - now)
+      if (leftTime > 0) {
+
+        let proportion = ((now - start) / (daysTime)) * 100
+        let d = Math.floor(leftTime / 60 / 60 / 24);
+        let h = Math.floor(leftTime / 60 / 60 % 24);
+        let timeText = `${d} days ${h} hours`
+        setCountime(timeText)
+        setEndTimeProportion(proportion)
+      }
+
+    }
+
+  }, [accountInfo.timestamp])
+
+  useEffect(() => {
+    if (accountInfo.estValue) {
+      let fee = 0
+      if (accountInfo.timestamp) {
+        fee = bg(accountInfo.estValue).times(0.9).times(0.002 + 0.002).toNumber()
+        setFee(fee)
+      } else if (!daysOff) {
+        fee = bg(accountInfo.estValue).times(0.9).times(0.004 + 0.002).toNumber()
+        setFee(fee)
+      } else {
+        setFee(fee)
+      }
+    }
+  }, [accountInfo.estValue, accountInfo.timestamp, daysOff])
+
+  useEffect(() => {
+    if (isApproved) {
+      if (accountInfo.estValue) {
+        if (accountInfo.timestamp && isTime) {
+          setDisable(false)
+        } else if (!accountInfo.timestamp) {
+          setDisable(true)
+        } else {
+          setDisable(true)
+        }
+      } else {
+        setDisable(true)
+      }
+    } else {
+      setDisable(true)
+    }
+  }, [accountInfo.estValue, accountInfo.timestamp, isApproved, isTime])
   return <div className="redeem-box">
-    <div className='redeem-box-days'>
+    {!accountInfo.timestamp ? <div className='redeem-box-days'>
       <div className='redeem-box-days-describe'>
         Redeem funds will be available for withdrawal in 7-15 days
       </div>
@@ -40,8 +135,15 @@ export default function Redeem() {
         <Icon token={daysOff ? "redeem-off" : "redeem-on"} />
         <Toggle isOff={daysOff} onClick={setDaysOff} />
       </div>
-    </div>
-    <div className='redeem-box-info'>
+    </div> : <div className='redeem-box-days-countdown'>
+      <div className='redeem-box-days-countdown-describe'>
+        Your Fund will be withdrawable in {countime} <Icon token="time-hint" />
+      </div>
+      <div className='time-slider'>
+        <div className='time-slider-box' style={{ width: `${endTimeProportion}%` }}></div>
+      </div>
+    </div>}
+    <div className={classNames('redeem-box-info', { timedown: accountInfo.timestamp })}>
       <div className='redeem-box-info-value'>
         <div className='redeem-box-info-value-label'>
           Est. Value
@@ -56,7 +158,7 @@ export default function Redeem() {
           </div>
         </div>
       </div>
-      <div className='redeem-box-info-value'>
+      {/* <div className='redeem-box-info-value'>
         <div className='redeem-box-info-value-label'>
           30-day Profit
         </div>
@@ -69,21 +171,28 @@ export default function Redeem() {
             BUSD
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
     <div className='open-preview'>
       <div className="prop">
-        Redeem cost
         <span>
-          <DeriNumberFormat value={10} prefix="$" decimalScale={2} />
+          Redeem cost
+          <UnderlineText tip={
+            daysOff ? !accountInfo.timestamp ? " no redemption fee required" : "est. transaction cost of swapping BNB into BUSD on Apeswap and closing BNBUSD postion on Deri Protocol." : " est. transaction cost of swapping BNBX into BUSD on Apeswap and closing BNBUSD postion on Deri Protocol."
+          }>
+            <Icon token="fee-hint" />
+          </UnderlineText>
+        </span>
+        <span>
+          <DeriNumberFormat value={fee} prefix="$" decimalScale={2} />
         </span>
       </div>
     </div>
     <div className={classNames("btn", { "btn-two": account && (!isApproved || isApprove) })}>
-      {account && isApproved && !isApprove && <Button label="REDEEM" onClick={click} fontSize={18} className="redeem-btn" width="100%" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />}
+      {account && isApproved && !isApprove && <Button label="REDEEM" disabled={disable} onClick={click} fontSize={18} className="redeem-btn" width="100%" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />}
       {account && (!isApproved || isApprove) && <>
         <Button label="APPOVE" fontSize={18} tip=" " tipIcon={isApprove ? "success-btn" : ""} onClick={clickApprove} className="approve-btn" width="272" height="72" bgColor="#38CB89" radius="14" borderSize={0} hoverBgColor="#38CB89" fontColor="#FFFFFF" />
-        <Button label="START REDEEM" fontSize={18} onClick={click} className="start-btn" width="272" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />
+        <Button label="START REDEEM" fontSize={18} disabled={disable} tip=" " tipIcon={isRemdeem ? "success-btn" : ""} onClick={click} className="start-btn" width="272" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />
       </>}
       {!account && <Button label="CONNECT WALLET" onClick={() => connect()} fontSize={18} width="100%" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />}
     </div>

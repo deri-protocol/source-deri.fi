@@ -6,9 +6,7 @@ import Erc20 from '../abi/erc20.json';
 import { BigNumber } from 'ethers';
 import { formatEther } from 'ethers/lib/utils';
 // import { retry } from '../lib/retry';
-import { DEFAULT_RETRY_OPTIONS, EVENT_TRANS_BEGIN, EVENT_TRANS_END } from '../utils/Constants';
 import useTransaction from './useTransaction';
-import Emitter from '../utils/Emitter';
 export default function useApprove(tokenAddress, tokenName) {
   const [contract,getTransaction] = useTransaction(tokenAddress, Erc20);
   const [allowance, setAllowance] = useState(0)
@@ -21,11 +19,6 @@ export default function useApprove(tokenAddress, tokenName) {
         const allowance = await contract.allowance(account, spender)
         const amount = formatEther(BigNumber.from(allowance._hex))
         setAllowance(Number(amount))
-        // const { promise } = retry(() => contract.allowance(account, spender), DEFAULT_RETRY_OPTIONS)
-        // promise.then((allowance) => {
-        //   const amount = formatEther(BigNumber.from(allowance._hex))
-        //   setAllowance(Number(amount))
-        // })
       }
     },
     [account, contract, spender],
@@ -33,7 +26,7 @@ export default function useApprove(tokenAddress, tokenName) {
   useEffect(() => {
     loadAllowance();
   }, [loadAllowance])
-  const approve = useMemo((onReceipt) => {
+  const approve = useMemo(() => {
     const transactionTitle = {
       processing: "Approve Processing",
       success: "Approve Executed",
@@ -43,7 +36,7 @@ export default function useApprove(tokenAddress, tokenName) {
       success: `Approve ${tokenName}`,
       error: "Transaction Failed"
     }
-    return async () => {
+    return async (onReceipt) => {
       if (allowance > 0) {
         throw new Error(`current Token :${tokenAddress} is already approved`)
       }

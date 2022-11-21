@@ -1,6 +1,33 @@
 .invest-box {
   width: 560px;
   margin-top: 74px;
+
+  .invest-disable-box {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      margin-bottom: 35px;
+    }
+
+    &-title {
+      color: #000000;
+      font-weight: 700;
+      font-size: 24px;
+      margin-bottom: 11px;
+    }
+
+    &-text {
+      font-weight: 400;
+      font-size: 16px;
+      margin-bottom: 21px;
+      color: #777E90;
+    }
+  }
+
   .balance-box {
     width: 100%;
     height: 140px;
@@ -18,6 +45,7 @@
       flex-direction: column;
       justify-content: space-between;
       height: 100%;
+
       &-value {
         &-input {
           width: 100%;
@@ -38,6 +66,7 @@
       align-items: flex-end;
       justify-content: space-between;
       height: 100%;
+
       &-balance {
         display: flex;
         align-items: center;
@@ -64,10 +93,12 @@
         background: #377DFF;
         color: #FFFFFF;
       }
-      .isMaxBalance{
+
+      .isMaxBalance {
         background: #377DFF;
         color: #FFFFFF;
       }
+
       &-name {
         display: flex;
         align-items: center;
@@ -86,71 +117,107 @@
     margin-top: 36px;
     font-weight: 600;
     font-size: 16px;
+
     .prop {
       color: #777E90;
       display: flex;
       justify-content: space-between;
-      span{
+
+      span {
         display: flex;
         align-items: center;
-        img{
+
+        img {
           margin-left: 4px;
         }
       }
-      .fee-value{
+
+      .fee-value {
         color: #040415;
       }
     }
   }
-  .btn{
+
+  .btn {
     width: 100%;
     margin-top: 79px;
   }
-  .btn-two{
+
+  .btn-two {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+
+  .invest-btn.disabled,
+  .start-btn.disabled {
+    background-color: rgba(56, 203, 133, 0.2);
+    color: rgba(119, 126, 144, 0.5);
+  }
+
 }
-@media only screen and (max-width : 1024px){
-  .invest-box{
+
+@media only screen and (max-width : 1024px) {
+  .invest-box {
     width: 290px;
     margin-top: 37px;
-    .balance-box{
+    .invest-disable-box{
+      img{
+        width: 40px;
+        height: 40px;
+        margin-bottom: 21px;
+      }
+      &-title{
+        font-size: 14px;
+      }
+      &-text{
+        font-size: 12px;
+        text-align: center;
+        margin-bottom: 0;
+      }
+    }
+    .balance-box {
       height: 96px;
       font-size: 12px;
       padding: 12px;
-      &-amount{
-        &-label{
+
+      &-amount {
+        &-label {
           height: 26px;
           line-height: 26px;
         }
-        &-value{
-          input{
+
+        &-value {
+          input {
             // width: 160px;
             font-size: 22px;
             height: 20px;
           }
         }
       }
-      &-token{
-        &-name{
+
+      &-token {
+        &-name {
           font-size: 22px;
-          img{
+
+          img {
             width: 20px;
             height: 20px;
           }
         }
       }
-      
+
     }
-    .open-preview{
+
+    .open-preview {
       margin-top: 30px;
       font-size: 12px;
     }
-    .btn{
+
+    .btn {
       margin-top: 42px;
-      .invest-btn{
+
+      .invest-btn {
         height: 40px;
         border-radius: 6px;
         font-size: 12px;

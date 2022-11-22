@@ -29,7 +29,17 @@ export default function Redeem() {
   const [isApproved, approve] = useApprove(FLP_TOKEN_ADDRESS, "FLP")
   const click = useCallback(async () => {
     let type = daysOff ? isTime ? "claimRedeem" : "requestRedeem" : "instantRedeem"
-    let message = daysOff ? {
+    let message = daysOff ? isTime ? {
+      title: {
+        processing: `Claim Processing`,
+        success: `Claim Executed`,
+        error: `Claim Failed`,
+      },
+      content: {
+        success: `Claimed ${accountInfo["estValue"]} ${token.tokenName}`,
+        error: "Transaction Failed"
+      }
+    } : {
       title: {
         processing: `Redeem Request Processing`,
         success: `Redeem Request Executed`,
@@ -115,7 +125,7 @@ export default function Redeem() {
         if (accountInfo.timestamp && isTime) {
           setDisable(false)
         } else if (!accountInfo.timestamp) {
-          setDisable(true)
+          setDisable(false)
         } else {
           setDisable(true)
         }

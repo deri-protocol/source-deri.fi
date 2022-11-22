@@ -92,6 +92,7 @@
       padding-left: 66px;
 
       .describe-left-text-box {
+        margin-right: 30px;
         &-title {
           font-weight: 700;
           font-size: 24px;
@@ -118,6 +119,9 @@
           }
         }
 
+      }
+      .describe-illustration{
+        margin-right: 30px;
       }
     }
 
@@ -218,7 +222,12 @@
         top: -220px;
         flex-direction: column-reverse;
         padding: 16px 22px;
-
+        .describe-left-text-box{
+          margin-right: 0;
+        }
+        .describe-illustration{
+          margin-right: 0;
+        }
         .describe-left-text-box-title {
           margin-bottom: 7px;
         }

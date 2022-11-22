@@ -3,11 +3,7 @@ import { Icon } from '@deri/eco-common';
 import Operate from '../components/Operate/Operate';
 import { useState } from 'react';
 import Header from '../components/Header/Header';
-export default function DipHunter({ lang, getLang, actions }) {
-  // const switchMenu = () => {
-  //   const status = !actions.getGlobalState('menuStatus')
-  //   actions.setGlobalState({ 'menuStatus': status })
-  // }
+export default function StableEarn({ lang, getLang, actions }) {
   const faqList = [
     { label: "How Stable Earn works?", answer: "Stable Earn runs a BNB POS staking fund, with its purpose to help users earn BNB staking yield with their BUSD investment. 90% of the BUSD invested will be swapped into BNB which is staked to Stader for POS yield. That is, 90% of the capital is participating in the Proof-of-Staking of the BNB Smart Chain (BSC). The rest 10% will be used as margin on Deri Protocol to short BNB perps. This combination ensures that the net value of the fund is not affected by BNB price fluctuations. " },
     { label: "What are the fees?", answer: "Stable Earn does not charge any fees.", answerTwo: " However, when users invest or redeem, they will incur transaction fees, including fees for BNB-BUSD swapping and trading BNB perps. These fees are charged for the use of these platform services and are not controlled by Stable Earn." },
@@ -41,7 +37,7 @@ export default function DipHunter({ lang, getLang, actions }) {
               <div className='stader-logo-text'>
                 X
                 <Icon token="stader" />
-                DERI
+                Stader
               </div>
             </div>
           </div>
@@ -104,6 +100,7 @@ function FaqInfo({ item, index }) {
         <div>
           {item.answer}
         </div>
+        <br></br>
         <div>
           {item.answerTwo && item.answerTwo}
         </div>

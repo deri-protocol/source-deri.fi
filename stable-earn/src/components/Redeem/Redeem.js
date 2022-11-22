@@ -16,7 +16,6 @@ import './redeem.scss'
 export default function Redeem() {
   const [daysOff, setDaysOff] = useState(true)
   const [isApprove, setIsApprove] = useState(false)
-  const [isRemdeem, setIsRemdeem] = useState(false)
   const [fee, setFee] = useState(0)
   const [countime, setCountime] = useState("")
   const [disable, setDisable] = useState(true)
@@ -63,7 +62,7 @@ export default function Redeem() {
     await trade(null, 0, type, message, (receipt) => {
       if (receipt) {
         loadBalance()
-        setIsRemdeem(true)
+        setIsApprove(false)
         load()
       }
     })
@@ -139,12 +138,14 @@ export default function Redeem() {
   return <div className="redeem-box">
     {!accountInfo.timestamp ? <div className='redeem-box-days'>
       <div className='redeem-box-days-describe'>
-        Redeem funds will be available for withdrawal in 7-15 days
+        {daysOff ? "Redeem funds will be available for withdrawal in 7-15 days":"Instant exchange BNBx to BNB on Apeswap. To know more refer our FAQs."}
       </div>
-      <div className='redeem-box-days-off-on'>
-        <Icon token={daysOff ? "redeem-off" : "redeem-on"} />
-        <Toggle isOff={daysOff} onClick={setDaysOff} />
-      </div>
+      <UnderlineText tip="Instant Redeem">
+        <div className='redeem-box-days-off-on'>
+          <Icon token={daysOff ? "redeem-off" : "redeem-on"} />
+          <Toggle isOff={daysOff} onClick={setDaysOff} />
+        </div>
+      </UnderlineText>
     </div> : <div className='redeem-box-days-countdown'>
       <div className='redeem-box-days-countdown-describe'>
         Your Fund will be withdrawable in {countime} <Icon token="time-hint" />
@@ -201,8 +202,8 @@ export default function Redeem() {
     <div className={classNames("btn", { "btn-two": account && (!isApproved || isApprove) })}>
       {account && isApproved && !isApprove && <Button label="REDEEM" disabled={disable} onClick={click} fontSize={18} className="redeem-btn" width="100%" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />}
       {account && (!isApproved || isApprove) && <>
-        <Button label="APPOVE" fontSize={18} tip=" " tipIcon={isApprove ? "success-btn" : ""} onClick={clickApprove} className="approve-btn" width="272" height="72" bgColor="#38CB89" radius="14" borderSize={0} hoverBgColor="#38CB89" fontColor="#FFFFFF" />
-        <Button label="START REDEEM" fontSize={18} disabled={disable} tip=" " tipIcon={isRemdeem ? "success-btn" : ""} onClick={click} className="start-btn" width="272" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />
+        <Button label="APPOVE" fontSize={18} tip=" " disabled={isApprove} tipIcon={isApprove ? "success-btn" : ""} onClick={clickApprove} className="approve-btn" width="272" height="72" bgColor="#38CB89" radius="14" borderSize={0} hoverBgColor="#38CB89" fontColor="#FFFFFF" />
+        <Button label="START REDEEM" fontSize={18} disabled={disable} onClick={click} className="start-btn" width="272" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />
       </>}
       {!account && <Button label="CONNECT WALLET" onClick={() => connect()} fontSize={18} width="100%" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />}
     </div>

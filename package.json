@@ -15,6 +15,7 @@
     "install:bet-it": "cd bet-it && yarn install --ignore-engines",
     "install:dip-hunter": "cd dip-hunter && yarn install --ignore-engines",
     "install:deri-lite": "cd deri-lite && yarn install --ignore-engines",
+    "install:stable-eart": "cd stable-eart && yarn install --ignore-engines",
     "reinstall:common": "concurrently 'npm run reinstall:common:*'",
     "reinstall:common:main": "cd main && yarn remove @deri/eco-common && yarn add file:../common",
     "reinstall:common:bet-it": "cd bet-it && yarn remove @deri/eco-common && yarn add file:../common",
@@ -26,6 +27,7 @@
     "build:bet-it": "mkdir -p build/bet-it  && cd bet-it && npm run build && mv ./build/* ../build/bet-it",
     "build:dip-hunter": "mkdir -p build/dip-hunter  && cd dip-hunter && npm run build && mv ./build/* ../build/dip-hunter",
     "build:deri-lite": "mkdir -p build/deri-lite  && cd deri-lite && npm run build && mv ./build/* ../build/deri-lite",
+    "build:stable-eart": "mkdir -p build/stable-eart  && cd stable-eart && npm run build && mv ./build/* ../build/stable-eart",
     "build:main": "cd main && npm run build && mv ./build/* ../build/ && cp ../public/favicon.ico ../build/"
   },
   "devDependencies": {

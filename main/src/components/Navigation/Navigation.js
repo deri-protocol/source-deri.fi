@@ -54,10 +54,13 @@ export default function Navigation({ collect, lang, statusCallback, switchMenu,c
             </span>
           ))}
           
-          <a target="_blank" href="https://deri.io/">
+          <a target="_blank" href="https://deri.io/" rel="noreferrer">
             <div className='deri-io'>DERI.IO</div>
           </a>
-          <a target="_blank" href="https://forms.gle/mtTqFW54KNM1wJ2f7">
+          <a target="_blank" href="https://lite.deri.io/" rel="noreferrer">
+            <div className='deri-io lite-deri-io'>LITE.DERI.IO</div>
+          </a>
+          <a target="_blank" href="https://forms.gle/mtTqFW54KNM1wJ2f7" rel="noreferrer">
             <Icon token="add-link" className="add-link" />
           </a>
         </div>

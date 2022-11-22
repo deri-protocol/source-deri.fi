@@ -7,13 +7,13 @@ const microApps = [
     activeRule: '#/bet-it',
     container: '#subapp-viewport'
   },
-  {
-    name: 'deri-lite',
-    displayName : 'deri.lite',
-    entry: process.env.REACT_APP_DERI_LITE,
-    activeRule: '#/deri-lite',
-    container: '#subapp-viewport'
-  },
+  // {
+  //   name: 'deri-lite',
+  //   displayName : 'deri.lite',
+  //   entry: process.env.REACT_APP_DERI_LITE,
+  //   activeRule: '#/deri-lite',
+  //   container: '#subapp-viewport'
+  // },
   {
     name: 'dip-hunter',
     displayName : 'Dip Hunter',

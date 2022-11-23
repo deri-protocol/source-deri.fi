@@ -11,6 +11,7 @@ import { hide } from "react-functional-modal";
 export function Chart(wallet) {
   const [data, setData] = useState(null)
   const [day, setDay] = useState("all")
+  const [Ydomain, setYdomain] = useState([0, 'auto'])
   const load = useCallback(async () => {
     let query = gql`
       query($fromTimestamp:Int!,$chainId:Int!,$isDeposit:Boolean){
@@ -45,8 +46,23 @@ export function Chart(wallet) {
     let data = await graph_request_test(query, variables);
     console.log("stableEarnValues", data)
     if (data.stableEarnValues.length) {
-      let list = data.stableEarnValues;
-      setData(list.map(d => ({ time: dateFormat(new Date(d.timestamp * 1000), 'UTC:mm.dd'), value: Number(d.shareValue) })));
+      let list = [];
+      let i = 0
+      while (i < data.stableEarnValues.length) {
+        list.push(data.stableEarnValues[i])
+        i += 12
+      }
+      console.log(list)
+      // let min = Math.min.apply(Math, list.map(function (o) {
+      //   return o.shareValue.toFixed(2)
+      // }
+      // ))
+      // let max = Math.max.apply(Math, list.map(function (o) {
+      //   return o.shareValue.toFixed(2)
+      // }
+      // ))
+      // setYdomain([+(min - 0.0001).toFixed(2), +(max + 0.0001).toFixed(2)])
+      setData(list.map(d => ({ time: dateFormat(new Date(d.timestamp * 1000), 'UTC:mm.dd'), value: Number(d.shareValue),timestamp:d.timestamp })));
     }
   }, [day, wallet.account, wallet.chainId])
   const CustomizedDot = () => {
@@ -74,7 +90,7 @@ export function Chart(wallet) {
         <LineChart data={data} w>
           <Tooltip cursor={true} active={true} content={<Tip />} />
           <XAxis dataKey="time" tick={{ fill: '#B0B7C3', fontSize: '14' }} tickLine={false} axisLine={false} />
-          <YAxis dataKey="value" tick={{ fill: '#B0B7C3', fontSize: '14' }}  tickLine={false} axisLine={false}  />
+          <YAxis dataKey="value" domain={Ydomain} tick={{ fill: '#B0B7C3', fontSize: '14' }} tickLine={false} axisLine={false} />
           <Line strokeWidth={4} dot={<CustomizedDot />} type="monotone" dataKey="value" stroke="#377DFF" activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>

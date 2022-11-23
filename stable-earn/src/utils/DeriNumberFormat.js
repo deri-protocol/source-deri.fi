@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import NumberFormat from 'react-number-format'
 import styled from 'styled-components';
 import { toPlainString, countDecimal} from './utils';

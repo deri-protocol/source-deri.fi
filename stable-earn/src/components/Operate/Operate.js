@@ -15,14 +15,14 @@ export default function Operate() {
   const [token] = useToken()
   const [info] = useInfo()
   const wallet = useWallet()
-  const openChart = ()=>{
-    show(<Chart wallet={wallet} />,{
+  const openChart = () => {
+    show(<Chart wallet={wallet} />, {
       key: "chart",
-        fading: true,
-        style: {
-          background: "rgba(0, 0, 0, 0.4)",
-          zIndex: 2,
-        }
+      fading: true,
+      style: {
+        background: "rgba(0, 0, 0, 0.4)",
+        zIndex: 2,
+      }
     })
   }
   return (
@@ -38,7 +38,8 @@ export default function Operate() {
           </div>
         </div>
         <div className='operate-info-box'>
-          {operate === 'invest' ? <Invest /> : <Redeem />}
+          <div style={operate === 'invest' ? { display: "block" } : { display: "none" }}><Invest /></div>
+          <div style={operate === 'redeem' ? { display: "block" } : { display: "none" }}><Redeem /></div>
         </div>
       </div>
       <div className='stats-box'>

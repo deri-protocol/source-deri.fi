@@ -90,7 +90,6 @@ export default function Redeem() {
       }
       let leftTime = (end - now)
       if (leftTime > 0) {
-
         let proportion = ((now - start) / (daysTime)) * 100
         let d = Math.floor(leftTime / 60 / 60 / 24);
         let h = Math.floor(leftTime / 60 / 60 % 24);
@@ -138,7 +137,7 @@ export default function Redeem() {
   return <div className="redeem-box">
     {!accountInfo.timestamp ? <div className='redeem-box-days'>
       <div className='redeem-box-days-describe'>
-        {daysOff ? "Redeem funds will be available for withdrawal in 7-15 days":"Instant exchange BNBx to BNB on Apeswap. To know more refer our FAQs."}
+        {daysOff ? "Redeem funds will be available for withdrawal in 7-15 days" : "Instant exchange BNBx to BNB on Apeswap. To know more refer our FAQs."}
       </div>
       <UnderlineText tip="Instant Redeem">
         <div className='redeem-box-days-off-on'>
@@ -185,7 +184,7 @@ export default function Redeem() {
       </div> */}
     </div>
     <div className='open-preview'>
-      <div className="prop">
+      {daysOff ? null : <div className="prop">
         <span>
           Redeem cost
           <UnderlineText tip={
@@ -197,7 +196,8 @@ export default function Redeem() {
         <span>
           <DeriNumberFormat value={fee} prefix="$" decimalScale={2} />
         </span>
-      </div>
+      </div>}
+
     </div>
     <div className={classNames("btn", { "btn-two": account && (!isApproved || isApprove) })}>
       {account && isApproved && !isApprove && <Button label="REDEEM" disabled={disable} onClick={click} fontSize={18} className="redeem-btn" width="100%" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />}

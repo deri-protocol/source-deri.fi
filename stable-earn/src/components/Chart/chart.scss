@@ -52,7 +52,7 @@
     margin-top: 59px;
 
     .chart-tip {
-      width: 114px;
+      width: 124px;
       height: 51px;
       background: #FFFFFF;
       border-radius: 8px;
@@ -70,6 +70,7 @@
       &-time{
         color: #B0B7C3;
         font-size: 11px;
+        white-space: nowrap;
       }
     }
   }

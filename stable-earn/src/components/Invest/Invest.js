@@ -60,11 +60,12 @@ export default function Invest() {
 
   useEffect(() => {
     if(isApproved){
-      if (+value && !bg(value).gt(token.walletBalance)) {
+      if (+value) {
         let fee = bg(value).times(0.9).times(0.002 + 0.002).toNumber()
         setDisabled(false)
         setFee(fee)
       } else {
+        setFee(0)
         setDisabled(true)
       }
     }else{

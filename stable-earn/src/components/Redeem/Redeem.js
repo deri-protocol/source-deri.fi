@@ -147,7 +147,7 @@ export default function Redeem() {
       </UnderlineText>
     </div> : <div className='redeem-box-days-countdown'>
       <div className='redeem-box-days-countdown-describe'>
-        Your Fund will be withdrawable in {countime} <Icon token="time-hint" />
+        <Icon token="time-hint" /> Your Fund will be withdrawable in {countime}
       </div>
       <div className='time-slider'>
         <div className='time-slider-box' style={{ width: `${endTimeProportion}%` }}></div>

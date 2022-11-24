@@ -110,7 +110,7 @@ export default function Invest() {
         <div className="prop">
           <span>
             Transaction cost
-            <UnderlineText tip="est. transaction cost of swapping BUSD into BNB on Apeswap and opening short BNBUSD on Deri Protocol.">
+            <UnderlineText width='200' tip="est. transaction cost of swapping BUSD into BNB on Apeswap and opening short BNBUSD on Deri Protocol.">
               <Icon token="fee-hint" />
             </UnderlineText>
           </span>

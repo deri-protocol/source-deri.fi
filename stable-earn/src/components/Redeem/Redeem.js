@@ -114,6 +114,8 @@ export default function Redeem() {
       } else {
         setFee(fee)
       }
+    }else{
+      setFee(0)
     }
   }, [accountInfo.estValue, accountInfo.timestamp, daysOff])
 
@@ -187,7 +189,7 @@ export default function Redeem() {
       {daysOff ? null : <div className="prop">
         <span>
           Redeem cost
-          <UnderlineText tip={
+          <UnderlineText width='200' tip={
             daysOff ? !accountInfo.timestamp ? " no redemption fee required" : "est. transaction cost of swapping BNB into BUSD on Apeswap and closing BNBUSD postion on Deri Protocol." : " est. transaction cost of swapping BNBX into BUSD on Apeswap and closing BNBUSD postion on Deri Protocol."
           }>
             <Icon token="fee-hint" />

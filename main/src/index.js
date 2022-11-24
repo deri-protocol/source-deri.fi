@@ -48,7 +48,8 @@ const current = apps.find(app => app.activeRule === window.location.hash)
 if(current) {
   setDefaultMountApp(current.activeRule)
 } else if(apps && apps.length > 0){
-  setDefaultMountApp(apps[0].activeRule)
+  const defaultEntry = apps.find(app => app.default) || apps[0]
+  setDefaultMountApp(defaultEntry.activeRule)
 }
 start({
   prefetch : false

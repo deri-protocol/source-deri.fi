@@ -26,7 +26,8 @@ const microApps = [
     displayName : 'Stable Earn',
     entry: process.env.REACT_APP_STABLE_EARN,
     activeRule: '#/stable-earn',
-    container: '#subapp-viewport'
+    container: '#subapp-viewport',
+    default : true,
   },
   // {
   //   name: 'liquidity-mining',

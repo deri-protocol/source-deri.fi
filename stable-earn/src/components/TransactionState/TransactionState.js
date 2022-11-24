@@ -56,7 +56,7 @@ export default function TransactionState() {
       }
       info["type"] = "error"
       info["title"] = res.title.error
-      info["content"] = `${res.content.error} : ${res.context.error}`
+      info["content"] = `${res.content.error} ${res.context.error}`
       info["hash"] = res.context.hash
       info["link"] = `${chain.viewUrl}/tx/${res.context.hash}`
     }

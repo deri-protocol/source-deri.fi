@@ -36,7 +36,7 @@ export default function Redeem() {
       },
       content: {
         success: `Claimed ${accountInfo["estValue"]} ${token.tokenName}`,
-        error: "Transaction Failed"
+        error: "Transaction Failed :"
       }
     } : {
       title: {
@@ -46,7 +46,7 @@ export default function Redeem() {
       },
       content: {
         success: `Redeem all your fund shares`,
-        error: "Transaction Failed"
+        error: "Transaction Failed :"
       }
     } : {
       title: {
@@ -56,7 +56,7 @@ export default function Redeem() {
       },
       content: {
         success: `Instant claimed ${accountInfo["estValue"]} ${token.tokenName}`,
-        error: "Transaction Failed"
+        error: "Transaction Failed : "
       }
     }
     await trade(null, 0, type, message, (receipt) => {

@@ -19,6 +19,7 @@ export default function Operate() {
     show(<Chart wallet={wallet} />, {
       key: "chart",
       fading: true,
+      clickOutsideToClose:true,
       style: {
         background: "rgba(0, 0, 0, 0.4)",
         zIndex: 2,

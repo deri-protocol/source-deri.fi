@@ -37,7 +37,7 @@ export default function useInfo() {
       let timestamp = BigNumber.from(waitDayInfo.startTime._hex).toNumber()
       let amount = formatUnits(BigNumber.from(flpBalance._hex), decimals);
       let estValue = timestamp ? formatUnits(BigNumber.from(waitDayInfo.share._hex), 18) : bg(shareValue).times(amount).toNumber()
-      if(timestamp){
+      if (timestamp) {
         timestamp = bg(timeDay).times(15).plus(timestamp).toNumber()
       }
       data["timestamp"] = timestamp
@@ -52,8 +52,15 @@ export default function useInfo() {
   }, [getAccountInfo, getInfo])
 
   useEffect(() => {
+    let interval = null
+    interval = window.setInterval(() => {
+      getInfo()
+    }, 1000 * 60 * 10)
     getInfo()
     getAccountInfo()
+    return ()=>{
+      interval && clearInterval(interval)
+    }
   }, [getAccountInfo, getInfo])
   return [info, accountInfo, load]
 }

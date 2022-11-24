@@ -53,15 +53,9 @@ export function Chart(wallet) {
         i += 12
       }
       console.log(list)
-      // let min = Math.min.apply(Math, list.map(function (o) {
-      //   return o.shareValue.toFixed(2)
-      // }
-      // ))
-      // let max = Math.max.apply(Math, list.map(function (o) {
-      //   return o.shareValue.toFixed(2)
-      // }
-      // ))
-      // setYdomain([+(min - 0.0001).toFixed(2), +(max + 0.0001).toFixed(2)])
+      let dataMax = Math.max(...list.map((i) => i.shareValue));
+      let dataMin = Math.min(...list.map((i) => i.shareValue));
+      setYdomain([+(dataMin - 0.01).toFixed(2), +(dataMax + 0.01).toFixed(2)])
       setData(list.map(d => ({ time: dateFormat(new Date(d.timestamp * 1000), 'UTC:mm.dd'), value: Number(d.shareValue),timestamp:d.timestamp })));
     }
   }, [day, wallet.account, wallet.chainId])
@@ -72,7 +66,7 @@ export function Chart(wallet) {
   }
   useEffect(() => {
     load()
-  }, [day])
+  }, [day, load])
   return (<div className="strategy-performance">
     <div className="strategy-performance-title">
       <span>
@@ -90,7 +84,7 @@ export function Chart(wallet) {
         <LineChart data={data} w>
           <Tooltip cursor={true} active={true} content={<Tip />} />
           <XAxis dataKey="time" tick={{ fill: '#B0B7C3', fontSize: '14' }} tickLine={false} axisLine={false} />
-          <YAxis dataKey="value" domain={Ydomain} tick={{ fill: '#B0B7C3', fontSize: '14' }} tickLine={false} axisLine={false} />
+          <YAxis dataKey="value" ticks={[0.8,0.9,"1.0",1.1,1.2,1.3]} tickCount={6} domain={Ydomain} tick={{ fill: '#B0B7C3', fontSize: '14' }} tickLine={false} axisLine={false} />
           <Line strokeWidth={4} dot={<CustomizedDot />} type="monotone" dataKey="value" stroke="#377DFF" activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>

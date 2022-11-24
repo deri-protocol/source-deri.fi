@@ -1,0 +1,103 @@
+.strategy-performance {
+  width: 800px;
+  height: 468px;
+  background: #FFFFFF;
+  border-radius: 15px;
+  padding: 38px;
+
+  &-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      font-weight: 500;
+      font-size: 20px;
+      color: #777E90;
+    }
+
+    .time-tab-close {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      img {
+        cursor: pointer;
+      }
+
+      .day-tab-box {
+        width: 72px;
+        height: 24px;
+        border: 1px solid #377DFF;
+        border-radius: 38.909px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 27px;
+        font-weight: 500;
+        font-size: 12px;
+        color: #377DFF;
+        cursor: pointer;
+      }
+
+      .check {
+        background-color: #377DFF;
+        color: #FFFFFF;
+      }
+    }
+  }
+
+  .chart-box {
+    height: 314px;
+    margin-top: 59px;
+
+    .chart-tip {
+      width: 124px;
+      height: 51px;
+      background: #FFFFFF;
+      border-radius: 8px;
+      filter: drop-shadow(0px 6.50562px 10.8427px rgba(176, 183, 195, 0.14));
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      font-weight: 600;
+      font-size: 12px;
+      color: #4E5D78;
+      padding-left: 15px;
+      &-title{
+        color: #B0B7C3;
+      }
+      &-time{
+        color: #B0B7C3;
+        font-size: 11px;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+@media only screen and (max-width : 1024px) {
+  .strategy-performance{
+    width: 326px;
+    height: 191px;
+    padding: 16px;
+    &-title {
+      span {
+        font-size: 12px;
+      }
+      .time-tab-close {
+        .day-tab-box {
+          width: 40px;
+          height: 14px;
+          margin-right: 6px;
+          font-size: 8px;
+        }
+      }
+    }
+    .chart-box {
+      height: 128px;
+      margin-top: 12px;
+      position: relative;
+      right: 32px;
+    }
+  }
+}

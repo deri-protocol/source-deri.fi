@@ -21,6 +21,13 @@ const microApps = [
     activeRule: '#/dip-hunter',
     container: '#subapp-viewport'
   },
+  {
+    name: 'stable-earn',
+    displayName : 'Stable Earn',
+    entry: process.env.REACT_APP_STABLE_EARN,
+    activeRule: '#/stable-earn',
+    container: '#subapp-viewport'
+  },
   // {
   //   name: 'liquidity-mining',
   //   displayName : 'liquidity mining',

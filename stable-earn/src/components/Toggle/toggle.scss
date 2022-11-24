@@ -1,0 +1,98 @@
+.toggle {
+  width: 52px;
+  height: 30px;
+  background: #DADADA;
+  border-radius: 1000px;
+  display: flex;
+  align-items: center;
+  padding: 5px 6px;
+  cursor: pointer;
+
+  .toggle-round {
+    width: 20px;
+    height: 20px;
+    background: #FFFFFF;
+    border-radius: 50%;
+
+    position: relative;
+  }
+}
+
+.on {
+  background-color: #377DFF;
+
+  .toggle-round {
+    animation: on .5s;
+    animation-fill-mode: forwards;
+  }
+}
+
+.off {
+  .toggle-round {
+    animation: off .5s;
+    animation-fill-mode: forwards;
+  }
+}
+
+@keyframes off {
+  0% {
+    left: 20px;
+  }
+
+  100% {
+    left: 0px;
+  }
+}
+
+@keyframes on {
+  0% {
+    left: 0px;
+  }
+
+  100% {
+    left: 20px;
+  }
+}
+
+@media only screen and (max-width : 1024px) {
+  .toggle {
+    width: 34px;
+    height: 17px;
+    padding: 3px 3px;
+    .toggle-round {
+      width: 11px;
+      height: 11px;
+    }
+
+    .on {
+      .toggle-round {
+        animation: on .5s;
+      }
+    }
+
+    .off {
+      .toggle-round {
+        animation: off .5s;
+      }
+    }
+  }
+  @keyframes off {
+    0% {
+      left: 16px;
+    }
+  
+    100% {
+      left: 0px;
+    }
+  }
+  
+  @keyframes on {
+    0% {
+      left: 0px;
+    }
+  
+    100% {
+      left: 16px;
+    }
+  }
+}

@@ -1,0 +1,163 @@
+.stable-earn-info-operate {
+  display: flex;
+  justify-content: space-between;
+  width: 1024px;
+  height: 576px;
+  position: relative;
+  top: -131px;
+
+  .invest-redeem-box,
+  .stats-box {
+    background: #FFFFFF;
+    box-shadow: 0px 18.9206px 36.1959px rgba(176, 183, 195, 0.14);
+    border-radius: 16px;
+  }
+
+  .invest-redeem-box {
+    width: 672px;
+    padding: 50px 56px;
+
+    .invest-redeem-tab {
+      width: 335px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 11px;
+      font-weight: 500;
+      font-size: 24px;
+      color: #777E90;
+
+      .invest-redeem {
+        width: 129px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .hr {
+        width: 1.64px;
+        height: 35.59px;
+        background: #C8CDD5;
+        margin-left: 20px;
+      }
+
+      .check {
+        background: #377DFF;
+        border-radius: 82px;
+        color: #FFFFFF;
+      }
+    }
+
+
+  }
+
+  .stats-box {
+    width: 328px;
+    padding: 50px 24px;
+    color: #777E90;
+    font-weight: 600;
+
+    &-title {
+      display: flex;
+      font-weight: 500;
+      align-items: center;
+    }
+
+    &-apy {
+      font-weight: 700;
+      font-size: 40px;
+      color: #377DFF;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 26px;
+      span {
+        font-weight: 400;
+        font-size: 16px;
+        color: #777E91;
+        margin-top: 16px;
+      }
+    }
+    &-info{
+      margin-top: 60px;
+      .info-box{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 32px;
+        span{
+          color: #040415;
+        }
+        .fees{
+          display: flex;
+          align-items: center;
+          img{
+            margin-left: 4px;
+          }
+        }
+      }
+    }
+    &-button{
+      margin-top: 22px;
+    }
+  }
+}
+@media only screen and (max-width : 1024px){
+  .stable-earn-info-operate{
+    flex-direction: column;
+    width: 328px;
+    top: -200px;
+    .invest-redeem-box{
+      width: 328px;
+      padding:  26px 19px 20px 19px;
+      margin-bottom: 20px;
+      .invest-redeem-tab{
+        width: 200px;
+        padding: 0;
+        .invest-redeem{
+          width: 78px;
+          height: 24px;
+          font-size: 14px;
+          font-weight: 700;
+        }
+        .hr{
+          height: 17px;
+          margin: 0;
+        }
+      }
+    }
+    .stats-box{
+      padding: 8px 18px;
+      padding-bottom: 20px;
+      font-size: 14px;
+      &-apy{
+        span{
+          font-size: 14px;
+        }
+      }
+      &-info{
+        margin-top: 40px;
+        font-size: 12px;
+        .info-box{
+          height: 26px;
+        }
+      }
+      &-button{
+        .stats-chart-btn{
+          height: 40px;
+          font-size: 12px;
+          border-radius: 6px;
+          img{
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+  }
+
+}

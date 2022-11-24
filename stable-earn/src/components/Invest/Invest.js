@@ -29,7 +29,7 @@ export default function Invest() {
       },
       content: {
         success: `Invest ${value} ${token.tokenName}`,
-        error: "Transaction Failed"
+        error: "Transaction Failed :"
       }
     }
     if (bg(value).gt(0)) {

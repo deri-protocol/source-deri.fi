@@ -7,8 +7,7 @@ import './chart.scss'
 import Tip from './Tip'
 import classNames from "classnames"
 import { Icon } from "@deri/eco-common"
-import { hide } from "react-functional-modal";
-export function Chart(wallet) {
+export default function Chart({wallet,closeChartModal}) {
   const [data, setData] = useState(null)
   const [day, setDay] = useState("all")
   const [Ydomain, setYdomain] = useState([0, 'auto'])
@@ -76,7 +75,7 @@ export function Chart(wallet) {
         <div className={classNames("day-tab-box", { check: day === "7" })} onClick={() => setDay("7")}>7 DAYS</div>
         <div className={classNames("day-tab-box", { check: day === "30" })} onClick={() => setDay("30")}>30 DAYS</div>
         <div className={classNames("day-tab-box", { check: day === "all" })} onClick={() => setDay("all")}>ALL</div>
-        <Icon token="close-modal" width={12} height={12} onClick={() => hide("chart")} />
+        <Icon token="close-modal" width={12} height={12} onClick={closeChartModal} />
       </div>
     </div>
     <div className="chart-box">

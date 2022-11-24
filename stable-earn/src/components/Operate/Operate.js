@@ -7,25 +7,18 @@ import { Button, Icon, UnderlineText } from '@deri/eco-common';
 import DeriNumberFormat from '../../utils/DeriNumberFormat';
 import useToken from '../../hooks/useToken';
 import useInfo from '../../hooks/useInfo';
-import { show } from 'react-functional-modal';
-import { Chart } from '../Chart/Chart';
+import { useModal } from "react-hooks-use-modal"
+import Chart from '../Chart/Chart';
 import { useWallet } from 'use-wallet';
 export default function Operate() {
   const [operate, setOperate] = useState("invest")
   const [token] = useToken()
   const [info] = useInfo()
   const wallet = useWallet()
-  const openChart = () => {
-    show(<Chart wallet={wallet} />, {
-      key: "chart",
-      fading: true,
-      clickOutsideToClose:true,
-      style: {
-        background: "rgba(0, 0, 0, 0.4)",
-        zIndex: 2,
-      }
-    })
-  }
+  const [ChartModal, openChartModal, closeChartModal] = useModal('stable-earn-root', {
+    preventScroll: true,
+    closeOnOverlayClick: true
+  });
   return (
     <div className='stable-earn-info-operate'>
       <div className='invest-redeem-box'>
@@ -90,9 +83,12 @@ export default function Operate() {
           </div>
         </div>
         <div className='stats-box-button'>
-          <Button label="PERFORMANCE" fontSize={18} onClick={openChart} className="stats-chart-btn" icon="chart" width="100%" height="72" bgColor="rgba(55, 125, 255, 0.7)" radius="12" fontColor='#FFFFFF' fontWeight='700' borderSize="0" />
+          <Button label="PERFORMANCE" fontSize={18} onClick={openChartModal} className="stats-chart-btn" icon="chart" width="100%" height="72" bgColor="rgba(55, 125, 255, 0.7)" radius="12" fontColor='#FFFFFF' fontWeight='700' borderSize="0" />
         </div>
       </div>
+      <ChartModal>
+        <Chart wallet={wallet} closeChartModal={closeChartModal} />
+      </ChartModal>
     </div>
   )
 }

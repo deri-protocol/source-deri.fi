@@ -222,10 +222,13 @@
     .btn {
       margin-top: 20px;
 
-      .redeem-btn {
+      .redeem-btn,.approve-btn,.start-btn {
         height: 40px;
         border-radius: 6px;
-        font-size: 14px;
+        font-size: 12px;
+      }
+      .approve-btn,.start-btn{
+        width: 48%;
       }
     }
 

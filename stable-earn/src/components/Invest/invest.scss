@@ -222,10 +222,13 @@
     .btn {
       margin-top: 42px;
 
-      .invest-btn {
+      .invest-btn,.approve-btn,.start-btn {
         height: 40px;
         border-radius: 6px;
         font-size: 12px;
+      }
+      .approve-btn,.start-btn{
+        width: 48%;
       }
     }
   }

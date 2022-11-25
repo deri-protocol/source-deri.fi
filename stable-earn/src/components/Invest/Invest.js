@@ -1,6 +1,7 @@
 
 import { Button, Icon, UnderlineText } from '@deri/eco-common'
 import classNames from 'classnames'
+import { set } from 'nprogress'
 import { useCallback, useEffect, useState } from 'react'
 import { useWallet } from 'use-wallet'
 import useApprove from '../../hooks/useApprove'
@@ -43,10 +44,10 @@ export default function Invest() {
   }, [loadBalance, token, trade, value])
   const onChange = useCallback(async (e) => {
     const { value } = e.target
-    if (((bg(value).gt(0) && value !== "--")) || value === "0" || value === "") {
-      setValue(value)
-    } else {
+    if (value < 0 || isNaN(value)) {
       setValue("")
+    }else{
+      setValue(value)
     }
   }, [])
   const clickApprove = useCallback(async () => {

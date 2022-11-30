@@ -183,14 +183,14 @@ export default function Header({  collect, switchMenu }) {
       setIsFixed(false)
       setBtnMainColor('#E6E8EC')
     }
-  })
+  },[collect])
 
   useEffect(() => {
     document.addEventListener('scroll', handler, false);
     return () => {
       document.removeEventListener('scroll', handler)
     }
-  }, [collect])
+  }, [collect, handler])
   return (
     <StyleSheetManager disableCSSOMInjection>
       <Wrapper className={clazz}>

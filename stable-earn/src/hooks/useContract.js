@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import ERC20_ABI from '../abi/erc20.json'
 import {Web3Provider} from '@ethersproject/providers'
 import { getContract } from '../client/helper'
 import { useWallet } from 'use-wallet'
@@ -39,11 +38,5 @@ export function useContract(
   ])
 }
 
-export function useTokenContract(
-  tokenAddress,
-  withSignerIfPossible,
-) {
-  return useContract(tokenAddress, ERC20_ABI, withSignerIfPossible)
-}
 
 

@@ -50,7 +50,6 @@ export default function StableEarn({ lang, getLang, actions }) {
               Stable Earn is a fund for you to invest BUSD and earn stable yield in BUSD at almost zero risk.
             </div>
           </div>
-
         </div>
       </div>
       <div className='stable-earn-info'>

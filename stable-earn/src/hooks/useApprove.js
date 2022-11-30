@@ -5,7 +5,6 @@ import { STABLE_EARN_CONTRACT } from '../abi/contractAddress';
 import Erc20 from '../abi/erc20.json';
 import { BigNumber } from 'ethers';
 import { formatEther } from 'ethers/lib/utils';
-// import { retry } from '../lib/retry';
 import useTransaction from './useTransaction';
 import Emitter from '../utils/Emitter';
 import { EVENT_TRANS_END } from '../utils/Constants';
@@ -66,7 +65,7 @@ export default function useApprove(tokenAddress, tokenName) {
         onReceipt && onReceipt(transaction.status)
       }
     }
-  }, [allowance, getTransaction, loadAllowance, spender, tokenAddress, tokenName])
+  }, [allowance, chainId, getTransaction, loadAllowance, spender, tokenAddress, tokenName])
   return [
     allowance > 0,
     approve

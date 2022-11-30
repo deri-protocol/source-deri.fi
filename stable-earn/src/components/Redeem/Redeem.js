@@ -204,7 +204,7 @@ export default function Redeem() {
     <div className={classNames("btn", { "btn-two": account && (!isApproved || isApprove) })}>
       {account && isApproved && !isApprove && <Button label="REDEEM" disabled={disable} onClick={click} fontSize={18} className="redeem-btn" width="100%" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />}
       {account && (!isApproved || isApprove) && <>
-        <Button label="APPOVE" fontSize={18} tip=" " disabled={isApprove} tipIcon={isApprove ? "success-btn" : ""} onClick={clickApprove} className="approve-btn" width="272" height="72" bgColor="#38CB89" radius="14" borderSize={0} hoverBgColor="#38CB89" fontColor="#FFFFFF" />
+        <Button label="APPROVE" fontSize={18} tip=" " disabled={isApprove} tipIcon={isApprove ? "success-btn" : ""} onClick={clickApprove} className="approve-btn" width="272" height="72" bgColor="#38CB89" radius="14" borderSize={0} hoverBgColor="#38CB89" fontColor="#FFFFFF" />
         <Button label="START REDEEM" fontSize={18} disabled={disable} onClick={click} className="start-btn" width="272" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />
       </>}
       {!account && <Button label="CONNECT WALLET" onClick={() => connect()} fontSize={18} width="100%" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />}

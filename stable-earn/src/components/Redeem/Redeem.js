@@ -4,15 +4,13 @@ import { useEffect } from 'react'
 import { useCallback, useState } from 'react'
 import { useWallet } from 'use-wallet'
 import useApprove from '../../hooks/useApprove'
-import useInfo from '../../hooks/useInfo'
-import useToken from '../../hooks/useToken'
 import useTrade from '../../hooks/useTrade'
 import { FLP_TOKEN_ADDRESS } from '../../utils/Constants'
 import DeriNumberFormat from '../../utils/DeriNumberFormat'
 import { bg } from '../../utils/utils'
 import Toggle from '../Toggle/Toggle'
 import './redeem.scss'
-export default function Redeem() {
+export default function Redeem({token,accountInfo,load,loadBalance}) {
   const [daysOff, setDaysOff] = useState(true)
   const [isApprove, setIsApprove] = useState(false)
   const [fee, setFee] = useState(0)
@@ -20,9 +18,7 @@ export default function Redeem() {
   const [disable, setDisable] = useState(true)
   const [endTimeProportion, setEndTimeProportion] = useState("")
   const [isTime, setIsTime] = useState(false)
-  const [token, loadBalance] = useToken()
   const { account, connect } = useWallet()
-  const [, accountInfo, load] = useInfo()
   const trade = useTrade()
   const [isApproved, approve] = useApprove(FLP_TOKEN_ADDRESS, "FLP")
   const click = useCallback(async () => {

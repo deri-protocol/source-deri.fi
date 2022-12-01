@@ -52,15 +52,8 @@ export default function useInfo() {
   }, [getAccountInfo, getInfo])
 
   useEffect(() => {
-    let interval = null
-    interval = window.setInterval(() => {
-      getInfo()
-    }, 1000 * 60 * 10)
     getInfo()
     getAccountInfo()
-    return ()=>{
-      interval && clearInterval(interval)
-    }
   }, [getAccountInfo, getInfo])
   return [info, accountInfo, load]
 }

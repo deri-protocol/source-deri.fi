@@ -74,9 +74,6 @@ export default function Invest({token,accountInfo,load,loadBalance}) {
     }
   }, [isApproved, token.walletBalance, value])
 
-useEffect(()=>{
-  console.log(account)
-},[account])
   return <div className="invest-box">
     {accountInfo.timestamp ? <div className='invest-disable-box'>
       <Icon token="invest-disable" />

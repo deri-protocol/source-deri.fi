@@ -13,7 +13,7 @@ export default function Invest() {
   const [value, setValue] = useState()
   const [disabled, setDisabled] = useState(true)
   const { account, connect } = useWallet()
-  const [, accountInfo] = useInfo()
+  const [, accountInfo, load] = useInfo()
   const [token, loadBalance] = useToken()
   const [fee, setFee] = useState(0)
   const [isApprove, setIsApprove] = useState(false)
@@ -36,15 +36,16 @@ export default function Invest() {
         if (receipt) {
           loadBalance()
           setIsApprove(false)
+          load()
         }
       })
     }
-  }, [loadBalance, token, trade, value])
+  }, [load, loadBalance, token, trade, value])
   const onChange = useCallback(async (e) => {
     const { value } = e.target
     if (value < 0 || isNaN(value)) {
       setValue("")
-    }else{
+    } else {
       setValue(value)
     }
   }, [])

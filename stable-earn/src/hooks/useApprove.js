@@ -13,7 +13,6 @@ export default function useApprove(tokenAddress, tokenName) {
   const [allowance, setAllowance] = useState(0)
   const { chainId, account } = useWallet()
   const spender = STABLE_EARN_CONTRACT[chainId]
-
   const loadAllowance = useCallback(
     async () => {
       if (account && contract && spender) {

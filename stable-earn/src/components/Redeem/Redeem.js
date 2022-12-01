@@ -1,6 +1,5 @@
 import { Button, Icon, UnderlineText } from '@deri/eco-common'
 import classNames from 'classnames'
-import { set } from 'nprogress'
 import { useEffect } from 'react'
 import { useCallback, useState } from 'react'
 import { useWallet } from 'use-wallet'

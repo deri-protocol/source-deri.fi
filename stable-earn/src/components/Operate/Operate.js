@@ -1,5 +1,5 @@
 import './operate.scss'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import Invest from '../Invest/Invest';
 import Redeem from '../Redeem/Redeem';
@@ -12,13 +12,22 @@ import Chart from '../Chart/Chart';
 import { useWallet } from 'use-wallet';
 export default function Operate() {
   const [operate, setOperate] = useState("invest")
-  const [token] = useToken()
-  const [info] = useInfo()
+  const [token, loadBalance] = useToken()
+  const [info, accountInfo, load] = useInfo()
   const wallet = useWallet()
   const [ChartModal, openChartModal, closeChartModal] = useModal('stable-earn-root', {
     preventScroll: true,
     closeOnOverlayClick: true
   });
+  useEffect(() => {
+    let interval = null
+    interval = window.setInterval(() => {
+      load()
+    }, 1000 * 60 * 10)
+    return () => {
+      interval && clearInterval(interval)
+    }
+  }, [load])
   return (
     <div className='stable-earn-info-operate'>
       <div className='invest-redeem-box'>
@@ -32,8 +41,8 @@ export default function Operate() {
           </div>
         </div>
         <div className='operate-info-box'>
-          <div style={operate === 'invest' ? { display: "block" } : { display: "none" }}><Invest /></div>
-          <div style={operate === 'redeem' ? { display: "block" } : { display: "none" }}><Redeem /></div>
+          <div style={operate === 'invest' ? { display: "block" } : { display: "none" }}><Invest token={token} info={info} accountInfo={accountInfo} load={load} loadBalance={loadBalance} /></div>
+          <div style={operate === 'redeem' ? { display: "block" } : { display: "none" }}><Redeem token={token} info={info} accountInfo={accountInfo} load={load} loadBalance={loadBalance} /></div>
         </div>
       </div>
       <div className='stats-box'>
@@ -79,6 +88,12 @@ export default function Operate() {
             </div>
             <span>
               0
+            </span>
+          </div>
+          <div className='info-box'>
+            My Investment
+            <span>
+              <DeriNumberFormat value={accountInfo["estValue"]} decimalScale={2} />
             </span>
           </div>
         </div>

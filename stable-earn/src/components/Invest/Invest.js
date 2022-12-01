@@ -3,18 +3,14 @@ import classNames from 'classnames'
 import { useCallback, useEffect, useState } from 'react'
 import { useWallet } from 'use-wallet'
 import useApprove from '../../hooks/useApprove'
-import useInfo from '../../hooks/useInfo'
-import useToken from '../../hooks/useToken'
 import useTrade from '../../hooks/useTrade'
 import DeriNumberFormat from '../../utils/DeriNumberFormat'
 import { bg } from '../../utils/utils'
 import './invest.scss'
-export default function Invest() {
+export default function Invest({token,accountInfo,load,loadBalance}) {
   const [value, setValue] = useState()
   const [disabled, setDisabled] = useState(true)
   const { account, connect } = useWallet()
-  const [, accountInfo, load] = useInfo()
-  const [token, loadBalance] = useToken()
   const [fee, setFee] = useState(0)
   const [isApprove, setIsApprove] = useState(false)
   const [isApproved, approve] = useApprove(token.tokenAddress, token.tokenName)
@@ -36,6 +32,7 @@ export default function Invest() {
         if (receipt) {
           loadBalance()
           setIsApprove(false)
+          setValue("")
           load()
         }
       })
@@ -76,7 +73,6 @@ export default function Invest() {
       setDisabled(true)
     }
   }, [isApproved, token.walletBalance, value])
-
 
   return <div className="invest-box">
     {accountInfo.timestamp ? <div className='invest-disable-box'>

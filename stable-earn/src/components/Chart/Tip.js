@@ -69,7 +69,7 @@ const Tip = ({ active, payload }) => {
           Net Value
         </div>
         <div className="chart-tip-value">
-          <DeriNumberFormat value={payload[0].payload.value} decimalScale={2} />
+          <DeriNumberFormat value={payload[0].payload.value} decimalScale={3} />
         </div>
         <div className="chart-tip-time">
           {dateText}

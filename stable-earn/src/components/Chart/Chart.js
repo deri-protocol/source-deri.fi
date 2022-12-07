@@ -28,7 +28,7 @@ export default function Chart({wallet,closeChartModal}) {
       }
     `
     let vChainId = 56;
-    let timestamp = 0;
+    let timestamp = 1669201200;
     let now = new Date()
     now = now.getTime() / 1000
     let daysTime = 86400

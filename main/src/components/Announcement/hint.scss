@@ -1,0 +1,292 @@
+.trade-hint {
+  width: 430px;
+  height: 202px;
+  position: fixed;
+  z-index: 7;
+  background-image: url('./img/announcement-bg.png');
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background-size: 100% 100%;
+  bottom: 36px;
+  right: 48px;
+  display: flex;
+  color: #FFFFFF;
+
+  .m-check {
+    display: none;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  .hint-img {
+    padding: 0 24px;
+    margin-top: 34px;
+    display: flex;
+    width: 30px;
+    height: 30px;
+
+    img {
+      cursor: pointer;
+    }
+  }
+
+  .vip-gift {
+    margin-top: 18px;
+
+    img {
+      width: 20px;
+      height: 20px;
+      margin-top: 4px;
+      margin-left: 10px;
+    }
+  }
+
+  .hint-box {
+    margin-top: 34px;
+    margin-left: 15px;
+    padding-top: 3px;
+    width: 337px;
+    padding-right: 24px;
+    height: 128px;
+
+    .hint-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+
+      img {
+        cursor: pointer;
+
+      }
+    }
+
+    .hint-content {
+      font-weight: normal;
+
+      .hint-text {
+        margin-top: 25px;
+        margin-bottom: 26px;
+      }
+
+      .vip-text {
+        margin-top: 14px;
+        margin-bottom: 0;
+
+      }
+      .lite-text{
+        font-size: 20px;
+      }
+
+      .submit-tg {
+        margin-top: 8px;
+        input {
+          border: 0;
+          width: 146px;
+          height: 24px;
+          margin-right: 8px;
+          border-radius: 4px;
+          font-size: 12px;
+          font-weight: 400;
+          padding-left: 8px;
+          color: #686262;
+          outline: none;
+        }
+
+        button {
+          border: 1px solid #5577FD;
+          width: 146px;
+          height: 24px;
+          font-size: 12px;
+          border-radius: 4px;
+          background-color: transparent;
+          color: #FFF;
+          font-weight: 600;
+          white-space: nowrap;
+          cursor: pointer;
+        }
+      }
+      .learn-more{
+        cursor: pointer;
+      }
+      .lite-link{
+        font-size:20px
+      }
+      .vip-skip {
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+
+        .skip {
+          width: 14px;
+          height: 14px;
+          border: 1px solid #959D9B;
+          border-radius: 50%;
+          margin-right: 8px;
+          margin-top: 4px;
+        }
+        .learn-more{
+          margin-right: 8px;
+          font-weight: bold;
+        }
+
+        .check-skip {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 0;
+          background-color: #3756CD;
+        }
+      }
+
+    }
+
+  }
+
+  .vip-box {
+    margin-top: 18px;
+  }
+}
+.vip-hint {
+  height: 210px;
+}
+.close-position-hint{
+  height: 234px;
+}
+.have-vip{
+  bottom: 300px;
+}
+.trade-hint:hover {
+  border: 1px solid #CD7A37;
+}
+
+@media only screen and (max-width: 759px) {
+  .no-vip {
+    position: static;
+    width: 100%;
+    height: 100%;
+    min-width: 375px;
+    padding-bottom: 8px;
+    background-image: url('./img/announcement-m.png');
+
+    .close {
+      display: none;
+    }
+
+    .hint-img {
+      padding-left: 24px;
+      margin-top: 9px;
+      display: flex;
+      width: 30px;
+      height: 30px;
+
+      img {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+      }
+    }
+
+    .hint-box {
+      margin-top: 8px;
+      margin-left: 5px;
+      width: 100%;
+      height: 58px;
+
+      .hint-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+      }
+
+      .hint-content {
+        font-weight: normal;
+        font-size: 10px;
+
+        .hint-text {
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+
+        .hint-link {
+          display: none;
+        }
+
+      }
+
+    }
+
+    .m-check {
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      .check {
+        display: inline-block;
+        width: 52px;
+        height: 19px;
+        text-align: center;
+        line-height: 19px;
+        background: #5577FD;
+        border-radius: 2px;
+        font-size: 12px;
+        font-weight: normal;
+      }
+    }
+  }
+
+  .trade-hint:hover {
+    border: 1px solid transparent;
+  }
+
+  .vip-hint {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 355px;
+    height: 246px;
+
+    .hint-img {
+      padding-left: 8px;
+    }
+    .vip-box{
+      width: 307px;
+      padding-right: 8px;
+      button{
+        margin-top: 16px;
+      }
+    }
+  }
+  .have-close{
+    top: 30%;
+  }
+  .close-position-hint{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 355px;
+    .hint-img {
+      padding-left: 8px;
+    }
+    .hint-box{
+      width: 307px;
+      padding-right: 8px;
+      button{
+        margin-top: 16px;
+      }
+    }
+  }
+  .have-vip{
+    top: 76%;
+  }
+  .vip-hint:hover ,.close-position-hint:hover{
+    border: 1px solid #CD7A37;
+  }
+}

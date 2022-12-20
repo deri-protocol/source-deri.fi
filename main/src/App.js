@@ -5,7 +5,7 @@ import './app.scss';
 import { Constants } from '@deri/eco-common';
 import Navigation from './components/Navigation/Navigation';
 import Loading from './components/Loading/Loading';
-
+import Announcement from './components/Announcement/Announcement';
 
 function App(props) {
   const config = {
@@ -17,6 +17,7 @@ function App(props) {
       <div className="app">
         <Navigation collect={true} {...props}/>
         {props.loading && <Loading className={props.loading}/>}
+        <Announcement />
         <main id="subapp-viewport">
         </main>
       </div>

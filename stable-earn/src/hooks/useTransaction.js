@@ -16,7 +16,9 @@ export default function useTransaction(contractAddress, ABI) {
       message,
       options) => {
       let opts = { gasLimit: bigNumberify(21000) };
-      opts.value = parseUnits(String(0.001))
+      if (method !== "approve") {
+        opts.value = parseUnits(String(0.001))
+      }
       let errorMsg;
       try {
         const gasLimit =

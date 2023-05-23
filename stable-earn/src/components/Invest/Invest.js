@@ -121,7 +121,7 @@ export default function Invest({token,accountInfo,load,loadBalance}) {
       </div>
     </>}
     <div className={classNames("btn", { "btn-two": account && (!isApproved || isApprove) })}>
-      {account && isApproved && !isApprove && <Button disabled={true} label="INVEST" onClick={click} fontSize={18} className="invest-btn" width="100%" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />}
+      {account && isApproved && !isApprove && <Button disabled={disabled} label="INVEST" onClick={click} fontSize={18} className="invest-btn" width="100%" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />}
       {account && (!isApproved || isApprove) && <>
         <Button label="APPROVE" fontSize={18} disabled={isApprove} tip=" " tipIcon={isApprove ? "success-btn" : ""} onClick={clickApprove} className="approve-btn" width="272" height="72" bgColor="#38CB89" radius="14" borderSize={0} hoverBgColor="#38CB89" fontColor="#FFFFFF" />
         <Button label="START INVEST" disabled={true} fontSize={18} onClick={click} className="start-btn" width="272" height="72" bgColor="rgba(56, 203, 137, 0.7)" radius="14" hoverBgColor="#38CB89" borderSize={0} fontColor="#FFFFFF" />

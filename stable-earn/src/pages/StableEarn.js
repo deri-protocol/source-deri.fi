@@ -37,7 +37,7 @@ export default function StableEarn({ lang, getLang, actions }) {
               </div>
               <div className='stader-logo-text'>
                 X
-                <Icon token="stader" />
+                <Icon token="stader"  />
                 Stader
               </div>
             </div>

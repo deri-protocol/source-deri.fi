@@ -29,6 +29,7 @@ export default function useInfo() {
   const getAccountInfo = useCallback(async () => {
     let data = {};
     if (contract && FLPContract && account) {
+      console.log(account)
       let res = await contract.calculateTotalValue([false])
       let waitDayInfo = await contract.userRedeemRequests(account)
       const flpBalance = await FLPContract.balanceOf(account)

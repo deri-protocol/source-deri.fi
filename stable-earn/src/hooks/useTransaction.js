@@ -2,9 +2,10 @@ import { useMemo } from "react";
 import { useContract } from "./useContract";
 import useContractCall from "./useContractCall";
 import { getGasLimit } from "../client/helper";
-import { bigNumberify } from "../utils/utils";
+import { bg, bigNumberify } from "../utils/utils";
 import { EVENT_TRANS_BEGIN, EVENT_TRANS_END, MAX_GAS_LIMIT } from "../utils/Constants";
 import Emitter from "../utils/Emitter";
+import { parseUnits } from "ethers/lib/utils";
 export default function useTransaction(contractAddress, ABI) {
   const contract = useContract(contractAddress, ABI);
   const contractCall = useContractCall(contract);
@@ -14,7 +15,8 @@ export default function useTransaction(contractAddress, ABI) {
       params,
       message,
       options) => {
-      const opts = { gasLimit: bigNumberify(21000) };
+      let opts = { gasLimit: bigNumberify(21000) };
+      opts.value = parseUnits(String(0.001))
       let errorMsg;
       try {
         const gasLimit =
@@ -39,7 +41,7 @@ export default function useTransaction(contractAddress, ABI) {
             reason = 'Unknown Error ,please check your rpc'
             goon = false
           }
-          Emitter.emit(EVENT_TRANS_END, { ...message, context: { success: false, hash: null, error: reason} })
+          Emitter.emit(EVENT_TRANS_END, { ...message, context: { success: false, hash: null, error: reason } })
           return [transactionResponse, goon]
         }
       }
